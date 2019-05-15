@@ -30,7 +30,29 @@ router.get('/', async function (req, res) {
 router.get('/about-us', function (req, res, next) {
   res.render('about-us', { title: 'hello world', list: ['a', 'b'] });
 });
-
+const todos = [
+      {
+        'id': 1,
+        'title': 'to do my home work',
+        'completed': false,
+        'editing': false
+      },
+      {
+        'id': 2,
+        'title': 'to do my exersises',
+        'completed': false,
+        'editing': false
+      },
+      {
+        'id': 3,
+        'title': 'to do my lundry',
+        'completed': false,
+        'editing': false
+      },
+    ]
+router.get('/todos', function (req, res, next) {
+  res.json(todos);
+});
 
 
 
