@@ -1,12 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ApiService } from '../../services/api.service';
+import { Todo } from '../../interfaces/todo'
 //import { Observable } from 'rxjs/Observable';
 //import { FormGroup, FormControl } from '@angular/core';
 
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.component.html',
-  styleUrls: ['./about-us.component.less']
+  styleUrls: ['./about-us.component.less'],
+  animations: [
+    trigger('fade', [
+      //transition in
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(30px)' }),
+        animate(1000, style({ opacity: 1, transform: 'translateY(0px)' }))
+      ]),
+      //transition out
+      transition(':leave', [
+        animate(1000, style({ opacity: 0, transform: 'translateY(30px)' }))
+      ])
+
+    ])
+  ]
 })
 export class AboutUsComponent implements OnInit {
   pageTitle: string = "Notice List";
@@ -15,23 +32,22 @@ export class AboutUsComponent implements OnInit {
   idForTodo: number;
   beforeEditCache: string;
   filter: string;
-  constructor(private http: HttpClient) { 
-    
-  }
 
-  getTodos() {
-    return this.http.get<Todo[]>('http://localhost:3000/todos')
-  }
+  constructor(
+    
+    private api: ApiService
+  ) { }
+
+
   ngOnInit() {
     this.filter = 'all';
     this.beforeEditCache = '';
     this.idForTodo = 4;
     this.todoTitle = '';
-    this.getTodos().subscribe(
+    this.api.getTodos().subscribe(
       (data) => {
-        console.log(data);
         this.todos = data;
-      }, 
+      },
       (error) => { console.log(error) }
     )
     this.todos = [
@@ -41,12 +57,12 @@ export class AboutUsComponent implements OnInit {
         'completed': false,
         'editing': false
       }
-      
+
     ]
   }
 
-	addTodo(): void {
-    if(this.todoTitle.trim().length < 5) {
+  addTodo(): void {
+    if (this.todoTitle.trim().length < 5) {
       return;
     }
 
@@ -58,6 +74,13 @@ export class AboutUsComponent implements OnInit {
     })
     this.todoTitle = "";
     this.idForTodo++;
+
+    this.api.setTodos(this.todos).subscribe(
+      (data) => {
+        console.log(data + 'data from server');
+      },
+      (error) => { console.log(error) }
+    )
   }
   editTodo(todo: Todo): void {
     this.beforeEditCache = todo.title;
@@ -67,7 +90,7 @@ export class AboutUsComponent implements OnInit {
     this.todos = this.todos.filter(todo => todo.id !== id);
   }
   doneEdit(todo: Todo): void {
-    if(todo.title.trim().length === 0) {
+    if (todo.title.trim().length === 0) {
       todo.title = this.beforeEditCache;
     }
     todo.editing = false;
@@ -89,23 +112,24 @@ export class AboutUsComponent implements OnInit {
     this.todos.forEach(todo => todo.completed = (<HTMLInputElement>event.target).checked);
   }
   todosFiltered(): Todo[] {
-    if(this.filter === 'all') {
+    if (this.filter === 'all') {
       return this.todos
-    }else if(this.filter === 'active') {
+    } else if (this.filter === 'active') {
       return this.todos.filter(todo => !todo.completed)
-    }else if(this.filter === 'completed') {
+    } else if (this.filter === 'completed') {
       return this.todos.filter(todo => todo.completed)
     }
     return this.todos
   }
+  toUpperCase(): void {
+    setTimeout(() => {
+      this.todoTitle = this.todoTitle.toLocaleUpperCase();
+    }, 0)
+  }
+
+
 
 }
 
-interface Todo {
-  id: number, 
-  title: string,
-  completed: boolean,
-  editing: boolean
-}
 
-//module cors to backend
+

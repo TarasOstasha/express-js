@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var cors = require('cors')
 const fs = require('fs');
 const myFs = require('../lib/fs');
 const myFilters = require('../lib/filters');
@@ -50,8 +51,13 @@ const todos = [
         'editing': false
       },
     ]
-router.get('/todos', function (req, res, next) {
+router.get('/todos', cors(), function (req, res, next) {
   res.json(todos);
+});
+
+router.post('/todos', cors(), function (req, res, next) {
+  console.log(req.body);
+  res.json('ok');
 });
 
 
