@@ -27,7 +27,7 @@ import { Todo } from '../../interfaces/todo'
 })
 export class AboutUsComponent implements OnInit {
   pageTitle: string = "Notice List";
-  todos: Todo[];
+  todos: Todo[] = [];
   todoTitle: string;
   idForTodo: number;
   beforeEditCache: string;
@@ -44,22 +44,38 @@ export class AboutUsComponent implements OnInit {
     this.beforeEditCache = '';
     this.idForTodo = 4;
     this.todoTitle = '';
+    //this.setFakeTodo();
+    this.getTodoFromServer();
+  }
+
+  getTodoFromServer() {
     this.api.getTodos().subscribe(
-      (data) => {
-        this.todos = data;
+      (dataBackend) => {
+        this.todos = dataBackend;
       },
       (error) => { console.log(error) }
     )
-    this.todos = [
-      {
-        'id': 1,
-        'title': 'to do my home work',
-        'completed': false,
-        'editing': false
-      }
-
-    ]
   }
+
+  refreshOnServer() {
+    this.api.setTodos(this.todos).subscribe(
+      (data) => {
+        console.log(data + 'data from server');
+      },
+      (error) => { console.log(error) }
+    )
+  }
+
+  // setFakeTodo() {
+  //   this.todos = [
+  //     {
+  //       'id': 1,
+  //       'title': 'to do my home work',
+  //       'completed': false,
+  //       'editing': false
+  //     }
+  //   ]
+  // }
 
   addTodo(): void {
     if (this.todoTitle.trim().length < 5) {
@@ -74,20 +90,17 @@ export class AboutUsComponent implements OnInit {
     })
     this.todoTitle = "";
     this.idForTodo++;
-
-    this.api.setTodos(this.todos).subscribe(
-      (data) => {
-        console.log(data + 'data from server');
-      },
-      (error) => { console.log(error) }
-    )
+    this.refreshOnServer();
+    
   }
   editTodo(todo: Todo): void {
     this.beforeEditCache = todo.title;
     todo.editing = true;
+    this.refreshOnServer();
   }
   deleteTodo(id: number): void {
     this.todos = this.todos.filter(todo => todo.id !== id);
+    this.refreshOnServer();
   }
   doneEdit(todo: Todo): void {
     if (todo.title.trim().length === 0) {
@@ -132,4 +145,4 @@ export class AboutUsComponent implements OnInit {
 }
 
 
-
+//node module connect

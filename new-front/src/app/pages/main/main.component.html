@@ -9,3 +9,6 @@
 </div>
 <button (click)="toDo()">show</button>
 <app-test></app-test>
+<!-- *ngFor -->
+<!-- <app-card [( state )]="card_state"></app-card> -->
+<app-card [state]="card_state" (onChanged)="cardHandler($event)"></app-card>

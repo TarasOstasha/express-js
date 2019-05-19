@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var cors = require('cors')
+var cors = require('cors');
 const fs = require('fs');
 const myFs = require('../lib/fs');
 const myFilters = require('../lib/filters');
@@ -31,33 +31,46 @@ router.get('/', async function (req, res) {
 router.get('/about-us', function (req, res, next) {
   res.render('about-us', { title: 'hello world', list: ['a', 'b'] });
 });
-const todos = [
-      {
-        'id': 1,
-        'title': 'to do my home work',
-        'completed': false,
-        'editing': false
-      },
-      {
-        'id': 2,
-        'title': 'to do my exersises',
-        'completed': false,
-        'editing': false
-      },
-      {
-        'id': 3,
-        'title': 'to do my lundry',
-        'completed': false,
-        'editing': false
-      },
-    ]
+// const todos = [
+//       {
+//         'id': 1,
+//         'title': 'to do my home work',
+//         'completed': false,
+//         'editing': false
+//       },
+//       {
+//         'id': 2,
+//         'title': 'to do my exersises',
+//         'completed': false,
+//         'editing': false
+//       },
+//       {
+//         'id': 3,
+//         'title': 'to do my lundry',
+//         'completed': false,
+//         'editing': false
+//       },
+//     ]
 router.get('/todos', cors(), function (req, res, next) {
-  res.json(todos);
+  fs.readFile('task.json', 'UTF-8', (err, todosjSON)=> {
+    const todos = JSON.parse(todosjSON);
+    res.json(todos);
+  }) 
 });
 
 router.post('/todos', cors(), function (req, res, next) {
-  console.log(req.body);
+  console.log(req.a);
+  const task = req.body;
+  const taskJson = JSON.stringify(task);
+  fs.writeFile('task.json', taskJson, (err)=> {
+    if(err) {
+      console.log('error', err)
+    } else {
+      console.log('succsessfull');
+    }
+  });
   res.json('ok');
+  
 });
 
 

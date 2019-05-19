@@ -15,7 +15,7 @@ import { HeaderComponent } from './parts/header/header.component';
 import { FooterComponent } from './parts/footer/footer.component';
 import { from } from 'rxjs';
 import { ApiService } from './services/api.service';
-import { Todo } from './interfaces/todo'
+import { CardComponent } from './parts/card/card.component'
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { Todo } from './interfaces/todo'
     MainComponent,
     AboutUsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
