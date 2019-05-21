@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { state } from '@angular/animations';
 
 
 @Component({
@@ -10,15 +11,67 @@ export class MainComponent implements OnInit {
 
   constructor() { }
   // public state: any;
-  card_state = {
-    title: 'product',
-    img: 'assets/img/1.jpg',
-    text: 'description',
-    price: 22
+  cards = [
+    {
+      title: 'product',
+      img: 'assets/img/sws1.png', 
+      imgSport: 'assets/img/nike_Logo_White.png',
+      fashionLine: 'FAS',
+      model: 'Hartbee',
+      modelType: 'sport',
+      collection: 'Basket Ball Collection',
+      size: 'size',
+      typeOfSize: [7, 8, 9, 10, 11],
+      selectedSize: 8,
+      color: 'color',
+      colorProducts: ['orange', 'green', 'yellow'],
+      selectedColor: 'orange',
+      text: 'description',
+      price: 22
+    },
+    {
+      title: 'product',
+      img: 'assets/img/sws1.png', 
+      imgSport: 'assets/img/nike_Logo_White.png',
+      fashionLine: 'FAS',
+      model: 'Hartbee',
+      modelType: 'sport',
+      collection: 'Basket Ball Collection',
+      size: 'size',
+      typeOfSize: [7, 8, 9, 10, 11],
+      selectedSize: 8,
+      color: 'color',
+      colorProducts: ['orange', 'green', 'yellow'],
+      selectedColor: 'orange',
+      text: 'description',
+      price: 22
+    },
+    {
+      title: 'product',
+      img: 'assets/img/sws1.png', 
+      imgSport: 'assets/img/nike_Logo_White.png',
+      fashionLine: 'FAS',
+      model: 'Hartbee',
+      modelType: 'sport',
+      collection: 'Basket Ball Collection',
+      size: 'size',
+      typeOfSize: [7, 8, 9, 10, 11],
+      selectedSize: 8,
+      color: 'color',
+      colorProducts: ['orange', 'green', 'yellow'],
+      selectedColor: 'orange',
+      text: 'description',
+      price: 22
+    }
+  ];
+
+  state = {
+    basket: []
   }
   ngOnInit() {
   }
-  cardHandler(data) {
-    console.log('return data', data);
+  cardHandler(product) {
+    console.log('return data', product);
+    this.state.basket.push(product);
   }
 }

@@ -1,8 +1,239 @@
-.cart {
-    background: rgb(99, 53, 53);
-    width: 300px;
-    height: 400px;
+// .cart {
+//     background: rgb(99, 53, 53);
+//     width: 300px;
+//     height: 400px;
+// }
+// .stuff {
+//     width: 100%;
+// }
+
+
+
+
+  
+// Color variables (appears count calculates by raw css)
+@color0: #fa782e; // Appears 5 times
+@color1: #ffffff; // Appears 5 times
+@color2: #c82930; // Appears 4 times
+@color3: #11e95b; // Appears 3 times
+@color4: #f35e3d; // Appears 3 times
+
+
+
+* {
+	margin: 0;
+	outline: none;
+	padding: 0;
 }
-.stuff {
-    width: 100%;
+body {
+	background: #353535;
+	font-family: 'Roboto', sans-serif;
 }
+.container {
+	height: 500px;
+	margin: 30px auto;
+	width: 280px;
+}
+.card {
+	border-radius: 25px;
+	box-shadow: -11px 11px 1px rgba(0, 0, 0, 0.3);
+}
+.card-head {
+	background: -moz-linear-gradient(-45deg, @color0 8%, @color2 83%);
+	background: -webkit-linear-gradient(-45deg, @color0 8%, @color2 83%);
+	background: @color0;
+	background: linear-gradient(135deg, @color0 8%, @color2 83%);
+	border-radius: 25px 25px 0 0;
+	//filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='@color0', endColorstr='@color2', GradientType=1);
+	height: 252px;
+	position: relative;
+}
+.card-logo {
+	margin: 20px;
+	width: 55px;
+}
+.product-img {
+	left: 0;
+	margin-left: 50px;
+	margin-top: -16px;
+	position: absolute;
+}
+.product-detail {
+	color: @color1;
+	font-size: 11px;
+	padding: 0 20px;
+	h2 {
+		font-size: 18px;
+		font-weight: 500;
+		letter-spacing: 2px;
+		padding-bottom: 10px;
+		text-transform: uppercase;
+	}
+}
+.back-text {
+	display: inline-block;
+	font-size: 125px;
+	font-weight: 900;
+	margin-left: -7px;
+	margin-top: -12px;
+	opacity: 0.1;
+}
+.card-body {
+	background: @color1;
+	border-radius: 0 0 25px 25px;
+	height: 255px;
+}
+.product-title {
+	display: block;
+	font-size: 17px;
+	font-weight: 500;
+	letter-spacing: 1px;
+	padding: 20px 20px 5px 20px;
+	text-transform: uppercase;
+	b {
+		font-weight: 900;
+		letter-spacing: 0px;
+	}
+}
+.badge {
+	background: @color3;
+	border-radius: 4px;
+	color: @color1;
+	font-size: 10px;
+	font-weight: 300;
+	margin-left: 5px;
+	padding: 2px 5px;
+	position: relative;
+	top: -2px;
+}
+.product-caption {
+	display: block;
+	font-size: 10px;
+	font-weight: 400;
+	padding: 0 20px;
+	text-transform: uppercase;
+}
+.product-rating {
+	font-size: 11px;
+	padding: 0 20px;
+	i.grey {
+		color: #acacab;
+	}
+}
+.product-size {
+	h4 {
+		font-size: 11px;
+		margin-top: 15px;
+		padding-bottom: 10px;
+		padding: 0 21px;
+		text-transform: uppercase;
+	}
+	&:before {
+		clear: both;
+		content: '';
+		display: block;
+	}
+	&:after {
+		clear: both;
+		content: '';
+		display: block;
+	}
+}
+.ul-size {
+	margin-left: 15px;
+	li {
+		float: left;
+		list-style: none;
+		margin-right: 20px;
+		a {
+			border-radius: 100%;
+			color: #000000;
+			display: inline-block;
+			font-size: 11px;
+			height: 23px;
+			line-height: 23px;
+			text-align: center;
+			text-decoration: none;
+			width: 23px;
+		}
+		a.active {
+			background: @color4;
+			color: @color1;
+		}
+	}
+}
+.product-color {
+	h4 {
+		font-size: 11px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+		padding-bottom: 20px;
+		padding: 0 21px;
+		text-transform: uppercase;
+	}
+}
+.ul-color {
+	margin-left: 27px;
+	li {
+		float: left;
+		list-style: none;
+		margin-right: 20px;
+		a {
+			border-radius: 100%;
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+		}
+		a.orange {
+			background: @color4;
+		}
+		a.green {
+			background: @color3;
+		}
+		a.yellow {
+			background: #ffd414;
+		}
+		a.active {
+			&:after {
+				border-radius: 100%;
+				border: 1px solid @color4;
+				content: '';
+				display: inline-block;
+				height: 24px;
+				margin-left: -4px;
+				margin-top: -4px;
+				position: absolute;
+				width: 24px;
+			}
+		}
+	}
+}
+.product-price {
+	background: @color3;
+	border-radius: 7px;
+	box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
+	color: @color1;
+	display: inline-block;
+	font-size: 24px;
+	font-weight: 200;
+	margin-left: -5px;
+	margin-top: -13px;
+	padding: 7px 20px;
+	position: absolute;
+    text-align: center;
+    cursor: pointer;
+	b {
+		margin-left: 5px;
+	}
+}
+.yt {
+	background: rgba(0,0,0,0.1);
+	padding:7px 10px 3px 10px;
+	position: fixed;
+	right: 5px;
+	top: 5px;
+	&:hover {
+		background: rgba(0,0,0,0.2);
+	}
+}
+  

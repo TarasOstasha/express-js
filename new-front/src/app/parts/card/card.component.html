@@ -1,8 +1,84 @@
-<div class="cart">
+<!-- <div class="cart">
     <h2>{{ state.title }}</h2>
-    <img class="stuff" [src]= state.img>
+    <img class="stuff" [src]=state.img>
     <p>{{ state.text }}</p>
     <span>{{ state.price }}</span>
     <br>
     <button (click)=buyProduct()>Buy</button>
+</div> -->
+
+
+<div class="container">
+        <div class="card">
+            <div class="card-head">
+                <img [src]=state.imgSport alt="logo" class="card-logo">
+                <img [src]=state.img alt="Shoe" class="product-img">
+                <div class="product-detail">
+                    <h2>{{ state.title }}</h2> 
+                </div>
+                <span class="back-text">
+                    {{ state.fashionLine }}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="product-desc">
+                    <span class="product-title">
+                    {{ state.model }}<b>{{state.sport }}</b>
+                        <span class="badge">
+                            New
+                        </span>
+                    </span>
+                    <span class="product-caption">
+                        {{state.collection }}
+                    </span>
+                    <span class="product-rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star grey"></i>
+                    </span>
+                </div>
+                <div class="product-properties">
+                    <span class="product-size">
+                        <h4>{{ state.size }}</h4>
+                        <ul class="ul-size">
+
+                            <!-- How to display size? -->
+                            <!-- how to add class active -->
+                            <li *ngFor="let size of state.typeOfSize">
+                                <a 
+                                    (click)="onSelectSize(size)" href="javascript:void(0)" 
+                                    [class.active]="size == state.selectedSize"
+                                >
+                                {{ size }}</a>
+                            </li>   
+                            <!-- <li><a href="#">{{ state.typeOfSize[1] }}</a></li>
+                            <li><a href="#">{{ state.typeOfSize[2] }}</a></li>
+                            <li><a href="#" class="active">{{ state.typeOfSize[3] }}</a></li>
+                            <li><a href="#">{{ state.typeOfSize[4] }}</a></li> -->
+                        </ul>
+                    </span>
+                    <span class="product-color">
+                        <h4>{{ state.color }}</h4>
+                        <ul class="ul-color">
+                            <!-- How to display color? -->
+                            <!-- how to add class active -->
+                            <li *ngFor="let color of state.colorProducts">
+                                <a [style.background]="color"
+                                    (click)="state.selectedColor = color;"
+                                    [class.active]="color == state.selectedColor"
+                                >
+                                </a>
+                            </li>
+                            <!-- <li><a href="#" class="green"></a></li>
+                            <li><a href="#" class="yellow"></a></li> -->
+                        </ul>
+                    </span>
+                    <button (click)=buyProduct() class="product-price">
+                        USD<b>{{ state.price }}</b>
+                    </button>
+                </div>
+            </div>
+        </div>
 </div>

@@ -21,6 +21,12 @@ export class CardComponent implements OnInit {
   }
 
   buyProduct() {
-    this.onChanged.emit('hello from cart');
+    this.onChanged.emit(this.state);
+  }
+
+
+  public onSelectSize(size): void {
+    this.state.selectedSize = size;
+    console.log(size);
   }
 }
