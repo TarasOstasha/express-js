@@ -7,8 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'new-front';
+  appState: any = {}
   ngOnInit(){
   }
+
 
 }
 

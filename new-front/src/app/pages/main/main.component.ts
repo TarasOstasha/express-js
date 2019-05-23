@@ -11,6 +11,7 @@ export class MainComponent implements OnInit {
 
   constructor() { }
   // public state: any;
+  
   cards = [
     {
       title: 'product',
@@ -64,14 +65,20 @@ export class MainComponent implements OnInit {
       price: 22
     }
   ];
-
+ 
   state = {
     basket: []
   }
+  header_state: any = {
+    basket: this.state.basket
+  }
   ngOnInit() {
   }
+ 
   cardHandler(product) {
     console.log('return data', product);
     this.state.basket.push(product);
+    this.header_state = this.state
   }
+  
 }

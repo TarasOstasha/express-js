@@ -15,7 +15,8 @@ import { HeaderComponent } from './parts/header/header.component';
 import { FooterComponent } from './parts/footer/footer.component';
 import { from } from 'rxjs';
 import { ApiService } from './services/api.service';
-import { CardComponent } from './parts/card/card.component'
+import { CardComponent } from './parts/card/card.component';
+import { CarouselComponent } from './parts/carousel/carousel.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CardComponent } from './parts/card/card.component'
     AboutUsComponent,
     HeaderComponent,
     FooterComponent,
-    CardComponent
+    CardComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { CardComponent } from './parts/card/card.component'
     FormsModule,
     AutofocusModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

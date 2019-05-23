@@ -1,3 +1,4 @@
+<app-header [state]="header_state"></app-header>
 <div class="jumbotron">
   <h1 class="display-3">Hello, world!</h1>
   <span class="basket">
@@ -7,11 +8,15 @@
   <hr class="my-4">
   <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    <a class="btn btn-primary btn-lg" href="#" role="button"></a>
+    
   </p>
 </div>
 <button (click)="toDo()">show</button>
 <app-test></app-test>
+<app-carousel></app-carousel>
 <!-- *ngFor -->
 <!-- <app-card [( state )]="card_state"></app-card> -->
+<h2 class="h2Title">New Collection</h2>
 <app-card *ngFor="let card of cards" [state]="card" (onChanged)="cardHandler($event)"></app-card>
+<app-footer></app-footer>
