@@ -12,8 +12,7 @@ export class CarouselComponent implements OnInit {
   test: string = 'test taras'
   imgSlides: any = [
     {
-      img: 'assets/img/sws1.png',
-      test2:'test'
+      img: 'assets/img/image.jpg',
     },
     {
       img:'assets/img/2015-Nike-Mag-02_hd_1600.jpg'
@@ -23,13 +22,20 @@ export class CarouselComponent implements OnInit {
    }
   ]
   slidePointer = 0;
-  endSlider = this.imgSlides.length - 1;
+  endSlider = this.imgSlides.length - 1; // останній елемент в масиві
+  startSlider = this.imgSlides[0]; // 1 елемент в масиві
+
   moveLeft() {
     if(this.slidePointer == 0) this.slidePointer = this.endSlider
     else this.slidePointer--;
+    
   }
   moveRight() {
-    this.slidePointer++;
+    if(this.slidePointer == this.endSlider) { //тут оприділяю що в нас наш каунтер дійшов до кінця масиву
+      this.slidePointer = 0;
+     // this.endSlider = this.startSlider // тут перезаписую що коли кінець масиву присвоїти 0 номер масиву
+      //this.slidePointer = 0 // обнуляю каунтер 
+    }else this.slidePointer ++;  // тут каунтер збільшую (але тут некоректно працює тому що )
   }
   ngOnInit() {
   }

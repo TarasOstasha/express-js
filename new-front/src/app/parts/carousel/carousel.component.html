@@ -1,6 +1,6 @@
 <div id="container">
   <h3>Slide</h3>
-  <ul>
+  <ul class="slider-list">
     <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn">
       <div class="slide-wrapper" *ngIf="i==slidePointer">
           <img [src]=slide.img>
