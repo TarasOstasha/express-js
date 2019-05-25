@@ -32,10 +32,8 @@ export class CarouselComponent implements OnInit {
   }
   moveRight() {
     if(this.slidePointer == this.endSlider) { //тут оприділяю що в нас наш каунтер дійшов до кінця масиву
-      this.slidePointer = 0;
-     // this.endSlider = this.startSlider // тут перезаписую що коли кінець масиву присвоїти 0 номер масиву
-      //this.slidePointer = 0 // обнуляю каунтер 
-    }else this.slidePointer ++;  // тут каунтер збільшую (але тут некоректно працює тому що )
+      this.slidePointer = 0; // обнуляю каунтер 
+    }else this.slidePointer ++;  // тут каунтер збільшую 
   }
   ngOnInit() {
   }

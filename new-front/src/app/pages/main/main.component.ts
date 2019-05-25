@@ -28,7 +28,8 @@ export class MainComponent implements OnInit {
       colorProducts: ['orange', 'green', 'yellow'],
       selectedColor: 'orange',
       text: 'description',
-      price: 22
+      price: 22,
+      stars: 5
     },
     {
       title: 'product',
@@ -45,7 +46,8 @@ export class MainComponent implements OnInit {
       colorProducts: ['orange', 'green', 'yellow'],
       selectedColor: 'orange',
       text: 'description',
-      price: 22
+      price: 22,
+      stars: 4
     },
     {
       title: 'product',
@@ -62,7 +64,8 @@ export class MainComponent implements OnInit {
       colorProducts: ['orange', 'green', 'yellow'],
       selectedColor: 'orange',
       text: 'description',
-      price: 22
+      price: 22,
+      stars: 3.7
     }
   ];
  

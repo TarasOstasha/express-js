@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AutofocusModule } from 'angular-autofocus-fix';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +17,8 @@ import { FooterComponent } from './parts/footer/footer.component';
 import { from } from 'rxjs';
 import { ApiService } from './services/api.service';
 import { CardComponent } from './parts/card/card.component';
-import { CarouselComponent } from './parts/carousel/carousel.component'
+import { CarouselComponent } from './parts/carousel/carousel.component';
+import { RatingComponent } from './parts/rating/rating.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { CarouselComponent } from './parts/carousel/carousel.component'
     HeaderComponent,
     FooterComponent,
     CardComponent,
-    CarouselComponent
+    CarouselComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { CarouselComponent } from './parts/carousel/carousel.component'
     AutofocusModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    AngularFontAwesomeModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
