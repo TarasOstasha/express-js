@@ -1,0 +1,25 @@
+<div class="basket-popup">
+    <span class="close"(click)="onClose()">X</span>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Products</th>
+            <th scope="col">Price</th>
+            <th scope="col">Controlls</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of state.products">
+            <th scope="row">1</th>
+            <td>{{ product.title }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+                <button>buy</button>
+                <button type="button" class="btn btn-danger" (click)="deleteProduct(product.id)">remove</button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    {{ state }}
+</div>

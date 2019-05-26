@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a (click)="test()" class="navbar-brand">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -25,10 +25,11 @@
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
-  <div class="bascket">
+  <div class="bascket" (click)="onShowBasket()" >
     <img src="" alt="">
       <span class="count fa fa-shopping-basket">
-        <span>{{ state.basket.length }}</span>
+        <span>{{ state.basket.products.length }}</span>
       </span>
   </div>
+  <app-basket-popup *ngIf="showBasked" [state]="state.basket"  (onChanged)="basketHandler($event)"></app-basket-popup>
 </nav>

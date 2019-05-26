@@ -18,7 +18,8 @@ import { from } from 'rxjs';
 import { ApiService } from './services/api.service';
 import { CardComponent } from './parts/card/card.component';
 import { CarouselComponent } from './parts/carousel/carousel.component';
-import { RatingComponent } from './parts/rating/rating.component'
+import { RatingComponent } from './parts/rating/rating.component';
+import { BasketPopupComponent } from './parts/basket-popup/basket-popup.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RatingComponent } from './parts/rating/rating.component'
     FooterComponent,
     CardComponent,
     CarouselComponent,
-    RatingComponent
+    RatingComponent,
+    BasketPopupComponent
   ],
   imports: [
     BrowserModule,

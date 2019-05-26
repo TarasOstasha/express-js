@@ -15,6 +15,7 @@ export class MainComponent implements OnInit {
   cards = [
     {
       title: 'product',
+      id: 1,
       img: 'assets/img/sws1.png', 
       imgSport: 'assets/img/nike_Logo_White.png',
       fashionLine: 'FAS',
@@ -28,11 +29,15 @@ export class MainComponent implements OnInit {
       colorProducts: ['orange', 'green', 'yellow'],
       selectedColor: 'orange',
       text: 'description',
-      price: 22,
-      stars: 5
+      price: 1,
+      stars: {
+        public: 50,
+        privite: 35.5
+      }
     },
     {
       title: 'product',
+      id: 2,
       img: 'assets/img/sws1.png', 
       imgSport: 'assets/img/nike_Logo_White.png',
       fashionLine: 'FAS',
@@ -46,11 +51,15 @@ export class MainComponent implements OnInit {
       colorProducts: ['orange', 'green', 'yellow'],
       selectedColor: 'orange',
       text: 'description',
-      price: 22,
-      stars: 4
+      price: 2,
+      stars: {
+        public: 60,
+        privite: 75.5
+      }
     },
     {
       title: 'product',
+      id: 3,
       img: 'assets/img/sws1.png', 
       imgSport: 'assets/img/nike_Logo_White.png',
       fashionLine: 'FAS',
@@ -64,24 +73,29 @@ export class MainComponent implements OnInit {
       colorProducts: ['orange', 'green', 'yellow'],
       selectedColor: 'orange',
       text: 'description',
-      price: 22,
-      stars: 3.7
+      price: 3,
+      stars: {
+        public: 20,
+        privite: 99.5
+      }
     }
   ];
  
   state = {
-    basket: []
+    //basket: []
   }
   header_state: any = {
-    basket: this.state.basket
+    basket: {
+      products: []
+    }
   }
   ngOnInit() {
   }
  
   cardHandler(product) {
     console.log('return data', product);
-    this.state.basket.push(product);
-    this.header_state = this.state
+    this.header_state.basket.products.push(product); //додати продукт в корзину
+  //  this.header_state.basket = this.state.basket; // передати 
   }
   
 }

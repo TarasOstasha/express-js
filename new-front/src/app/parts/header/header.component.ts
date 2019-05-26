@@ -12,5 +12,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+  showBasked: boolean = false;
+  onShowBasket(): void {
+    this.showBasked = true;
+  }
+  basketHandler(basketState) {
+    this.showBasked = basketState.open;
+  }
 
 }
