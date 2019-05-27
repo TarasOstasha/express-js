@@ -13,7 +13,8 @@ export class BasketPopupComponent implements OnInit {
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
   @Input() state: any
   ngOnInit() {
-
+    // test
+    console.log('Hello from basket :)')
   }
 
   onClose() {
