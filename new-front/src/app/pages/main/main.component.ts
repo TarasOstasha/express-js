@@ -82,20 +82,25 @@ export class MainComponent implements OnInit {
   ];
  
   state = {
-    //basket: []
-  }
-  header_state: any = {
-    basket: {
-      products: []
+    header: {
+      basket: {
+        open: true,
+        products: []
+      }
     }
   }
+
   ngOnInit() {
   }
  
   cardHandler(product) {
     console.log('return data', product);
-    this.header_state.basket.products.push(product); //додати продукт в корзину
+    this.state.header.basket.products.push(product); //додати продукт в корзину
   //  this.header_state.basket = this.state.basket; // передати 
+  }
+
+  headerHandler(headerState) {
+    this.state.header = headerState;
   }
   
 }

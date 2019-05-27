@@ -6,17 +6,19 @@
             <th scope="col">#</th>
             <th scope="col">Products</th>
             <th scope="col">Price</th>
+            <th scope="col">Amount</th>
             <th scope="col">Controlls</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of state.products">
+          <tr *ngFor="let uProduct of preparedProducts()">
             <th scope="row">1</th>
-            <td>{{ product.title }}</td>
-            <td>{{ product.price }}</td>
+            <td>{{ uProduct.product.title }}</td>
+            <td>{{ uProduct.product.price }}</td>
+            <td>{{ uProduct.amount }}</td>
             <td>
                 <button>buy</button>
-                <button type="button" class="btn btn-danger" (click)="deleteProduct(product.id)">remove</button>
+                <button type="button" class="btn btn-danger" (click)="deleteProduct(uProduct.product.id)">remove</button>
             </td>
           </tr>
         </tbody>

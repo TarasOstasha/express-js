@@ -31,5 +31,5 @@
         <span>{{ state.basket.products.length }}</span>
       </span>
   </div>
-  <app-basket-popup *ngIf="showBasked" [state]="state.basket"  (onChanged)="basketHandler($event)"></app-basket-popup>
+  <app-basket-popup *ngIf="state.basket.open" [state]="state.basket"  (onChanged)="basketHandler($event)"></app-basket-popup>
 </nav>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 
 @Component({
@@ -8,16 +8,22 @@ import { Input } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Input() state: any
+  @Output() onChanged = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() {
   }
-  showBasked: boolean = false;
+  //showBasked: boolean = false;
   onShowBasket(): void {
-    this.showBasked = true;
+    this.state.basket.open = true;
   }
   basketHandler(basketState) {
-    this.showBasked = basketState.open;
+    //this.showBasked = basketState.open;
+    this.state.basket = basketState;
+    this.stateBack();
+  }
+  stateBack() {
+    this.onChanged.emit(this.state);
   }
 
 }
