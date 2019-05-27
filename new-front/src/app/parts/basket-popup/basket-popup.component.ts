@@ -15,9 +15,14 @@ export class BasketPopupComponent implements OnInit {
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
   @Input() state: any
   ngOnInit() {
+<<<<<<< HEAD
     setInterval(()=> {
       console.log(this.preparedProducts());
     },1000)
+=======
+    // test
+    console.log('Hello from basket :)')
+>>>>>>> e947f66ecd61185d9523e55cd081903362803b13
   }
 
   onClose() {
