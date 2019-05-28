@@ -8,20 +8,43 @@
             <th scope="col">Price</th>
             <th scope="col">Amount</th>
             <th scope="col">Controlls</th>
+            
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let uProduct of preparedProducts()">
             <th scope="row">1</th>
             <td>{{ uProduct.product.title }}</td>
-            <td>{{ uProduct.product.price }}</td>
-            <td>{{ uProduct.amount }}</td>
+            <td>{{ subTotalPrice(uProduct) }}</td>
             <td>
-                <button>buy</button>
-                <button type="button" class="btn btn-danger" (click)="deleteProduct(uProduct.product.id)">remove</button>
+                <button class="btn btn-info"(click)="minus(uProduct.product)">-</button>
+                {{ uProduct.amount }}
+                <button class="btn btn-info"(click)="plus(uProduct.product)">+</button>
+                <!-- <input type="text" [(ngModel)]="uProduct.amount"> set edit value --> 
             </td>
+            <td>
+                <!-- <button class="btn btn-success">Add</button> -->
+                <button type="button" class="btn btn-danger" (click)="deleteProduct(uProduct.product.id)">remove</button>
+                <!-- <button class="btn btn-warning" (click)="editAmount()">edit</button> -->
+            </td>
+            
+           
           </tr>
         </tbody>
     </table>
-    {{ state }}
+    <table class="table-striped pull-right checkout-table">
+      <thead>
+        <tr>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>
+              <span>Total Price: {{ totalPrice() }}</span><br>
+              <span>Quantity: {{ state.products.length }}</span><br><br>
+              <button class="btn btn-success">Proceed to checkout</button>
+            </td>
+        </tr>
+    </table>
 </div>
