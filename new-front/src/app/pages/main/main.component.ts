@@ -84,7 +84,7 @@ export class MainComponent implements OnInit {
   state = {
     header: {
       basket: {
-        open: true,
+        open: false,
         products: []
       }
     }

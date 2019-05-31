@@ -43,7 +43,7 @@
             <td>
               <span>Total Price: {{ totalPrice() }}</span><br>
               <span>Quantity: {{ state.products.length }}</span><br><br>
-              <button class="btn btn-success">Proceed to checkout</button>
+              <button class="btn btn-success" [attr.disabled]="state.products.length > 0 ? false : true">Proceed to checkout</button>
             </td>
         </tr>
     </table>
