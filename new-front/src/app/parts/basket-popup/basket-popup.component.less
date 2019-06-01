@@ -6,11 +6,14 @@
     background: white;
     min-height: 200px;
     width: calc(100% - 10em);
+    display: flex;
+    flex-direction: column;
 }
 .close {
     color: red;
     font-size: 30px;
     cursor: pointer;
+    text-align: right;
 }
 .checkout-table {
     margin: 20px;
@@ -20,4 +23,10 @@
     span {
         color: black
     }
+    text-align: right;
+}
+.checkout {
+    height: 0;
+    overflow: hidden;
+    transition: 5s;
 }

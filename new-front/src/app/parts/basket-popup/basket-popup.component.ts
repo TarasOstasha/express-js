@@ -12,8 +12,10 @@ export class BasketPopupComponent implements OnInit {
 
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
   @Input() state: any
-  ngOnInit() { }
-
+  ngOnInit() { 
+    this.state.showPaymant = false;
+  }
+  disabled: boolean = false;
   onClose() {
     this.state.open = false;
     //this.stateBack()  

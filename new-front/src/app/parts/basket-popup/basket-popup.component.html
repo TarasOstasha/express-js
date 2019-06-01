@@ -43,8 +43,12 @@
             <td>
               <span>Total Price: {{ totalPrice() }}</span><br>
               <span>Quantity: {{ state.products.length }}</span><br><br>
-              <button class="btn btn-success" [attr.disabled]="state.products.length > 0 ? false : true">Proceed to checkout</button>
+              <button (click)="state.showPaymant=true" class="btn btn-success" [disabled]="state.products.length > 0 ? false : true">Proceed to checkout</button>
             </td>
         </tr>
     </table>
+    <div class="checkout" [style.height]="state.showPaymant ? '300px' : 0">
+        Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, corrupti?
+      </div>
 </div>
+
