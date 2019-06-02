@@ -91,15 +91,29 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    
+    this.getBasketFromStorage()
     
   }
  
   cardHandler(product) {
     console.log('return data', product);
     this.state.header.basket.products.push(product); //додати продукт в корзину
+    this.refreshBasketStorage()
   //  this.header_state.basket = this.state.basket; // передати 
+  }
+
+  refreshBasketStorage() {
+    const json = JSON.stringify(this.state.header.basket.products);
+    localStorage.setItem('basket', json);
+  }
+
+  getBasketFromStorage() {
+    const json = localStorage.getItem('basket');
+    if(json == null) {
+      this.state.header.basket.products = [];
+    } else {
+      this.state.header.basket.products = JSON.parse(json);
+    }
   }
 
   headerHandler(headerState) {
