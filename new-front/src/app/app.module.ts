@@ -15,13 +15,15 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { HeaderComponent } from './parts/header/header.component';
 import { FooterComponent } from './parts/footer/footer.component';
 import { from } from 'rxjs';
-import { ApiService } from './services/api.service';
 import { CardComponent } from './parts/card/card.component';
 import { CarouselComponent } from './parts/carousel/carousel.component';
 import { RatingComponent } from './parts/rating/rating.component';
 import { BasketPopupComponent } from './parts/basket-popup/basket-popup.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { P404Component } from './pages/p404/p404.component'
+// services
+import { ApiService } from './services/api.service';
+import { StorageService } from './services/storage.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { P404Component } from './pages/p404/p404.component'
     AngularFontAwesomeModule,
     ReactiveFormsModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

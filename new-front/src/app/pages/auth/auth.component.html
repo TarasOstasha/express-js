@@ -1,13 +1,8 @@
 <app-header [state]="state.header" (onChanged)="headerHandler($event)"></app-header>
 <div class="container">
   <div class="row" style="margin-top:20px">
-    <div 
-      class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" 
-      [ngSwitch]="state.checked_form">
-      <form 
-        class="form-signIn" 
-        *ngSwitchCase=" 'login' "
-        [formGroup]="userForm"  >
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" [ngSwitch]="state.checked_form">
+      <form class="form-signIn" *ngSwitchCase=" 'login' " [formGroup]="userForm">
         <fieldset>
           <h2>Please Sign In</h2>
           <hr class="colorgraph">
@@ -15,26 +10,28 @@
 
           <!-- form-group email -->
           <div class="form-group">
-              <label for="firstName">Email</label>
-              <input class="form-control" name="firstName" id="email" type="email" formControlName="email">
+            <input class="form-control" name="firstName" id="email" type="email" formControlName="email"
+              placeholder="email">
 
-              <div *ngIf="!userForm.controls.email.valid && !userForm.controls.email.pristine" class="alert alert-danger">
-              
-                <span *ngIf="userForm.controls.email.errors.custom">
-                    Incorrect email
-                </span>
+            <div *ngIf="!userForm.controls.email.valid && !userForm.controls.email.pristine" class="alert alert-danger">
 
-              </div>
+              <span *ngIf="userForm.controls.email.errors.custom">
+                Incorrect email
+              </span>
 
             </div>
 
+          </div>
+
           <!-- form-group password -->
           <div class="form-group">
-            <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" formControlName="password">
-            <div *ngIf="!userForm.controls.password.valid && userForm.controls.password.dirty" class="alert alert-danger">
-                <span *ngIf="userForm.controls.password.errors.custom">
-                    Incorrect password
-                </span>
+            <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password"
+              formControlName="password">
+            <div *ngIf="!userForm.controls.password.valid && userForm.controls.password.dirty"
+              class="alert alert-danger">
+              <span *ngIf="userForm.controls.password.errors.custom">
+                Incorrect password
+              </span>
             </div>
           </div>
 
@@ -55,103 +52,90 @@
           </div>
         </fieldset>
       </form>
+      <!-- signUp-Form -->
+      <form class="form-signUp" *ngSwitchCase=" 'register' " [formGroup]="userForm">
+        <fieldset>
+          <h2>Please Sign Up</h2>
+          <hr class="colorgraph">
 
-      <form 
-        class="form-signUp" 
-        *ngSwitchCase=" 'register' "
-        [formGroup]="userForm">
-          <fieldset>
-            <h2>Please Sign Up</h2>
-            <hr class="colorgraph">
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input class="form-control" name="firstName" id="firstName" type="text" formControlName="firstName">
-                <div *ngIf="!userForm.controls.firstName.valid && !userForm.controls.firstName.pristine" class="alert alert-danger">
-                  <span *ngIf="userForm.controls.firstName.errors.required">
-                    First Name is required
-                  </span>
-                  <span *ngIf="userForm.controls.firstName.errors.minlength">
-                      please put more text
-                    </span>
-                </div>
+          <!-- first name -->
+          <div class="form-group">
+            <input class="form-control" name="firstName" id="firstName" type="text" formControlName="firstName"
+              placeholder="First Name">
+            <div *ngIf="!userForm.controls.firstName.valid && !userForm.controls.firstName.pristine"
+              class="alert alert-danger">
+              <span *ngIf="userForm.controls.firstName.errors.required">
+                First Name is required
+              </span>
+              <span *ngIf="userForm.controls.firstName.errors.minlength">
+                please put more text
+              </span>
             </div>
+          </div>
+
+          <!-- last name -->
+          <div class="form-group">
+            <input class="form-control" name="lastName" id="lastName" type="text" formControlName="lastName"
+              placeholder="Last Name">
+            <div *ngIf="!userForm.controls.lastName.valid && !userForm.controls.lastName.pristine"
+              class="alert alert-danger">
+              <span *ngIf="userForm.controls.lastName.errors.required">
+                Last Name is required
+              </span>
+            </div>
+          </div>
+
+          <!-- email -->
+          <div class="form-group">
+            <input class="form-control" name="firstName" id="email" type="email" formControlName="email"
+              placeholder="Email Address">
+            <div *ngIf="!userForm.controls.email.valid && !userForm.controls.email.pristine" class="alert alert-danger">
+              <span *ngIf="userForm.controls.email.errors.custom">
+                Incorrect email
+              </span>
+            </div>
+          </div>
+
+          <fieldset formGroupName="passwords">
+            <!-- password -->
             <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input class="form-control" name="lastName" id="lastName" type="text" formControlName="lastName">
-                <div *ngIf="!userForm.controls.lastName.valid && !userForm.controls.lastName.pristine" class="alert alert-danger">
-                  <span *ngIf="userForm.controls.lastName.errors.required">
-                    Last Name is required
-                  </span>
-                </div>
+              <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password"
+                formControlName="pwd">
+
+                <!-- <app-validator-message [field]="secondFormGroup.get('passwords').get('pwd')"></app-validator-message> -->
+
+              <div *ngIf="!userForm.controls.passwords.controls.pwd.valid && userForm.controls.passwords.controls.pwd.dirty"
+                class="alert alert-danger">
+                <span *ngIf="userForm.controls.passwords.controls.pwd.errors.custom">
+                  Incorrect password
+                </span>
               </div>
-            <div class="form-group">
-              <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address">
             </div>
+
+            <!-- confirm password -->
             <div class="form-group">
-              <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password">
-            </div>
-            <span class="button-checkbox">
-              <button type="button" class="btn" data-color="info">Remember Me</button>
-              <input type="checkbox" name="remember_me" id="remember_me" checked="checked" class="hidden">
-              <a href="" class="btn btn-link pull-right">Forgot Password?</a>
-            </span>
-            <hr class="colorgraph">
-            <div class="row">
-              <div class="col-xs-6 col-sm-6 col-md-6">
-                <a class="btn btn-link pull-center">Login</a>
-              </div>
-              <div class="col-xs-6 col-sm-6 col-md-6">
-                <a class="btn btn-lg btn-primary btn-block">Sign Up</a>
+              <input type="password" name="password" id="password-confirm" class="form-control input-lg"
+                placeholder="Confirm Password" formControlName="confirm">
+              <div *ngIf="!userForm.controls.passwords.controls.confirm.valid && userForm.controls.passwords.controls.confirm.dirty"
+                class="alert alert-danger">
+                <span *ngIf="userForm.controls.passwords.controls.confirm.errors.custom">
+                  Incorrect password
+                </span>
               </div>
             </div>
           </fieldset>
-        </form>
+          <hr class="colorgraph">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <a class="btn btn-lg btn-success btn-block" (click)="state.checked_form = 'login' ">Sign In</a>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <a class="btn btn-lg btn-primary btn-block">Sign Up</a>
+            </div>
+          </div>
+        </fieldset>
+      </form>
     </div>
   </div>
 </div>
-
-
-<!-- <div class="container">
-  <form [formGroup]="userForm" (ngSubmit)="logFormValue()">
-  <div class="form-group">
-    <label for="firstName">First Name</label>
-    <input class="form-control" name="firstName" id="firstName" type="text" formControlName="firstName">
-    <div *ngIf="!userForm.controls.firstName.valid && !userForm.controls.firstName.pristine" class="alert alert-danger">
-      <span *ngIf="userForm.controls.firstName.errors.required">
-        First Name is required
-      </span>
-      <span *ngIf="userForm.controls.firstName.errors.minlength">
-          please put more text
-        </span>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="lastName">Last Name</label>
-    <input class="form-control" name="lastName" id="lastName" type="text" formControlName="lastName">
-    <div *ngIf="!userForm.controls.lastName.valid && !userForm.controls.lastName.pristine" class="alert alert-danger">
-      <span *ngIf="userForm.controls.lastName.errors.required">
-        Last Name is required
-      </span>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="role">User Role</label>
-    <select class="form-control" name="role" id="role" formControlName="role">
-      <option *ngFor="let userRole of roles" [ngValue]="userRole">{{userRole}}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="notes">Additional Notes</label>
-    <textarea class="form-control" name="notes" id="notes" formControlName="notes" rows="6" placeholder="Add additional notes here."></textarea>
-  </div>
-  <button type="submit" class="btn btn-default" [disabled]="!userForm.valid">Submit</button>
-</form>
-</div>
-
-
-<div class="d-flex w-100 pt-4 justify-content-between">
-  <button class="btn pull-right btn-primary" (click)="logForm()">Log Form</button>
-  <button class="btn pull-right btn-warning" (click)="disableForm()">Disable Form</button>
-  <button class="btn pull-right btn-info" (click)="enableForm()">Enable Form</button>
-</div> -->
-  <app-footer></app-footer>
+<app-footer></app-footer>

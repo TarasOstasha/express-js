@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { state } from '@angular/animations';
+import { StorageService } from '../../services/storage.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { state } from '@angular/animations';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private storage: StorageService) { }
   // public state: any;
   
   cards = [
@@ -91,8 +92,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getBasketFromStorage()
-    
+    this.state.header.basket.products = this.storage.getBasketFromStorage()
   }
  
   cardHandler(product) {
@@ -107,14 +107,7 @@ export class MainComponent implements OnInit {
     localStorage.setItem('basket', json);
   }
 
-  getBasketFromStorage() {
-    const json = localStorage.getItem('basket');
-    if(json == null) {
-      this.state.header.basket.products = [];
-    } else {
-      this.state.header.basket.products = JSON.parse(json);
-    }
-  }
+
 
   headerHandler(headerState) {
     this.state.header = headerState;

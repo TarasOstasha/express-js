@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, FormArray  } from '@angular/forms';
 import { User } from '../../interfaces/user';
-
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-auth',
@@ -21,15 +21,28 @@ export class AuthComponent implements OnInit {
     lastName: '',
     email:'',
     password: '',
+    password1: '',
+    password2: '',
     role: 'Guest',
     notes: null
   };
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder, private storage: StorageService ) { 
+    const pwdValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
+
+
     this.userForm = this.formBuilder.group({
       'email': [this.user.email, [Validators.required, Validators.minLength(5),this.mailValidator()]],
       'firstName': [this.user.firstName, [Validators.required, Validators.minLength(3)]],
       'lastName': [this.user.lastName, [Validators.required]],
       'password': [this.user.password, [Validators.required,this.passwordConfirm()]],
+      //'password1': [this.user.password, [Validators.required,Validators.minLength(3),this.passwordsAreEqual()]],
+
+      'passwords': this.formBuilder.group({
+        'pwd': ['', pwdValidators],
+        'confirm': ['', pwdValidators]
+      }, { validator: this.passwordsAreEqual() }),
+
+      //'password2': [this.user.password, [Validators.required,Validators.minLength(3),this.passwordsAreEqual()]],
       'role': [this.user.role, [Validators.required]],
       'notes': [this.user.notes, [Validators.maxLength(45)]]
     });
@@ -49,7 +62,7 @@ export class AuthComponent implements OnInit {
   //check password
   private passwordConfirm(): ValidatorFn {
     return (group: FormGroup): { [key: string]: any } => {
-      if ( (group.dirty || group.touched) ) {
+      if ( !(group.dirty || group.touched) ) {
         return {custom: 'Something going wrong'} 
       } else {
         return null;
@@ -61,6 +74,7 @@ export class AuthComponent implements OnInit {
   //check password equal
   private passwordsAreEqual(): ValidatorFn {
     return (group: FormGroup): { [key: string]: any } => {
+      console.log(group.get('password'))
       if (!(group.dirty || group.touched) || group.get('pwd').value === group.get('confirm').value) {
         return null;
       }
@@ -80,6 +94,7 @@ export class AuthComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.state.header.basket.products = this.storage.getBasketFromStorage()
     setInterval(()=>{
       console.log(this.userForm)
     }, 1000)
