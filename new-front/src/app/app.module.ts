@@ -9,7 +9,6 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app-boot/app.component';
-import { TestComponent } from './parts/test/test.component';
 import { MainComponent } from './pages/main/main.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { HeaderComponent } from './parts/header/header.component';
@@ -28,7 +27,6 @@ import { StorageService } from './services/storage.service';
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
     MainComponent,
     AboutUsComponent,
     HeaderComponent,

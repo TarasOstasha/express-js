@@ -1,12 +1,12 @@
-<div id="container">
-  <h3>Slide</h3>
-  <ul class="slider-list">
-    <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn">
-      <div class="slide-wrapper" *ngIf="i==slidePointer">
+<div class="slider-wrapper" id="container">
+  <ul class="slider-list" >
+    <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn" >
+      <div class="slide-wrapper" *ngIf="i==slidePointer" [@slideInOut1]>
           <img [src]=slide.img>
       </div>
     </li> 
   </ul>
-  <button (click)=moveLeft()>left</button> 
-  <button (click)=moveRight()>right</button> 
+  <button class="left-slide-btn" (click)=moveLeft()><i class="fa fa-chevron-circle-left slide-icon"></i></button> 
+  <button class="right-slide-btn" (click)=moveRight()><i class="fa fa-chevron-circle-right slide-icon"></i></button> 
 </div>
+

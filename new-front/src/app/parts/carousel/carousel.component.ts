@@ -1,9 +1,23 @@
 import { OnInit, Component } from '@angular/core';
+import { trigger, transition, style, animate, keyframes,query,stagger } from '@angular/animations';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.less']
+  styleUrls: ['./carousel.component.less'],
+  animations: [
+    trigger('slideInOut1', [
+      transition(':enter', [
+        style({opacity: '0'}),
+        animate('500ms linear', style({opacity: '1'}))
+      ]),
+      transition(':leave', [
+        animate('500ms linear', style({opacity: '0'}))
+      ])
+    ])
+  ]
+  
 })
 export class CarouselComponent implements OnInit {
   constructor() {
@@ -30,12 +44,22 @@ export class CarouselComponent implements OnInit {
     else this.slidePointer--;
     
   }
+
   moveRight() {
+    this.startSlider = 'test';
     if(this.slidePointer == this.endSlider) { //тут оприділяю що в нас наш каунтер дійшов до кінця масиву
       this.slidePointer = 0; // обнуляю каунтер 
+      
     }else this.slidePointer ++;  // тут каунтер збільшую 
   }
+
+
   ngOnInit() {
+    //slider 24
+    setInterval(()=>{
+      this.moveRight() 
+    }, 5000)
   }
    
 }
+
