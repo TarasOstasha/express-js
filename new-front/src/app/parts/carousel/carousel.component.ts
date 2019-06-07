@@ -56,10 +56,7 @@ export class CarouselComponent implements OnInit {
 
   ngOnInit() {
     //slider 24
-    setInterval(()=>{
-      this.moveRight() 
-    }, 5000)
+    setInterval( this.moveRight, 5000)
   }
-   
 }
 

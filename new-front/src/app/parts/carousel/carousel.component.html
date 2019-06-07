@@ -1,9 +1,9 @@
 <div class="slider-wrapper" id="container">
-  <ul class="slider-list" >
+  <ul class="slider-list">
     <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn" >
-      <div class="slide-wrapper" *ngIf="i==slidePointer" [@slideInOut1]>
-          <img [src]=slide.img>
-      </div>
+      <!-- <div class="slide-wrapper" *ngIf="i==slidePointer" [@slideInOut1]> -->
+          <img class="slide-wrapper" [src]=slide.img *ngIf="i==slidePointer" [@slideInOut1]>
+      <!-- </div> -->
     </li> 
   </ul>
   <button class="left-slide-btn" (click)=moveLeft()><i class="fa fa-chevron-circle-left slide-icon"></i></button> 
