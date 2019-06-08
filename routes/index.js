@@ -5,6 +5,7 @@ const fs = require('fs');
 const myFs = require('../lib/fs');
 const myFilters = require('../lib/filters');
 const myRequest = require('../lib/req-func');
+var passport = require('passport');
 
 
 
@@ -28,7 +29,7 @@ router.get('/', async function (req, res) {
 
 
 // Get aboute us
-router.get('/about-us', function (req, res, next) {
+router.get('/about-us', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res, next) {
   res.render('about-us', { title: 'hello world', list: ['a', 'b'] });
 });
 // const todos = [
