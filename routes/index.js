@@ -6,6 +6,7 @@ const myFs = require('../lib/fs');
 const myFilters = require('../lib/filters');
 const myRequest = require('../lib/req-func');
 var passport = require('passport');
+const User = require('../models/user')
 
 
 
@@ -27,9 +28,9 @@ router.get('/', async function (req, res) {
 
 });
 
-
+//ensureAuthenticated
 // Get aboute us
-router.get('/about-us', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res, next) {
+router.get('/about-us', function (req, res, next) {
   res.render('about-us', { title: 'hello world', list: ['a', 'b'] });
 });
 // const todos = [
@@ -71,10 +72,48 @@ router.post('/todos', cors(), function (req, res, next) {
     }
   });
   res.json('ok');
-  
 });
 
+router.post('/login', cors(), passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
+  console.log('req body', req.body );
+  console.log('req user', req.user);
+  //res.json('ok');
+  res.redirect('/test');
+});
+router.get('/test', cors(), (req, res)=>{
+  console.log(req.user);
+  res.json(req.user);
+})
 
+router.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('profile', { user: req.user });
+  });
+
+router.get('/login', (req, res)=>{
+  res.render('login');
+})
+
+
+router.post('/register', cors(), (req, res)=> {
+  console.log('!***', req.body);
+  const user = new User({ 
+   username: req.body.email, 
+   firstName: req.body.firstName,
+   lastName: req.body.lastName,
+   email: req.body.email, 
+   password: req.body.password 
+  });
+ user.save()
+  .then(() => {
+    console.log('meow')
+    res.json({ ok: true })
+  })
+  .catch(()=>{
+    res.json({ ok: false })
+  })
+})
 
 module.exports = router;
 

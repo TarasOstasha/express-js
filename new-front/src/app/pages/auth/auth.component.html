@@ -10,7 +10,7 @@
 
           <!-- form-group email -->
           <div class="form-group">
-            <input class="form-control" name="firstName" id="email" type="email" formControlName="email"
+            <input class="form-control" name="email" id="email" type="email" formControlName="email"
               placeholder="email">
 
             <div *ngIf="!userForm.controls.email.valid && !userForm.controls.email.pristine" class="alert alert-danger">
@@ -43,7 +43,7 @@
           <hr class="colorgraph">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <a class="btn btn-lg btn-success btn-block" (click)="test()">Sign In</a>
+              <a class="btn btn-lg btn-success btn-block" (click)="signIn()">Sign In</a>
               <!-- <input c type="submit" class="btn btn-lg btn-success btn-block" value="Sign In"> -->
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -130,7 +130,7 @@
               <a class="btn btn-lg btn-success btn-block" (click)="state.checked_form = 'login' ">Sign In</a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <a class="btn btn-lg btn-primary btn-block">Sign Up</a>
+              <a class="btn btn-lg btn-primary btn-block" (click)="register()">Sign Up</a>
             </div>
           </div>
         </fieldset>

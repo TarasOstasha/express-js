@@ -15,6 +15,13 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
+  login(userData) {
+    return this.http.post('http://localhost:3000/login', userData, httpOptions)
+  }
+
+  register(userData) {
+    return this.http.post('http://localhost:3000/register', userData, httpOptions)
+  }
 
   getTodos() {
     return this.http.get<Todo[]>('http://localhost:3000/todos')
@@ -26,4 +33,3 @@ export class ApiService {
 }
 
 
-//

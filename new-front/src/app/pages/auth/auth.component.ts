@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, FormArray  } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { StorageService } from '../../services/storage.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-auth',
@@ -26,7 +27,10 @@ export class AuthComponent implements OnInit {
     role: 'Guest',
     notes: null
   };
-  constructor(private formBuilder: FormBuilder, private storage: StorageService ) { 
+  constructor(
+      private formBuilder: FormBuilder, 
+      private storage: StorageService,
+      private api:  ApiService ) { 
     const pwdValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
 
 
@@ -95,15 +99,40 @@ export class AuthComponent implements OnInit {
   
   ngOnInit() {
     this.state.header.basket.products = this.storage.getBasketFromStorage()
-    setInterval(()=>{
-      console.log(this.userForm)
-    }, 1000)
+    //setInterval(()=>{
+      //console.log(this.userForm)
+    //}, 1000)
   }
-  test() {
-    console.log(this.userForm);
+  signIn() {
+    const userData = {
+      email: this.userForm.controls.email.value,
+      password: this.userForm.controls.password.value
+    }
+    this.api.login(userData).subscribe(
+      (fromServer) => {
+        console.log('result', fromServer);
+      },
+      (error) => { console.log(error) }
+    )
   }
+  register() {
+    console.log('register clicked!');
+    const userData = {
+      firstName:this.userForm.controls.firstName.value,
+      lastName:this.userForm.controls.lastName.value,
+      email: this.userForm.controls.email.value,
+      password: this.userForm.controls.password.value
+    }
+    this.api.register(userData).subscribe(
+      (fromServer) => {
+        console.log('result', fromServer);
+      },
+      (error) => { console.log(error) }
+    )
+   }
   logForm(){
     console.log(this.userForm);
+    
    }
  
    logFormValue(){
@@ -117,5 +146,7 @@ export class AuthComponent implements OnInit {
    enableForm(){
      this.userForm.enable();
    }
+
+
 
 }

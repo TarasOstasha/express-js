@@ -1,13 +1,25 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var sassMiddleware = require('node-sass-middleware');
-var cors = require('cors');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const sassMiddleware = require('node-sass-middleware');
+const cors = require('cors');
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+const db = require('./db');
+const mongoose = require('mongoose');
+const User = require('./models/user')
 
+// connect to the database
+mongoose.connect('mongodb+srv://user:1111@cluster0-olmgj.mongodb.net/test?retryWrites=true&w=majority')
+
+// connect to the database
+//mongoose.connect('mongodb://localhost/' + process.env.DBNAME)
+
+// const Cat = mongoose.model('Cat', { name: String });
+// const kitty = new Cat({ name: 'Zildjian' });
+// kitty.save().then(() => console.log('meow'));
 
 
 var indexRouter = require('./routes/index');
