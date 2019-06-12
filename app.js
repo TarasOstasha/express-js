@@ -42,14 +42,7 @@ app.use((req, res, next)=> {
   req.a = 'Hello';
   next();
 });
-app.use(session({ 
-  secret: 'my_precious',
-  name: 'cookie_name',
-  //store: sessionStore, // connect-mongo session store
-  proxy: true,
-  resave: true,
-  saveUninitialized: true
-}))
+
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -63,11 +56,21 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'new-front/dist/new-front')));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
+app.use(session({ 
+  secret: 'my_precious',
+  name: 'cookie_name',
+  //store: sessionStore, // connect-mongo session store
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}))
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 
 app.use('/', indexRouter);

@@ -65,15 +65,13 @@ passport.deserializeUser(function (id, done) {
 
 
 //
-// LocalStrategy
+// LocalStrategys
 //
 passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 }, function (username, password, done) {
-    log('úsername is', username)
   User.findOne({ username: username }, function (err, user) { // request to data base
-    log('!!!',username, user)
     return err
       ? done(err)
       : user

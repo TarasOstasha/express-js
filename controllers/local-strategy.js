@@ -11,16 +11,8 @@ module.exports.ctr = {
   // При удачной авторизации данные пользователя будут храниться в req.user
 
   login: (req, res, next) => {
-    log('login: ', req.body)
-    setTimeout(() => {
-      log('****')
-      log('****')
-      log('****')
-      log('req.user', req.isAuthenticated(), req.user)
-    }, 2000)
-
     //req.body.password = hash(req.body.password)
-    req.body.email = req.body.username;
+    //req.body.email = req.body.username;
     passport.authenticate('local',
       (err, user, info) => {
           console.log(err, user, info)
