@@ -74,20 +74,31 @@ router.post('/todos', cors(), function (req, res, next) {
   res.json('ok');
 });
 
-router.post('/login', cors(), passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
-  console.log('req body', req.body );
-  console.log('req user', req.user);
-  //res.json('ok');
-  res.redirect('/test');
-});
-router.get('/test', cors(), (req, res)=>{
-  console.log(req.user);
-  res.json(req.user);
-})
+// router.post('/login', cors(), passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
+//   console.log('req body', req.body );
+//   console.log('req user', req.user);
+//   //res.json('ok');
+//   res.redirect('/test');
+// });
+// router.get('/test', cors(), (req, res)=>{
+//   console.log(req.user);
+//   res.json(req.user);
+// })
+///////////////////////////////////////////////////////
+//                                                   //
+//                   local strategy                  //
+//                                                   //
+///////////////////////////////////////////////////////
+
+// Auth system
+const lS = require('../controllers/local-strategy').ctr;
+router.post('/login', lS.login); // actual
+router.get('/logout', lS.logout);
 
 router.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
+  //require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
+    console.log('isAuth',req.isAuthenticated())
     res.render('profile', { user: req.user });
   });
 

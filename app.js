@@ -10,6 +10,7 @@ const Strategy = require('passport-local').Strategy;
 const db = require('./db');
 const mongoose = require('mongoose');
 const User = require('./models/user')
+const session = require('express-session');
 
 // connect to the database
 mongoose.connect('mongodb+srv://user:1111@cluster0-olmgj.mongodb.net/test?retryWrites=true&w=majority')
@@ -29,27 +30,7 @@ var app = express();
 
 
 
-// Configure the local strategy for use by Passport.
-passport.use(new Strategy(
-  function(username, password, cb) {
-    db.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
-    });
-  }));
-  // Configure Passport authenticated session persistence.
-  passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
-  });
-  
-  passport.deserializeUser(function(id, cb) {
-    db.users.findById(id, function (err, user) {
-      if (err) { return cb(err); }
-      cb(null, user);
-    });
-  });
+require('./_app/passport.js'); //... passport
 
 
 
@@ -61,6 +42,14 @@ app.use((req, res, next)=> {
   req.a = 'Hello';
   next();
 });
+app.use(session({ 
+  secret: 'my_precious',
+  name: 'cookie_name',
+  //store: sessionStore, // connect-mongo session store
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}))
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
