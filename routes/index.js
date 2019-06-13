@@ -54,18 +54,18 @@ router.get('/about-us', function (req, res, next) {
 //       },
 //     ]
 router.get('/todos', cors(), function (req, res, next) {
-  fs.readFile('task.json', 'UTF-8', (err, todosjSON)=> {
+  fs.readFile('task.json', 'UTF-8', (err, todosjSON) => {
     const todos = JSON.parse(todosjSON);
     res.json(todos);
-  }) 
+  })
 });
 
 router.post('/todos', cors(), function (req, res, next) {
   console.log(req.a);
   const task = req.body;
   const taskJson = JSON.stringify(task);
-  fs.writeFile('task.json', taskJson, (err)=> {
-    if(err) {
+  fs.writeFile('task.json', taskJson, (err) => {
+    if (err) {
       console.log('error', err)
     } else {
       console.log('succsessfull');
@@ -97,34 +97,43 @@ router.get('/logout', lS.logout);
 
 router.get('/profile',
   //require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    console.log('isAuth',req.isAuthenticated())
+  function (req, res) {
+    console.log('isAuth', req.isAuthenticated())
     res.render('profile', { user: req.user });
   });
 
-router.get('/login', (req, res)=>{
+router.get('/login', (req, res) => {
   res.render('login');
 })
 
 
-router.post('/register', cors(), (req, res)=> {
-  console.log('!***', req.body);
-  const user = new User({ 
-   username: req.body.email, 
-   firstName: req.body.firstName,
-   lastName: req.body.lastName,
-   email: req.body.email, 
-   password: req.body.password 
-  });
- user.save()
-  .then(() => {
-    console.log('meow')
+router.post('/register', cors(), async (req, res) => {
+  try {
+    const username = req.body.email;
+    const user = await User.findOne({ username: username }); // request to data base
+    if (user) return res.json({ ok: false, message: 'this user already exist' });
+    
+    const new_user = new User({
+      username: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password
+    });
+    new_user.save()
     res.json({ ok: true })
-  })
-  .catch(()=>{
-    res.json({ ok: false })
-  })
+  } catch (error) {
+    console.log(error)
+    res.json({ ok: false, message: error })
+  }
 })
+
+router.get('/*', cors(), (req, res)=>{
+  res.redirect('/index.html');
+})
+
+
+
 
 module.exports = router;
 
