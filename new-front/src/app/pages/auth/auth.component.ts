@@ -94,7 +94,10 @@ export class AuthComponent implements OnInit {
         products: []
       }
     },
-    checked_form :'login'
+    checked_form :'login',
+    error: {
+      dublicate_user: false
+    }
   }
   
   ngOnInit() {
@@ -126,7 +129,7 @@ export class AuthComponent implements OnInit {
     this.api.register(userData).subscribe(
       (fromServer: any) => {
         if(fromServer.ok == false ) {
-          alert(fromServer.message)
+          this.state.error.dublicate_user = true
         }
         console.log('result', fromServer);
       },

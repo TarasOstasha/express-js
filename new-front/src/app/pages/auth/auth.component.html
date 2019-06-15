@@ -96,6 +96,11 @@
             </div>
           </div>
 
+          <div *ngIf="state.error.dublicate_user" class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> User is alrerady exist. Please enter another email or Sign In
+          </div>
+
           <fieldset formGroupName="passwords">
             <!-- password -->
             <div class="form-group">
