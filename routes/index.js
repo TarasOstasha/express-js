@@ -138,3 +138,7 @@ router.get('/*', cors(), (req, res)=>{
 module.exports = router;
 
 
+//show error mesages(this user is exist) in angular
+//login with facebook
+//remind how to transfer server from angular to express
+

@@ -124,7 +124,10 @@ export class AuthComponent implements OnInit {
       password: this.userForm.controls.password.value
     }
     this.api.register(userData).subscribe(
-      (fromServer) => {
+      (fromServer: any) => {
+        if(fromServer.ok == false ) {
+          alert(fromServer.message)
+        }
         console.log('result', fromServer);
       },
       (error) => { console.log(error) }
