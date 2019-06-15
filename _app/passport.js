@@ -4,7 +4,7 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-// var FacebookStrategy = require('passport-facebook').Strategy;
+//var FacebookStrategy = require('passport-facebook').Strategy;
 // var TwitterStrategy = require('passport-twitter').Strategy;
 // var GithubStrategy = require('passport-github2').Strategy;
 // var GoogleStrategy = require('passport-google-oauth2').Strategy;
@@ -14,35 +14,35 @@ let log = console.log
 
 
 var config = {
-  facebook: {
-    clientID: '', //process.env.FB_ID,  // '455174914848353',
-    clientSecret: '', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
-    callbackURL: ''//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
-    // callbackURL: `${process.env.HOST}:3600/auth/facebook/callback`
-  },
-  twitter: {
-    consumerKey: 'get_your_own',
-    consumerSecret: 'get_your_own',
-    callbackURL: "http://127.0.0.1:3600/auth/twitter/callback"
-  },
-  github: {
-    clientID: 'get_your_own',
-    clientSecret: 'get_your_own',
-    callbackURL: "http://127.0.0.1:3600/auth/github/callback"
-  },
-  google: {
-    clientID: '', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
-    clientSecret: '', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
-    // callbackURL: 'http://127.0.0.1:3600/auth/google/callback'
-    callbackURL: ''//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
-    // callbackURL: `${process.env.HOST}:3600/auth/google/callback`
+    facebook: {
+        clientID: '', //process.env.FB_ID,  // '455174914848353',
+        clientSecret: '', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
+        callbackURL: ''//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
+        // callbackURL: `${process.env.HOST}:3600/auth/facebook/callback`
+    },
+    twitter: {
+        consumerKey: 'get_your_own',
+        consumerSecret: 'get_your_own',
+        callbackURL: "http://127.0.0.1:3600/auth/twitter/callback"
+    },
+    github: {
+        clientID: 'get_your_own',
+        clientSecret: 'get_your_own',
+        callbackURL: "http://127.0.0.1:3600/auth/github/callback"
+    },
+    google: {
+        clientID: '', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
+        clientSecret: '', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
+        // callbackURL: 'http://127.0.0.1:3600/auth/google/callback'
+        callbackURL: ''//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
+        // callbackURL: `${process.env.HOST}:3600/auth/google/callback`
 
-  },
-  instagram: {
-    clientID: 'get_your_own',
-    clientSecret: 'get_your_own',
-    callbackURL: 'http://127.0.0.1:3600/auth/instagram/callback'
-  }
+    },
+    instagram: {
+        clientID: 'get_your_own',
+        clientSecret: 'get_your_own',
+        callbackURL: 'http://127.0.0.1:3600/auth/instagram/callback'
+    }
 };
 
 
@@ -50,16 +50,16 @@ var config = {
 // serialize and deserialize
 //
 passport.serializeUser(function (user, done) {
-  log('serializeUser: ' + user._id);
-  done(null, user._id);
+    log('serializeUser: ' + user._id);
+    done(null, user._id);
 })
 
 passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    log(user)
-    if (!err) done(null, user)
-    else done(err, null)
-  });
+    User.findById(id, function (err, user) {
+        log(user)
+        if (!err) done(null, user)
+        else done(err, null)
+    });
 })
 
 
@@ -68,69 +68,69 @@ passport.deserializeUser(function (id, done) {
 // LocalStrategys
 //
 passport.use(new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
+    usernameField: 'email',
+    passwordField: 'password'
 }, function (username, password, done) {
-  User.findOne({ username: username }, function (err, user) { // request to data base
-    return err
-      ? done(err)
-      : user
-        ? password === user.password
-          ? done(null, user)
-          : done(null, false, { message: 'Incorrect password.' })
-        : done(null, false, { message: 'Incorrect username.' });
-  });
+    User.findOne({ username: username }, function (err, user) { // request to data base
+        return err
+            ? done(err)
+            : user
+                ? password === user.password
+                    ? done(null, user)
+                    : done(null, false, { message: 'Incorrect password.' })
+                : done(null, false, { message: 'Incorrect username.' });
+    });
 }));
 
 
 // module.exports = passport.use(new FacebookStrategy({
-//   clientID: config.facebook.clientID,
-//   clientSecret: config.facebook.clientSecret,
-//   callbackURL: config.facebook.callbackURL
+//     clientID: config.facebook.clientID,
+//     clientSecret: config.facebook.clientSecret,
+//     callbackURL: config.facebook.callbackURL
 // },
-//   function (accessToken, refreshToken, profile, done) {
-//     // logs
-//     log('facebook profile: '.info, profile)
-//     // var-s
-//     let email = ''
-//     let id = profile.id
-//     let username = profile.displayName
+//     function (accessToken, refreshToken, profile, done) {
+//         // logs
+//         log('facebook profile: '.info, profile)
+//         // var-s
+//         let email = ''
+//         let id = profile.id
+//         let username = profile.displayName
 
-//     User.findOne({ 'facebook.id': profile.id }, function (err, user) {
+//         User.findOne({ 'facebook.id': profile.id }, function (err, user) {
 
-//       if (err) log(err)
+//             if (err) log(err)
 
-//       if (!err && user !== null) done(null, user)
-//       else {
+//             if (!err && user !== null) done(null, user)
+//             else {
 
-//         if (profile.email) email = profile.email
+//                 if (profile.email) email = profile.email
 
-//         user = new User()
+//                 user = new User()
 
-//         user.facebook.id = id,
-//           user.facebook.username = username,
-//           user.facebook.email = email,
-//           user.username = username,
-//           user.email = email,
-//           user.created = Date.now()
-//         user.wallets =
-//           {
-//             USD: {
-//               balance: 0
+//                 user.facebook.id = id,
+//                     user.facebook.username = username,
+//                     user.facebook.email = email,
+//                     user.username = username,
+//                     user.email = email,
+//                     user.created = Date.now()
+//                 user.wallets =
+//                     {
+//                         USD: {
+//                             balance: 0
+//                         }
+//                     }
+
+//                 user.save(function (err) {
+//                     if (err) log(err)
+//                     else {
+//                         log("saving user ...")
+//                         done(null, user)
+//                     }
+//                 })
+
 //             }
-//           }
-
-//         user.save(function (err) {
-//           if (err) log(err)
-//           else {
-//             log("saving user ...")
-//             done(null, user)
-//           }
 //         })
-
-//       }
-//     })
-//   }
+//     }
 // ))
 
 // passport.use(new TwitterStrategy({

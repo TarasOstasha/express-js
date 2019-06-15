@@ -74,6 +74,20 @@ router.post('/todos', cors(), function (req, res, next) {
   res.json('ok');
 });
 
+
+// facebook
+// 
+router.get('/api/auth/facebook', passport.authenticate('facebook'), (req, res) => { });
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => res.redirect('/'));
+
+
+
+
+
+
+
+
+
 // router.post('/login', cors(), passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
 //   console.log('req body', req.body );
 //   console.log('req user', req.user);
@@ -91,7 +105,7 @@ router.post('/todos', cors(), function (req, res, next) {
 ///////////////////////////////////////////////////////
 
 // Auth system
-const lS = require('../controllers/local-strategy').ctr;
+const lS = require('../controllers/local-strategy').ctr; // !!!!!!!!!
 router.post('/login', lS.login); // actual
 router.get('/logout', lS.logout);
 
@@ -104,6 +118,7 @@ router.get('/profile',
 
 router.get('/login', (req, res) => {
   res.render('login');
+ 
 })
 
 

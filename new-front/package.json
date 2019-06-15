@@ -25,6 +25,7 @@
     "font-awesome": "^4.7.0",
     "ng2-carouselamos": "^3.2.0",
     "node-cmd": "^3.0.0",
+    "passport-facebook": "^3.0.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "web-animations-js": "^2.3.1",

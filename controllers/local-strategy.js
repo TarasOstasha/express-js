@@ -22,19 +22,19 @@ module.exports.ctr = {
             ? req.logIn(user, (err) => {
               return err
                 ? next(err)
-                : res.json('ok');
+                : res.json({ok: true, user});
             })
             : res.json('no');
       }
     )(req, res, next);
   },
-
-
-
-
   logout: (req, res) => {
     req.logout();
     res.redirect('/');
   }
-
 }
+
+// function okResponse_user(user) {
+//     res.json({ok: true, user})
+// }
+

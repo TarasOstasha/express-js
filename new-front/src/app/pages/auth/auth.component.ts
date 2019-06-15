@@ -89,6 +89,10 @@ export class AuthComponent implements OnInit {
   }
   state = {
     header: {
+      isLogged: false,
+      user: {
+        name: ''
+      },
       basket: {
         open: false,
         products: []
@@ -112,8 +116,12 @@ export class AuthComponent implements OnInit {
       password: this.userForm.controls.password.value
     }
     this.api.login(userData).subscribe(
-      (fromServer) => {
+      (fromServer: any) => {
         console.log('result', fromServer);
+        if(fromServer.ok) {
+          this.state.header.isLogged = true;
+          this.state.header.user.name = fromServer.user.firstName;
+        }
       },
       (error) => { console.log(error) }
     )
