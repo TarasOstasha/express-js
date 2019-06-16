@@ -4,7 +4,7 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-//var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 // var TwitterStrategy = require('passport-twitter').Strategy;
 // var GithubStrategy = require('passport-github2').Strategy;
 // var GoogleStrategy = require('passport-google-oauth2').Strategy;
@@ -15,9 +15,9 @@ let log = console.log
 
 var config = {
     facebook: {
-        clientID: '', //process.env.FB_ID,  // '455174914848353',
-        clientSecret: '', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
-        callbackURL: ''//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
+        clientID: '606330336522613', //process.env.FB_ID,  // '455174914848353',
+        clientSecret: '2ac98be6f4897dee347d645f9e537b74', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
+        callbackURL: 'http://localhost:3000/auth/facebook/callback'//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
         // callbackURL: `${process.env.HOST}:3600/auth/facebook/callback`
     },
     twitter: {
@@ -83,55 +83,55 @@ passport.use(new LocalStrategy({
 }));
 
 
-// module.exports = passport.use(new FacebookStrategy({
-//     clientID: config.facebook.clientID,
-//     clientSecret: config.facebook.clientSecret,
-//     callbackURL: config.facebook.callbackURL
-// },
-//     function (accessToken, refreshToken, profile, done) {
-//         // logs
-//         log('facebook profile: '.info, profile)
-//         // var-s
-//         let email = ''
-//         let id = profile.id
-//         let username = profile.displayName
+module.exports = passport.use(new FacebookStrategy({
+    clientID: config.facebook.clientID,
+    clientSecret: config.facebook.clientSecret,
+    callbackURL: config.facebook.callbackURL
+},
+    function (accessToken, refreshToken, profile, done) {
+        // logs
+        log('facebook profile: '.info, profile)
+        // var-s
+        let email = ''
+        let id = profile.id
+        let username = profile.displayName
 
-//         User.findOne({ 'facebook.id': profile.id }, function (err, user) {
+        User.findOne({ 'facebook.id': profile.id }, function (err, user) {
 
-//             if (err) log(err)
+            if (err) log(err)
 
-//             if (!err && user !== null) done(null, user)
-//             else {
+            if (!err && user !== null) done(null, user)
+            else {
 
-//                 if (profile.email) email = profile.email
+                if (profile.email) email = profile.email
 
-//                 user = new User()
+                user = new User()
 
-//                 user.facebook.id = id,
-//                     user.facebook.username = username,
-//                     user.facebook.email = email,
-//                     user.username = username,
-//                     user.email = email,
-//                     user.created = Date.now()
-//                 user.wallets =
-//                     {
-//                         USD: {
-//                             balance: 0
-//                         }
-//                     }
+                user.facebook.id = id,
+                    user.facebook.username = username,
+                    user.facebook.email = email,
+                    user.username = username,
+                    user.email = email,
+                    user.created = Date.now()
+                user.wallets =
+                    {
+                        USD: {
+                            balance: 0
+                        }
+                    }
 
-//                 user.save(function (err) {
-//                     if (err) log(err)
-//                     else {
-//                         log("saving user ...")
-//                         done(null, user)
-//                     }
-//                 })
+                user.save(function (err) {
+                    if (err) log(err)
+                    else {
+                        log("saving user ...")
+                        done(null, user)
+                    }
+                })
 
-//             }
-//         })
-//     }
-// ))
+            }
+        })
+    }
+))
 
 // passport.use(new TwitterStrategy({
 //   consumerKey: config.twitter.consumerKey,
