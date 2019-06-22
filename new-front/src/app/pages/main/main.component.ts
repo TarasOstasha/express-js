@@ -106,8 +106,9 @@ export class MainComponent implements OnInit {
     this.state.header.basket.products = this.storage.getBasketFromStorage()
 
     this.session.getUser()
-      .then((user) => {
-        console.log('main->user:', user)
+      .then((dataFromLocalStorage: any) => {
+        this.state.header.isLogged = true;
+        this.state.header.user.name = dataFromLocalStorage.user.firstName || dataFromLocalStorage.user.username;
       })
       .catch((err)=>{
         console.log(err);
@@ -118,8 +119,7 @@ export class MainComponent implements OnInit {
     //   if (!fromServer.user) {
     //     fromServer = JSON.parse('{"user":{"wallets":{"USD":{"balance":0}},"facebook":{"id":"2712492348826122","username":"Taras Ostasha","email":""},"purchases_made":[],"saved_numbers":[],"linked_users":[],"_id":"5d063f55ba40b4ee185dea94","last_login":"2019-06-16T13:08:37.543Z","last_appeal":"2019-06-16T13:08:37.543Z","username":"Taras Ostasha","email":"","created":"2019-06-16T13:08:37.546Z","__v":0}}')
     //     console.log(fromServer);
-    //     this.state.header.isLogged = true;
-    //     this.state.header.user.name = fromServer.user.firstName || fromServer.user.username;
+       
     //   }
     // }, (err) => {
     //   console.log(err);

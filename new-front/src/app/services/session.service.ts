@@ -7,7 +7,7 @@ import { ApiService } from './api.service';
 export class SessionService {
 
   constructor(private api: ApiService) { }
-
+  fake = JSON.parse('{"user":{"wallets":{"USD":{"balance":0}},"facebook":{"id":"2712492348826122","username":"Taras Ostasha","email":""},"purchases_made":[],"saved_numbers":[],"linked_users":[],"_id":"5d063f55ba40b4ee185dea94","last_login":"2019-06-16T13:08:37.543Z","last_appeal":"2019-06-16T13:08:37.543Z","username":"Taras Ostasha","email":"","created":"2019-06-16T13:08:37.546Z","__v":0}}')
   //3 set user
   setUser(fromServer) {
     if(fromServer.user) localStorage.setItem('user', JSON.stringify(fromServer.user));
@@ -16,21 +16,13 @@ export class SessionService {
   getUser() {
     return new Promise((res, rej) => {
       const json = localStorage.getItem('user');
-      console.log(json, undefined, typeof(json));
-      // undefined
       if(json == 'undefined') this.removeUser() ; 
-      // ...
-      if (json && json !== 'undefined') {
-        console.log('json', json)
-        res(JSON.parse(json));
-      }
+      if (json && json !== 'undefined') res(JSON.parse(json));
 
       this.api.getSessionInfo().subscribe((fromServer: any) => {
         if (fromServer.user) { this.setUser(fromServer); res(fromServer)} //if session
-        else { //if no session
-            res('fakeUser or message about you are not logged')
-        }
-        
+        //else res('no session') //if no session
+        else res(this.fake);
       },
         (err) => rej(err));
     })
