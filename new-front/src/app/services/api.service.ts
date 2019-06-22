@@ -30,6 +30,10 @@ export class ApiService {
   setTodos(todos) {
     return this.http.post<Todo[]>('http://localhost:3000/todos', todos, httpOptions)
   }
+
+  getSessionInfo() {
+    return this.http.get('http://localhost:3000/session-info');
+  }
 }
 
 

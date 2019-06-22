@@ -4,7 +4,7 @@ const passport = require('passport');
 //var hash = require('../controllers/crypto/hash');
 
 
-module.exports.ctr = {
+module.exports = {
 
   // Здесь мы проверяем, передаем данные о пользователе в функцию верификации, котоую мы определили выше. 
   // Вообще, passport.authenticate() вызывает метод req.logIn автоматически, здесь же я указал это явно. Это добавляет удобство в отладке. Например, можно вставить сюда console.log(), чтобы посмотреть, что происходит...

@@ -105,7 +105,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', { failur
 ///////////////////////////////////////////////////////
 
 // Auth system
-const lS = require('../controllers/local-strategy').ctr; // !!!!!!!!!
+const lS = require('../controllers/local-strategy'); // !!!!!!!!!
 router.post('/login', lS.login); // actual
 router.get('/logout', lS.logout);
 
@@ -141,11 +141,17 @@ router.post('/register', cors(), async (req, res) => {
     console.log(error)
     res.json({ ok: false, message: error })
   }
-})
+});
 
+router.get('/session-info', cors(), (req, res)=>{
+  res.json({user: req.user})
+});
+
+
+//redirect all get request to index.html. Must be the last!
 router.get('/*', cors(), (req, res)=>{
   res.redirect('/index.html');
-})
+});
 
 
 

@@ -30,6 +30,7 @@
           <li id="signIn">
             <a *ngIf="!state.isLogged" routerLink="/auth">Sign In</a>
             <a *ngIf="state.isLogged" routerLink="/auth">{{ state.user.name }}</a>
+            <a *ngIf="state.isLogged" href="/logout">Sign Out</a>
           </li>
       </ul>
   </div>
