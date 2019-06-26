@@ -20,16 +20,16 @@
         <a class="nav-link" routerLink="/about-us">About</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <div class="form-inline my-2 my-lg-0">
+      <input [(ngModel)]="state.search_input" (ngModelChange)="search()" class="form-control mr-sm-2" type="text" placeholder="Search">
+      <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> -->
+    </div>
   </div>
   <div class="user-registration header-registration">
       <ul class="wrapper-button-registration">
           <li id="signIn">
             <a *ngIf="!state.isLogged" routerLink="/auth">Sign In</a>
-            <a *ngIf="state.isLogged" routerLink="/auth">{{ state.user.name }}</a>
+            <a class="link-ptofile" *ngIf="state.isLogged"(click)="showProfile()">{{ state.user.name }}</a>&nbsp;&nbsp;
             <a *ngIf="state.isLogged" href="/logout">Sign Out</a>
           </li>
       </ul>

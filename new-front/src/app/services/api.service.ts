@@ -34,6 +34,13 @@ export class ApiService {
   getSessionInfo() {
     return this.http.get('http://localhost:3000/session-info');
   }
+  getProducts() {
+    return this.http.get('http://localhost:3000/products');
+  }
+
+  search() {
+    return this.http.get('http://localhost:3000/search');
+  }
 }
 
 

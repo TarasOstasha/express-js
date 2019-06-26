@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import { Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() state: any
   @Output() onChanged = new EventEmitter<any>();
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
   }
@@ -24,6 +25,22 @@ export class HeaderComponent implements OnInit {
   }
   stateBack() {
     this.onChanged.emit(this.state);
+  }
+  showProfile() {
+    alert('see profile preferenses');
+  }
+  search() {
+    console.log(this.state.search_input);
+    //filter by rxjs
+    //request to server
+    //method in servise api
+    this.api.search().subscribe((fromServer:any)=>{
+      //this.product = fromServer;
+      console.log(fromServer);
+    },
+    (err)=>{
+      console.log(err);
+    })
   }
 
 }

@@ -1,5 +1,5 @@
 <app-header [state]="state.header" (onChanged)="headerHandler($event)"></app-header>
 <app-carousel></app-carousel>
 <h2 class="h2Title">New Collection</h2>
-<app-card *ngFor="let card of cards" [state]="card" (onChanged)="cardHandler($event)"></app-card>
+<app-card *ngFor="let card of state.products" [state]="card" (onChanged)="cardHandler($event)"></app-card>
 <app-footer></app-footer>

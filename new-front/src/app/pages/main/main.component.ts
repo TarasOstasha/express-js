@@ -20,74 +20,74 @@ export class MainComponent implements OnInit {
 
   // public state: any;
 
-  cards = [
-    {
-      title: 'product',
-      id: 1,
-      img: 'assets/img/sws1.png',
-      imgSport: 'assets/img/nike_Logo_White.png',
-      fashionLine: 'FAS',
-      model: 'Hartbee',
-      modelType: 'sport',
-      collection: 'Basket Ball Collection',
-      size: 'size',
-      typeOfSize: [7, 8, 9, 10, 11],
-      selectedSize: 8,
-      color: 'color',
-      colorProducts: ['orange', 'green', 'yellow'],
-      selectedColor: 'orange',
-      text: 'description',
-      price: 1,
-      stars: {
-        public: 50,
-        privite: 35.5
-      }
-    },
-    {
-      title: 'product',
-      id: 2,
-      img: 'assets/img/sws1.png',
-      imgSport: 'assets/img/nike_Logo_White.png',
-      fashionLine: 'FAS',
-      model: 'Hartbee',
-      modelType: 'sport',
-      collection: 'Basket Ball Collection',
-      size: 'size',
-      typeOfSize: [7, 8, 9, 10, 11],
-      selectedSize: 8,
-      color: 'color',
-      colorProducts: ['orange', 'green', 'yellow'],
-      selectedColor: 'orange',
-      text: 'description',
-      price: 2,
-      stars: {
-        public: 60,
-        privite: 75.5
-      }
-    },
-    {
-      title: 'product',
-      id: 3,
-      img: 'assets/img/sws1.png',
-      imgSport: 'assets/img/nike_Logo_White.png',
-      fashionLine: 'FAS',
-      model: 'Hartbee',
-      modelType: 'sport',
-      collection: 'Basket Ball Collection',
-      size: 'size',
-      typeOfSize: [7, 8, 9, 10, 11],
-      selectedSize: 8,
-      color: 'color',
-      colorProducts: ['orange', 'green', 'yellow'],
-      selectedColor: 'orange',
-      text: 'description',
-      price: 3,
-      stars: {
-        public: 20,
-        privite: 99.5
-      }
-    }
-  ];
+  // cards = [
+  //   {
+  //     title: 'product',
+  //     id: 1,
+  //     img: 'assets/img/sws1.png',
+  //     imgSport: 'assets/img/nike_Logo_White.png',
+  //     fashionLine: 'FAS',
+  //     model: 'Hartbee',
+  //     modelType: 'sport',
+  //     collection: 'Basket Ball Collection',
+  //     size: 'size',
+  //     typeOfSize: [7, 8, 9, 10, 11],
+  //     selectedSize: 8,
+  //     color: 'color',
+  //     colorProducts: ['orange', 'green', 'yellow'],
+  //     selectedColor: 'orange',
+  //     text: 'description',
+  //     price: 1,
+  //     stars: {
+  //       public: 50,
+  //       privite: 35.5
+  //     }
+  //   },
+  //   {
+  //     title: 'product',
+  //     id: 2,
+  //     img: 'assets/img/sws1.png',
+  //     imgSport: 'assets/img/nike_Logo_White.png',
+  //     fashionLine: 'FAS',
+  //     model: 'Hartbee',
+  //     modelType: 'sport',
+  //     collection: 'Basket Ball Collection',
+  //     size: 'size',
+  //     typeOfSize: [7, 8, 9, 10, 11],
+  //     selectedSize: 8,
+  //     color: 'color',
+  //     colorProducts: ['orange', 'green', 'yellow'],
+  //     selectedColor: 'orange',
+  //     text: 'description',
+  //     price: 2,
+  //     stars: {
+  //       public: 60,
+  //       privite: 75.5
+  //     }
+  //   },
+  //   {
+  //     title: 'product',
+  //     id: 3,
+  //     img: 'assets/img/sws1.png',
+  //     imgSport: 'assets/img/nike_Logo_White.png',
+  //     fashionLine: 'FAS',
+  //     model: 'Hartbee',
+  //     modelType: 'sport',
+  //     collection: 'Basket Ball Collection',
+  //     size: 'size',
+  //     typeOfSize: [7, 8, 9, 10, 11],
+  //     selectedSize: 8,
+  //     color: 'color',
+  //     colorProducts: ['orange', 'green', 'yellow'],
+  //     selectedColor: 'orange',
+  //     text: 'description',
+  //     price: 3,
+  //     stars: {
+  //       public: 20,
+  //       privite: 99.5
+  //     }
+  //   }
+  // ];
 
   state = {
     header: {
@@ -99,10 +99,16 @@ export class MainComponent implements OnInit {
         open: false,
         products: []
       }
-    }
+    },
+    products: []
   }
 
   ngOnInit() {
+    this.api.getProducts().subscribe((fromServer: any)=>{
+      this.state.products = fromServer;
+    },(err)=>{
+      console.log(err)
+    })
     this.state.header.basket.products = this.storage.getBasketFromStorage()
 
     this.session.getUser()
