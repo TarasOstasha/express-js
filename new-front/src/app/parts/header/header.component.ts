@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { SearchService } from '../../services/search.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,17 @@ import { ApiService } from '../../services/api.service';
 export class HeaderComponent implements OnInit {
   @Input() state: any
   @Output() onChanged = new EventEmitter<any>();
-  constructor(private api: ApiService) { }
+  results: Object;
+  searchTerm$ = new Subject<string>();
+  constructor(
+      private api: ApiService,
+      private searchService: SearchService
+  ) { 
+    this.searchService.search(this.searchTerm$)
+      .subscribe(results => {
+        this.results = results;
+      });
+  }
 
   ngOnInit() {
   }

@@ -5,18 +5,21 @@ import { ApiService } from '../../services/api.service';
 import { SessionService } from '../../services/session.service';
 
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
+  
 
   constructor(
     private storage: StorageService,
     private api: ApiService,
-    private session: SessionService
-  ) { }
+    private session: SessionService,
+    
+  ) {  }
 
   // public state: any;
 
@@ -106,9 +109,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.api.getProducts().subscribe((fromServer: any)=>{
       this.state.products = fromServer;
-    },(err)=>{
-      console.log(err)
-    })
+    },  this.errorHandler )
     this.state.header.basket.products = this.storage.getBasketFromStorage()
 
     this.session.getUser()
@@ -116,20 +117,11 @@ export class MainComponent implements OnInit {
         this.state.header.isLogged = true;
         this.state.header.user.name = dataFromLocalStorage.user.firstName || dataFromLocalStorage.user.username;
       })
-      .catch((err)=>{
-        console.log(err);
-      })
-    // this.api.getSessionInfo().subscribe((fromServer: any) => {
-    //   console.log(fromServer, 'from server');
-    //   //fake session
-    //   if (!fromServer.user) {
-    //     fromServer = JSON.parse('{"user":{"wallets":{"USD":{"balance":0}},"facebook":{"id":"2712492348826122","username":"Taras Ostasha","email":""},"purchases_made":[],"saved_numbers":[],"linked_users":[],"_id":"5d063f55ba40b4ee185dea94","last_login":"2019-06-16T13:08:37.543Z","last_appeal":"2019-06-16T13:08:37.543Z","username":"Taras Ostasha","email":"","created":"2019-06-16T13:08:37.546Z","__v":0}}')
-    //     console.log(fromServer);
-       
-    //   }
-    // }, (err) => {
-    //   console.log(err);
-    // })
+      .catch( this.errorHandler )
+  }
+
+   errorHandler(err) {
+    console.log(err);
   }
 
   cardHandler(product) {

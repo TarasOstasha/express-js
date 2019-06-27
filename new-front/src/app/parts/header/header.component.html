@@ -21,7 +21,8 @@
       </li>
     </ul>
     <div class="form-inline my-2 my-lg-0">
-      <input [(ngModel)]="state.search_input" (ngModelChange)="search()" class="form-control mr-sm-2" type="text" placeholder="Search">
+      <span>results: {{ results }}</span>
+      <input [(ngModel)]="state.search_input" (keyup)="searchTerm$.next($event.target.value)" (ngModelChange)="search()" class="form-control mr-sm-2" type="text" placeholder="Search">
       <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> -->
     </div>
   </div>

@@ -19,10 +19,12 @@ import { CarouselComponent } from './parts/carousel/carousel.component';
 import { RatingComponent } from './parts/rating/rating.component';
 import { BasketPopupComponent } from './parts/basket-popup/basket-popup.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { P404Component } from './pages/p404/p404.component'
+import { P404Component } from './pages/p404/p404.component';
+
 // services
 import { ApiService } from './services/api.service';
 import { StorageService } from './services/storage.service';
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { StorageService } from './services/storage.service';
     BasketPopupComponent,
     AuthComponent,
     P404Component
+    
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,7 @@ import { StorageService } from './services/storage.service';
     AngularFontAwesomeModule,
     ReactiveFormsModule
   ],
-  providers: [ApiService, StorageService],
+  providers: [ApiService, StorageService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
