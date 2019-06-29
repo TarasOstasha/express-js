@@ -12,7 +12,6 @@ import { Subject } from 'rxjs';
 export class HeaderComponent implements OnInit {
   @Input() state: any
   @Output() onChanged = new EventEmitter<any>();
-  results: Object;
   searchTerm$ = new Subject<string>();
   constructor(
       private api: ApiService,
@@ -20,7 +19,8 @@ export class HeaderComponent implements OnInit {
   ) { 
     this.searchService.search(this.searchTerm$)
       .subscribe(results => {
-        this.results = results;
+        this.state.searchResult = results; //set search result into array
+        console.log(results);
       });
   }
 
@@ -41,18 +41,7 @@ export class HeaderComponent implements OnInit {
   showProfile() {
     alert('see profile preferenses');
   }
-  search() {
-    console.log(this.state.search_input);
-    //filter by rxjs
-    //request to server
-    //method in servise api
-    this.api.search().subscribe((fromServer:any)=>{
-      //this.product = fromServer;
-      console.log(fromServer);
-    },
-    (err)=>{
-      console.log(err);
-    })
-  }
+
+
 
 }

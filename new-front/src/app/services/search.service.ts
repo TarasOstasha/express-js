@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, pipe } from "rxjs";
 import { filter, map } from 'rxjs/operators';
 import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators'; 
+import { query } from '@angular/animations';
 //how import observable and map
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  baseUrl: string = 'http://localhost:3000/serach';//localhost 3000
+  baseUrl: string = 'http://localhost:3000/search';//localhost 3000
   queryUrl: string = '?search=';//
 
   constructor(private http: HttpClient) { }
@@ -25,6 +26,7 @@ export class SearchService {
   }
 
   searchEntries(term) {
+    console.log(term)
     return this.http
         .get(this.baseUrl + this.queryUrl + term)
         //.map(res => res.json());

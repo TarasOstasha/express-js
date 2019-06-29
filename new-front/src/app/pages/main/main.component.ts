@@ -101,7 +101,8 @@ export class MainComponent implements OnInit {
       basket: {
         open: false,
         products: []
-      }
+      },
+      searchResult: []
     },
     products: []
   }

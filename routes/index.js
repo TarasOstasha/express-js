@@ -146,12 +146,23 @@ router.post('/todos', cors(), function (req, res, next) {
 
 //question
 router.get('/search', cors(), function (req, res, next) {
+  const search = req.query.search;
+  //fs.writeFile('product.json', JSON.stringify(cards), ()=>{}); 
   fs.readFile('product.json', 'UTF-8', (err, productjSON) => { //get products
     console.log(productjSON);
-    if(err) {
+    if (err) {
       console.log(err);
     }
-    const product = JSON.parse(productjSON);
+    let product = JSON.parse(productjSON);
+    product = product.filter((product) => {
+      var patt = new RegExp(search);
+      const inTitle = patt.test(product.title);
+      console.log('title', inTitle)
+      const inDescription = patt.test(product.text);
+      console.log('descr', inDescription)
+      return (inTitle || inDescription)  
+    });
+
     res.json(product);
   })
 });
@@ -209,7 +220,7 @@ router.get('/profile',
 
 router.get('/login', (req, res) => {
   res.render('login');
- 
+
 })
 
 
@@ -218,7 +229,7 @@ router.post('/register', cors(), async (req, res) => {
     const username = req.body.email;
     const user = await User.findOne({ username: username }); // request to data base
     if (user) return res.json({ ok: false, message: 'this user already exist' });
-    
+
     const new_user = new User({
       username: req.body.email,
       firstName: req.body.firstName,
@@ -234,13 +245,13 @@ router.post('/register', cors(), async (req, res) => {
   }
 });
 
-router.get('/session-info', cors(), (req, res)=>{
-  res.json({user: req.user})
+router.get('/session-info', cors(), (req, res) => {
+  res.json({ user: req.user })
 });
 
 
 //redirect all get request to index.html. Must be the last!
-router.get('/*', cors(), (req, res)=>{
+router.get('/*', cors(), (req, res) => {
   res.redirect('/index.html');
 });
 
