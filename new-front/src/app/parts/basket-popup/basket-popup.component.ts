@@ -3,6 +3,7 @@ import { state } from '@angular/animations';
 import { providerDef } from '@angular/core/src/view';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-basket-popup',
@@ -29,13 +30,15 @@ import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, Valid
   ]
 })
 export class BasketPopupComponent implements OnInit {
-  constructor() { }
+  constructor(private storage: StorageService,) { }
 
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
   @Input() state: any
   
   ngOnInit() { 
     this.state.showPaymant = 'myClose';
+     //quantity of products
+     this.state.products = this.storage.getBasketFromStorage()
   }
 
   private phoneValidator(): ValidatorFn {

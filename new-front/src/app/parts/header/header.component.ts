@@ -19,9 +19,10 @@ export class HeaderComponent implements OnInit {
   ) { 
     this.searchService.search(this.searchTerm$)
       .subscribe(results => {
-        this.state.searchResult = results; //set search result into array
-        console.log(results);
+        this.state.searchResult = results; 
+        console.log(results); 
       });
+      
   }
 
   ngOnInit() {

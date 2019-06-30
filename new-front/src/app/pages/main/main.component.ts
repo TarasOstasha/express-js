@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { state } from '@angular/animations';
-import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
 import { SessionService } from '../../services/session.service';
 
@@ -15,7 +14,7 @@ export class MainComponent implements OnInit {
   
 
   constructor(
-    private storage: StorageService,
+    
     private api: ApiService,
     private session: SessionService,
     
@@ -111,7 +110,7 @@ export class MainComponent implements OnInit {
     this.api.getProducts().subscribe((fromServer: any)=>{
       this.state.products = fromServer;
     },  this.errorHandler )
-    this.state.header.basket.products = this.storage.getBasketFromStorage()
+   
 
     this.session.getUser()
       .then((dataFromLocalStorage: any) => {

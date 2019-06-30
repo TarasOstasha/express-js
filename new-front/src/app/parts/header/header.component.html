@@ -20,12 +20,37 @@
         <a class="nav-link" routerLink="/about-us">About</a>
       </li>
     </ul>
-    <div class="form-inline my-2 my-lg-0">
+    <div class="search-wrapper form-inline my-2 my-lg-0">
       <input [(ngModel)]="state.search_input" (keyup)="searchTerm$.next($event.target.value)" class="form-control mr-sm-2" type="text" placeholder="Search">
-      <div class="serach-result">
+      <div class="serach-result" *ngIf="state.search_input"> 
         <div class="search-item" *ngFor="let product of state.searchResult">
+                        <!-- !!!!!!!!!!!!!! -->
           <!-- create pattern of mini card products with info -->
-          {{ product }} 
+          <div class="card header-search-card">
+              <div class="card-head">
+                  <img [src]=product.imgSport alt="logo" class="card-logo">
+                  <!-- <img [src]=product.img alt="Shoe" class="product-img"> -->
+                  <div class="product-detail">
+                      <h2>{{ product.title }}</h2> 
+                  </div>
+              </div>
+              <div class="card-body">
+                  <div class="product-desc">
+                      <span class="product-title">
+                         {{ product.model }}<b>{{product.sport }}</b>
+                          <span class="badge">
+                              New
+                          </span>
+                      </span>
+                  </div>
+                  <div class="product-properties">
+                      <button (click)=buyProduct() class="product-price search-product-price">
+                          USD<b>{{ product.price }}</b>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <!-- {{ product }}  -->
         </div>
       </div>
       <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> -->
