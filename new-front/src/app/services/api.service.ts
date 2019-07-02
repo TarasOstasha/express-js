@@ -15,6 +15,10 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
+  getJson(json) {
+    return this.http.get('./assets/data/' + json)
+  }
+
   login(userData) {
     return this.http.post('http://localhost:3000/login', userData, httpOptions)
   }

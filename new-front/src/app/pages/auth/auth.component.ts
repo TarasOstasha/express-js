@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, FormArray  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
   user: User = {
     firstName: '',
     lastName: '',
-    email:'',
+    email: '',
     password: '',
     password1: '',
     password2: '',
@@ -28,17 +28,18 @@ export class AuthComponent implements OnInit {
     notes: null
   };
   constructor(
-      private formBuilder: FormBuilder, 
-      private storage: StorageService,
-      private api:  ApiService ) { 
+    private formBuilder: FormBuilder,
+    private storage: StorageService,
+    private api: ApiService
+  ) {
     const pwdValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
 
 
     this.userForm = this.formBuilder.group({
-      'email': [this.user.email, [Validators.required, Validators.minLength(5),this.mailValidator()]],
+      'email': [this.user.email, [Validators.required, Validators.minLength(5), this.mailValidator()]],
       'firstName': [this.user.firstName, [Validators.required, Validators.minLength(3)]],
       'lastName': [this.user.lastName, [Validators.required]],
-      'password': [this.user.password, [Validators.required,this.passwordConfirm()]],
+      'password': [this.user.password, [Validators.required, this.passwordConfirm()]],
       //'password1': [this.user.password, [Validators.required,Validators.minLength(3),this.passwordsAreEqual()]],
 
       'passwords': this.formBuilder.group({
@@ -66,12 +67,12 @@ export class AuthComponent implements OnInit {
   //check password
   private passwordConfirm(): ValidatorFn {
     return (group: FormGroup): { [key: string]: any } => {
-      if ( !(group.dirty || group.touched) ) {
-        return {custom: 'Something going wrong'} 
+      if (!(group.dirty || group.touched)) {
+        return { custom: 'Something going wrong' }
       } else {
         return null;
       }
-      
+
     };
   }
 
@@ -98,16 +99,16 @@ export class AuthComponent implements OnInit {
         products: []
       }
     },
-    checked_form :'login',
+    checked_form: 'login',
     error: {
       dublicate_user: false
     }
   }
-  
+
   ngOnInit() {
     this.state.header.basket.products = this.storage.getBasketFromStorage()
     //setInterval(()=>{
-      //console.log(this.userForm)
+    //console.log(this.userForm)
     //}, 1000)
   }
   signIn() {
@@ -118,7 +119,7 @@ export class AuthComponent implements OnInit {
     this.api.login(userData).subscribe(
       (fromServer: any) => {
         console.log('result', fromServer);
-        if(fromServer.ok) {
+        if (fromServer.ok) {
           this.state.header.isLogged = true;
           this.state.header.user.name = fromServer.user.firstName;
         }
@@ -129,37 +130,37 @@ export class AuthComponent implements OnInit {
   register() {
     console.log('register clicked!');
     const userData = {
-      firstName:this.userForm.controls.firstName.value,
-      lastName:this.userForm.controls.lastName.value,
+      firstName: this.userForm.controls.firstName.value,
+      lastName: this.userForm.controls.lastName.value,
       email: this.userForm.controls.email.value,
       password: this.userForm.controls.password.value
     }
     this.api.register(userData).subscribe(
       (fromServer: any) => {
-        if(fromServer.ok == false ) {
+        if (fromServer.ok == false) {
           this.state.error.dublicate_user = true
         }
         console.log('result', fromServer);
       },
       (error) => { console.log(error) }
     )
-   }
-  logForm(){
+  }
+  logForm() {
     console.log(this.userForm);
-    
-   }
- 
-   logFormValue(){
-     console.log(this.userForm.value);
-   }
- 
-   disableForm(){
-     this.userForm.disable();
-   }
- 
-   enableForm(){
-     this.userForm.enable();
-   }
+
+  }
+
+  logFormValue() {
+    console.log(this.userForm.value);
+  }
+
+  disableForm() {
+    this.userForm.disable();
+  }
+
+  enableForm() {
+    this.userForm.enable();
+  }
 
 
 

@@ -4,6 +4,7 @@ import { providerDef } from '@angular/core/src/view';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-basket-popup',
@@ -30,15 +31,49 @@ import { StorageService } from '../../services/storage.service';
   ]
 })
 export class BasketPopupComponent implements OnInit {
-  constructor(private storage: StorageService,) { }
+  paymentForm: FormGroup; //set type
+
+  constructor(
+    private storage: StorageService,
+    private formBuilder: FormBuilder,
+    private api: ApiService,
+
+  ) {
+     this.state = {} //check if needed
+     this.state.paymentData = {}
+    // this.state.defaultData = {
+    //   states: []
+    // }
+
+    
+    const paymantValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
+
+    this.paymentForm = this.formBuilder.group({
+      'name': [this.state.paymentData.name, [Validators.required, Validators.minLength(2)]]
+      // 'firstName': [this.user.firstName, [Validators.required, Validators.minLength(3)]],
+      // 'lastName': [this.user.lastName, [Validators.required]],
+      // 'password': [this.user.password, [Validators.required, this.passwordConfirm()]],
+      // //'password1': [this.user.password, [Validators.required,Validators.minLength(3),this.passwordsAreEqual()]],
+
+      // 'passwords': this.formBuilder.group({
+      //   'pwd': ['', pwdValidators],
+      //   'confirm': ['', pwdValidators]
+      // }, { validator: this.passwordsAreEqual() }),
+
+      // //'password2': [this.user.password, [Validators.required,Validators.minLength(3),this.passwordsAreEqual()]],
+      // 'role': [this.user.role, [Validators.required]],
+      // 'notes': [this.user.notes, [Validators.maxLength(45)]]
+    });
+  }
 
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
-  @Input() state: any
-  
-  ngOnInit() { 
+  @Input() state: any;
+   
+
+  ngOnInit() {
     this.state.showPaymant = 'myClose';
-     //quantity of products
-     this.state.products = this.storage.getBasketFromStorage()
+    //quantity of products
+    this.state.products = this.storage.getBasketFromStorage()
   }
 
   private phoneValidator(): ValidatorFn {
@@ -51,21 +86,43 @@ export class BasketPopupComponent implements OnInit {
       }
     };
   }
-  
+
   disabled: boolean = false;
   onClose() {
     this.state.open = false;
     //this.stateBack()  
   }
 
+  getDataForCheckout() {
+    this.api.getJson('us-states.json').subscribe((json) => {
+      
+      let result = [];
+      for (var i in json)
+        result.push([i, json[i]]);
+
+        
+
+     // console.log(this.state.defaultData.states)
+      this.state.defaultData.states = result;
+      console.log(result);
+
+      //console.log(json, 'AK' in json);
+      //if('AK' in json) console.log(json['AK']);
+
+
+    }, () => {
+
+    })
+  }
   // open checkout block with animation
   openCheckout() {
     this.state.showPaymant = 'fixedOpen';
     setTimeout(() => {
       this.state.showPaymant = 'OpenFit';
-    },1000)
+    }, 1000)
+    this.getDataForCheckout()
   }
-  
+
   //stateBack() на даний момент не використовується
   stateBack() {
     this.onChanged.emit(this.state); //згенерувати подію, this.state - обєкт події/подія
@@ -116,13 +173,18 @@ export class BasketPopupComponent implements OnInit {
 
   totalPrice() {
     let total = 0;
-    this.state.products.map((product)=> {
-      total+= product.price;
+    this.state.products.map((product) => {
+      total += product.price;
     })
     return total;
   }
   subTotalPrice(uProduct) {
     return uProduct.amount * uProduct.product.price;
+  }
+
+
+  saveAdress() {
+    console.log('adress', this.paymentForm);
   }
 }
 

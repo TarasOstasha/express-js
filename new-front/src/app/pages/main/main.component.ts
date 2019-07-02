@@ -99,11 +99,15 @@ export class MainComponent implements OnInit {
       },
       basket: {
         open: false,
-        products: []
+        products: [],
+        defaultData : {
+          states: []
+        },
+        paymentData :{}
       },
       searchResult: []
     },
-    products: []
+    products: [],
   }
 
   ngOnInit() {
