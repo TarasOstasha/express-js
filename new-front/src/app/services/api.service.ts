@@ -45,6 +45,9 @@ export class ApiService {
   search() {
     return this.http.get('http://localhost:3000/search');
   }
+  getUsers() {
+    return this.http.get('http://localhost:3000/users')
+  }
 }
 
 

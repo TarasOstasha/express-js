@@ -172,7 +172,7 @@ router.post('/search', cors(), function (req, res, next) {
 });
 
 router.get('/products', cors(), function (req, res, next) {
-  res.json(cards);
+  res.json({ ok: true, products:cards })
 });
 
 
@@ -249,12 +249,21 @@ router.get('/session-info', cors(), (req, res) => {
   res.json({ user: req.user })
 });
 
+//get all users
+router.get('/users', cors(), async (req, res)=> {
+  try {
+    const users = await User.find({  }); // request to data base    
+    res.json({ ok: true, users })
 
-//redirect all get request to index.html. Must be the last!
+  } catch (error) {
+    res.json({ ok: false, message: error })
+  }
+});
+
+//redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', cors(), (req, res) => {
   res.redirect('/index.html');
 });
-
 
 
 

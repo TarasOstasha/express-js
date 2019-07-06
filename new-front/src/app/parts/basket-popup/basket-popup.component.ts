@@ -1,10 +1,26 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  Input,
+  AfterViewInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
+
 import { state } from '@angular/animations';
 import { providerDef } from '@angular/core/src/view';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
+
+declare var stripe: any;
+declare var elements: any;
 
 @Component({
   selector: 'app-basket-popup',
@@ -30,22 +46,28 @@ import { ApiService } from '../../services/api.service';
     ]),
   ]
 })
-export class BasketPopupComponent implements OnInit {
+export class BasketPopupComponent implements OnInit, AfterViewInit, OnDestroy {
   paymentForm: FormGroup; //set type
+  @ViewChild('cardInfo') cardInfo: ElementRef;
+
+  card: any;
+  cardHandler = this.onChange.bind(this);
+  error: string;
+
 
   constructor(
     private storage: StorageService,
     private formBuilder: FormBuilder,
     private api: ApiService,
-
+    private cd: ChangeDetectorRef
   ) {
-     this.state = {} //check if needed
-     this.state.paymentData = {}
+    this.state = {} //check if needed
+    this.state.paymentData = {}
     // this.state.defaultData = {
     //   states: []
     // }
 
-    
+
     const paymantValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
 
     this.paymentForm = this.formBuilder.group({
@@ -68,13 +90,59 @@ export class BasketPopupComponent implements OnInit {
 
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
   @Input() state: any;
-   
 
   ngOnInit() {
     this.state.showPaymant = 'myClose';
     //quantity of products
     this.state.products = this.storage.getBasketFromStorage()
   }
+
+  ngAfterViewInit() {
+    this.card = elements.create('card');
+    this.card.mount(this.cardInfo.nativeElement);
+    this.card.addEventListener('change', this.cardHandler);
+    const style = {
+      base: {
+        lineHeight: '24px',
+        fontFamily: 'monospace',
+        fontSmoothing: 'antialiased',
+        fontSize: '19px',
+        '::placeholder': {
+          color: 'purple'
+        }
+      }
+    }
+    this.card = elements.create('card', { style });
+    this.card.mount(this.cardInfo.nativeElement);
+
+    this.card.addEventListener('change', this.cardHandler);
+  }
+
+  ngOnDestroy() {
+    this.card.removeEventListener('change', this.cardHandler);
+    this.card.destroy();
+  }
+  onChange({ error }) {
+    if (error) {
+      this.error = error.message;
+    } else {
+      this.error = null;
+    }
+    this.cd.detectChanges();
+  }
+
+  async onSubmit(form: NgForm) {
+    const { token, error } = await stripe.createToken(this.card);
+
+    if (error) {
+      console.log('Something is wrong:', error);
+    } else {
+      console.log('Success!', token);
+      // ...send the token to the your backend to process the charge
+    }
+  }
+
+
 
   private phoneValidator(): ValidatorFn {
     const pattern: RegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
@@ -95,14 +163,14 @@ export class BasketPopupComponent implements OnInit {
 
   getDataForCheckout() {
     this.api.getJson('us-states.json').subscribe((json) => {
-      
+
       let result = [];
       for (var i in json)
         result.push([i, json[i]]);
 
-        
 
-     // console.log(this.state.defaultData.states)
+
+      // console.log(this.state.defaultData.states)
       this.state.defaultData.states = result;
       console.log(result);
 

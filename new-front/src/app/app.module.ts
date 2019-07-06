@@ -25,6 +25,7 @@ import { P404Component } from './pages/p404/p404.component';
 import { ApiService } from './services/api.service';
 import { StorageService } from './services/storage.service';
 import { SearchService } from './services/search.service';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SearchService } from './services/search.service';
     RatingComponent,
     BasketPopupComponent,
     AuthComponent,
-    P404Component
+    P404Component,
+    AdminComponent
     
   ],
   imports: [

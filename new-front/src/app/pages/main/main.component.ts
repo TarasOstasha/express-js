@@ -112,7 +112,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.api.getProducts().subscribe((fromServer: any)=>{
-      this.state.products = fromServer;
+      this.state.products = fromServer.products;
     },  this.errorHandler )
    
 
