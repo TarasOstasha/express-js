@@ -12,7 +12,7 @@ const User = require('../models/user')
 
 const cards = [
   {
-    title: 'product',
+    title: 'product1',
     id: 1,
     img: 'assets/img/sws1.png',
     imgSport: 'assets/img/nike_Logo_White.png',
@@ -34,7 +34,7 @@ const cards = [
     }
   },
   {
-    title: 'product',
+    title: 'xproduct',
     id: 2,
     img: 'assets/img/sws1.png',
     imgSport: 'assets/img/nike_Logo_White.png',
@@ -56,7 +56,7 @@ const cards = [
     }
   },
   {
-    title: 'product',
+    title: 'product3',
     id: 3,
     img: 'assets/img/sws1.png',
     imgSport: 'assets/img/nike_Logo_White.png',
