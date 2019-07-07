@@ -26,6 +26,7 @@ import { ApiService } from './services/api.service';
 import { StorageService } from './services/storage.service';
 import { SearchService } from './services/search.service';
 import { AdminComponent } from './pages/admin/admin.component';
+import { NewProductsComponent } from './parts/new-products/new-products.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AdminComponent } from './pages/admin/admin.component';
     BasketPopupComponent,
     AuthComponent,
     P404Component,
-    AdminComponent
+    AdminComponent,
+    NewProductsComponent
     
   ],
   imports: [

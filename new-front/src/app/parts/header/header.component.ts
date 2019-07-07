@@ -14,15 +14,15 @@ export class HeaderComponent implements OnInit {
   @Output() onChanged = new EventEmitter<any>();
   searchTerm$ = new Subject<string>();
   constructor(
-      private api: ApiService,
-      private searchService: SearchService
-  ) { 
+    private api: ApiService,
+    private searchService: SearchService
+  ) {
     this.searchService.search(this.searchTerm$)
       .subscribe(results => {
-        this.state.searchResult = results; 
-        console.log(results); 
+        this.state.searchResult = results;
+        console.log(results);
       });
-      
+
   }
 
   ngOnInit() {

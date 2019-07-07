@@ -1,0 +1,54 @@
+<div class="container">
+  <form>
+    <div class="form-group">
+      <label for="input-title">Product name :</label>
+      <input type="text" id="input-title" name="input-title" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Category :</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+        <option selected disabled>Choose a category</option>
+        <option>Category 1</option>
+        <option>Category 2</option>
+        <option>Category 3</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="input-title">Price :</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">€</div>
+        </div>
+        <input type="number" id="input-price" name="input-price" class="form-control" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input-desc">Description :</label>
+      <div id="input-desc"></div>
+    </div>
+    <div class="form-group">
+      <label>Add pictures :</label>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-pic">
+            <input id="uploadFile" type="file" (change)="onChange($event)" class="form-control">
+            <img src="http://via.placeholder.com/400x300" alt="Image preview..." class="img-fluid mh-100 mw-100">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-pic">
+            <input type="file" onchange="previewFile()" class="form-control">
+            <img src="http://via.placeholder.com/400x300" alt="Image preview..." class="img-fluid mh-100 mw-100">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-pic">
+            <input type="file" onchange="previewFile()" class="form-control">
+            <img src="http://via.placeholder.com/400x300" alt="Image preview..." class="img-fluid mh-100 mw-100">
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
