@@ -36,6 +36,8 @@ export class AdminComponent implements OnInit {
     productPage: 1, 
     productChunk: 10,
     users: [],
+    productSearchResult: [], // idea???
+    userSearchResult: [] // idea???
   }
 
   ngOnInit() {
@@ -48,7 +50,15 @@ export class AdminComponent implements OnInit {
       console.log(fromServer)
     }, this.errorHandler)
 
+    this.searchService.search(this.searchTerm$)
+      .subscribe((results: any) => {
+        //this.state.productSearchResult = results;
+        this.state.products = results;
+        console.log(results);
+      });
   }
+
+  //method
 
   errorHandler(err) {
     console.log(err);
