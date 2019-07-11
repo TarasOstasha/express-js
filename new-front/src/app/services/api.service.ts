@@ -46,7 +46,10 @@ export class ApiService {
     return this.http.get('http://localhost:3000/search');
   }
   getUsers() {
-    return this.http.get('http://localhost:3000/users')
+    return this.http.get('http://localhost:3000/users');
+  }
+  setCategories(productCategories) {
+    return this.http.post('http://localhost:3000/categories', productCategories, httpOptions);
   }
 }
 

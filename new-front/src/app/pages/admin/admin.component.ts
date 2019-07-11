@@ -30,12 +30,17 @@ export class AdminComponent implements OnInit {
         },
         paymentData: {}
       },
-      searchResult: []
+      searchResult: [],
     },
     products: [],
     productPage: 1, 
     productChunk: 10,
     users: [],
+    newProduct: { productName: '',
+                  productPrice: [],
+                  productCategories : [],
+                  checkedCategory: ''
+                },
     productSearchResult: [], // idea???
     userSearchResult: [] // idea???
   }

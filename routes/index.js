@@ -265,7 +265,12 @@ router.get('/*', cors(), (req, res) => {
   res.redirect('/index.html');
 });
 
-
+router.post('/categories', cors(), (req, res) => {
+  console.log(req.body, 'categories from server');
+  res.json({ ok: true });
+  //convert obj to json
+  //write json to file
+})
 
 module.exports = router;
 

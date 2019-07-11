@@ -2,16 +2,38 @@
   <form>
     <div class="form-group">
       <label for="input-title">Product name :</label>
-      <input type="text" id="input-title" name="input-title" class="form-control" required>
+      <input [(ngModel)]="state.productName" type="text" id="input-title" name="input-title" class="form-control"
+        required>
     </div>
+    <button (click)="productTest()">ok</button>
     <div class="form-group">
       <label for="exampleFormControlSelect1">Category :</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option selected disabled>Choose a category</option>
-        <option>Category 1</option>
-        <option>Category 2</option>
-        <option>Category 3</option>
-      </select>
+      <div class="option-wrap">
+        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="state.checkedCategory" [ngModelOptions]="{standalone: true}">
+          <option selected disabled>Choose a category</option>
+          <option *ngFor="let category of state.productCategories" [ngValue]="category">{{ category }}</option>
+        </select>
+
+        <button (click)="openCategory = !openCategory" type="button" class="btn btn-info btn-edit">Edit</button>
+      </div>
+    </div>
+    <!-- popup -->
+    <div class="edit-category-block" *ngIf="openCategory">
+      <div class="add-new-user-wrap">
+        <input [(ngModel)]="new_category" name="add_category" type="text" placeholder="new category">
+        <button (click)="addCategory(new_category)" type="button" class="btn btn-success">
+            <i class="fa fa-plus-circle"></i>
+        </button>
+      </div>
+      <div class="category" *ngFor="let category of state.productCategories">
+
+        <span>{{ category }}</span>
+        <div class="btn-group">
+          <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
+              <i class="fa fa-minus-circle"></i>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="input-title">Price :</label>
@@ -19,7 +41,8 @@
         <div class="input-group-prepend">
           <div class="input-group-text">€</div>
         </div>
-        <input type="number" id="input-price" name="input-price" class="form-control" required>
+        <input [(ngModel)]="state.productPrice" type="number" id="input-price" name="input-price" class="form-control"
+          required>
       </div>
     </div>
     <div class="form-group">
