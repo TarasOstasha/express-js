@@ -14,7 +14,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private api: ApiService,
     private searchService: SearchService
-  ) {}
+  ) { }
 
   state = {
     header: {
@@ -33,14 +33,15 @@ export class AdminComponent implements OnInit {
       searchResult: [],
     },
     products: [],
-    productPage: 1, 
+    productPage: 1,
     productChunk: 10,
     users: [],
-    newProduct: { productName: '',
-                  productPrice: [],
-                  productCategories : [],
-                  checkedCategory: ''
-                },
+    newProduct: {
+      productName: '',
+      productPrice: 0,
+      productCategories: [],
+      checkedCategory: ''
+    },
     productSearchResult: [], // idea???
     userSearchResult: [] // idea???
   }
@@ -61,6 +62,7 @@ export class AdminComponent implements OnInit {
         this.state.products = results;
         console.log(results);
       });
+      this.getproductCategories();
   }
 
   //method
@@ -106,6 +108,14 @@ export class AdminComponent implements OnInit {
       }
       return x < y ? -1 * this.k : x > y ? 1 * this.k : 0;
     });
+  }
+
+  getproductCategories() {
+    this.api.getCategories().subscribe((fromServer: any) => {
+      this.state.newProduct.productCategories = fromServer;
+    },
+      this.errorHandler
+    )
   }
 
 }

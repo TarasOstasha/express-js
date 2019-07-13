@@ -7,12 +7,13 @@ const myFilters = require('../lib/filters');
 const myRequest = require('../lib/req-func');
 var passport = require('passport');
 const User = require('../models/user')
+const Product = require('../models/product');
 
 
 
 const cards = [
   {
-    title: 'product1',
+    productName: 'product1',
     id: 1,
     img: 'assets/img/sws1.png',
     imgSport: 'assets/img/nike_Logo_White.png',
@@ -31,50 +32,6 @@ const cards = [
     stars: {
       public: 50,
       privite: 35.5
-    }
-  },
-  {
-    title: 'xproduct',
-    id: 2,
-    img: 'assets/img/sws1.png',
-    imgSport: 'assets/img/nike_Logo_White.png',
-    fashionLine: 'FAS',
-    model: 'Hartbee',
-    modelType: 'sport',
-    collection: 'Basket Ball Collection',
-    size: 'size',
-    typeOfSize: [7, 8, 9, 10, 11],
-    selectedSize: 8,
-    color: 'color',
-    colorProducts: ['orange', 'green', 'yellow'],
-    selectedColor: 'orange',
-    text: 'description',
-    price: 2,
-    stars: {
-      public: 60,
-      privite: 75.5
-    }
-  },
-  {
-    title: 'product3',
-    id: 3,
-    img: 'assets/img/sws1.png',
-    imgSport: 'assets/img/nike_Logo_White.png',
-    fashionLine: 'FAS',
-    model: 'Hartbee',
-    modelType: 'sport',
-    collection: 'Basket Ball Collection',
-    size: 'size',
-    typeOfSize: [7, 8, 9, 10, 11],
-    selectedSize: 8,
-    color: 'color',
-    colorProducts: ['orange', 'green', 'yellow'],
-    selectedColor: 'orange',
-    text: 'description',
-    price: 3,
-    stars: {
-      public: 20,
-      privite: 99.5
     }
   }
 ];
@@ -160,7 +117,7 @@ router.get('/search', cors(), function (req, res, next) {
       console.log('title', inTitle)
       const inDescription = patt.test(product.text);
       console.log('descr', inDescription)
-      return (inTitle || inDescription)  
+      return (inTitle || inDescription)
     });
 
     res.json(product);
@@ -172,7 +129,7 @@ router.post('/search', cors(), function (req, res, next) {
 });
 
 router.get('/products', cors(), function (req, res, next) {
-  res.json({ ok: true, products:cards })
+  res.json({ ok: true, products: cards })
 });
 
 
@@ -214,7 +171,7 @@ router.get('/logout', lS.logout);
 router.get('/profile',
   //require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
-    console.log('isAuth', req.isAuthenticated())
+    //console.log('isAuth', req.isAuthenticated())
     res.render('profile', { user: req.user });
   });
 
@@ -250,9 +207,9 @@ router.get('/session-info', cors(), (req, res) => {
 });
 
 //get all users
-router.get('/users', cors(), async (req, res)=> {
+router.get('/users', cors(), async (req, res) => {
   try {
-    const users = await User.find({  }); // request to data base    
+    const users = await User.find({}); // request to data base    
     res.json({ ok: true, users })
 
   } catch (error) {
@@ -260,17 +217,55 @@ router.get('/users', cors(), async (req, res)=> {
   }
 });
 
+router.post('/categories', cors(), (req, res) => {
+  console.log(req.body, 'categories from server');
+  const categories = req.body;
+  const categoiesJson = JSON.stringify(categories);
+  fs.writeFile('app-settings/product-categories.json', categoiesJson, (err) => {
+    if (err) {
+      console.log('error', err)
+    } else {
+      console.log('succsessfull');
+    }
+  });
+  res.json({ ok: true });
+
+})
+router.get('/categories', cors(), function (req, res, next) {
+  console.log('touch route');
+  fs.readFile('app-settings/product-categories.json', 'UTF-8', (err, categoriesjSON) => { //get categories
+    console.log(categoriesjSON, 'from server');
+    if (err) {
+      console.log(err);
+    }
+
+    let category = JSON.parse(categoriesjSON);
+
+
+    res.json(category);
+  })
+});
+
+router.post('/products', cors(), async (req, res) => {
+  try {
+    console.log(req.body)
+    const product = new Product(req.body);
+    await product.save()
+    res.json({ ok: true });
+  } catch (error) {
+    res.json({ ok: false, message: error });
+  }
+
+})
+
+
+
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', cors(), (req, res) => {
   res.redirect('/index.html');
 });
 
-router.post('/categories', cors(), (req, res) => {
-  console.log(req.body, 'categories from server');
-  res.json({ ok: true });
-  //convert obj to json
-  //write json to file
-})
+
 
 module.exports = router;
 

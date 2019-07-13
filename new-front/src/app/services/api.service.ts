@@ -51,6 +51,12 @@ export class ApiService {
   setCategories(productCategories) {
     return this.http.post('http://localhost:3000/categories', productCategories, httpOptions);
   }
+  getCategories() {
+    return this.http.get('http://localhost:3000/categories');
+  }
+  addProduct(newProduct) {
+    return this.http.post('http://localhost:3000/products', newProduct, httpOptions)
+  }
 }
 
 

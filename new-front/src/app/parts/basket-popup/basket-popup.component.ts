@@ -48,7 +48,7 @@ declare var elements: any;
 })
 export class BasketPopupComponent implements OnInit, AfterViewInit, OnDestroy {
   paymentForm: FormGroup; //set type
-  @ViewChild('cardInfo') cardInfo: ElementRef;
+  //@ViewChild('cardInfo') cardInfo: ElementRef;
 
   card: any;
   cardHandler = this.onChange.bind(this);
@@ -97,26 +97,26 @@ export class BasketPopupComponent implements OnInit, AfterViewInit, OnDestroy {
     this.state.products = this.storage.getBasketFromStorage()
   }
 
-  ngAfterViewInit() {
-    this.card = elements.create('card');
-    this.card.mount(this.cardInfo.nativeElement);
-    this.card.addEventListener('change', this.cardHandler);
-    const style = {
-      base: {
-        lineHeight: '24px',
-        fontFamily: 'monospace',
-        fontSmoothing: 'antialiased',
-        fontSize: '19px',
-        '::placeholder': {
-          color: 'purple'
-        }
-      }
-    }
-    this.card = elements.create('card', { style });
-    this.card.mount(this.cardInfo.nativeElement);
+  // ngAfterViewInit() {
+  //   this.card = elements.create('card');
+  //   this.card.mount(this.cardInfo.nativeElement);
+  //   this.card.addEventListener('change', this.cardHandler);
+  //   const style = {
+  //     base: {
+  //       lineHeight: '24px',
+  //       fontFamily: 'monospace',
+  //       fontSmoothing: 'antialiased',
+  //       fontSize: '19px',
+  //       '::placeholder': {
+  //         color: 'purple'
+  //       }
+  //     }
+  //   }
+  //   this.card = elements.create('card', { style });
+  //   this.card.mount(this.cardInfo.nativeElement);
 
-    this.card.addEventListener('change', this.cardHandler);
-  }
+  //   this.card.addEventListener('change', this.cardHandler);
+  // }
 
   ngOnDestroy() {
     this.card.removeEventListener('change', this.cardHandler);
@@ -131,16 +131,16 @@ export class BasketPopupComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  async onSubmit(form: NgForm) {
-    const { token, error } = await stripe.createToken(this.card);
+  // async onSubmit(form: NgForm) {
+  //   const { token, error } = await stripe.createToken(this.card);
 
-    if (error) {
-      console.log('Something is wrong:', error);
-    } else {
-      console.log('Success!', token);
-      // ...send the token to the your backend to process the charge
-    }
-  }
+  //   if (error) {
+  //     console.log('Something is wrong:', error);
+  //   } else {
+  //     console.log('Success!', token);
+  //     // ...send the token to the your backend to process the charge
+  //   }
+  // }
 
 
 

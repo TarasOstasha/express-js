@@ -44,7 +44,9 @@ export class NewProductsComponent implements OnInit {
 
     })
   }
-
+  errHandler(err) {
+    console.log(err);
+  }
   onChange(event) {
     var preview: any = document.querySelector('img');
     //var files: any = document.querySelector('input[type=file]');
@@ -91,9 +93,22 @@ export class NewProductsComponent implements OnInit {
   refreshCategoriesOnServer() {
     this.api.setCategories(this.state.productCategories).subscribe((fromServer: any)=>{
       console.log(fromServer)
-    },(err)=> {
-      console.log(err)
-    });
-    
+    },
+      this.errHandler
+    );
+  }
+
+  sendNewProduct() {
+    const newProduct = {
+      productName: this.state.productName,
+      checkedCategory: this.state.checkedCategory,
+      price: this.state.productPrice,
+      description: this.quill.container.firstChild.innerHTML
+    }
+    this.api.addProduct(newProduct).subscribe((fromServer: any)=>{
+      if(fromServer.ok) alert('new product has been created');
+    }, 
+      this.errHandler
+    )
   }
 }
