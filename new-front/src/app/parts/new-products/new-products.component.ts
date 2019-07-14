@@ -111,4 +111,23 @@ export class NewProductsComponent implements OnInit {
       this.errHandler
     )
   }
+
+  testcode() {
+
+    console.log('çlick');
+    function eventFire(el, etype){
+      if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+      } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+      }
+    }
+
+    const button = document.querySelector('#uploadForm');
+    eventFire(button, 'submit')
+  }
+
+
 }

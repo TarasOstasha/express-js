@@ -46,7 +46,7 @@ declare var elements: any;
     ]),
   ]
 })
-export class BasketPopupComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BasketPopupComponent implements OnInit,  OnDestroy { //AfterViewInit, also add
   paymentForm: FormGroup; //set type
   //@ViewChild('cardInfo') cardInfo: ElementRef;
 

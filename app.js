@@ -9,9 +9,9 @@ const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const db = require('./db');
 const mongoose = require('mongoose');
-const User = require('./models/user')
+//const User = require('./models/user')
 const session = require('express-session');
-
+const fileUpload = require('express-fileupload');
 // connect to the database
 mongoose.connect('mongodb+srv://user:1111@cluster0-olmgj.mongodb.net/test?retryWrites=true&w=majority')
 
@@ -55,6 +55,7 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'new-front/dist/new-front')));
 
@@ -71,6 +72,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// file upload img
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
 
 
 app.use('/', indexRouter);

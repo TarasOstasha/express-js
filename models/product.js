@@ -6,7 +6,25 @@ let Product = mongoose.model('Product', {
     productName: String,
     categories: String,
     price: Number,
-    description: String
+    description: String,
+    img: String,
+    imgSport: String,
+    // fashionLine: String,
+    // model: String,
+    // modelType: String,
+    // collection: String,
+    // size: Number,
+    // typeOfSize: Number,
+    // selectedSize: Number,
+    // color: String,
+    // colorProducts: String,
+    // selectedColor: String,
+    // text: String,
+    // price: Number,
+    // stars: {
+    //   public: Number,
+    //   privite: Number
+    // }
 });
 
 

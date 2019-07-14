@@ -146,4 +146,10 @@ export class MainComponent implements OnInit {
     this.state.header = headerState;
   }
 
+
+
+  register(form) {
+    console.log(form)
+  }
+
 }
