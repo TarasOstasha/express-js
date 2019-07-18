@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 declare var Quill: any;
-
+declare var swal: any;
+var log = console.log;
 @Component({
   selector: 'app-new-products',
   templateUrl: './new-products.component.html',
@@ -66,7 +67,7 @@ export class NewProductsComponent implements OnInit {
     }
   }
 
-  
+
 
   productTest() {
     var text = this.quill.getText(); // work
@@ -91,7 +92,7 @@ export class NewProductsComponent implements OnInit {
     this.refreshCategoriesOnServer()
   }
   refreshCategoriesOnServer() {
-    this.api.setCategories(this.state.productCategories).subscribe((fromServer: any)=>{
+    this.api.setCategories(this.state.productCategories).subscribe((fromServer: any) => {
       console.log(fromServer)
     },
       this.errHandler
@@ -105,28 +106,111 @@ export class NewProductsComponent implements OnInit {
       price: this.state.productPrice,
       description: this.quill.container.firstChild.innerHTML
     }
-    this.api.addProduct(newProduct).subscribe((fromServer: any)=>{
-      if(fromServer.ok) alert('new product has been created');
-    }, 
+    this.api.addProduct(newProduct).subscribe((fromServer: any) => {
+      if (fromServer.ok) alert('new product has been created');
+    },
       this.errHandler
     )
   }
 
   testcode() {
-
     console.log('çlick');
-    function eventFire(el, etype){
-      if (el.fireEvent) {
-        el.fireEvent('on' + etype);
-      } else {
-        var evObj = document.createEvent('Events');
-        evObj.initEvent(etype, true, false);
-        el.dispatchEvent(evObj);
-      }
-    }
+    // function eventFire(el, etype){
+    //   if (el.fireEvent) {
+    //     el.fireEvent('on' + etype);
+    //   } else {
+    //     var evObj = document.createEvent('Events');
+    //     evObj.initEvent(etype, true, false);
+    //     el.dispatchEvent(evObj);
+    //   }
+    // }
 
-    const button = document.querySelector('#uploadForm');
-    eventFire(button, 'submit')
+    // const button = document.querySelector('#uploadForm');
+    // eventFire(button, 'submit')
+
+
+  }
+
+  // FILE UPLOADER - BEGIN
+  upload_i // counter
+  max_size_req = 1000//99999
+  uploaded
+  onChange2() {
+    this.uploaded = 0
+    this.upload_i = 0
+    let name = 'upload'
+    var file = (<HTMLInputElement>document.getElementById(name)).files[0];  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
+    log('file', file)
+    log('file size', file.size)
+    let times = Math.ceil(file.size / this.max_size_req) //amount of peases 
+    log('TIMES:::::: ', times)
+    this.upload(file, times)
+  }
+  upload(file, times) {
+    //  aliases
+    let i = this.upload_i
+    let max = this.max_size_req
+    // next step
+    this.upload_i++
+    // set a range
+    let begin = (i - 1) * max
+    let end = begin + max
+    // коли останній кусок тоді зрізаємо пусте
+    if (end > file.size) end = file.size
+    log("Upload SLICE  (begin end): ", begin, end)
+    // take link to one chunk
+    var slice = file.slice(begin, end) //0, file.size
+    // set type of chunk
+    if (this.upload_i == 1) var load_type = 'new'
+    else if (this.upload_i > 1) var load_type = 'append'
+    log('Upload STEP # : ', this.upload_i)
+    log('Uplod CHUNK Type', load_type)
+    // take access to file API
+    var fileReader: any = new FileReader()
+    // read chunk as binary type
+    fileReader.readAsBinaryString(slice)
+    // when chunk has been red
+    fileReader.onload = (e) => { // e == load { target: FileReader, isTrusted: true, lengthComputable: true, loaded: 1048576, total: 1048576, currentTarget: FileReader, eventPhase: 2, bubbles: false, cancelable: false, defaultPrevented: false, timeStamp: 1474537690010000 }
+      // show in console.log  
+      var array = new Int8Array(fileReader.result);
+      let output = JSON.stringify(array, null, '  ');
+      log('LOAD fileReader.result', output)
+      // =>>>> SEND to backend
+      this.api.upload({
+        load_type: load_type, // ..... new or append
+        name: file.name, // .......... file name
+        data: fileReader.result // ... data
+      })
+        .subscribe( data => {
+            log(data)
+            if (times == this.upload_i) {
+              //alert('good job');
+              swal({
+                title: "Good job!",
+                text: "File successfully added",
+                icon: "success",
+              })
+              //refresh
+              //this.get_files()
+            }
+
+            if (times > this.upload_i) {
+              log('.............REPEAT !!!', times, this.upload_i)
+              this.uploaded = Math.floor((100 / times) * this.upload_i)
+              setTimeout(() => { this.upload(file, times) }, 2000)
+              // Repeat
+            }
+            else {
+              log('..........END !!! ', times, this.upload_i)
+              this.uploaded = 100
+              setTimeout(() => this.uploaded = undefined, 1000)
+            }
+          },
+          error => {
+            //alert('error')
+            swal("Oops", "Something went wrong in 'upload()' !", "error")
+          })
+    }
   }
 
 

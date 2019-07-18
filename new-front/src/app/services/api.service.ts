@@ -57,6 +57,10 @@ export class ApiService {
   addProduct(newProduct) {
     return this.http.post('http://localhost:3000/products', newProduct, httpOptions)
   }
+  upload(obj) {
+    return this.http.post('http://localhost:3000/upload2', obj, httpOptions)
+
+  }
 }
 
 

@@ -8,7 +8,7 @@ const myRequest = require('../lib/req-func');
 var passport = require('passport');
 const User = require('../models/user')
 const Product = require('../models/product');
-
+const log = console.log
 
 
 const cards = [
@@ -277,6 +277,66 @@ router.post('/products', cors(), async (req, res) => {
 })
 
 
+
+//
+// upload file
+//
+
+router.post('/upload2', async (req, res) => {
+  log('Upload');
+  try {
+      // var-s
+      let productId = 'test';
+      let load_type = req.body.load_type
+      let user_folder = './uploads/' + productId
+      let path = user_folder + '/' + req.body.name
+      // Logs
+      log(req.body)
+      // log(`req.body:`.info)
+      // log('TYPE '.info, req.body.load_type)
+      // create General Folder ?
+      if (!fs.existsSync('./uploads')) {
+          fs.mkdirSync('./uploads')
+      }
+      // create User Folder ?
+      if (!fs.existsSync(user_folder)) {
+          fs.mkdirSync(user_folder)
+      }
+      // Algorithm of uploading
+      if (load_type == 'new') {
+        log('new', path, req.body);
+          // Write File
+          fs.writeFile(path, req.body.data, 'binary', (err) => {
+            log(err, 'this is error')
+              if (err) {
+                  res.json({
+                      msg: 'error in "upload" - 1 ',
+                      error: err
+                  })
+                  throw err
+              }
+              else res.json({ msg: 'success' })
+          })
+      }
+      else if (load_type == 'append') {
+        log('áppend');
+          // Append part of file
+          fs.appendFile(path, req.body.data, 'binary', (err) => {
+              if (err) {
+                  res.json({
+                      msg: 'error in "upload" -2 ',
+                      error: err
+                  })
+                  throw err
+              }
+              else res.json({ msg: 'success' })
+          })
+      }
+  } catch (err) {
+    console.log(err);
+      //error(e, req, res, 500, 'Cannot upload file or fragment! ')
+  }
+})
 
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!

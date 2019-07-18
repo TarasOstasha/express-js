@@ -56,15 +56,11 @@
 
 
       <div class="row">
-        <form ref='uploadForm' id='uploadForm' action='http://localhost:3000/upload' method='post' (onSubmit)="console.log('test')"
-          encType="multipart/form-data">
-          <input type="file" name="sampleFile" />
-          <input type='submit' value='Upload!' />
-        </form>
+        <input type="file" id="upload" (change)="onChange2($event)">
         <button (click)="testcode()">test code</button>
       </div>
 
-      
+
       <div class="row">
         <div class="col-md-4">
           <div class="input-pic">

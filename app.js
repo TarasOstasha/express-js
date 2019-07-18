@@ -12,6 +12,8 @@ const mongoose = require('mongoose');
 //const User = require('./models/user')
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser');
+
 // connect to the database
 mongoose.connect('mongodb+srv://user:1111@cluster0-olmgj.mongodb.net/test?retryWrites=true&w=majority')
 
@@ -48,6 +50,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser({ limit: '11111111mb' }));
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -58,6 +61,8 @@ app.use(sassMiddleware({
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'new-front/dist/new-front')));
+app.use(express.static(path.join(__dirname, 'node_modules')));
+
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -73,9 +78,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // file upload img
-app.use(fileUpload({
-  limits: { fileSize: 50 * 1024 * 1024 },
-}));
+// app.use(fileUpload({
+//   limits: { fileSize: 50 * 1024 * 1024 },
+// }));
+
 
 
 app.use('/', indexRouter);
