@@ -16,49 +16,49 @@ export class ApiService {
   ) { }
 
   getJson(json) {
-    return this.http.get('./assets/data/' + json)
+    return this.http.get('./assets/data/' + json).toPromise();
   }
 
   login(userData) {
-    return this.http.post('http://localhost:3000/login', userData, httpOptions)
+    return this.http.post('http://localhost:3000/login', userData, httpOptions).toPromise();
   }
 
   register(userData) {
-    return this.http.post('http://localhost:3000/register', userData, httpOptions)
+    return this.http.post('http://localhost:3000/register', userData, httpOptions).toPromise();
   }
 
   getTodos() {
-    return this.http.get<Todo[]>('http://localhost:3000/todos')
+    return this.http.get<Todo[]>('http://localhost:3000/todos') //leave becouse we don't use it
   }
 
   setTodos(todos) {
-    return this.http.post<Todo[]>('http://localhost:3000/todos', todos, httpOptions)
+    return this.http.post<Todo[]>('http://localhost:3000/todos', todos, httpOptions) //leave becouse we don't use it
   }
 
   getSessionInfo() {
-    return this.http.get('http://localhost:3000/session-info');
+    return this.http.get('http://localhost:3000/session-info').toPromise();
   }
-  getProducts() {
-    return this.http.get('http://localhost:3000/products');
+  getProducts(): any {
+    return this.http.get('http://localhost:3000/products').toPromise(); 
   }
 
-  search() {
-    return this.http.get('http://localhost:3000/search');
-  }
+  // search() {
+  //   return this.http.get('http://localhost:3000/search'); // dont know
+  // }
   getUsers() {
-    return this.http.get('http://localhost:3000/users');
+    return this.http.get('http://localhost:3000/users').toPromise();
   }
   setCategories(productCategories) {
-    return this.http.post('http://localhost:3000/categories', productCategories, httpOptions);
+    return this.http.post('http://localhost:3000/categories', productCategories, httpOptions).toPromise();
   }
   getCategories() {
-    return this.http.get('http://localhost:3000/categories');
+    return this.http.get('http://localhost:3000/categories').toPromise();
   }
   addProduct(newProduct) {
-    return this.http.post('http://localhost:3000/products', newProduct, httpOptions)
+    return this.http.post('http://localhost:3000/products', newProduct, httpOptions).toPromise();
   }
   upload(obj) {
-    return this.http.post('http://localhost:3000/upload2', obj, httpOptions)
+    return this.http.post('http://localhost:3000/upload2', obj, httpOptions).toPromise();
 
   }
 }

@@ -46,7 +46,7 @@ declare var elements: any;
     ]),
   ]
 })
-export class BasketPopupComponent implements OnInit,  OnDestroy { //AfterViewInit, also add
+export class BasketPopupComponent implements OnInit, OnDestroy { //AfterViewInit, also add
   paymentForm: FormGroup; //set type
   //@ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -161,26 +161,12 @@ export class BasketPopupComponent implements OnInit,  OnDestroy { //AfterViewIni
     //this.stateBack()  
   }
 
-  getDataForCheckout() {
-    this.api.getJson('us-states.json').subscribe((json) => {
-
-      let result = [];
-      for (var i in json)
-        result.push([i, json[i]]);
-
-
-
-      // console.log(this.state.defaultData.states)
-      this.state.defaultData.states = result;
-      console.log(result);
-
-      //console.log(json, 'AK' in json);
-      //if('AK' in json) console.log(json['AK']);
-
-
-    }, () => {
-
-    })
+  async getDataForCheckout() {
+    const json = await this.api.getJson('us-states.json');
+    let result = [];
+    for (var i in json) result.push([i, json[i]]);
+    this.state.defaultData.states = result;
+    console.log(result);
   }
   // open checkout block with animation
   openCheckout() {

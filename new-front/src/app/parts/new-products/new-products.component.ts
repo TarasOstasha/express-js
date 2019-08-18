@@ -91,26 +91,27 @@ export class NewProductsComponent implements OnInit {
     this.state.productCategories.shift();
     this.refreshCategoriesOnServer()
   }
-  refreshCategoriesOnServer() {
-    this.api.setCategories(this.state.productCategories).subscribe((fromServer: any) => {
-      console.log(fromServer)
-    },
-      this.errHandler
-    );
+  async refreshCategoriesOnServer() {
+    const fromServer: any = await this.api.setCategories(this.state.productCategories)
+    console.log(fromServer)
+    this.errHandler
   }
 
-  sendNewProduct() {
-    const newProduct = {
-      productName: this.state.productName,
-      checkedCategory: this.state.checkedCategory,
-      price: this.state.productPrice,
-      description: this.quill.container.firstChild.innerHTML
-    }
-    this.api.addProduct(newProduct).subscribe((fromServer: any) => {
+  async sendNewProduct() {
+    try {
+      const newProduct = {
+        productName: this.state.productName,
+        checkedCategory: this.state.checkedCategory,
+        price: this.state.productPrice,
+        description: this.quill.container.firstChild.innerHTML
+      }
+      const fromServer: any = await this.api.addProduct(newProduct)
       if (fromServer.ok) alert('new product has been created');
-    },
       this.errHandler
-    )
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   testcode() {
@@ -170,46 +171,48 @@ export class NewProductsComponent implements OnInit {
     // read chunk as binary type
     fileReader.readAsBinaryString(slice)
     // when chunk has been red
-    fileReader.onload = (e) => { // e == load { target: FileReader, isTrusted: true, lengthComputable: true, loaded: 1048576, total: 1048576, currentTarget: FileReader, eventPhase: 2, bubbles: false, cancelable: false, defaultPrevented: false, timeStamp: 1474537690010000 }
+    fileReader.onload = async (e) => { // e == load { target: FileReader, isTrusted: true, lengthComputable: true, loaded: 1048576, total: 1048576, currentTarget: FileReader, eventPhase: 2, bubbles: false, cancelable: false, defaultPrevented: false, timeStamp: 1474537690010000 }
       // show in console.log  
       var array = new Int8Array(fileReader.result);
       let output = JSON.stringify(array, null, '  ');
       log('LOAD fileReader.result', output)
-      // =>>>> SEND to backend
-      this.api.upload({
+      // gathering part of file
+      const piece = {
         load_type: load_type, // ..... new or append
         name: file.name, // .......... file name
         data: fileReader.result // ... data
-      })
-        .subscribe( data => {
-            log(data)
-            if (times == this.upload_i) {
-              //alert('good job');
-              swal({
-                title: "Good job!",
-                text: "File successfully added",
-                icon: "success",
-              })
-              //refresh
-              //this.get_files()
-            }
+      }
+      // =>>>> SEND to backend
+      const data = await this.api.upload(piece)
 
-            if (times > this.upload_i) {
-              log('.............REPEAT !!!', times, this.upload_i)
-              this.uploaded = Math.floor((100 / times) * this.upload_i)
-              setTimeout(() => { this.upload(file, times) }, 2000)
-              // Repeat
-            }
-            else {
-              log('..........END !!! ', times, this.upload_i)
-              this.uploaded = 100
-              setTimeout(() => this.uploaded = undefined, 1000)
-            }
-          },
-          error => {
-            //alert('error')
-            swal("Oops", "Something went wrong in 'upload()' !", "error")
-          })
+      log(data)
+      if (times == this.upload_i) {
+        //alert('good job');
+        swal({
+          title: "Good job!",
+          text: "File successfully added",
+          icon: "success",
+        })
+        //refresh
+        //this.get_files()
+      }
+
+      if (times > this.upload_i) {
+        log('.............REPEAT !!!', times, this.upload_i)
+        this.uploaded = Math.floor((100 / times) * this.upload_i)
+        setTimeout(() => { this.upload(file, times) }, 2000)
+        // Repeat
+      }
+      else {
+        log('..........END !!! ', times, this.upload_i)
+        this.uploaded = 100
+        setTimeout(() => this.uploaded = undefined, 1000)
+      }
+
+      // error => {
+      //   //alert('error')
+      //   swal("Oops", "Something went wrong in 'upload()' !", "error")
+      // })
     }
   }
 

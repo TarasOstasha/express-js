@@ -1,0 +1,34 @@
+<div *ngIf="it.invalid && (it.dirty || it.touched)" class="alert alert-danger">
+
+  <span *ngIf="it.errors.mailValidator">
+    {{it.errors.mailValidator.msg}}
+  </span>
+
+  <!-- email validator -->
+  <div *ngIf="it.errors.mailValidator && it.value.length > 0">
+    {{it.errors.mailValidator.msg}}
+  </div>
+
+  <!-- password validator -->
+  <span *ngIf="it.errors.passwordsAreEqual">
+    {{it.errors.passwordsAreEqual.msg}}
+  </span>
+
+  <!-- required -->
+  <div *ngIf="it.errors.required">
+    Is required.
+  </div>
+
+  <!-- min -->
+  <div *ngIf="it.errors.minlength">
+    Must be at least {{it.errors.minlength.requiredLength}} characters long.
+  </div>
+
+  <!-- max -->
+  <div *ngIf="it.errors.maxlength">
+    Must be shorter {{it.errors.maxlength.requiredLength}} characters long.
+  </div>
+
+
+
+</div>

@@ -110,10 +110,10 @@ export class MainComponent implements OnInit {
     products: [],
   }
 
-  ngOnInit() {
-    this.api.getProducts().subscribe((fromServer: any)=>{
+  async ngOnInit() {
+    const  fromServer: any = await this.api.getProducts()
       this.state.products = fromServer.products;
-    },  this.errorHandler )
+      this.errorHandler 
    
 
     this.session.getUser()

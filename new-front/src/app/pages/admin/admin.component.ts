@@ -46,23 +46,23 @@ export class AdminComponent implements OnInit {
     userSearchResult: [] // idea???
   }
 
-  ngOnInit() {
-    this.api.getProducts().subscribe((fromServer: any) => {
+  async ngOnInit() {
+    try {
+      const fromServer: any = await this.api.getProducts();
       this.state.products = fromServer.products;
-    }, this.errorHandler)
-
-    this.api.getUsers().subscribe((fromServer: any) => {
-      this.state.users = fromServer.users;
-      console.log(fromServer)
-    }, this.errorHandler)
-
-    this.searchService.search(this.searchTerm$)
-      .subscribe((results: any) => {
-        //this.state.productSearchResult = results;
-        this.state.products = results;
-        console.log(results);
-      });
+      console.log(this.state.products);
+      const users: any = await this.api.getUsers()
+      this.state.users = users.users;
+      
+      //console.log(users)
+      const results: any = await this.searchService.search(this.searchTerm$)
+      //this.state.products = results;
+      console.log(results);
       this.getproductCategories();
+    } catch (error) {
+      this.errorHandler(error);
+    }
+
   }
 
   //method
@@ -110,12 +110,12 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  getproductCategories() {
-    this.api.getCategories().subscribe((fromServer: any) => {
-      this.state.newProduct.productCategories = fromServer;
-    },
-      this.errorHandler
-    )
+  async getproductCategories() {
+    const fromServer: any = await this.api.getCategories()
+    this.state.newProduct.productCategories = fromServer;
+    this.errorHandler
   }
 
+
+  
 }

@@ -27,6 +27,7 @@ import { StorageService } from './services/storage.service';
 import { SearchService } from './services/search.service';
 import { AdminComponent } from './pages/admin/admin.component';
 import { NewProductsComponent } from './parts/new-products/new-products.component';
+import { FormValidatorComponent } from './parts/general/form-validator/form-validator.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { NewProductsComponent } from './parts/new-products/new-products.componen
     AuthComponent,
     P404Component,
     AdminComponent,
-    NewProductsComponent
+    NewProductsComponent,
+    FormValidatorComponent
     
   ],
   imports: [
