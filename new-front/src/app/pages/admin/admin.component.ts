@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { SearchService } from '../../services/search.service';
 import { Subject } from 'rxjs';
+import { Pipe, PipeTransform } from '@angular/core';
+
+//import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.less']
+})
+@Pipe({
+  name: 'search'
 })
 export class AdminComponent implements OnInit {
   searchTerm$ = new Subject<string>();
@@ -42,6 +49,9 @@ export class AdminComponent implements OnInit {
       productCategories: [],
       checkedCategory: ''
     },
+    userTableRange: 5,
+    userTablePage: 1,
+    userSearch: '',
     productSearchResult: [], // idea???
     userSearchResult: [] // idea???
   }
@@ -53,7 +63,7 @@ export class AdminComponent implements OnInit {
       console.log(this.state.products);
       const users: any = await this.api.getUsers()
       this.state.users = users.users;
-      
+
       //console.log(users)
       const results: any = await this.searchService.search(this.searchTerm$)
       //this.state.products = results;
@@ -116,6 +126,41 @@ export class AdminComponent implements OnInit {
     this.errorHandler
   }
 
+ 
 
-  
+  userFilter() {
+    const users = JSON.parse(JSON.stringify(this.state.users));
+    const _value = (users || [])
+    if (this.state.userSearch !== '') {
+      const patt = new RegExp(this.state.userSearch);
+      const result = _value.filter(item => patt.test(item.firstName))
+      return result
+    } else return _value
+  }
+
+ //length array = 20 el
+  //limit = 5
+  //current page 1
+  //output from 0 to 4 el (1-5)
+  //end = page * limit -1
+  //start = end - limit
+  //getter
+  get clipped_users() {
+    const users = this.userFilter();
+    const range = this.state.userTableRange //limit
+    const page = this.state.userTablePage // page
+    const end = page * range;
+    const start = end - range;
+
+    const corrected_end = (end > users.length) ? users.length : end
+    const result = (users.length > 0) ? users.splice(start, corrected_end) : users
+    console.log('clipped', 'start-', start, 'end-', corrected_end, 'users', users, 'result-', result, 'limit-', range)
+    return result;
+  }
+
+
+
+
 }
+
+

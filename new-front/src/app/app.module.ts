@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+//import {MatButtonModule} from '@angular/material/button';
+//import {MatCheckboxModule} from '@angular/material/checkbox';
+//import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +31,7 @@ import { SearchService } from './services/search.service';
 import { AdminComponent } from './pages/admin/admin.component';
 import { NewProductsComponent } from './parts/new-products/new-products.component';
 import { FormValidatorComponent } from './parts/general/form-validator/form-validator.component';
+import { UserFilterPipe } from './pipes/user-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,8 @@ import { FormValidatorComponent } from './parts/general/form-validator/form-vali
     P404Component,
     AdminComponent,
     NewProductsComponent,
-    FormValidatorComponent
+    FormValidatorComponent,
+    UserFilterPipe
     
   ],
   imports: [
@@ -55,7 +60,11 @@ import { FormValidatorComponent } from './parts/general/form-validator/form-vali
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    //MatButtonModule, MatCheckboxModule,
+    // MatPaginator,
+    // MatSort,
+    // MatTableDataSource
   ],
   providers: [ApiService, StorageService, SearchService],
   bootstrap: [AppComponent]

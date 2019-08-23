@@ -206,7 +206,7 @@
             </div>
           </div>
         </div>
-      <app-new-products [state]="state.newProduct"></app-new-products>
+        <app-new-products [state]="state.newProduct"></app-new-products>
 
         <!-- Area Chart Example-->
         <div class="card mb-3">
@@ -233,7 +233,7 @@
           </div>
           <div class="col-sm-12 col-md-6 search-wrapper">
             <label>Search:
-              <input type="search">
+              <input  type="search">
             </label>
           </div>
         </div>
@@ -291,17 +291,24 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <label>Show entries
-              <select>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
+              <select #selectElem (change)="setNewUser(selectElem.value)">
+                <option *ngFor="let user of lUsers" [value]="user.id">
+                  {{user.Name}}
+                </option>
+              </select>
+              <span>++++{{ state.userTableRange }}</span>
+              <select [(ngModel)]="state.userTableRange">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="50">50</option>
+                <option [value]="100">100</option>
               </select>
             </label>
           </div>
           <div class="col-sm-12 col-md-6 search-wrapper">
             <label>Search:
-              <input type="search">
+              <input [(ngModel)]="state.userSearch" type="search">
+              <span>{{ state.userSearch }}</span>
             </label>
           </div>
         </div>
@@ -323,7 +330,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of state.users; let i = index" [attr.data-index]="i">
+            <!-- <tr *ngFor="let user of clipped_users | userFilter: user; let i = index" [attr.data-index]="i"> -->
+            <tr *ngFor="let user of clipped_users; let i = index" [attr.data-index]="i">
               <th scope="row">{{ i }}</th>
               <td>{{ user.firstName }}</td>
               <td>{{ user.lastName }}</td>

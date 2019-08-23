@@ -59,15 +59,15 @@ export class AuthComponent implements OnInit {
     const pattern: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return (control: AbstractControl) => {
       const isValid = pattern.test(control.value);
-      return  isValid ? null : error_message 
+      return isValid ? null : error_message
     }
 
   }
- 
+
 
   //check password equal
   private passwordsAreEqual(): ValidatorFn {
-    const error_message = { passwordsAreEqual: { msg: 'Passwords are not equal' }}
+    const error_message = { passwordsAreEqual: { msg: 'Passwords are not equal' } }
     return (group: FormGroup) => {
       const isEqual = group.get('pwd').value === group.get('confirm').value;
       return isEqual ? null : error_message;
@@ -95,17 +95,19 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     console.log('this is pwd', this.pwd);
     this.state.header.basket.products = this.storage.getBasketFromStorage()
-    setInterval(() => {
-      console.log(this.userForm)
-    }, 1000)
+    // setInterval(() => {
+    //   console.log(this.userForm)
+    // }, 1000)
   }
   async signIn() {
     try {
       const userData = {
         email: this.userForm.controls.email.value,
-        password: this.userForm.controls.pwd.value
+        password: this.pwd.value
       }
+      console.log('sign in')
       const fromServer: any = await this.api.login(userData)
+      this.userForm.reset()
       console.log('result', fromServer);
       if (fromServer.ok) {
         this.state.header.isLogged = true;
@@ -122,9 +124,10 @@ export class AuthComponent implements OnInit {
         firstName: this.userForm.controls.firstName.value,
         lastName: this.userForm.controls.lastName.value,
         email: this.userForm.controls.email.value,
-        password: this.userForm.controls.pwd.value
+        password: this.pwd.value
       }
       const fromServer: any = await this.api.register(userData)
+      this.userForm.reset()
       if (fromServer.ok == false) this.state.error.dublicate_user = true;
 
       console.log('result', fromServer);
@@ -132,6 +135,8 @@ export class AuthComponent implements OnInit {
       console.log(error)
     }
   }
+ 
+
   logForm() {
     console.log(this.userForm);
 
