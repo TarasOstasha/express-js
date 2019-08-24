@@ -49,9 +49,17 @@ export class AdminComponent implements OnInit {
       productCategories: [],
       checkedCategory: ''
     },
-    userTableRange: 5,
-    userTablePage: 1,
-    userSearch: '',
+    table: {
+      user: {
+        range: 5,
+        start: 0,
+        end: 4,
+        page: 1,
+        search: ''
+        
+      }
+    },
+    
     productSearchResult: [], // idea???
     userSearchResult: [] // idea???
   }
@@ -126,19 +134,19 @@ export class AdminComponent implements OnInit {
     this.errorHandler
   }
 
- 
 
-  userFilter() {
-    const users = JSON.parse(JSON.stringify(this.state.users));
-    const _value = (users || [])
-    if (this.state.userSearch !== '') {
-      const patt = new RegExp(this.state.userSearch);
-      const result = _value.filter(item => patt.test(item.firstName))
-      return result
-    } else return _value
-  }
+//example
+  // userFilter() {
+  //   const users = JSON.parse(JSON.stringify(this.state.users));
+  //   const _value = (users || [])
+  //   if (this.state.table.user.search !== '') {
+  //     const patt = new RegExp(this.state.table.user.search);
+  //     const result = _value.filter(item => patt.test(item.firstName))
+  //     return result
+  //   } else return _value
+  // }
 
- //length array = 20 el
+  //length array = 20 el
   //limit = 5
   //current page 1
   //output from 0 to 4 el (1-5)
@@ -146,21 +154,34 @@ export class AdminComponent implements OnInit {
   //start = end - limit
   //getter
   get clipped_users() {
-    const users = this.userFilter();
-    const range = this.state.userTableRange //limit
-    const page = this.state.userTablePage // page
-    const end = page * range;
-    const start = end - range;
-
-    const corrected_end = (end > users.length) ? users.length : end
+    const table = this.state.table.user;
+    //const users = JSON.parse(JSON.stringify(this.state.users)); // copy object instead link
+    const users = this.clone(this.state.users);
+    //const range = this.state.table.user.range //limit
+    const end = this.tableEnd(table);
+    const start = this.tableStart(table);
+    //const corrected_end = (end > users.length) ? users.length : end
+    const corrected_end = this.tableActuallyEnd(table, users);
     const result = (users.length > 0) ? users.splice(start, corrected_end) : users
-    console.log('clipped', 'start-', start, 'end-', corrected_end, 'users', users, 'result-', result, 'limit-', range)
+    //console.log('clipped', 'start-', start, 'end-', corrected_end, 'users', users, 'result-', result, 'limit-', table.range)
     return result;
   }
 
 
+  //example of clone
+  // clone1(obj) {
+  //   return JSON.parse(JSON.stringify(obj));
+  // }
+
+  clone = (obj) => JSON.parse(JSON.stringify(obj)); // the same as clone1
+
+  //table = this.state.table.user
+  tableEnd = (table) =>  table.range * table.page;
+  tableStart = (table) => this.tableEnd(table) - table.range;
+  tableActuallyEnd = (table, arr) => (this.tableEnd(table) > arr.length) ? arr.length : this.tableEnd(table);
+  
 
 
 }
 
-
+//read about getter and setter!!!
