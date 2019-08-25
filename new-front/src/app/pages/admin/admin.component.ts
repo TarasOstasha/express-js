@@ -68,14 +68,14 @@ export class AdminComponent implements OnInit {
     try {
       const fromServer: any = await this.api.getProducts();
       this.state.products = fromServer.products;
-      console.log(this.state.products);
+      //console.log(this.state.products);
       const users: any = await this.api.getUsers()
       this.state.users = users.users;
 
       //console.log(users)
       const results: any = await this.searchService.search(this.searchTerm$)
       //this.state.products = results;
-      console.log(results);
+      //console.log(results);
       this.getproductCategories();
     } catch (error) {
       this.errorHandler(error);
@@ -180,7 +180,24 @@ export class AdminComponent implements OnInit {
   tableStart = (table) => this.tableEnd(table) - table.range;
   tableActuallyEnd = (table, arr) => (this.tableEnd(table) > arr.length) ? arr.length : this.tableEnd(table);
   
+  numToArray(number) {
+    const listOfPagination = [];
+    for(let i = 1; i < number+1; i++) {
+      //console.log('this is I', i)
+      listOfPagination.push(i);
+    }
+    return listOfPagination;
+  }
 
+  amountOfPage(table, arr) {
+    //console.log('arr', arr, 'table', table)
+    return Math.ceil(arr.length / table.range);
+    
+  }
+
+  clickPagination(currentPage) {
+    this.state.table.user.page = currentPage;
+  }
 
 }
 

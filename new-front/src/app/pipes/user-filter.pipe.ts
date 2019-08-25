@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class UserFilterPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    console.log('this is value', value) //array of all users
-    console.log('this is args', args) //value from input ngModel user
+    //console.log('this is value', value) //array of all users
+    //console.log('this is args', args) //value from input ngModel user
     const _value = (value || [])
     if (args !== '' && args !== undefined) {
       const patt = new RegExp(args);

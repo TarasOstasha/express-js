@@ -134,7 +134,7 @@ export class NewProductsComponent implements OnInit {
 
   // FILE UPLOADER - BEGIN
   upload_i // counter
-  max_size_req = 1000//99999
+  max_size_req = 10000//99999
   uploaded
   onChange2() {
     this.uploaded = 0
@@ -143,7 +143,7 @@ export class NewProductsComponent implements OnInit {
     var file = (<HTMLInputElement>document.getElementById(name)).files[0];  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
     log('file', file)
     log('file size', file.size)
-    let times = Math.ceil(file.size / this.max_size_req) //amount of peases 
+    let times = Math.ceil(file.size / this.max_size_req)+1 //amount of peases 
     log('TIMES:::::: ', times)
     this.upload(file, times)
   }
@@ -200,13 +200,17 @@ export class NewProductsComponent implements OnInit {
       if (times > this.upload_i) {
         log('.............REPEAT !!!', times, this.upload_i)
         this.uploaded = Math.floor((100 / times) * this.upload_i)
-        setTimeout(() => { this.upload(file, times) }, 2000)
+        //setTimeout(() => { this.upload(file, times) }, 2000)
+        this.upload(file, times) 
+
         // Repeat
       }
       else {
         log('..........END !!! ', times, this.upload_i)
         this.uploaded = 100
-        setTimeout(() => this.uploaded = undefined, 1000)
+        //setTimeout(() => this.uploaded = undefined, 1000)
+        this.uploaded = undefined;
+
       }
 
       // error => {
