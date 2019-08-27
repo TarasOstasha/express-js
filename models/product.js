@@ -9,22 +9,22 @@ let Product = mongoose.model('Product', {
     description: String,
     img: String,
     imgSport: String,
-    // fashionLine: String,
-    // model: String,
-    // modelType: String,
-    // collection: String,
-    // size: Number,
-    // typeOfSize: Number,
-    // selectedSize: Number,
-    // color: String,
-    // colorProducts: String,
-    // selectedColor: String,
-    // text: String,
-    // price: Number,
-    // stars: {
-    //   public: Number,
-    //   privite: Number
-    // }
+    fashionLine: String,
+    model: String,
+    modelType: String,
+    _collection: String,
+    size: Number,
+    typeOfSize: [],
+    selectedSize: Number,
+    color: String,
+    colorProducts: [],
+    selectedColor: String,
+    text: String,
+    price: Number,
+    stars: {
+      public: Number,
+      private: Number
+    }
 });
 
 

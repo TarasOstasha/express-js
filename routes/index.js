@@ -147,7 +147,11 @@ router.post('/search', cors(), function (req, res, next) {
 });
 
 router.get('/products', cors(), function (req, res, next) {
-  res.json({ ok: true, products: cards })
+  Product.find().then((products)=>{
+    res.json({ ok: true, products: products })
+  }).catch((err) =>{
+    console.log(err);
+  });
 });
 
 
@@ -286,17 +290,17 @@ router.post('/upload2', async (req, res) => {
   log('Upload');
   try {
       // var-s
-      let productId = 'test';
+      let productId = 'test'; 
       let load_type = req.body.load_type
-      let user_folder = './uploads/' + productId
+      let user_folder = './public/uploads/' //+ productId
       let path = user_folder + '/' + req.body.name
       // Logs
       log(req.body)
       // log(`req.body:`.info)
       // log('TYPE '.info, req.body.load_type)
       // create General Folder ?
-      if (!fs.existsSync('./uploads')) {
-          fs.mkdirSync('./uploads')
+      if (!fs.existsSync('./public/uploads')) {
+          fs.mkdirSync('./public/uploads')
       }
       // create User Folder ?
       if (!fs.existsSync(user_folder)) {

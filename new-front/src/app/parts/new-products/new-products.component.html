@@ -27,11 +27,10 @@
         </button>
       </div>
       <div class="category" *ngFor="let category of state.productCategories">
-
         <span>{{ category }}</span>
         <div class="btn-group">
           <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
-            <i class="fa fa-minus-circle"></i>
+            <i class="fa fa-minus-circle"></i> 
           </button>
         </div>
       </div>

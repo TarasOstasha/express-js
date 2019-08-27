@@ -261,10 +261,10 @@
           <tbody>
             <tr *ngFor="let product of state.products; let i = index" [attr.data-index]="i">
               <th scope="row">{{ i }}</th>
-              <td>{{ product.title }}</td>
-              <td>{{ product.id }}</td>
+              <td>{{ product._id }}</td>
+              <!-- <td>{{ product.id }}</td> -->
               <td>{{ product.model }}</td>
-              <td>{{ product.stars.public }}</td>
+              <!-- <td>{{ product.stars.public || '***'}}</td> -->
               <td>{{ product.text }}</td>
             </tr>
           </tbody>

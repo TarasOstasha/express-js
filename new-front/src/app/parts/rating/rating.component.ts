@@ -8,12 +8,12 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angu
 })
 export class RatingComponent implements OnChanges {
   @Input() ratingPublic;
-  @Input() ratingPrivite;
+  @Input() ratingPrivate;
   //starWidth: number;
 
   checkedStar(icon) {
     console.log(icon); //send data to server
-    this.ratingPrivite = icon * 20;
+    this.ratingPrivate = icon * 20;
   }
 
 

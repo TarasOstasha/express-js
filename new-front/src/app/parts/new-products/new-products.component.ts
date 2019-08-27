@@ -100,10 +100,29 @@ export class NewProductsComponent implements OnInit {
   async sendNewProduct() {
     try {
       const newProduct = {
+        img: this.state.currentNewProductImg,
+        imgSport: 'assets/img/nike_Logo_White.png',
+        fashionLine: 'FAS',
+        model: 'Hartbee',
+        modelType: 'sport',
+        _collection: 'Basket Ball Collection',
+        size: 7,
+        typeOfSize: [7, 8, 9, 10, 11],
+        selectedSize: 8,
+        color: 'color',
+        colorProducts: ['orange', 'green', 'yellow'],
+        selectedColor: 'orange',
+        text: 'description',
+        stars: {
+          public: 50,
+          privite: 35.5
+        },
         productName: this.state.productName,
         checkedCategory: this.state.checkedCategory,
         price: this.state.productPrice,
         description: this.quill.container.firstChild.innerHTML
+
+
       }
       const fromServer: any = await this.api.addProduct(newProduct)
       if (fromServer.ok) alert('new product has been created');
@@ -143,8 +162,9 @@ export class NewProductsComponent implements OnInit {
     var file = (<HTMLInputElement>document.getElementById(name)).files[0];  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
     log('file', file)
     log('file size', file.size)
-    let times = Math.ceil(file.size / this.max_size_req)+1 //amount of peases 
+    let times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
     log('TIMES:::::: ', times)
+    this.state.currentNewProductImg = 'http://localhost:3000/uploads/' + file.name;
     this.upload(file, times)
   }
   upload(file, times) {
@@ -188,7 +208,7 @@ export class NewProductsComponent implements OnInit {
       log(data)
       if (times == this.upload_i) {
         //alert('good job');
-        swal({
+        swal.fire({
           title: "Good job!",
           text: "File successfully added",
           icon: "success",
@@ -201,7 +221,7 @@ export class NewProductsComponent implements OnInit {
         log('.............REPEAT !!!', times, this.upload_i)
         this.uploaded = Math.floor((100 / times) * this.upload_i)
         //setTimeout(() => { this.upload(file, times) }, 2000)
-        this.upload(file, times) 
+        this.upload(file, times)
 
         // Repeat
       }

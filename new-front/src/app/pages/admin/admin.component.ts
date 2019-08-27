@@ -47,7 +47,8 @@ export class AdminComponent implements OnInit {
       productName: '',
       productPrice: 0,
       productCategories: [],
-      checkedCategory: ''
+      checkedCategory: '',
+      currentNewProductImg: 'assets/img/sws1.png'
     },
     table: {
       user: {
