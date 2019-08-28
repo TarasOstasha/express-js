@@ -37,7 +37,7 @@ body {
 .card {
 	border-radius: 25px;
     box-shadow: -11px 11px 1px rgba(0, 0, 0, 0.3);
-    height: 500px;
+    //ßheight: 500px;
 	//margin: 30px auto;
     width: 280px;
     display: inline-block;
@@ -58,9 +58,11 @@ body {
 	width: 55px;
 }
 .product-img {
+	width: 100%;
 	left: 0;
-	margin-left: 50px;
-	margin-top: -16px;
+	//margin-left: 50px;
+	//margin-top: -16px;
+	height: inherit;
 	position: absolute;
 }
 .product-detail {
@@ -178,7 +180,9 @@ body {
 	}
 }
 .ul-color {
-	margin-left: 27px;
+	//margin-left: 27px;
+	padding: 10px 27px;
+	display: inline-block;
 	li {
 		float: left;
 		list-style: none;
@@ -214,15 +218,17 @@ body {
 	}
 }
 .product-price {
+	display: block;
+	margin-top: 2%;
 	background: @color3;
 	border-radius: 7px;
 	box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
 	color: @color1;
-	display: inline-block;
+	//display: inline-block;
 	font-size: 24px;
 	font-weight: 200;
 	margin-left: -5px;
-	margin-top: -13px;
+	//margin-top: -13px;
 	padding: 7px 20px;
 	position: absolute;
     text-align: center;

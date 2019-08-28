@@ -32,6 +32,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { NewProductsComponent } from './parts/new-products/new-products.component';
 import { FormValidatorComponent } from './parts/general/form-validator/form-validator.component';
 import { UserFilterPipe } from './pipes/user-filter.pipe';
+import { ProductComponent } from './pages/product/product.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UserFilterPipe } from './pipes/user-filter.pipe';
     AdminComponent,
     NewProductsComponent,
     FormValidatorComponent,
-    UserFilterPipe
+    UserFilterPipe,
+    ProductComponent
     
   ],
   imports: [

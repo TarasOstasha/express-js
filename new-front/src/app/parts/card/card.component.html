@@ -9,7 +9,7 @@
 
 
 <!-- <div class="container"> -->
-    <div class="card">
+    <div class="card" (click)="full_card()" routerLink="/products/qw3c">
         <div class="card-head">
             <img [src]=state.imgSport alt="logo" class="card-logo">
             <img [src]=state.img alt="Shoe" class="product-img">
@@ -49,7 +49,8 @@
                         <!-- how to add class active -->
                         <li *ngFor="let size of state.typeOfSize">
                             <a 
-                                (click)="onSelectSize(size)" href="javascript:void(0)" 
+                                (click)="onSelectSize(size); $event.stopPropagation()" 
+                                href="javascript:void(0)" 
                                 [class.active]="size == state.selectedSize"
                             >
                             {{ size }}</a>
@@ -67,7 +68,7 @@
                         <!-- how to add class active -->
                         <li *ngFor="let color of state.colorProducts">
                             <a [style.background]="color"
-                                (click)="state.selectedColor = color;"
+                                (click)="state.selectedColor = color; $event.stopPropagation()"
                                 [class.active]="color == state.selectedColor"
                             >
                             </a>
@@ -76,7 +77,7 @@
                         <li><a href="#" class="yellow"></a></li> -->
                     </ul>
                 </span>
-                <button (click)=buyProduct() class="product-price">
+                <button (click)=buyProduct($event) class="product-price">
                     USD<b>{{ state.price }}</b>
                 </button>
             </div>

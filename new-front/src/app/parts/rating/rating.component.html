@@ -3,7 +3,7 @@
   [title]="ratingPublic" >
   
   <div class="icons">
-    <img src="assets/img/anti-start.png" class="icon-img" *ngFor="let icon of [1,2,3,4,5]" (click)="checkedStar(icon)">
+    <img src="assets/img/anti-start.png" class="icon-img" *ngFor="let icon of [1,2,3,4,5]" (click)="checkedStar(icon); $event.stopPropagation()">
   </div>
   <div class="transparent1"[style.width.%]="ratingPublic"></div>
   <div class="transparent2"[style.width.%]="ratingPrivate"></div>

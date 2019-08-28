@@ -20,7 +20,8 @@ export class CardComponent implements OnInit {
     console.log('state', this.state);
   }
 
-  buyProduct() {
+  buyProduct(event) {
+    event.stopPropagation();
     this.onChanged.emit(this.state);
   }
 
@@ -28,5 +29,9 @@ export class CardComponent implements OnInit {
   public onSelectSize(size): void {
     this.state.selectedSize = size;
     console.log(size);
+  }
+
+  full_card() {
+    console.log('card')
   }
 }
