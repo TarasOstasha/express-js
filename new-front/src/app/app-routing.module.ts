@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'p404', component: P404Component },
   { path: 'admin', component:  AdminComponent},
-  { path: 'products/:productId', component: ProductComponent },
+  { path: 'product/:productId', component: ProductComponent },
   { path: '**', redirectTo: '/p404' } //should be last one
 ];
 

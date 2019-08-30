@@ -154,6 +154,16 @@ router.get('/products', cors(), function (req, res, next) {
   });
 });
 
+router.get('/product/:id', cors(), function (req, res, next) {
+  console.log(req.params.id);
+  const _id = req.params.id;
+  Product.findOne({_id}).then((product)=>{
+    res.json({ ok: true, product: product })
+  }).catch((err) =>{
+    console.log(err);
+  });
+});
+
 
 
 // facebook

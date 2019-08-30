@@ -31,7 +31,7 @@ export class CardComponent implements OnInit {
     console.log(size);
   }
 
-  full_card() {
+  async full_card() {
     console.log('card')
   }
 }

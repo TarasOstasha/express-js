@@ -46,7 +46,7 @@ declare var elements: any;
     ]),
   ]
 })
-export class BasketPopupComponent implements OnInit, OnDestroy { //AfterViewInit, also add
+export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   paymentForm: FormGroup; //set type
   //@ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -118,10 +118,10 @@ export class BasketPopupComponent implements OnInit, OnDestroy { //AfterViewInit
   //   this.card.addEventListener('change', this.cardHandler);
   // }
 
-  ngOnDestroy() {
-    this.card.removeEventListener('change', this.cardHandler);
-    this.card.destroy();
-  }
+  // ngOnDestroy() {
+  //   this.card.removeEventListener('change', this.cardHandler);
+  //   this.card.destroy();
+  // }
   onChange({ error }) {
     if (error) {
       this.error = error.message;

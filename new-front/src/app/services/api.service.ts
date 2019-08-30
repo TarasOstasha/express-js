@@ -27,6 +27,10 @@ export class ApiService {
     return this.http.post('http://localhost:3000/register', userData, httpOptions).toPromise();
   }
 
+  getProduct(id) {
+    return this.http.get('http://localhost:3000/product/' + id).toPromise(); //productID
+  }
+
   getTodos() {
     return this.http.get<Todo[]>('http://localhost:3000/todos') //leave becouse we don't use it
   }
