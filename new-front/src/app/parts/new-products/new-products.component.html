@@ -30,7 +30,7 @@
         <span>{{ category }}</span>
         <div class="btn-group">
           <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
-            <i class="fa fa-minus-circle"></i> 
+            <i class="fa fa-minus-circle"></i>
           </button>
         </div>
       </div>
@@ -55,11 +55,15 @@
 
 
       <div class="row">
-        <input type="file" id="upload" (change)="onChange2($event)">
-        <button (click)="testcode()">test code</button>
+        <input type="file" id="upload" (change)="onChange2($event)" multiple="multiple">
+        <!-- <button (click)="testcode()">test code</button> -->
       </div>
-
-
+       fileQuantity - {{ fileQuantity }}, fileCounter - {{ fileCounter-2 }}
+      <div class="progress" *ngIf="(round(100/times*upload_i ))">
+        <div class="progress-bar" [style.background]=" (round(100/times*upload_i) == 100) ? 'green':'blue' "
+          role="progressbar" [style.width]="round(100/times*upload_i )+'%'" aria-valuenow="25" aria-valuemin="0"
+          aria-valuemax="100">{{ round(100/times*upload_i ) }}%</div>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <div class="input-pic">

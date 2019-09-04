@@ -48,24 +48,7 @@ export class NewProductsComponent implements OnInit {
   errHandler(err) {
     console.log(err);
   }
-  onChange(event) {
-    var preview: any = document.querySelector('img');
-    //var files: any = document.querySelector('input[type=file]');
-    var file = (<HTMLInputElement>document.getElementById("uploadFile")).files[0];
-    var reader = new FileReader();
 
-    reader.onloadend = function () {
-      preview.src = reader.result;
-    }
-    console.log(file);
-    if (file) {
-      console.log('if')
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = "";
-      console.log('else')
-    }
-  }
 
 
 
@@ -133,38 +116,52 @@ export class NewProductsComponent implements OnInit {
 
   }
 
-  testcode() {
-    console.log('çlick');
-    // function eventFire(el, etype){
-    //   if (el.fireEvent) {
-    //     el.fireEvent('on' + etype);
-    //   } else {
-    //     var evObj = document.createEvent('Events');
-    //     evObj.initEvent(etype, true, false);
-    //     el.dispatchEvent(evObj);
-    //   }
-    // }
 
-    // const button = document.querySelector('#uploadForm');
-    // eventFire(button, 'submit')
+  onChange(event) {
+    var preview: any = document.querySelector('img');
+    //var files: any = document.querySelector('input[type=file]');
+    var file = (<HTMLInputElement>document.getElementById("uploadFile")).files[0];
+    var reader = new FileReader();
 
-
+    reader.onloadend = function () {
+      preview.src = reader.result;
+    }
+    console.log(file);
+    if (file) {
+      console.log('if')
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = "";
+      console.log('else')
+    }
   }
-
+  
   // FILE UPLOADER - BEGIN
   upload_i // counter
+  times; //time
   max_size_req = 10000//99999
-  uploaded
+  uploaded;
+  fileQuantity;
+  fileCounter;
+  files;
   onChange2() {
     this.uploaded = 0
     this.upload_i = 0
     let name = 'upload'
-    var file = (<HTMLInputElement>document.getElementById(name)).files[0];  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
-    log('file', file)
-    log('file size', file.size)
+    this.files = (<HTMLInputElement>document.getElementById(name)).files;  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
+    // for(let x in files) {
+    //   console.log('in', x)
+    // }
+    this.fileQuantity = this.files.length;
+    this.fileCounter = 1;
+
+    const file = this.files[0];
+    //log('file', file)
+    //log('file size', file.size)
     let times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
-    log('TIMES:::::: ', times)
+    //log('TIMES:::::: ', times)
     this.state.currentNewProductImg = 'http://localhost:3000/uploads/' + file.name;
+    this.times = times;
     this.upload(file, times)
   }
   upload(file, times) {
@@ -178,14 +175,14 @@ export class NewProductsComponent implements OnInit {
     let end = begin + max
     // коли останній кусок тоді зрізаємо пусте
     if (end > file.size) end = file.size
-    log("Upload SLICE  (begin end): ", begin, end)
+    //log("Upload SLICE  (begin end): ", begin, end)
     // take link to one chunk
     var slice = file.slice(begin, end) //0, file.size
     // set type of chunk
     if (this.upload_i == 1) var load_type = 'new'
     else if (this.upload_i > 1) var load_type = 'append'
-    log('Upload STEP # : ', this.upload_i)
-    log('Uplod CHUNK Type', load_type)
+    //log('Upload STEP # : ', this.upload_i)
+    //log('Uplod CHUNK Type', load_type)
     // take access to file API
     var fileReader: any = new FileReader()
     // read chunk as binary type
@@ -195,7 +192,7 @@ export class NewProductsComponent implements OnInit {
       // show in console.log  
       var array = new Int8Array(fileReader.result);
       let output = JSON.stringify(array, null, '  ');
-      log('LOAD fileReader.result', output)
+      //log('LOAD fileReader.result', output)
       // gathering part of file
       const piece = {
         load_type: load_type, // ..... new or append
@@ -203,42 +200,35 @@ export class NewProductsComponent implements OnInit {
         data: fileReader.result // ... data
       }
       // =>>>> SEND to backend
-      const data = await this.api.upload(piece)
-
-      log(data)
+      const data = await this.api.upload(piece);
+      //last chunk of file
       if (times == this.upload_i) {
-        //alert('good job');
-        swal.fire({
-          title: "Good job!",
-          text: "File successfully added",
-          icon: "success",
-        })
-        //refresh
-        //this.get_files()
+        this.fileCounter++;
+        //upload next file?
+        if (this.fileQuantity >= this.fileCounter) { this.uploadNextFile(); }
+        log('loaded', this.fileCounter);
+        alert('good job');
+        // swal.fire({
+        //   title: "Good job!",
+        //   text: "File successfully added",
+        //   icon: "success",
+        // })
       }
-
-      if (times > this.upload_i) {
-        log('.............REPEAT !!!', times, this.upload_i)
-        this.uploaded = Math.floor((100 / times) * this.upload_i)
-        //setTimeout(() => { this.upload(file, times) }, 2000)
-        this.upload(file, times)
-
-        // Repeat
-      }
-      else {
-        log('..........END !!! ', times, this.upload_i)
-        this.uploaded = 100
-        //setTimeout(() => this.uploaded = undefined, 1000)
-        this.uploaded = undefined;
-
-      }
-
-      // error => {
-      //   //alert('error')
-      //   swal("Oops", "Something went wrong in 'upload()' !", "error")
-      // })
+      //first and middle chunks
+      if (times > this.upload_i) this.upload(file, times);
     }
   }
 
-
+  round = (x) => Math.round(x); //progress bar
+  //upload next file
+  uploadNextFile() {
+    const file = this.files[this.fileCounter - 1]; //current upload file
+    //3 0
+    const times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
+    this.upload_i = 0;
+    this.upload(file, times);
+    console.log('this is upload', file, times, this.fileCounter) //undefined
+  }
 }
+
+
