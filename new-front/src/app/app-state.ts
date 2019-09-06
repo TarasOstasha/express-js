@@ -15,6 +15,7 @@ const appState = {
       searchResult: []
     },
     products: []
+    
   }
 
  export default appState;

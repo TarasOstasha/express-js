@@ -55,7 +55,7 @@
 
 
       <div class="row">
-        <input type="file" id="upload" (change)="onChange2($event)" multiple="multiple">
+        <!-- <input type="file" id="upload" (change)="onChange($event)" multiple="multiple"> -->
         <!-- <button (click)="testcode()">test code</button> -->
       </div>
        fileQuantity - {{ fileQuantity }}, fileCounter - {{ fileCounter-2 }}
@@ -65,24 +65,16 @@
           aria-valuemax="100">{{ round(100/times*upload_i ) }}%</div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" *ngFor="let preview of state.previews; let i = index;">
+          {{ i }}
           <div class="input-pic">
-            <input id="uploadFile" type="file" (change)="onChange($event)" class="form-control">
-            <img src="http://via.placeholder.com/400x300" alt="Image preview..." class="img-fluid mh-100 mw-100">
+            <input id="upload" type="file" (change)="onChange($event)" class="form-control" multiple="multiple">
+            <img [src]="preview.reader.result" alt="Image preview..." class="img-fluid mh-100 mw-100">
+            <i (click)='state.previews.splice(i,1)' class="fa fa-window-close" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="input-pic">
-            <input type="file" onchange="previewFile()" class="form-control">
-            <img src="http://via.placeholder.com/400x300" alt="Image preview..." class="img-fluid mh-100 mw-100">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="input-pic">
-            <input type="file" onchange="previewFile()" class="form-control">
-            <img src="http://via.placeholder.com/400x300" alt="Image preview..." class="img-fluid mh-100 mw-100">
-          </div>
-        </div>
+        
+        
       </div>
     </div>
     <button (click)="sendNewProduct()" type="submit" class="btn btn-primary">Submit</button>

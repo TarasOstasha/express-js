@@ -17,6 +17,8 @@ export class NewProductsComponent implements OnInit {
   quill: any;
 
   ngOnInit() {
+    console.log(this.state.previews)
+
     let toolBarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
@@ -117,25 +119,7 @@ export class NewProductsComponent implements OnInit {
   }
 
 
-  onChange(event) {
-    var preview: any = document.querySelector('img');
-    //var files: any = document.querySelector('input[type=file]');
-    var file = (<HTMLInputElement>document.getElementById("uploadFile")).files[0];
-    var reader = new FileReader();
 
-    reader.onloadend = function () {
-      preview.src = reader.result;
-    }
-    console.log(file);
-    if (file) {
-      console.log('if')
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = "";
-      console.log('else')
-    }
-  }
-  
   // FILE UPLOADER - BEGIN
   upload_i // counter
   times; //time
@@ -144,14 +128,18 @@ export class NewProductsComponent implements OnInit {
   fileQuantity;
   fileCounter;
   files;
-  onChange2() {
+  onChange() {
     this.uploaded = 0
     this.upload_i = 0
-    let name = 'upload'
+    let name = 'upload';
     this.files = (<HTMLInputElement>document.getElementById(name)).files;  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
-    // for(let x in files) {
-    //   console.log('in', x)
-    // }
+    console.log('this files', this.files)
+
+    //step one - remove first example photo
+    this.state.previews = this.state.previews.filter((elem)=>{
+      return (elem.reader.result == "assets/img/400x300.png") ? false : true;
+    })
+
     this.fileQuantity = this.files.length;
     this.fileCounter = 1;
 
@@ -163,6 +151,20 @@ export class NewProductsComponent implements OnInit {
     this.state.currentNewProductImg = 'http://localhost:3000/uploads/' + file.name;
     this.times = times;
     this.upload(file, times)
+    //preview
+    //const preview: any = document.querySelector('img');
+    for (let i = 0; i < this.files.length; i++) {
+      const reader = new FileReader();
+      reader.onloadend =  ()=> {
+        this.state.previews.push({
+          reader: reader
+        })
+        // preview.src = reader.result;
+  
+      }
+      reader.readAsDataURL(this.files[i]);
+    }
+
   }
   upload(file, times) {
     //  aliases
