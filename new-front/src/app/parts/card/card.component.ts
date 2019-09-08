@@ -34,4 +34,5 @@ export class CardComponent implements OnInit {
   async full_card() {
     console.log('card')
   }
+
 }

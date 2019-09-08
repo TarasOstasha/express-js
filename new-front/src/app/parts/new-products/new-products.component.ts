@@ -17,8 +17,6 @@ export class NewProductsComponent implements OnInit {
   quill: any;
 
   ngOnInit() {
-    console.log(this.state.previews)
-
     let toolBarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
@@ -84,8 +82,14 @@ export class NewProductsComponent implements OnInit {
 
   async sendNewProduct() {
     try {
+      let imgs = [];
+      for(let i = 0; i < this.files.length; i++) {
+        imgs.push('http://localhost:3000/uploads/' + this.files[i].name);
+      }
       const newProduct = {
-        img: this.state.currentNewProductImg,
+        //img: this.state.currentNewProductImg,
+        img: this.getNumberPhoto(),
+        imgs: imgs,
         imgSport: 'assets/img/nike_Logo_White.png',
         fashionLine: 'FAS',
         model: 'Hartbee',
@@ -127,13 +131,14 @@ export class NewProductsComponent implements OnInit {
   uploaded;
   fileQuantity;
   fileCounter;
-  files;
+  files:any={};
   onChange() {
     this.uploaded = 0
     this.upload_i = 0
     let name = 'upload';
     this.files = (<HTMLInputElement>document.getElementById(name)).files;  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
     console.log('this files', this.files)
+
 
     //step one - remove first example photo
     this.state.previews = this.state.previews.filter((elem)=>{
@@ -209,12 +214,12 @@ export class NewProductsComponent implements OnInit {
         //upload next file?
         if (this.fileQuantity >= this.fileCounter) { this.uploadNextFile(); }
         log('loaded', this.fileCounter);
-        alert('good job');
-        // swal.fire({
-        //   title: "Good job!",
-        //   text: "File successfully added",
-        //   icon: "success",
-        // })
+        //alert('good job');
+        swal.fire({
+          title: "Good job!",
+          text: "File successfully added",
+          icon: "success",
+        })
       }
       //first and middle chunks
       if (times > this.upload_i) this.upload(file, times);
@@ -231,6 +236,24 @@ export class NewProductsComponent implements OnInit {
     this.upload(file, times);
     console.log('this is upload', file, times, this.fileCounter) //undefined
   }
+
+  checkMainPhoto(index) {
+    this.state.previews.map((el, i)=>{
+      this.state.previews[i].main = false;
+    })
+    this.state.previews[index].main = true;
+  }
+//get number of main photo
+  getNumberPhoto() {
+    for(let i = 0;i < this.state.previews.length; i++) {
+      if(this.state.previews[i].main == true) {
+        return i;
+      }
+    }
+    return 0;
+  }
+  
+
 }
 
 

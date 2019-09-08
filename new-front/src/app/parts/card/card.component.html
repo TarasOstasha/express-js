@@ -11,8 +11,8 @@
 <!-- <div class="container"> -->
     <div class="card" (click)="full_card()" routerLink="/product/{{state._id}}">
         <div class="card-head">
-            <img [src]=state.imgSport alt="logo" class="card-logo">
-            <img [src]=state.img alt="Shoe" class="product-img">
+            <img [src]="state.imgSport" alt="logo" class="card-logo">
+            <img [src]="state.imgs[this.state.img]" alt="Shoe" class="product-img">
             <div class="product-detail">
                 <h2>{{ state.productName }}</h2> 
             </div>

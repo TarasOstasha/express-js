@@ -18,7 +18,10 @@ export class ProductComponent implements OnInit {
   ) {
 
     this.state = state;
-    this.state.product = {}
+    this.state.product = {
+      img: 0,
+      imgs: ['https://images.app.goo.gl/qryHY5QDqt7mmdxZ8']
+    }
   }
   async getProductIdFromServer() {
     try {
