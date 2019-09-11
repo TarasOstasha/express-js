@@ -132,14 +132,12 @@ export class NewProductsComponent implements OnInit {
   fileQuantity;
   fileCounter;
   files:any={};
+
   onChange() {
+    this.files = (<HTMLInputElement>document.getElementById('upload')).files;  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
     this.uploaded = 0
     this.upload_i = 0
-    let name = 'upload';
-    this.files = (<HTMLInputElement>document.getElementById(name)).files;  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
     console.log('this files', this.files)
-
-
     //step one - remove first example photo
     this.state.previews = this.state.previews.filter((elem)=>{
       return (elem.reader.result == "assets/img/400x300.png") ? false : true;
@@ -155,7 +153,6 @@ export class NewProductsComponent implements OnInit {
     //log('TIMES:::::: ', times)
     this.state.currentNewProductImg = 'http://localhost:3000/uploads/' + file.name;
     this.times = times;
-    this.upload(file, times)
     //preview
     //const preview: any = document.querySelector('img');
     for (let i = 0; i < this.files.length; i++) {
@@ -165,41 +162,34 @@ export class NewProductsComponent implements OnInit {
           reader: reader
         })
         // preview.src = reader.result;
-  
       }
       reader.readAsDataURL(this.files[i]);
     }
+    this.upload(file, times)
+ 
 
   }
   upload(file, times) {
-    //  aliases
-    let i = this.upload_i
+    log('upload begin', this.upload_i)
     let max = this.max_size_req
     // next step
     this.upload_i++
     // set a range
-    let begin = (i - 1) * max
+    let begin = (this.upload_i - 1) * max
     let end = begin + max
     // коли останній кусок тоді зрізаємо пусте
     if (end > file.size) end = file.size
-    //log("Upload SLICE  (begin end): ", begin, end)
     // take link to one chunk
     var slice = file.slice(begin, end) //0, file.size
     // set type of chunk
     if (this.upload_i == 1) var load_type = 'new'
     else if (this.upload_i > 1) var load_type = 'append'
-    //log('Upload STEP # : ', this.upload_i)
-    //log('Uplod CHUNK Type', load_type)
     // take access to file API
     var fileReader: any = new FileReader()
     // read chunk as binary type
     fileReader.readAsBinaryString(slice)
     // when chunk has been red
     fileReader.onload = async (e) => { // e == load { target: FileReader, isTrusted: true, lengthComputable: true, loaded: 1048576, total: 1048576, currentTarget: FileReader, eventPhase: 2, bubbles: false, cancelable: false, defaultPrevented: false, timeStamp: 1474537690010000 }
-      // show in console.log  
-      var array = new Int8Array(fileReader.result);
-      let output = JSON.stringify(array, null, '  ');
-      //log('LOAD fileReader.result', output)
       // gathering part of file
       const piece = {
         load_type: load_type, // ..... new or append
@@ -208,21 +198,24 @@ export class NewProductsComponent implements OnInit {
       }
       // =>>>> SEND to backend
       const data = await this.api.upload(piece);
+      //repeat to upload first and middle chunks   
+      log('i: ', this.upload_i)
       //last chunk of file
-      if (times == this.upload_i) {
+      if (times > this.upload_i) this.upload(file, times)
+      else if (times == this.upload_i) {
         this.fileCounter++;
         //upload next file?
-        if (this.fileQuantity >= this.fileCounter) { this.uploadNextFile(); }
         log('loaded', this.fileCounter);
-        //alert('good job');
-        swal.fire({
-          title: "Good job!",
-          text: "File successfully added",
-          icon: "success",
-        })
+        alert('good job');
+        if (this.fileQuantity >= this.fileCounter) { this.uploadNextFile(); }
+        
+        // swal.fire({
+        //   title: "Good job!",
+        //   text: "File successfully added",
+        //   icon: "success",
+        // })
       }
-      //first and middle chunks
-      if (times > this.upload_i) this.upload(file, times);
+      
     }
   }
 
@@ -233,8 +226,8 @@ export class NewProductsComponent implements OnInit {
     //3 0
     const times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
     this.upload_i = 0;
-    this.upload(file, times);
     console.log('this is upload', file, times, this.fileCounter) //undefined
+    this.upload(file, times);
   }
 
   checkMainPhoto(index) {

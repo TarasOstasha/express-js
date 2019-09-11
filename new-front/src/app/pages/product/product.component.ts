@@ -21,7 +21,8 @@ export class ProductComponent implements OnInit {
     this.state.product = {
       img: 0,
       imgs: ['https://images.app.goo.gl/qryHY5QDqt7mmdxZ8']
-    }
+    },
+    this.state.activeSliderImg = [true];
   }
   async getProductIdFromServer() {
     try {
@@ -76,5 +77,8 @@ export class ProductComponent implements OnInit {
     localStorage.setItem('basket', json);
   }
 
-
+  changeImg(i) {
+    this.state.activeSliderImg = [];
+    this.state.activeSliderImg[i] = true;
+  }
 }
