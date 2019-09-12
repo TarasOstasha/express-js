@@ -149,10 +149,8 @@ export class NewProductsComponent implements OnInit {
     const file = this.files[0];
     //log('file', file)
     //log('file size', file.size)
-    let times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
     //log('TIMES:::::: ', times)
     this.state.currentNewProductImg = 'http://localhost:3000/uploads/' + file.name;
-    this.times = times;
     //preview
     //const preview: any = document.querySelector('img');
     for (let i = 0; i < this.files.length; i++) {
@@ -165,11 +163,13 @@ export class NewProductsComponent implements OnInit {
       }
       reader.readAsDataURL(this.files[i]);
     }
-    this.upload(file, times)
+    this.upload(file)
  
 
   }
-  upload(file, times) {
+  upload(file) {
+    let times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
+    this.times = times;
     log('upload begin', this.upload_i)
     let max = this.max_size_req
     // next step
@@ -190,6 +190,7 @@ export class NewProductsComponent implements OnInit {
     fileReader.readAsBinaryString(slice)
     // when chunk has been red
     fileReader.onload = async (e) => { // e == load { target: FileReader, isTrusted: true, lengthComputable: true, loaded: 1048576, total: 1048576, currentTarget: FileReader, eventPhase: 2, bubbles: false, cancelable: false, defaultPrevented: false, timeStamp: 1474537690010000 }
+      this.progressPercent();
       // gathering part of file
       const piece = {
         load_type: load_type, // ..... new or append
@@ -199,21 +200,21 @@ export class NewProductsComponent implements OnInit {
       // =>>>> SEND to backend
       const data = await this.api.upload(piece);
       //repeat to upload first and middle chunks   
-      log('i: ', this.upload_i)
+      log('i: ', this.upload_i, 'from', this.times)
       //last chunk of file
-      if (times > this.upload_i) this.upload(file, times)
+      if (times > this.upload_i) this.upload(file)
       else if (times == this.upload_i) {
         this.fileCounter++;
         //upload next file?
         log('loaded', this.fileCounter);
-        alert('good job');
+        // alert('good job');
         if (this.fileQuantity >= this.fileCounter) { this.uploadNextFile(); }
         
-        // swal.fire({
-        //   title: "Good job!",
-        //   text: "File successfully added",
-        //   icon: "success",
-        // })
+        swal.fire({
+          title: "Good job!",
+          text: "File successfully added",
+          icon: "success",
+        })
       }
       
     }
@@ -227,7 +228,7 @@ export class NewProductsComponent implements OnInit {
     const times = Math.ceil(file.size / this.max_size_req) + 1 //amount of peases 
     this.upload_i = 0;
     console.log('this is upload', file, times, this.fileCounter) //undefined
-    this.upload(file, times);
+    this.upload(file);
   }
 
   checkMainPhoto(index) {
@@ -245,7 +246,15 @@ export class NewProductsComponent implements OnInit {
     }
     return 0;
   }
-  
+  progressBarPercent = 0;
+  progressPercent() {
+    setTimeout(()=> {
+      this.progressBarPercent = this.round(100/this.times * this.upload_i);
+      log(this.progressBarPercent);
+    })
+
+
+  }
 
 }
 

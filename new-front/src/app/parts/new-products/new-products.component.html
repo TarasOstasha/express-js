@@ -59,11 +59,24 @@
         <!-- <button (click)="testcode()">test code</button> -->
       </div>
       fileQuantity - {{ fileQuantity }}, fileCounter - {{ fileCounter-2 }}
-      <div class="progress" *ngIf="(round(100/times*upload_i ))">
+      <!-- <div class="progress" *ngIf="(round(100/times*upload_i ))">
         <div class="progress-bar" [style.background]=" (round(100/times*upload_i) == 100) ? 'green':'blue' "
           role="progressbar" [style.width]="round(100/times*upload_i )+'%'" aria-valuenow="25" aria-valuemin="0"
-          aria-valuemax="100">{{ round(100/times*upload_i ) }}%</div>
+          aria-valuemax="100">{{ round(2.43902439*upload_i)}} %</div>
+      </div> -->
+
+      <!-- <div class="progress" *ngIf="(round(100/times*upload_i ))">
+        <div class="progress-bar" [style.background]=" (round(100/times*upload_i)/20-2.5 == 100) ? 'green':'blue' "
+          role="progressbar" [style.width]="round(100/times*upload_i )+'%'" aria-valuenow="25" aria-valuemin="0"
+          aria-valuemax="100">{{ round(100/times * upload_i)/20-2.5}} %</div>
+      </div> -->
+
+      <div class="progress" *ngIf="progressBarPercent !== 0;">
+        <div class="progress-bar" [style.background]=" (progressBarPercent == 100) ? 'green':'blue' "
+          role="progressbar" [style.width]="progressBarPercent + '%'" aria-valuenow="25" aria-valuemin="0"
+          aria-valuemax="100">{{ progressBarPercent }} %</div>
       </div>
+
       <div class="row">
         <div class="col-md-4" *ngFor="let preview of state.previews; let i = index;">
           {{ i }}
