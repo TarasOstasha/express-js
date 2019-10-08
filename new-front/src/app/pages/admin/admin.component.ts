@@ -3,7 +3,7 @@ import { ApiService } from '../../services/api.service';
 import { SearchService } from '../../services/search.service';
 import { Subject } from 'rxjs';
 import { Pipe, PipeTransform } from '@angular/core';
-
+import appState from '../../app-state';
 //import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 
@@ -17,60 +17,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
   searchTerm$ = new Subject<string>();
-
+  state = appState.pages.admin;
   constructor(
     private api: ApiService,
     private searchService: SearchService
   ) { }
 
-  state = {
-    header: {
-      isLogged: false,
-      user: {
-        name: ''
-      },
-      basket: {
-        open: false,
-        products: [],
-        defaultData: {
-          states: []
-        },
-        paymentData: {}
-      },
-      searchResult: [],
-    },
-    products: [],
-    productPage: 1,
-    productChunk: 10,
-    users: [],
-    newProduct: {
-      productName: '',
-      productPrice: 0,
-      productCategories: [],
-      checkedCategory: '',
-      currentNewProductImg: 'assets/img/sws1.png',
-      previews: [
-        {
-          reader: {
-            result: "assets/img/400x300.png"
-          }
-        }
-      ]
-    },
-    table: {
-      user: {
-        range: 5,
-        start: 0,
-        end: 4,
-        page: 1,
-        search: ''
-        
-      }
-    },
-    
-    productSearchResult: [], // idea???
-    userSearchResult: [] // idea???
-  }
+ 
 
   async ngOnInit() {
     try {

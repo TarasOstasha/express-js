@@ -24,17 +24,18 @@ export class ProductComponent implements OnInit {
     },
     this.state.activeSliderImg = [true];
   }
-  async getProductIdFromServer() {
+  async getProductIdFromServer(id) {
     try {
-      this.route.paramMap.subscribe(async (params) => {
-        const productId = params.get('productId');
-        console.log(productId)
-        const fromServer: any = await this.api.getProduct(productId);
+      //this.route.paramMap.subscribe(async (params) => {
+
+        //const productId = params.get('productId');
+        console.log(id)
+        const fromServer: any = await this.api.getProduct(id);
         this.state.product = fromServer.product;
         console.log(fromServer);
-      }, err => {
-        console.log(err);
-      })
+      // }, err => {
+      //   console.log(err);
+      // })
 
     } catch (error) {
       console.log(error);
@@ -43,8 +44,14 @@ export class ProductComponent implements OnInit {
 
   }
   ngOnInit() {
+    let id = this.route.snapshot.paramMap.get('productId');
+    let statistic: any = {
+      user: this.state.header.user.name,
+      productId: id
+    }
+    this.api.addUserStatistic(statistic);
     console.log('state', state)
-    this.getProductIdFromServer();
+    this.getProductIdFromServer(id);
 
     setInterval(() => {
       console.log('star public', this.starPublic())

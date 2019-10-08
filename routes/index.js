@@ -146,6 +146,10 @@ router.post('/search', cors(), function (req, res, next) {
   res.json(cards);
 });
 
+router.post('/user-statistic', cors(), function (req, res, next) {
+  res.json('....ok');
+});
+
 router.get('/products', cors(), function (req, res, next) {
   Product.find().then((products)=>{
     res.json({ ok: true, products: products })

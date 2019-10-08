@@ -12,11 +12,12 @@ var log = console.log;
 export class NewProductsComponent implements OnInit {
   @Input() state: any;
   constructor(
-    private api: ApiService
+    private api: ApiService, 
   ) { }
   quill: any;
-
   ngOnInit() {
+        
+    console.log('sizes in product creating', this.state.sizes)
     let toolBarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
@@ -79,7 +80,7 @@ export class NewProductsComponent implements OnInit {
     console.log(fromServer)
     this.errHandler
   }
-
+  
   async sendNewProduct() {
     try {
       let imgs = [];
@@ -95,11 +96,10 @@ export class NewProductsComponent implements OnInit {
         model: 'Hartbee',
         modelType: 'sport',
         _collection: 'Basket Ball Collection',
-        size: 7,
-        typeOfSize: [7, 8, 9, 10, 11],
-        selectedSize: 8,
-        color: 'color',
-        colorProducts: ['orange', 'green', 'yellow'],
+        sizes: this.state.sizes,
+        selectedSize: 8, // remove later!!!
+        //color: this.state.color,
+        colorProducts: this.state.colorProducts,
         selectedColor: 'orange',
         text: 'description',
         stars: {
@@ -255,6 +255,7 @@ export class NewProductsComponent implements OnInit {
 
 
   }
+  
 
 }
 

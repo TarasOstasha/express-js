@@ -22,28 +22,30 @@
 
 				</div>
 				<div class="details col-md-6">
+					<div class="views">
+						<i class="fa fa-eye"></i>
+					</div>
 					<h3 class="product-title">{{ state.product.productName }}</h3>
 					<div class="rating">
 						<div class="stars">
 							{{ starPublic() | json }}
 							<app-rating [ratingPublic]="starPublic()" [ratingPrivate]="starPrivate()"></app-rating>
 						</div>
-						<span class="review-no">41 reviews</span>
+						<span class="review-no">41 reviews</span> 
 					</div>
-					<p class="product-description">{{ state.product.description }}</p>
+					<p [innerHTML]="state.product.description" class="product-description"></p>
 					<h4 class="price">current price: <span>{{ state.product.price }}</span></h4>
 					<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 					<h5 class="sizes">sizes:
-						<span class="size" data-toggle="tooltip" title="small">s</span>
-						<span class="size" data-toggle="tooltip" title="medium">m</span>
-						<span class="size" data-toggle="tooltip" title="large">l</span>
-						<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+						<span *ngFor="let size of state.product.sizes" class="size" data-toggle="tooltip" title="small">
+							{{ size }}
+						</span>
+						
 					</h5>
-					<h5 class="colors">colors:
-						<span class="color orange not-available" data-toggle="tooltip"
-							title="Not In store">{{ state.product.selectedColor }}</span>
-						<span class="color green"></span>
-						<span class="color blue"></span>
+					<h5 class="colors">colors: 
+						<span class="product-color" *ngFor="let color of state.product.colorProducts" [style.background]="color">
+
+						</span>
 					</h5>
 					<div class="action">
 						<button class="add-to-cart btn btn-default" type="button" (click)=buyProduct($event)>add to

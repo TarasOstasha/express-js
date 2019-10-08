@@ -18,6 +18,30 @@
         <button (click)="openCategory = !openCategory" type="button" class="btn btn-info btn-edit">Edit</button>
       </div>
     </div>
+    <div class="form-group">
+      <label for="color">Choose color:</label>
+      <div class="option-wrap">
+          <input [(ngModel)]="state.color" type="color" id="color" name="color" class="form-control" required>
+          <button (click)="state.colorProducts.push(state.color)" type="button" class="btn btn-info add-color">Add</button>
+      </div>
+      <div class="show-color">
+        <div *ngFor="let color of state.colorProducts" [style.background]="color" class="one-color">
+          {{ color }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="color">Choose size:</label>
+      <div class="size-wrapper">
+        <button (click)="item.checked = !item.checked; state.sizes.push(item.size)" *ngFor="let item of state.standartSizes" type="button" 
+                [style.opacity]="(item.checked) ? .3 : 1" 
+                class="btn btn-outline-success">
+                {{ item.size }}
+        </button>
+       <!-- click checked or not checked -->
+      </div>
+    </div>
+
     <!-- popup -->
     <div class="edit-category-block" *ngIf="openCategory">
       <div class="add-new-user-wrap">
@@ -51,30 +75,15 @@
     </div>
     <div class="form-group">
       <label>Add pictures :</label>
-
-
-
       <div class="row">
         <input type="file" id="upload" (change)="onChange($event)" multiple="multiple">
         <!-- <button (click)="testcode()">test code</button> -->
       </div>
       fileQuantity - {{ fileQuantity }}, fileCounter - {{ fileCounter-2 }}
-      <!-- <div class="progress" *ngIf="(round(100/times*upload_i ))">
-        <div class="progress-bar" [style.background]=" (round(100/times*upload_i) == 100) ? 'green':'blue' "
-          role="progressbar" [style.width]="round(100/times*upload_i )+'%'" aria-valuenow="25" aria-valuemin="0"
-          aria-valuemax="100">{{ round(2.43902439*upload_i)}} %</div>
-      </div> -->
-
-      <!-- <div class="progress" *ngIf="(round(100/times*upload_i ))">
-        <div class="progress-bar" [style.background]=" (round(100/times*upload_i)/20-2.5 == 100) ? 'green':'blue' "
-          role="progressbar" [style.width]="round(100/times*upload_i )+'%'" aria-valuenow="25" aria-valuemin="0"
-          aria-valuemax="100">{{ round(100/times * upload_i)/20-2.5}} %</div>
-      </div> -->
-
       <div class="progress" *ngIf="progressBarPercent !== 0;">
-        <div class="progress-bar" [style.background]=" (progressBarPercent == 100) ? 'green':'blue' "
-          role="progressbar" [style.width]="progressBarPercent + '%'" aria-valuenow="25" aria-valuemin="0"
-          aria-valuemax="100">{{ progressBarPercent }} %</div>
+        <div class="progress-bar" [style.background]=" (progressBarPercent == 100) ? 'green':'blue' " role="progressbar"
+          [style.width]="progressBarPercent + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          {{ progressBarPercent }} %</div>
       </div>
 
       <div class="row">
@@ -84,11 +93,12 @@
             <input id="upload" type="file" (change)="onChange($event)" class="form-control" multiple="multiple">
             <img [src]="preview.reader.result" alt="Image preview..." class="img-fluid mh-100 mw-100 img">
             <div class="mark-main-photo" *ngIf='preview.main'>
-                <i class="fa fa-home" aria-hidden="true"></i>
+              <i class="fa fa-home" aria-hidden="true"></i>
               main photo
             </div>
             <div class="overlay">
-              <div class="text">Press <button (click)="checkMainPhoto(i)">Set</button> to set first photo in product card</div>
+              <div class="text">Press <button (click)="checkMainPhoto(i)">Set</button> to set first photo in product
+                card</div>
             </div>
             <i (click)='state.previews.splice(i,1)' class="fa fa-window-close close-window" aria-hidden="true"></i>
           </div>

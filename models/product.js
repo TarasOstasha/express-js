@@ -14,7 +14,7 @@ let Product = mongoose.model('Product', {
     model: String,
     modelType: String,
     _collection: String,
-    size: Number,
+    sizes: [],
     typeOfSize: [],
     selectedSize: Number,
     color: String,

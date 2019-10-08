@@ -63,7 +63,9 @@ export class ApiService {
   }
   upload(obj) {
     return this.http.post('http://localhost:3000/upload2', obj, httpOptions).toPromise();
-
+  }
+  addUserStatistic(obj) {
+    return this.http.post('http://localhost:3000/user-statistic', obj, httpOptions).toPromise();
   }
 }
 
