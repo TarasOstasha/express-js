@@ -22,6 +22,7 @@ let Product = mongoose.model('Product', {
     selectedColor: String,
     text: String,
     price: Number,
+    views: Number,
     stars: {
       public: Number,
       private: Number

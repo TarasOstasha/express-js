@@ -36,7 +36,7 @@ const cards = [
   }
 ];
 
-router.post('/upload', function(req, res) { 
+router.post('/upload', function (req, res) {
   console.log('test form route', req.files)
   if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
@@ -46,7 +46,7 @@ router.post('/upload', function(req, res) {
   let sampleFile = req.files.sampleFile;
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('public/img/products/filename.jpeg', function(err) {
+  sampleFile.mv('public/img/products/filename.jpeg', function (err) {
     if (err)
       return res.status(500).send(err);
 
@@ -146,14 +146,34 @@ router.post('/search', cors(), function (req, res, next) {
   res.json(cards);
 });
 
+
+const viewedProduct = {}
+setInterval(async() => {
+  for (let id in viewedProduct) {
+    // 1) update data base counter
+    const product = await Product.findByIdAndUpdate({
+      _id: id
+    }, {
+        $inc: {
+          views: viewedProduct[id]
+        }
+      }) 
+      // clear back end counter
+      viewedProduct[id] = 0;
+    console.log(id, viewedProduct[id], product)
+  }
+}, 1000)
 router.post('/user-statistic', cors(), function (req, res, next) {
-  res.json('....ok');
+  const id = req.body.productId;
+  if (!viewedProduct[id]) viewedProduct[id] = 1
+  else viewedProduct[id]++
+  res.json('ok');
 });
 
 router.get('/products', cors(), function (req, res, next) {
-  Product.find().then((products)=>{
+  Product.find().then((products) => {
     res.json({ ok: true, products: products })
-  }).catch((err) =>{
+  }).catch((err) => {
     console.log(err);
   });
 });
@@ -161,9 +181,9 @@ router.get('/products', cors(), function (req, res, next) {
 router.get('/product/:id', cors(), function (req, res, next) {
   console.log(req.params.id);
   const _id = req.params.id;
-  Product.findOne({_id}).then((product)=>{
+  Product.findOne({ _id }).then((product) => {
     res.json({ ok: true, product: product })
-  }).catch((err) =>{
+  }).catch((err) => {
     console.log(err);
   });
 });
@@ -303,56 +323,56 @@ router.post('/products', cors(), async (req, res) => {
 router.post('/upload2', async (req, res) => {
   log('Upload');
   try {
-      // var-s
-      let productId = 'test'; 
-      let load_type = req.body.load_type
-      let user_folder = './public/uploads/' //+ productId
-      let path = user_folder + '/' + req.body.name
-      // Logs
-      log(req.body)
-      // log(`req.body:`.info)
-      // log('TYPE '.info, req.body.load_type)
-      // create General Folder ?
-      if (!fs.existsSync('./public/uploads')) {
-          fs.mkdirSync('./public/uploads')
-      }
-      // create User Folder ?
-      if (!fs.existsSync(user_folder)) {
-          fs.mkdirSync(user_folder)
-      }
-      // Algorithm of uploading
-      if (load_type == 'new') {
-        log('new', path, req.body);
-          // Write File
-          fs.writeFile(path, req.body.data, 'binary', (err) => {
-            log(err, 'this is error')
-              if (err) {
-                  res.json({
-                      msg: 'error in "upload" - 1 ',
-                      error: err
-                  })
-                  throw err
-              }
-              else res.json({ msg: 'success' })
+    // var-s
+    let productId = 'test';
+    let load_type = req.body.load_type
+    let user_folder = './public/uploads/' //+ productId
+    let path = user_folder + '/' + req.body.name
+    // Logs
+    log(req.body)
+    // log(`req.body:`.info)
+    // log('TYPE '.info, req.body.load_type)
+    // create General Folder ?
+    if (!fs.existsSync('./public/uploads')) {
+      fs.mkdirSync('./public/uploads')
+    }
+    // create User Folder ?
+    if (!fs.existsSync(user_folder)) {
+      fs.mkdirSync(user_folder)
+    }
+    // Algorithm of uploading
+    if (load_type == 'new') {
+      log('new', path, req.body);
+      // Write File
+      fs.writeFile(path, req.body.data, 'binary', (err) => {
+        log(err, 'this is error')
+        if (err) {
+          res.json({
+            msg: 'error in "upload" - 1 ',
+            error: err
           })
-      }
-      else if (load_type == 'append') {
-        log('áppend');
-          // Append part of file
-          fs.appendFile(path, req.body.data, 'binary', (err) => {
-              if (err) {
-                  res.json({
-                      msg: 'error in "upload" -2 ',
-                      error: err
-                  })
-                  throw err
-              }
-              else res.json({ msg: 'success' })
+          throw err
+        }
+        else res.json({ msg: 'success' })
+      })
+    }
+    else if (load_type == 'append') {
+      log('áppend');
+      // Append part of file
+      fs.appendFile(path, req.body.data, 'binary', (err) => {
+        if (err) {
+          res.json({
+            msg: 'error in "upload" -2 ',
+            error: err
           })
-      }
+          throw err
+        }
+        else res.json({ msg: 'success' })
+      })
+    }
   } catch (err) {
     console.log(err);
-      //error(e, req, res, 500, 'Cannot upload file or fragment! ')
+    //error(e, req, res, 500, 'Cannot upload file or fragment! ')
   }
 })
 

@@ -102,6 +102,7 @@ export class NewProductsComponent implements OnInit {
         colorProducts: this.state.colorProducts,
         selectedColor: 'orange',
         text: 'description',
+        views: 0,
         stars: {
           public: 50,
           privite: 35.5
