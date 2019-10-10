@@ -72,6 +72,13 @@ export class ProductComponent implements OnInit {
       return 0;
     }
   };
+  productId() {
+    try {
+      return this.state.product._id 
+    } catch (error) {
+      return 0;
+    }
+  }
 
   buyProduct(event) {
     event.stopPropagation();

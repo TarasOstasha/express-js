@@ -223,22 +223,20 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <label>Show entries
-              <select>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
+              <select [(ngModel)]="state.table.product.range">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="50">50</option>
+                <option [value]="100">100</option>
               </select>
             </label>
           </div>
           <div class="col-sm-12 col-md-6 search-wrapper">
             <label>Search:
-              <input  type="search">
+              <input [(ngModel)]="state.table.product.search" type="search">
             </label>
           </div>
         </div>
-
-
         <div class="card-header">
           <i class="fa fa-table"></i>
           Products Data Table
@@ -247,10 +245,10 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">№</th>
-              <th class="head-table-products" scope="col" (click)="sortTableProduct('title')"
-                [ngClass]="statusProducts ? 'on' : 'off'">Title</th>
               <th class="head-table-products" scope="col" (click)="sortTableProduct('id')"
                 [ngClass]="statusProducts ? 'on' : 'off'">Id</th>
+              <th class="head-table-products" scope="col" (click)="sortTableProduct('title')"
+                [ngClass]="statusProducts ? 'on' : 'off'">Title</th>
               <th class="head-table-products" scope="col" (click)="sortTableProduct('model')"
                 [ngClass]="statusProducts ? 'on' : 'off'">Model</th>
               <th class="head-table-products" scope="col" (click)="sortTableProduct('stars.public')"
@@ -259,29 +257,39 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of state.products; let i = index" [attr.data-index]="i">
+            <tr *ngFor="let product of clipped_products | userFilter: state.table.product.search; let i = index"
+              [attr.data-index]="i">
+            <!-- <tr *ngFor="let product of state.products; let i = index" [attr.data-index]="i"> -->
               <th scope="row">{{ i }}</th>
               <td>{{ product._id }}</td>
               <!-- <td>{{ product.id }}</td> -->
               <td>{{ product.model }}</td>
               <!-- <td>{{ product.stars.public || '***'}}</td> -->
               <td>{{ product.text }}</td>
+              <td>{{ product.stars.public }}</td>
+              <td>{{ product.description }}</td>
             </tr>
           </tbody>
         </table>
         <div class="row">
           <div class="col-sm-12 col-md-5">
-            <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 10 of 57
-              entries</div>
+            <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+              Showing {{ tableStart(state.table.product) }} to {{ tableActuallyEnd(state.table.product, state.products) }} of
+            {{ state.products.length }}  
+            </div>
+            {{state.table.product.range}} and 
           </div>
           <div class="col-sm-12 col-md-7">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li *ngFor="let page of numToArray(amountOfPage(state.table.product, state.products))" class="page-item">
+                  <a (click)="clickPagination1(page)" class="page-link" href="javascript:void(0)">{{ page }}</a>
+                </li>
+                <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
               </ul>
             </nav>
           </div>
@@ -291,7 +299,7 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <label>Show entries
-      
+
               <select [(ngModel)]="state.table.user.range">
                 <option [value]="5">5</option>
                 <option [value]="10">10</option>
@@ -324,8 +332,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of clipped_users | userFilter: state.table.user.search; let i = index" [attr.data-index]="i">
-            <!-- <tr *ngFor="let user of clipped_users; let i = index" [attr.data-index]="i"> -->
+            <tr *ngFor="let user of clipped_users | userFilter: state.table.user.search; let i = index"
+              [attr.data-index]="i">
+              <!-- <tr *ngFor="let user of clipped_users; let i = index" [attr.data-index]="i"> -->
               <th scope="row">{{ i }}</th>
               <td>{{ user.firstName }}</td>
               <td>{{ user.lastName }}</td>
@@ -337,7 +346,8 @@
         <div class="row">
           <div class="col-sm-12 col-md-5">
             <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-              Showing {{ tableStart(state.table.user) }} to {{ tableActuallyEnd(state.table.user, state.users) }} of {{ state.users.length }}
+              Showing {{ tableStart(state.table.user) }} to {{ tableActuallyEnd(state.table.user, state.users) }} of
+              {{ state.users.length }}
               entries
             </div>
           </div>
@@ -395,26 +405,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <!-- <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-
-  <!-- Core plugin JavaScript-->
-  <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
-
-  <!-- Page level plugin JavaScript-->
-  <!-- <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-
-  <!-- Custom scripts for all pages-->
-  <!-- <script src="js/sb-admin.min.js"></script> -->
-
-  <!-- Demo scripts for this page-->
-  <!-- <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script> -->
-
 </body>
 
 </html>

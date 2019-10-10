@@ -67,6 +67,9 @@ export class ApiService {
   addUserStatistic(obj) {
     return this.http.post('http://localhost:3000/user-statistic', obj, httpOptions).toPromise();
   }
+  addVoute(obj) {
+    return this.http.post('http://localhost:3000/user-voute', obj, httpOptions).toPromise();
+  }
 }
 
 

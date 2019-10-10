@@ -69,7 +69,13 @@ const appState = {
           end: 4,
           page: 1,
           search: ''
-
+        },
+        product: {
+          range: 5,
+          start: 0,
+          end: 4,
+          page: 1,
+          search: ''
         }
       },
 

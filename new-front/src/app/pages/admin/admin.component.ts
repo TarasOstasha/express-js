@@ -128,6 +128,16 @@ export class AdminComponent implements OnInit {
     return result;
   }
 
+  get clipped_products() {
+    const table = this.state.table.product;
+    const products = this.clone(this.state.products);
+    const end = this.tableEnd(table);
+    const start = this.tableStart(table);
+    const corrected_end = this.tableActuallyEnd(table, products);
+    const result = (products.length > 0) ? products.splice(start, corrected_end) : products
+    console.log('result-', result)
+    return result;
+  }
 
   //example of clone
   // clone1(obj) {
@@ -155,11 +165,14 @@ export class AdminComponent implements OnInit {
     return Math.ceil(arr.length / table.range);
     
   }
-
+  //pagination of Users Data Table
   clickPagination(currentPage) {
     this.state.table.user.page = currentPage;
   }
-
+  //pagination of Products Data Table
+  clickPagination1(currentPage) {
+    this.state.table.product.page = currentPage;
+  }
 }
 
 //read about getter and setter!!!
