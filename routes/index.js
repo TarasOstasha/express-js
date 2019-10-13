@@ -104,7 +104,7 @@ router.get('/todos', cors(), function (req, res, next) {
 });
 
 router.post('/todos', cors(), function (req, res, next) {
-  console.log(req.a);
+  //console.log(req.a);
   const task = req.body;
   const taskJson = JSON.stringify(task);
   fs.writeFile('task.json', taskJson, (err) => {
@@ -122,7 +122,7 @@ router.get('/search', cors(), function (req, res, next) {
   const search = req.query.search;
   //fs.writeFile('product.json', JSON.stringify(cards), ()=>{}); 
   fs.readFile('product.json', 'UTF-8', (err, productjSON) => { //get products
-    console.log(productjSON);
+   // console.log(productjSON);
     if (err) {
       console.log(err);
     }
@@ -130,9 +130,9 @@ router.get('/search', cors(), function (req, res, next) {
     product = product.filter((product) => {
       var patt = new RegExp(search);
       const inTitle = patt.test(product.title);
-      console.log('title', inTitle)
+      //console.log('title', inTitle)
       const inDescription = patt.test(product.text);
-      console.log('descr', inDescription)
+      //console.log('descr', inDescription)
       return (inTitle || inDescription)
     });
 
@@ -147,28 +147,7 @@ router.post('/search', cors(), function (req, res, next) {
 });
 
 
-const viewedProduct = {}
-setInterval(async() => {
-  for (let id in viewedProduct) {
-    // 1) update data base counter
-    const product = await Product.findByIdAndUpdate({
-      _id: id
-    }, {
-        $inc: {
-          views: viewedProduct[id]
-        }
-      }) 
-      // clear back end counter
-      viewedProduct[id] = 0;
-    console.log(id, viewedProduct[id], product)
-  }
-}, 1000)
-router.post('/user-statistic', cors(), function (req, res, next) {
-  const id = req.body.productId;
-  if (!viewedProduct[id]) viewedProduct[id] = 1
-  else viewedProduct[id]++
-  res.json('ok');
-});
+
 
 router.get('/products', cors(), function (req, res, next) {
   Product.find().then((products) => {
@@ -179,7 +158,7 @@ router.get('/products', cors(), function (req, res, next) {
 });
 
 router.get('/product/:id', cors(), function (req, res, next) {
-  console.log(req.params.id);
+  //console.log(req.params.id);
   const _id = req.params.id;
   Product.findOne({ _id }).then((product) => {
     res.json({ ok: true, product: product })
@@ -274,7 +253,7 @@ router.get('/users', cors(), async (req, res) => {
 });
 
 router.post('/categories', cors(), (req, res) => {
-  console.log(req.body, 'categories from server');
+  //console.log(req.body, 'categories from server');
   const categories = req.body;
   const categoiesJson = JSON.stringify(categories);
   fs.writeFile('app-settings/product-categories.json', categoiesJson, (err) => {
@@ -288,7 +267,7 @@ router.post('/categories', cors(), (req, res) => {
 
 })
 router.get('/categories', cors(), function (req, res, next) {
-  console.log('touch route');
+  //console.log('touch route');
   fs.readFile('app-settings/product-categories.json', 'UTF-8', (err, categoriesjSON) => { //get categories
     console.log(categoriesjSON, 'from server');
     if (err) {
@@ -304,7 +283,7 @@ router.get('/categories', cors(), function (req, res, next) {
 
 router.post('/products', cors(), async (req, res) => {
   try {
-    console.log(req.body)
+    //console.log(req.body)
     const product = new Product(req.body);
     await product.save()
     res.json({ ok: true });
@@ -375,6 +354,46 @@ router.post('/upload2', async (req, res) => {
     //error(e, req, res, 500, 'Cannot upload file or fragment! ')
   }
 })
+
+// user statistic
+const viewedProduct = {}
+setInterval(async() => {
+  for (let id in viewedProduct) {
+    // 1) update data base counter
+    const product = await Product.findByIdAndUpdate({
+      _id: id
+    }, {
+        $inc: {
+          views: viewedProduct[id]
+        }
+      }) 
+      // clear back end counter
+      viewedProduct[id] = 0;
+    //console.log(id, viewedProduct[id], product)
+  }
+}, 1000)
+router.post('/user-statistic', cors(), function (req, res, next) {
+  const id = req.body.productId;
+  if (!viewedProduct[id]) viewedProduct[id] = 1
+  else viewedProduct[id]++
+  res.json('ok');
+});
+
+
+router.post('/user-voute', cors(), async function(req, res) {
+  console.log('user-voute')
+  const voute = req.body;
+  const globalVoute = voute.voute // 5 stars = global 5%
+  const product = await Product.findByIdAndUpdate({
+    _id: voute.productId
+    }, {
+        $inc: {
+          "stars.public": globalVoute
+        }
+    }) 
+  res.json('ok');
+})
+
 
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
