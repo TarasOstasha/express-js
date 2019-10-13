@@ -10,6 +10,7 @@ export class RatingComponent implements OnChanges {
   @Input() ratingPublic;
   @Input() ratingPrivate;
   @Input() productId;
+  @Input() user;
   //starWidth: number;
   //star: number = 20;
   constructor(private api: ApiService) { 
@@ -22,7 +23,8 @@ export class RatingComponent implements OnChanges {
     console.log('ratingPrivate',this.ratingPrivate)
     this.api.addVoute({
       productId: this.productId,
-      voute: icon
+      voute: icon,
+      user: this.user
     });
     this.ratingPrivate = icon * 20;
   }

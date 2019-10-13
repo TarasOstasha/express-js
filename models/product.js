@@ -25,7 +25,8 @@ let Product = mongoose.model('Product', {
     views: Number,
     stars: {
       public: Number,
-      private: Number
+      private: Number,
+      voutes: []
     }
 });
 

@@ -2,7 +2,8 @@ const appState = {
   header: {
     isLogged: false,
     user: {
-      name: ''
+      name: '',
+      _id: 'unlogged'
     },
     basket: {
       open: false,

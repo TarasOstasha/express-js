@@ -122,7 +122,7 @@ router.get('/search', cors(), function (req, res, next) {
   const search = req.query.search;
   //fs.writeFile('product.json', JSON.stringify(cards), ()=>{}); 
   fs.readFile('product.json', 'UTF-8', (err, productjSON) => { //get products
-   // console.log(productjSON);
+    // console.log(productjSON);
     if (err) {
       console.log(err);
     }
@@ -357,7 +357,7 @@ router.post('/upload2', async (req, res) => {
 
 // user statistic
 const viewedProduct = {}
-setInterval(async() => {
+setInterval(async () => {
   for (let id in viewedProduct) {
     // 1) update data base counter
     const product = await Product.findByIdAndUpdate({
@@ -366,9 +366,9 @@ setInterval(async() => {
         $inc: {
           views: viewedProduct[id]
         }
-      }) 
-      // clear back end counter
-      viewedProduct[id] = 0;
+      })
+    // clear back end counter
+    viewedProduct[id] = 0;
     //console.log(id, viewedProduct[id], product)
   }
 }, 1000)
@@ -380,17 +380,35 @@ router.post('/user-statistic', cors(), function (req, res, next) {
 });
 
 
-router.post('/user-voute', cors(), async function(req, res) {
+router.post('/user-voute', cors(), async function (req, res) {
   console.log('user-voute')
   const voute = req.body;
-  const globalVoute = voute.voute // 5 stars = global 5%
-  const product = await Product.findByIdAndUpdate({
+  //step 1 
+  const product = await Product.findOneAndUpdate({
     _id: voute.productId
-    }, {
-        $inc: {
-          "stars.public": globalVoute
+  }, {
+      $pull: {
+        "stars.voutes": {
+          id: voute.user._id
         }
-    }) 
+      }
+    })
+  let publicCounter = 0;
+  // step 2 recalc public voutes
+  product.stars.voutes.map((voute) => publicCounter += voute.voute)
+  //step 3 
+  await Product.findOneAndUpdate({
+    _id: voute.productId
+  }, {
+      "stars.public": publicCounter, 
+      $push: {
+        "stars.voutes": {
+          id: voute.user._id,
+          voute: voute.voute
+        }
+      }
+    })
+
   res.json('ok');
 })
 

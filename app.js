@@ -14,7 +14,9 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 
+
 // connect to the database
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb+srv://user:1111@cluster0-olmgj.mongodb.net/test?retryWrites=true&w=majority')
 
 // connect to the database

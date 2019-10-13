@@ -31,7 +31,7 @@
 					<div class="rating">
 						<div class="stars">
 							{{ starPublic() | json }}
-							<app-rating [productId]="productId()" [ratingPublic]="starPublic()" [ratingPrivate]="starPrivate()"></app-rating>
+							<app-rating [user]="state.header.user" [productId]="productId()" [ratingPublic]="starPublic()" [ratingPrivate]="starPrivate()"></app-rating>
 						</div>
 						<span class="review-no">41 reviews</span> 
 					</div>
