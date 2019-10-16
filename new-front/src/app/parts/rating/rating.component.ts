@@ -16,7 +16,9 @@ export class RatingComponent implements OnChanges {
   constructor(private api: ApiService) { 
 
   }
-
+  ngOnInit() {
+    console.log('ratingPrivate', this.ratingPrivate)
+  }
   checkedStar(icon) {
     console.log(icon); //send data to server
     console.log('productStarId',this.productId)
@@ -38,7 +40,6 @@ export class RatingComponent implements OnChanges {
   }
   
 
-  // ngOnInit() {
-  // }
+ 
 
 }

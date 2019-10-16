@@ -67,7 +67,11 @@ export class ProductComponent implements OnInit {
   };
   starPrivate() {
     try {
-      return this.state.product.stars.private || 0
+      const myVoute = this.state.product.stars.voutes.filter((voute)=>{
+        return voute.id == this.state.header.user._id;
+      })
+      console.log('myvoute', myVoute)
+      return myVoute[0].voute * 20 || 0
     } catch (error) {
       return 0;
     }
