@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
     this.getProductIdFromServer(id);
 
     setInterval(() => {
-      console.log('star public', this.starPublic())
+      //console.log('star public', this.starPublic())
     }, 1000)
   }
 
@@ -65,6 +65,7 @@ export class ProductComponent implements OnInit {
       return 0;
     }
   };
+  //code dublicate !!!! (product component and card component)
   starPrivate() {
     try {
       const myVoute = this.state.product.stars.voutes.filter((voute)=>{

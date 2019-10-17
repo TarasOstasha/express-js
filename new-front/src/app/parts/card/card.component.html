@@ -32,7 +32,10 @@
                     {{state.collection }}
                 </span>
                 <span class="product-rating">
-                    <app-rating [ratingPublic]="state.stars.public" [ratingPrivate]="state.stars.private"></app-rating>
+                    <!-- <app-rating [user]="state.header.user" [productId]="productId()" [ratingPublic]="starPublic()" [ratingPrivate]="starPrivate()"></app-rating> -->
+
+
+                    <app-rating [user]="userId" [productId]="state._id" [ratingPublic]="state.stars.public" [ratingPrivate]="starPrivate()"></app-rating>
                     <!-- <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
