@@ -18,7 +18,7 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('state', this.state);
+    //console.log('state', this.state);
   }
 
   buyProduct(event) {

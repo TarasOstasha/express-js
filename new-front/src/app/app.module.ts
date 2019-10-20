@@ -33,6 +33,7 @@ import { NewProductsComponent } from './parts/new-products/new-products.componen
 import { FormValidatorComponent } from './parts/general/form-validator/form-validator.component';
 import { UserFilterPipe } from './pipes/user-filter.pipe';
 import { ProductComponent } from './pages/product/product.component';
+import { ProductSliderComponent } from './parts/product-slider/product-slider.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ProductComponent } from './pages/product/product.component';
     NewProductsComponent,
     FormValidatorComponent,
     UserFilterPipe,
-    ProductComponent
+    ProductComponent,
+    ProductSliderComponent
     
   ],
   imports: [

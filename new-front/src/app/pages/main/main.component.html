@@ -15,4 +15,5 @@
 <app-carousel></app-carousel>
 <h2 class="h2Title">New Collection</h2>
 <app-card *ngFor="let card of state.products" [state]="card" [userId]="state.header.user._id" (onChanged)="cardHandler($event)"></app-card>
+<app-product-slider [userId]="state.header.user._id" [products]="state.products"></app-product-slider>
 <app-footer></app-footer>

@@ -1,0 +1,13 @@
+<div class="arrow-slider">
+  <div class="container-card" (document:mousemove)="onMouseMove($event)" (mousedown)="click('down', $event)"  (mouseup)="click('up', $event)">
+    <div id="measure" class="measure-card" [style.left.px]="position"> 
+      <app-card *ngFor="let card of products;let i = index;" [state]="card" [userId]="userId" (onChanged)="cardHandler($event)"></app-card>
+    </div>
+  </div>
+  <button (click)="left()">left</button>
+  <button (click)="right()">right</button> <br>
+  mesuareWidth - {{ meseareWidth }} <br>
+  cardWidth - {{ cardWidth }} <br>
+  position - {{ position }}
+</div>
+ 
