@@ -4,10 +4,15 @@
       <app-card *ngFor="let card of products;let i = index;" [state]="card" [userId]="userId" (onChanged)="cardHandler($event)"></app-card>
     </div>
   </div>
-  <button (click)="left()">left</button>
-  <button (click)="right()">right</button> <br>
+  <div class="wrapper-btn">
+      <button class="arrow" (click)="left()"><i class="fa fa-chevron-left"></i></button>
+      <button class="arrow" (click)="right()"><i class="fa fa-chevron-right"></i></button>
+  </div>
+     <br>
   mesuareWidth - {{ meseareWidth }} <br>
   cardWidth - {{ cardWidth }} <br>
-  position - {{ position }}
+  position - {{ position }} <br>
+  contsiner card width - {{ containerCardWidth }} <br>
+  products array width - {{ products.length }}
 </div>
  

@@ -12,11 +12,11 @@ var log = console.log;
 export class NewProductsComponent implements OnInit {
   @Input() state: any;
   constructor(
-    private api: ApiService, 
+    private api: ApiService,
   ) { }
   quill: any;
   ngOnInit() {
-        
+
     console.log('sizes in product creating', this.state.sizes)
     let toolBarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -63,9 +63,15 @@ export class NewProductsComponent implements OnInit {
   }
   new_category: any;
   categories: any = []
+
   addCategory(new_category): void {
     //this.state.productCategories // array in state admin
-    this.state.productCategories.push(new_category);
+    this.state.productCategories.push(
+      {
+        name: new_category,
+        subCategories: []
+      }
+    );
     this.new_category = "";
     console.log(new_category);
     this.refreshCategoriesOnServer()
@@ -80,11 +86,11 @@ export class NewProductsComponent implements OnInit {
     console.log(fromServer)
     this.errHandler
   }
-  
+
   async sendNewProduct() {
     try {
       let imgs = [];
-      for(let i = 0; i < this.files.length; i++) {
+      for (let i = 0; i < this.files.length; i++) {
         imgs.push('http://localhost:3000/uploads/' + this.files[i].name);
       }
       const newProduct = {
@@ -132,7 +138,7 @@ export class NewProductsComponent implements OnInit {
   uploaded;
   fileQuantity;
   fileCounter;
-  files:any={};
+  files: any = {};
 
   onChange() {
     this.files = (<HTMLInputElement>document.getElementById('upload')).files;  // file == {  name: "OhdIJZy8H7o.jpg", lastModified: 1467921666657,  lastModifiedDate: Date 2016-07-07T20:01:06.657Z,  size: 214450,  type: "image/jpeg"   }
@@ -140,7 +146,7 @@ export class NewProductsComponent implements OnInit {
     this.upload_i = 0
     console.log('this files', this.files)
     //step one - remove first example photo
-    this.state.previews = this.state.previews.filter((elem)=>{
+    this.state.previews = this.state.previews.filter((elem) => {
       return (elem.reader.result == "assets/img/400x300.png") ? false : true;
     })
 
@@ -156,7 +162,7 @@ export class NewProductsComponent implements OnInit {
     //const preview: any = document.querySelector('img');
     for (let i = 0; i < this.files.length; i++) {
       const reader = new FileReader();
-      reader.onloadend =  ()=> {
+      reader.onloadend = () => {
         this.state.previews.push({
           reader: reader
         })
@@ -165,7 +171,7 @@ export class NewProductsComponent implements OnInit {
       reader.readAsDataURL(this.files[i]);
     }
     this.upload(file)
- 
+
 
   }
   upload(file) {
@@ -210,14 +216,14 @@ export class NewProductsComponent implements OnInit {
         log('loaded', this.fileCounter);
         // alert('good job');
         if (this.fileQuantity >= this.fileCounter) { this.uploadNextFile(); }
-        
+
         swal.fire({
           title: "Good job!",
           text: "File successfully added",
           icon: "success",
         })
       }
-      
+
     }
   }
 
@@ -233,15 +239,15 @@ export class NewProductsComponent implements OnInit {
   }
 
   checkMainPhoto(index) {
-    this.state.previews.map((el, i)=>{
+    this.state.previews.map((el, i) => {
       this.state.previews[i].main = false;
     })
     this.state.previews[index].main = true;
   }
-//get number of main photo
+  //get number of main photo
   getNumberPhoto() {
-    for(let i = 0;i < this.state.previews.length; i++) {
-      if(this.state.previews[i].main == true) {
+    for (let i = 0; i < this.state.previews.length; i++) {
+      if (this.state.previews[i].main == true) {
         return i;
       }
     }
@@ -249,14 +255,14 @@ export class NewProductsComponent implements OnInit {
   }
   progressBarPercent = 0;
   progressPercent() {
-    setTimeout(()=> {
-      this.progressBarPercent = this.round(100/this.times * this.upload_i);
+    setTimeout(() => {
+      this.progressBarPercent = this.round(100 / this.times * this.upload_i);
       log(this.progressBarPercent);
     })
 
 
   }
-  
+
 
 }
 

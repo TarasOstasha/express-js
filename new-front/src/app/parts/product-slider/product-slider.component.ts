@@ -19,6 +19,9 @@ export class ProductSliderComponent implements OnInit {
   cardWidth; //number in px
   card; //link to DOM element
 
+  containerCardWidth; // number in px
+  containerCard; ////link to DOM element
+
 
 
   ngAfterViewInit() {
@@ -26,6 +29,11 @@ export class ProductSliderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.containerCard = document.querySelector('.container-card');
+    this.containerCardWidth = this.containerCard.clientWidth;
+    console.log('!!!Container Width', this.containerCard.clientWidth)
+
+
     this.measure = document.querySelector('#measure');
     //console.log(this.measure.clientWidth)
     this.meseareWidth = this.measure.clientWidth;
@@ -62,17 +70,19 @@ export class ProductSliderComponent implements OnInit {
 
   // buttons switch slider
   left() {
-    this.position -= this.cardWidth;
+    this.position -= this.cardWidth/2;
     if(this.meseareWidth + this.position < 0 ) {
       this.position = 0;
-    }
+    } 
+  
   }
   right() {
-    this.position += this.cardWidth;
+    console.log(this.products.length)
+    this.position += this.cardWidth/2;
     if(this.position > 0) {
       this.position = -this.meseareWidth;
-    }
+    } 
   }
-  
+  //1301
   
 }

@@ -12,7 +12,7 @@
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="state.checkedCategory"
           [ngModelOptions]="{standalone: true}">
           <option selected disabled>Choose a category</option>
-          <option *ngFor="let category of state.productCategories" [ngValue]="category">{{ category }}</option>
+          <option *ngFor="let category of state.productCategories" [ngValue]="category">{{ category.name }}</option>
         </select>
 
         <button (click)="openCategory = !openCategory" type="button" class="btn btn-info btn-edit">Edit</button>
@@ -21,8 +21,9 @@
     <div class="form-group">
       <label for="color">Choose color:</label>
       <div class="option-wrap">
-          <input [(ngModel)]="state.color" type="color" id="color" name="color" class="form-control" required>
-          <button (click)="state.colorProducts.push(state.color)" type="button" class="btn btn-info add-color">Add</button>
+        <input [(ngModel)]="state.color" type="color" id="color" name="color" class="form-control" required>
+        <button (click)="state.colorProducts.push(state.color)" type="button"
+          class="btn btn-info add-color">Add</button>
       </div>
       <div class="show-color">
         <div *ngFor="let color of state.colorProducts" [style.background]="color" class="one-color">
@@ -33,12 +34,12 @@
     <div class="form-group">
       <label for="color">Choose size:</label>
       <div class="size-wrapper">
-        <button (click)="item.checked = !item.checked; state.sizes.push(item.size)" *ngFor="let item of state.standartSizes" type="button" 
-                [style.opacity]="(item.checked) ? .3 : 1" 
-                class="btn btn-outline-success">
-                {{ item.size }}
+        <button (click)="item.checked = !item.checked; state.sizes.push(item.size)"
+          *ngFor="let item of state.standartSizes" type="button" [style.opacity]="(item.checked) ? .3 : 1"
+          class="btn btn-outline-success">
+          {{ item.size }}
         </button>
-       <!-- click checked or not checked -->
+        <!-- click checked or not checked -->
       </div>
     </div>
 
@@ -50,14 +51,40 @@
           <i class="fa fa-plus-circle"></i>
         </button>
       </div>
-      <div class="category" *ngFor="let category of state.productCategories">
-        <span>{{ category }}</span>
-        <div class="btn-group">
-          <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
-            <i class="fa fa-minus-circle"></i>
-          </button>
-        </div>
-      </div>
+      <!-- CATEGORY -->
+      <span>{{state.productCategories.subCategories.name}}</span>
+      <app-subcategory [subcategory]="state.productCategories"></app-subcategory>
+
+      <!-- <div class="category" *ngFor="let category of state.productCategories">
+        <div class="category-block">
+          <span>{{ category.name }}</span>
+          <div class="btn-group">
+            <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
+              <i class="fa fa-minus-circle"></i>
+            </button>
+          </div>
+        </div> -->
+        <!-- SUBCATEGORY -->
+        <!-- <app-subcategory [subcategory]="category"></app-subcategory> -->
+
+        <!-- <div *ngFor="let subcategory of category.subCategories" class="subcategory">
+          <details>
+            <summary>
+              {{ subcategory.name }}
+            </summary>
+            <p>Lorem ipsum dolor sit amet.</p>
+            <div class="btn-group">
+              <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
+                <i class="fa fa-minus-circle"></i>
+              </button>
+            </div>
+            <app-subcategory [subcategory]="subcategory"></app-subcategory>
+          </details>
+        </div> -->
+        
+      <!-- </div> -->
+      <hr>
+      
     </div>
     <div class="form-group">
       <label for="input-title">Price :</label>

@@ -10,3 +10,29 @@
     //justify-content: center;
     //left: -100px;
 }
+.arrow {
+    padding: 10px 15px;
+    transition: .3s;
+    //color: #f4511e;
+    &:hover {
+        background-color: #f4511e;
+        border: 1px solid #f4511e;
+        color: white;
+        text-align: center;
+       // opacity: 0.6;
+       &:focus {
+        border-color: #f4511e;
+       }
+    }
+    &:active {
+        border-color: #f4511e;
+    }
+    &:focus {
+        border-color: #f4511e;
+        outline: none;
+    }
+}
+.wrapper-btn {
+    text-align: right;
+    padding: 0 15px;
+}

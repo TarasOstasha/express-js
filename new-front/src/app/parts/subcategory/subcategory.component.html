@@ -1,0 +1,15 @@
+<!-- SUBSUBCATEGORY-->
+ <div *ngFor="let subSubcategory of subcategory.subCategories" class="subcategory">
+    <details>
+      <summary>
+        {{ subSubcategory.name }}
+      </summary>
+      <div class="btn-group">
+        <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
+          <i class="fa fa-minus-circle"></i>
+        </button>
+      </div>
+      RECURSION
+      <app-subcategory [subcategory]="subSubcategory.subCategories"></app-subcategory>
+    </details>
+  </div>

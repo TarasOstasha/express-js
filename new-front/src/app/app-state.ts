@@ -40,7 +40,7 @@ const appState = {
       newProduct: {
         productName: '',
         productPrice: 0,
-        productCategories: [],
+        productCategories: {name:'hight level',subCategories:[]},
         checkedCategory: '',
         color: '',
         colorProducts: [],
