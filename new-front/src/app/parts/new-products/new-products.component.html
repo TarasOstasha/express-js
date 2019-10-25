@@ -12,7 +12,7 @@
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="state.checkedCategory"
           [ngModelOptions]="{standalone: true}">
           <option selected disabled>Choose a category</option>
-          <option *ngFor="let category of state.productCategories" [ngValue]="category">{{ category.name }}</option>
+          <option *ngFor="let category of state.productCategories.subCategories" [ngValue]="category">{{ category.name }}</option>
         </select>
 
         <button (click)="openCategory = !openCategory" type="button" class="btn btn-info btn-edit">Edit</button>
@@ -54,35 +54,6 @@
       <!-- CATEGORY -->
       <span>{{state.productCategories.subCategories.name}}</span>
       <app-subcategory [subcategory]="state.productCategories"></app-subcategory>
-
-      <!-- <div class="category" *ngFor="let category of state.productCategories">
-        <div class="category-block">
-          <span>{{ category.name }}</span>
-          <div class="btn-group">
-            <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
-              <i class="fa fa-minus-circle"></i>
-            </button>
-          </div>
-        </div> -->
-        <!-- SUBCATEGORY -->
-        <!-- <app-subcategory [subcategory]="category"></app-subcategory> -->
-
-        <!-- <div *ngFor="let subcategory of category.subCategories" class="subcategory">
-          <details>
-            <summary>
-              {{ subcategory.name }}
-            </summary>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <div class="btn-group">
-              <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
-                <i class="fa fa-minus-circle"></i>
-              </button>
-            </div>
-            <app-subcategory [subcategory]="subcategory"></app-subcategory>
-          </details>
-        </div> -->
-        
-      <!-- </div> -->
       <hr>
       
     </div>

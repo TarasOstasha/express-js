@@ -90,7 +90,10 @@ export class AdminComponent implements OnInit {
   }
 
   async getproductCategories() {
+    console.log('getproductCategories')
     const fromServer: any = await this.api.getCategories()
+    console.log('getproductCategories', fromServer)
+
     this.state.newProduct.productCategories = fromServer;
     this.errorHandler
   }
