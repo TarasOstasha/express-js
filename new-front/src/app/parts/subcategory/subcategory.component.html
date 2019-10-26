@@ -1,15 +1,18 @@
 <!-- SUBSUBCATEGORY-->
- <div *ngFor="let subSubcategory of subcategory.subCategories" class="subcategory">
+ <div *ngFor="let subSubcategory of category.subCategories; let i = index;" class="subcategory">
     <details>
       <summary>
         {{ subSubcategory.name }}
       </summary>
       <div class="btn-group">
-        <button (click)="delCategory(categoryName)" type="button" class="btn btn-danger">
+        <button (click)="delCategory(i)" type="button" class="btn btn-danger">
           <i class="fa fa-minus-circle"></i>
         </button>
+        <button (click)="addCategory(i)" type="button" class="btn btn-success">
+            <i class="fa fa-plus-circle"></i>
+          </button>
       </div>
       <!-- RECURSION -->
-      <app-subcategory [subcategory]="subSubcategory"></app-subcategory> {{subSubcategory | json}}
+      <app-subcategory [new_category]="new_category" [category]="subSubcategory"></app-subcategory> 
     </details>
   </div>

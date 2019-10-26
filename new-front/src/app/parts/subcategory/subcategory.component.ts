@@ -6,14 +6,24 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./subcategory.component.less']
 })
 export class SubcategoryComponent implements OnInit {
-  @Input() subcategory: any
+  @Input() category: any
+  @Input() new_category;
   constructor() { 
-    if(this.subcategory == undefined) this.subcategory = {name:'test1', subCategories: []}
+    if(this.category == undefined) this.category = {name:'test1', subCategories: []}
   }
 
   ngOnInit() {
-    if(this.subcategory == undefined) this.subcategory = {name:'test1', subCategories: []}
+    if(this.category == undefined) this.category = {name:'test1', subCategories: []}
 
   }
 
+  delCategory(i) {
+    this.category.subCategories.splice(i, 1);
+  }
+  addCategory(i) {
+    this.category.subCategories[i].subCategories.push({
+      name: this.new_category, 
+      subCategories: []
+    })
+  }
 }

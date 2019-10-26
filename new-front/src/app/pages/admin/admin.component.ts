@@ -138,7 +138,7 @@ export class AdminComponent implements OnInit {
     const start = this.tableStart(table);
     const corrected_end = this.tableActuallyEnd(table, products);
     const result = (products.length > 0) ? products.splice(start, corrected_end) : products
-    console.log('result-', result)
+    //console.log('result-', result)
     return result;
   }
 

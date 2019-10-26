@@ -66,7 +66,7 @@ export class NewProductsComponent implements OnInit {
 
   addCategory(new_category): void {
     //this.state.productCategories // array in state admin
-    this.state.productCategories.push(
+    this.state.productCategories.subCategories.push(
       {
         name: new_category,
         subCategories: []
@@ -86,6 +86,7 @@ export class NewProductsComponent implements OnInit {
     console.log(fromServer)
     this.errHandler
   }
+  refreshCategories = () => this.refreshCategoriesOnServer(); //refresh on server side
 
   async sendNewProduct() {
     try {

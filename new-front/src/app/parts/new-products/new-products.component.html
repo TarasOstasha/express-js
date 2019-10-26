@@ -53,7 +53,7 @@
       </div>
       <!-- CATEGORY -->
       <span>{{state.productCategories.subCategories.name}}</span>
-      <app-subcategory [subcategory]="state.productCategories"></app-subcategory>
+      <app-subcategory (click)="refreshCategories()" [new_category]="new_category" [category]="state.productCategories"></app-subcategory>
       <hr>
       
     </div>
