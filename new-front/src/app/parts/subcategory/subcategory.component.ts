@@ -22,7 +22,7 @@ export class SubcategoryComponent implements OnInit {
   }
   addCategory(i) {
     this.category.subCategories[i].subCategories.push({
-      name: this.new_category, 
+      name: this.new_category || '!!!', 
       subCategories: []
     })
   }

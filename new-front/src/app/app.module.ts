@@ -35,6 +35,7 @@ import { UserFilterPipe } from './pipes/user-filter.pipe';
 import { ProductComponent } from './pages/product/product.component';
 import { ProductSliderComponent } from './parts/product-slider/product-slider.component';
 import { SubcategoryComponent } from './parts/subcategory/subcategory.component';
+import { SubcategorySelectComponent } from './parts/subcategory-select/subcategory-select.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { SubcategoryComponent } from './parts/subcategory/subcategory.component'
     UserFilterPipe,
     ProductComponent,
     ProductSliderComponent,
-    SubcategoryComponent
+    SubcategoryComponent,
+    SubcategorySelectComponent
     
   ],
   imports: [
