@@ -7,13 +7,22 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SubcategorySelectComponent implements OnInit {
   @Input() categories;
+  @Input() recurtionLevel;
+  @Input() breadCrumbs;
   constructor() { }
 
   ngOnInit() {
   }
-  state = {};
+  state = {
+    checkedCategory: {
+      name: 'chop',
+      subCategories:[]
+    }
+  };
 
-  checkedEvent() {
-    console.log('checked event');
+  onChange(event) {
+    console.log(event.name);
+    this.breadCrumbs.splice(this.recurtionLevel, this.breadCrumbs.length - this.recurtionLevel);  // is there exist way to resolve more easier(clear)???! CUT
+    this.breadCrumbs.push(event.name)
   }
 }

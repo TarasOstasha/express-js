@@ -41,6 +41,7 @@ const appState = {
         productName: '',
         productPrice: 0,
         productCategories: {name:'hight-level',subCategories:[]},
+        breadCrumbs: [],
         checkedCategory: '',
         color: '',
         colorProducts: [],

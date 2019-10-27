@@ -9,10 +9,15 @@
     <div class="form-group">
       <label for="exampleFormControlSelect1">Category :</label>
       <div class="option-wrap">
-        <app-subcategory-select [categories]="state.productCategories"></app-subcategory-select>
+        <app-subcategory-select 
+          [breadCrumbs]="state.breadCrumbs"  
+          [recurtionLevel]="0" 
+          [categories]="state.productCategories">
+        </app-subcategory-select>
         <button (click)="openCategory = !openCategory" type="button" class="btn btn-info btn-edit">Edit</button>
       </div>
     </div>
+    Bread crumbs: {{ state.breadCrumbs | json}}
     <div class="form-group">
       <label for="color">Choose color:</label>
       <div class="option-wrap">
