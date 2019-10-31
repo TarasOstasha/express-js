@@ -36,6 +36,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { ProductSliderComponent } from './parts/product-slider/product-slider.component';
 import { SubcategoryComponent } from './parts/subcategory/subcategory.component';
 import { SubcategorySelectComponent } from './parts/subcategory-select/subcategory-select.component';
+import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SubcategorySelectComponent } from './parts/subcategory-select/subcatego
     ProductComponent,
     ProductSliderComponent,
     SubcategoryComponent,
-    SubcategorySelectComponent
+    SubcategorySelectComponent,
+    LinkCategoriesComponent
     
   ],
   imports: [

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { state } from '@angular/animations';
 declare var Quill: any;
 declare var swal: any;
 var log = console.log;
@@ -117,7 +118,8 @@ export class NewProductsComponent implements OnInit {
         productName: this.state.productName,
         checkedCategory: this.state.checkedCategory,
         price: this.state.productPrice,
-        description: this.quill.container.firstChild.innerHTML
+        description: this.quill.container.firstChild.innerHTML,
+        breadCrumbs: this.state.breadCrumbs
 
 
       }

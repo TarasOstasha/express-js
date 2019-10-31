@@ -6,6 +6,8 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { P404Component } from './pages/p404/p404.component'
 import { AdminComponent } from './pages/admin/admin.component';
 import { ProductComponent } from './pages/product/product.component';
+import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
+
 
 
 const routes: Routes = [
@@ -16,6 +18,7 @@ const routes: Routes = [
   { path: 'p404', component: P404Component },
   { path: 'admin', component:  AdminComponent},
   { path: 'product/:productId', component: ProductComponent },
+  { path: 'link-category/:crumbs', component: LinkCategoriesComponent },
   { path: '**', redirectTo: '/p404' } //should be last one
 ];
 

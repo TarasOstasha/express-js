@@ -8,13 +8,12 @@
 					<div class="preview-pic tab-content">
 
 						<div *ngFor="let img of state.product.imgs; let i = index;"
-							[class]="( state.activeSliderImg[i] ) ? 'tab-pane active' : 'tab-pane' " 
-							id="pic-{{ 1+i }}">
+							[class]="( state.activeSliderImg[i] ) ? 'tab-pane active' : 'tab-pane' " id="pic-{{ 1+i }}">
 							<img [src]="img" />
 						</div>
 					</div>
 					<ul class="preview-thumbnail nav nav-tabs">
-						<li (click)="changeImg(i)" *ngFor="let img of state.product.imgs; let i = index;" 
+						<li (click)="changeImg(i)" *ngFor="let img of state.product.imgs; let i = index;"
 							[class]="( state.activeSliderImg[i] ) ? 'active' : '' ">
 							<a><img [src]="img" /></a>
 						</li>
@@ -22,6 +21,16 @@
 
 				</div>
 				<div class="details col-md-6">
+					<div class="bread-crumbs">
+						<ul class="breadCrumb-list">
+							<li *ngFor="let crumb of state.product.breadCrumbs">
+								<a href="javascript:void(0)">
+									{{ crumb }}
+								</a>	
+							</li>
+						</ul>
+						<!-- {{ state.product.breadCrumbs }} -->
+					</div>
 					<div class="views">
 						<i class="fa fa-eye">
 							{{ state.product.views }}
@@ -31,9 +40,10 @@
 					<div class="rating">
 						<div class="stars">
 							{{ starPublic() | json }}
-							<app-rating [user]="state.header.user" [productId]="productId()" [ratingPublic]="starPublic()" [ratingPrivate]="starPrivate()"></app-rating>
+							<app-rating [user]="state.header.user" [productId]="productId()"
+								[ratingPublic]="starPublic()" [ratingPrivate]="starPrivate()"></app-rating>
 						</div>
-						<span class="review-no">41 reviews</span> 
+						<span class="review-no">41 reviews</span>
 					</div>
 					<p [innerHTML]="state.product.description" class="product-description"></p>
 					<h4 class="price">current price: <span>{{ state.product.price }}</span></h4>
@@ -42,10 +52,11 @@
 						<span *ngFor="let size of state.product.sizes" class="size" data-toggle="tooltip" title="small">
 							{{ size }}
 						</span>
-						
+
 					</h5>
-					<h5 class="colors">colors: 
-						<span class="product-color" *ngFor="let color of state.product.colorProducts" [style.background]="color">
+					<h5 class="colors">colors:
+						<span class="product-color" *ngFor="let color of state.product.colorProducts"
+							[style.background]="color">
 
 						</span>
 					</h5>
