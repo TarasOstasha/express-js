@@ -18,14 +18,19 @@ import appState from '../../app-state';
 export class AdminComponent implements OnInit {
   searchTerm$ = new Subject<string>();
   state = appState.pages.admin;
+  appState:any;
+  
   constructor(
     private api: ApiService,
     private searchService: SearchService
-  ) { }
+  ) { 
+    this.appState = appState;
+  }
 
  
 
   async ngOnInit() {
+    console.log(appState.breadCrumbs)
     try {
       const fromServer: any = await this.api.getProducts();
       this.state.products = fromServer.products;
@@ -94,7 +99,7 @@ export class AdminComponent implements OnInit {
     const fromServer: any = await this.api.getCategories()
     console.log('getproductCategories', fromServer)
 
-    this.state.newProduct.productCategories = fromServer;
+    appState.productCategories = fromServer;
     this.errorHandler
   }
 

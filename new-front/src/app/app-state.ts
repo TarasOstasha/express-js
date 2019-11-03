@@ -1,4 +1,9 @@
 const appState = {
+  //general
+  products: [],
+  breadCrumbs: [],
+  productCategories: {name:'hight-level',subCategories:[]},
+  //header
   header: {
     isLogged: false,
     user: {
@@ -15,7 +20,7 @@ const appState = {
     },
     searchResult: []
   },
-  products: [],
+//pages
   pages: {
     admin: {
       header: {
@@ -40,8 +45,8 @@ const appState = {
       newProduct: {
         productName: '',
         productPrice: 0,
-        productCategories: {name:'hight-level',subCategories:[]},
-        breadCrumbs: [],
+        //productCategories: {name:'hight-level',subCategories:[]},
+        //breadCrumbs: [],
         checkedCategory: '',
         color: '',
         colorProducts: [],

@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngIf="toggleFilter">
+    <div [class]="(toggleFilter) ? '': 'hide'">
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
@@ -8,7 +8,7 @@
                             <i class="fa fa-search-plus"></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control" aria-label="Default"
+                    <input [(ngModel)]="queries.keywords" type="text" class="form-control" aria-label="Default"
                         aria-describedby="inputGroup-sizing-default" placeholder="Search">
                 </div>
             </div>
@@ -18,10 +18,12 @@
                         <span class="input-group-text">
                             <i class="fa fa-align-justify"></i>
                         </span>
-                        <select class="filter-category">
-                            <option selected="selected">Choose Category</option>
-                            <option>example1</option>
-                        </select>
+
+                        <app-subcategory-select 
+                            [breadCrumbs]="appState.breadCrumbs" 
+                            [recurtionLevel]="0"
+                            [categories]="appState.productCategories">
+                        </app-subcategory-select>
                     </div>
                 </div>
             </div>
@@ -100,41 +102,25 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div id="rangeBox">
-                            <div id="sliderBox">
-                                <input type="range" id="slider0to50" min="0" max="50">
-                                <input type="range" id="slider51to100" min="50" max="100">
-                            </div>
-                            <div id="inputRange">
-                                <input type="number" min="0" max="50" placeholder="Min" id="min">
-                                <input type="number" min="51" max="100" placeholder="Max" id="max">
-                            </div>
+                            <!-- using this plugin - https://www.npmjs.com/package/bootstrap-slider and https://github.com/seiyria/bootstrap-slider-->
+                            <input id="range" type="text" id="range" step="1" precision="2" value="7"
+                                scale="logarithmic" name="somename" data-provide="slider" data-slider-min="10"
+                                data-slider-max="1000" data-slider-step="1" data-slider-value="[250,950]">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="button-success">
-                            <button type="button" class="btn btn-success">Success</button>
-
+                            <button (click)="search()" type="button" class="btn btn-success">Success</button>
                         </div>
                     </div>
                 </div>
-                <input
-                type="text"
-                name="somename"
-                data-provide="slider"
-                data-slider-ticks="[1, 2, 3]"
-                data-slider-ticks-labels='["short", "medium", "long"]'
-                data-slider-min="1"
-                data-slider-max="3"
-                data-slider-step="1"
-                data-slider-value="3"
-                data-slider-tooltip="hide"
-            >
-                Filter by price interval: <b>€ 10</b> <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>€ 1000</b>
+
             </div>
         </div>
     </div>
     <div class="filter-btn">
-        <button (click)="toggleFilter = !toggleFilter" class="btn btn-primary"><i class="fa fa-filter"></i>Filter</button>
+        <button (click)="toggleFilter = !toggleFilter" class="btn btn-primary"><i
+                class="fa fa-filter"></i>Filter</button>
     </div>
     <div class="bread-crumbs">
         <nav aria-label="breadcrumb">
@@ -145,4 +131,6 @@
             </ol>
         </nav>
     </div>
+    <app-card *ngFor="let card of products;" [state]="card" [userId]="state.header.user._id" (onChanged)="cardHandler($event)">
+    </app-card>
 </div>

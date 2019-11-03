@@ -412,7 +412,13 @@ router.post('/user-voute', cors(), async function (req, res) {
   res.json('ok');
 })
 
-
+router.get('/mega-search', cors(), async (req, res)=>{
+  const proucts = await Product.find({
+    productName: req.query.keywords
+    
+  })
+  res.json(proucts);
+})
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', cors(), (req, res) => {

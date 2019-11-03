@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { state } from '@angular/animations';
+//import { state } from '@angular/animations';
 declare var Quill: any;
 declare var swal: any;
 var log = console.log;
@@ -12,6 +12,8 @@ var log = console.log;
 })
 export class NewProductsComponent implements OnInit {
   @Input() state: any;
+  @Input() breadCrumbs;
+  @Input() categories;
   constructor(
     private api: ApiService,
   ) { }
@@ -47,6 +49,7 @@ export class NewProductsComponent implements OnInit {
 
     })
   }
+
   errHandler(err) {
     console.log(err);
   }
@@ -63,7 +66,7 @@ export class NewProductsComponent implements OnInit {
 
   }
   new_category: any;
-  categories: any = []
+  //categories: any = []
 
   addCategory(new_category): void {
     //this.state.productCategories // array in state admin
@@ -85,7 +88,6 @@ export class NewProductsComponent implements OnInit {
   async refreshCategoriesOnServer() {
     const fromServer: any = await this.api.setCategories(this.state.productCategories)
     console.log(fromServer)
-    this.errHandler
   }
   refreshCategories = () => this.refreshCategoriesOnServer(); //refresh on server side
 
@@ -125,7 +127,6 @@ export class NewProductsComponent implements OnInit {
       }
       const fromServer: any = await this.api.addProduct(newProduct)
       if (fromServer.ok) alert('new product has been created');
-      this.errHandler
     } catch (error) {
       console.log(error);
     }

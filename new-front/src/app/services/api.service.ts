@@ -70,6 +70,9 @@ export class ApiService {
   addVoute(obj) {
     return this.http.post('http://localhost:3000/user-voute', obj, httpOptions).toPromise();
   }
+  megaSearch(queryString) {
+    return this.http.get(`http://localhost:3000/mega-search${queryString}`).toPromise();
+  }
 }
 
 
