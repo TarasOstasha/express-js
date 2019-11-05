@@ -13,9 +13,10 @@ declare const $: any;
   styleUrls: ['./link-categories.component.less']
 })
 export class LinkCategoriesComponent implements OnInit {
+  
   state: any;
   appState: any;
-  products = []
+  products: any = []
 
 
   constructor(
@@ -28,7 +29,7 @@ export class LinkCategoriesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    log(this.state)
+    log(this.products)
     let crumbs = this.route.snapshot.paramMap.get('crumbs');
     console.log(crumbs)
 
@@ -58,8 +59,23 @@ export class LinkCategoriesComponent implements OnInit {
 
 
   toggleFilter = true;
+  sortByPriceFlag = false;
 
+  //sort products from lover to hight and hight to lover
+  filterPriceOption = {
+    default: "Choose By Price",
+    up: "from lover to hight",
+    down: "from hight to lover"
+  }
+  sortByPrice() {
+    this.sortByPriceFlag = !this.sortByPriceFlag;
+    if(this.sortByPriceFlag) {
+      this.products = this.products.sort( (a, b)=> a.price - b.price );
+    }else {
+      this.products = this.products.sort( (a, b)=> b.price - a.price );
 
+    }
+  }
 
 
 

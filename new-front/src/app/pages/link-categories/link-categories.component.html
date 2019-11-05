@@ -19,9 +19,7 @@
                             <i class="fa fa-align-justify"></i>
                         </span>
 
-                        <app-subcategory-select 
-                            [breadCrumbs]="appState.breadCrumbs" 
-                            [recurtionLevel]="0"
+                        <app-subcategory-select [breadCrumbs]="appState.breadCrumbs" [recurtionLevel]="0"
                             [categories]="appState.productCategories">
                         </app-subcategory-select>
                     </div>
@@ -62,11 +60,21 @@
                             <span class="input-group-text">
                                 <i class="fa fa-file"></i>
                             </span>
-                            <select class="filter-category">
-                                <option selected="selected">Choose By Price</option>
-                                <option>from lover to hight</option>
-                                <option>from hight to lover</option>
-                            </select>
+                            <!-- <select class="filter-category"> -->
+                            <!-- <option selected="selected">Choose By Price</option> -->
+                            <!-- <option [selected]="selected">{{ filterPriceOption.default }}</option>
+                                <option>{{ filterPriceOption.up }}</option>
+                                <option>{{ filterPriceOption.down }}</option>
+                            </select> -->
+                            <div class="btn-group">
+                                <button *ngIf="!sortByPriceFlag" (click)="sortByPrice()">
+                                    <i class="fa fa-arrow-up"></i>
+                                    from lover to hight</button>
+                                <button *ngIf="sortByPriceFlag" (click)="sortByPrice()">
+                                    <i class="fa fa-arrow-down"></i>
+                                    from hight to lover
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,6 +139,7 @@
             </ol>
         </nav>
     </div>
-    <app-card *ngFor="let card of products;" [state]="card" [userId]="state.header.user._id" (onChanged)="cardHandler($event)">
+    <app-card *ngFor="let card of products;" [state]="card" [userId]="state.header.user._id"
+        (onChanged)="cardHandler($event)">
     </app-card>
 </div>
