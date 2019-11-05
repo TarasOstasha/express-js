@@ -16,7 +16,7 @@ export class LinkCategoriesComponent implements OnInit {
   
   state: any;
   appState: any;
-  products: any = []
+  //products: any = []
 
 
   constructor(
@@ -29,12 +29,12 @@ export class LinkCategoriesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    log(this.products)
+    log('appState', this.appState)
     let crumbs = this.route.snapshot.paramMap.get('crumbs');
     console.log(crumbs)
 
     const fromServer: any = await this.api.getProducts();
-    this.products = fromServer.products;
+    this.appState.products = fromServer.products;
     this.appState.productCategories = await this.api.getCategories();
     log(fromServer)
   }
@@ -70,9 +70,9 @@ export class LinkCategoriesComponent implements OnInit {
   sortByPrice() {
     this.sortByPriceFlag = !this.sortByPriceFlag;
     if(this.sortByPriceFlag) {
-      this.products = this.products.sort( (a, b)=> a.price - b.price );
+      this.appState.products = this.appState.products.sort( (a, b)=> a.price - b.price );
     }else {
-      this.products = this.products.sort( (a, b)=> b.price - a.price );
+      this.appState.products = this.appState.products.sort( (a, b)=> b.price - a.price );
 
     }
   }

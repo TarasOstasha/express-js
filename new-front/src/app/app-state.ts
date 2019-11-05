@@ -30,7 +30,7 @@ const appState = {
         },
         basket: {
           open: false,
-          products: [],
+          products: [], // move to global level
           defaultData: {
             states: []
           },

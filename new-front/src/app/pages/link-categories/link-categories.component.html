@@ -139,7 +139,7 @@
             </ol>
         </nav>
     </div>
-    <app-card *ngFor="let card of products;" [state]="card" [userId]="state.header.user._id"
+    <app-card *ngFor="let card of appState.products;" [state]="card" [userId]="state.header.user._id"
         (onChanged)="cardHandler($event)">
     </app-card>
 </div>
