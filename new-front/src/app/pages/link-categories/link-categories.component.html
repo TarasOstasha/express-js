@@ -10,6 +10,8 @@
                     </div>
                     <input [(ngModel)]="queries.keywords" type="text" class="form-control" aria-label="Default"
                         aria-describedby="inputGroup-sizing-default" placeholder="Search">
+                        <span>{{ queries.minPrice }}</span>
+                        <span>{{ queries.maxPrice }}</span>
                 </div>
             </div>
             <div class="col-md-6 input-group-select">
@@ -118,7 +120,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="button-success">
-                            <button (click)="search()" type="button" class="btn btn-success">Success</button>
+                            <button (click)="search()" type="button" class="btn btn-success">search</button>
                         </div>
                     </div>
                 </div>

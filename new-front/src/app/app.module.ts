@@ -37,6 +37,7 @@ import { ProductSliderComponent } from './parts/product-slider/product-slider.co
 import { SubcategoryComponent } from './parts/subcategory/subcategory.component';
 import { SubcategorySelectComponent } from './parts/subcategory-select/subcategory-select.component';
 import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
+import { MegaSearchComponent } from './parts/mega-search/mega-search.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { LinkCategoriesComponent } from './pages/link-categories/link-categories
     ProductSliderComponent,
     SubcategoryComponent,
     SubcategorySelectComponent,
-    LinkCategoriesComponent
+    LinkCategoriesComponent,
+    MegaSearchComponent
     
   ],
   imports: [

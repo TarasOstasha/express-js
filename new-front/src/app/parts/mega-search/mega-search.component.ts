@@ -5,20 +5,20 @@ import { log, toQueryString, getUrlQueries } from '../../my_models/stuff';
 import { Queries } from '../../interfaces/queries';
 import appState from '../../app-state';
 
-
 declare const $: any;
 
 @Component({
-  selector: 'app-link-categories',
-  templateUrl: './link-categories.component.html',
-  styleUrls: ['./link-categories.component.less']
+  selector: 'app-mega-search',
+  templateUrl: './mega-search.component.html',
+  styleUrls: ['./mega-search.component.less']
 })
-export class LinkCategoriesComponent implements OnInit {
+export class MegaSearchComponent implements OnInit {
+
+
 
   queries: Queries = getUrlQueries();
   state: any;
   appState: any;
-  //products: any = []
 
 
   constructor(
@@ -45,7 +45,6 @@ export class LinkCategoriesComponent implements OnInit {
     log('appState', this.appState)
     let crumbs = this.route.snapshot.paramMap.get('crumbs');
     console.log(crumbs)
-
     const fromServer: any = await this.api.getProducts();
     this.appState.products = fromServer.products;
     this.appState.productCategories = await this.api.getCategories();
@@ -58,9 +57,6 @@ export class LinkCategoriesComponent implements OnInit {
       const queryString = toQueryString(this.queries);
       const serverResponse = await this.api.megaSearch(queryString);
       log(serverResponse)
-
-      //next - show cards in this component like in main page 
-      // work with others input and transfer to obj queries
     } catch (error) {
       log(error);
     }
@@ -86,11 +82,7 @@ export class LinkCategoriesComponent implements OnInit {
 
 
 
-  // parse crumbs
-  // req to server
-  // view to show array of product, link of crumbs and filter block on the top
 
 
   //add html filter block
-
 }
