@@ -73,6 +73,9 @@ export class ApiService {
   megaSearch(queryString) {
     return this.http.get(`http://localhost:3000/mega-search${queryString}`).toPromise();
   }
+  editProduct(product) {
+    return this.http.put('http://localhost:3000/edit-product', product, httpOptions).toPromise();
+  }
 }
 
 

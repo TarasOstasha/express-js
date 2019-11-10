@@ -152,7 +152,7 @@
 <div class="container vertical" *ngIf="true">
     <div [class]="(toggleFilter) ? '': 'hide'">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">
@@ -165,7 +165,7 @@
                         <span>{{ queries.maxPrice }}</span>
                 </div>
             </div>
-            <div class="col-md-6 input-group-select">
+            <div class="col-md-12 input-group-select">
                 <div class="input-group">
                     <div class="input-group-prepend category-wrapper">
                         <span class="input-group-text">
@@ -181,7 +181,7 @@
         </div>
         <div class="section-list-filter">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="filter-section">
                         <div class="input-group-prepend filter-section">
                             <span class="input-group-text">
@@ -194,7 +194,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="filter-section">
                         <div class="input-group-prepend filter-section">
                             <span class="input-group-text">
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="filter-section">
                         <div class="input-group-prepend filter-section">
                             <span class="input-group-text">
@@ -231,7 +231,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="filter-section">
                         <div class="input-group-prepend filter-section">
                             <span class="input-group-text">
@@ -261,7 +261,7 @@
             </div>
             <div class="rangeBox">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div id="rangeBox">
                             <!-- using this plugin - https://www.npmjs.com/package/bootstrap-slider and https://github.com/seiyria/bootstrap-slider-->
                             <input id="range" type="text" id="range" step="1" precision="2" value="7"
@@ -269,7 +269,7 @@
                                 data-slider-max="1000" data-slider-step="1" data-slider-value="[250,950]">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="button-success">
                             <button (click)="search()" type="button" class="btn btn-success">search</button>
                         </div>
@@ -283,7 +283,9 @@
         <button (click)="toggleFilter = !toggleFilter" class="btn btn-primary"><i
                 class="fa fa-filter"></i>Filter</button>
     </div>
-    <div class="bread-crumbs">
+    <!-- I THINK BREAD CRUMBS DONT NEEDED FOR THIS SIDE BAR MENU -->
+    
+    <!-- <div class="bread-crumbs">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -294,5 +296,5 @@
     </div>
     <app-card *ngFor="let card of appState.products;" [state]="card" [userId]="state.header.user._id"
         (onChanged)="cardHandler($event)">
-    </app-card>
+    </app-card> -->
 </div>

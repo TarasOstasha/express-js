@@ -400,7 +400,7 @@ router.post('/user-voute', cors(), async function (req, res) {
   await Product.findOneAndUpdate({
     _id: voute.productId
   }, {
-      "stars.public": publicCounter, 
+      "stars.public": publicCounter,
       $push: {
         "stars.voutes": {
           id: voute.user._id,
@@ -412,12 +412,30 @@ router.post('/user-voute', cors(), async function (req, res) {
   res.json('ok');
 })
 
-router.get('/mega-search', cors(), async (req, res)=>{
+router.get('/mega-search', cors(), async (req, res) => {
   const proucts = await Product.find({
     productName: req.query.keywords
-    
   })
   res.json(proucts);
+})
+//save edit product in component ProductComponent
+router.put('/edit-product', cors(), async (req, res) => {
+  console.log('SIZES!!!',req.body.sizes)
+  const productObj = req.body; // get all product object (state)
+  const editedName = productObj.productName; //  get productName from user side
+  const editedSize = productObj.sizes; // get sizes array
+  const editPrice = productObj.price; // get size
+  const editDescription = productObj.description; // get description
+  const editColor = productObj.colorProducts; //get new color
+  const product = await Product.findByIdAndUpdate(productObj, {
+    productName: editedName,
+    price: editPrice,
+    sizes: editedSize,
+    description: editDescription,
+    colorProducts: editColor
+  }, { new: true });
+  console.log('!!!!!!!!!!product', product, editedSize)
+  res.json('okayyy');
 })
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!

@@ -12,9 +12,20 @@
           </form> -->
 
 <app-header [state]="state.header" (onChanged)="headerHandler($event)"></app-header>
-<app-mega-search></app-mega-search>
 <app-carousel></app-carousel>
-<h2 class="h2Title">New Collection</h2>
-<app-card *ngFor="let card of state.products" [state]="card" [userId]="state.header.user._id" (onChanged)="cardHandler($event)"></app-card>
-<app-product-slider [userId]="state.header.user._id" [products]="state.products"></app-product-slider>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <app-mega-search></app-mega-search>
+    </div>
+    <div class="col-md-9">
+      <h2 class="h2Title">New Collection</h2>
+      <app-card *ngFor="let card of state.products" [state]="card" [userId]="state.header.user._id"
+        (onChanged)="cardHandler($event)"></app-card>
+      <app-product-slider [userId]="state.header.user._id" [products]="state.products"></app-product-slider>
+    </div>
+  </div>
+
+</div>
 <app-footer></app-footer>

@@ -57,6 +57,7 @@ export class MegaSearchComponent implements OnInit {
       const queryString = toQueryString(this.queries);
       const serverResponse = await this.api.megaSearch(queryString);
       log(serverResponse)
+      this.appState.products = serverResponse;
     } catch (error) {
       log(error);
     }

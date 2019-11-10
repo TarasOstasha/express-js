@@ -10,6 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   state: any;
+  editFlag: boolean = false;
+  newSize;
+  newColor;
   //private api: ApiService
 
   constructor(
@@ -99,5 +102,29 @@ export class ProductComponent implements OnInit {
   changeImg(i) {
     this.state.activeSliderImg = [];
     this.state.activeSliderImg[i] = true;
+  }
+
+
+  editForAdmin() {
+    this.editFlag = !this.editFlag;
+  }
+  async saveForAdmin(product) {
+    console.log('!!!!!!!saveForAdmin', product)
+    this.editFlag = !this.editFlag;
+    const fromServer: any = await this.api.editProduct(product);
+    console.log('saveForAdmin', fromServer)
+    //this api edit priduct
+    //create in route path route to new method
+  }
+
+  addNewSize() {
+    this.state.product.sizes.push(this.newSize);
+    this.newSize = '';
+  }
+
+  addNewColor() { //newColor
+    console.log('state color', this.newColor);
+    this.state.product.colorProducts.push(this.newColor);
+    this.newColor = '';
   }
 }

@@ -52,8 +52,8 @@
         </button>
       </div>
       <!-- CATEGORY -->
-      <span>{{state.productCategories.subCategories.name}}</span>
-      <app-subcategory (click)="refreshCategories()" [new_category]="new_category" [category]="state.productCategories"></app-subcategory>
+      <span>{{categories.subCategories.name}}</span>
+      <app-subcategory (click)="refreshCategories()" [new_category]="new_category" [category]="categories"></app-subcategory>
       <hr>
       
     </div>

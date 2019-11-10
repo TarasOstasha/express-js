@@ -11,7 +11,8 @@ import  state  from '../../app-state';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
-  state: any;
+  state: any; //remove
+  appState:any;
   constructor(
     
     private api: ApiService,
@@ -19,7 +20,7 @@ export class MainComponent implements OnInit {
     
   ) { 
     this.state = state;
-
+    this.appState = state;
    }
 
   async ngOnInit() {

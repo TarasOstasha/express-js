@@ -70,7 +70,7 @@ export class NewProductsComponent implements OnInit {
 
   addCategory(new_category): void {
     //this.state.productCategories // array in state admin
-    this.state.productCategories.subCategories.push(
+    this.categories.subCategories.push(
       {
         name: new_category,
         subCategories: []
@@ -82,11 +82,11 @@ export class NewProductsComponent implements OnInit {
   }
 
   delCategory(): any {
-    this.state.productCategories.shift();
+    this.categories.shift();
     this.refreshCategoriesOnServer()
   }
   async refreshCategoriesOnServer() {
-    const fromServer: any = await this.api.setCategories(this.state.productCategories)
+    const fromServer: any = await this.api.setCategories(this.categories);
     console.log(fromServer)
   }
   refreshCategories = () => this.refreshCategoriesOnServer(); //refresh on server side
