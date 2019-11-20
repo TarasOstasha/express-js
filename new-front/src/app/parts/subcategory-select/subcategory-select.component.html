@@ -1,4 +1,4 @@
-<select (ngModelChange)="onChange($event)" class="form-control" id="exampleFormControlSelect1"
+<select (ngModelChange)="onChange($event)" class="form-control select-categories" id="exampleFormControlSelect1"
   [(ngModel)]="state.checkedCategory" [ngModelOptions]="{standalone: true}">
   <option selected disabled>Choose a category</option>
   <option *ngFor="let category of categories.subCategories" [ngValue]="category">{{ category.name }}
@@ -10,4 +10,4 @@
   *ngIf="state.checkedCategory.subCategories.length != 0" 
   [categories]="state.checkedCategory">
 </app-subcategory-select>
-{{ recurtionLevel }}- {{ state.checkedCategory.name }}
+<!-- {{ recurtionLevel }}- {{ state.checkedCategory.name }} -->

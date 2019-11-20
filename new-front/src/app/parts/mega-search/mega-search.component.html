@@ -172,9 +172,12 @@
                             <i class="fa fa-align-justify"></i>
                         </span>
 
-                        <app-subcategory-select [breadCrumbs]="appState.breadCrumbs" [recurtionLevel]="0"
+                        <app-subcategory-select 
+                            [breadCrumbs]="appState.breadCrumbs" 
+                            [recurtionLevel]="0"
                             [categories]="appState.productCategories">
                         </app-subcategory-select>
+
                     </div>
                 </div>
             </div>
@@ -219,11 +222,11 @@
                                 <option>{{ filterPriceOption.up }}</option>
                                 <option>{{ filterPriceOption.down }}</option>
                             </select> -->
-                            <div class="btn-group">
-                                <button *ngIf="!sortByPriceFlag" (click)="sortByPrice()">
+                            <div class="btn-group price-btn-wrapper">
+                                <button *ngIf="!sortByPriceFlag" (click)="sortByPrice()" class="price-option">
                                     <i class="fa fa-arrow-up"></i>
                                     from lover to hight</button>
-                                <button *ngIf="sortByPriceFlag" (click)="sortByPrice()">
+                                <button *ngIf="sortByPriceFlag" (click)="sortByPrice()" class="price-option">
                                     <i class="fa fa-arrow-down"></i>
                                     from hight to lover
                                 </button>

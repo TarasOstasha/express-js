@@ -413,14 +413,33 @@ router.post('/user-voute', cors(), async function (req, res) {
 })
 
 router.get('/mega-search', cors(), async (req, res) => {
-  const proucts = await Product.find({
-    productName: req.query.keywords
+  req.query.breadCrumbs += ' '; // fixed query string, add space after the last query element
+  //console.log('!BREADCRUMBS', req.query.breadCrumbs + '...');
+  const breadCrumbs = req.query.breadCrumbs.split(',');
+  //console.log('!BREADCRUMBS', breadCrumbs);
+
+  // const proucts = await Product.find({
+  //   productName: req.query.keywords
+  // })
+  //const products = await Product.find({ "productName:": { "$regex": `${req.query.keywords}*` } }) //example, the same like 416 line
+
+  //db.users.find({awards: {$elemMatch: {award:'National Medal', year:1975}}})
+  const re = new RegExp(req.query.keywords, "g");
+  const products = await Product.find({
+    //productName: { $in: [ re ] } , // search exactly value
+    breadCrumbs: {
+      
+        "$all": breadCrumbs // find method instead $all
+
+      
+    }
+    // looking for method how to work with array in mongo db request!!!
   })
-  res.json(proucts);
+  res.json(products);
 })
 //save edit product in component ProductComponent
 router.put('/edit-product', cors(), async (req, res) => {
-  console.log('SIZES!!!',req.body.sizes)
+  console.log('SIZES!!!', req.body.sizes)
   const productObj = req.body; // get all product object (state)
   const editedName = productObj.productName; //  get productName from user side
   const editedSize = productObj.sizes; // get sizes array

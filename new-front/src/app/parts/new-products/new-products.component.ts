@@ -118,7 +118,7 @@ export class NewProductsComponent implements OnInit {
           privite: 35.5
         },
         productName: this.state.productName,
-        checkedCategory: this.state.checkedCategory,
+        //checkedCategory: this.state.checkedCategory,
         price: this.state.productPrice,
         description: this.quill.container.firstChild.innerHTML,
         breadCrumbs: this.state.breadCrumbs

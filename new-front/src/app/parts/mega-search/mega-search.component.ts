@@ -48,12 +48,13 @@ export class MegaSearchComponent implements OnInit {
     const fromServer: any = await this.api.getProducts();
     this.appState.products = fromServer.products;
     this.appState.productCategories = await this.api.getCategories();
-    log(fromServer)
+    //log(fromServer)
   }
 
 
   async search() {
     try {
+      this.queries.breadCrumbs = this.appState.breadCrumbs;
       const queryString = toQueryString(this.queries);
       const serverResponse = await this.api.megaSearch(queryString);
       log(serverResponse)

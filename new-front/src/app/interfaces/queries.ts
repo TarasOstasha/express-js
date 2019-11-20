@@ -1,5 +1,6 @@
 export interface Queries {
     keywords: string,
     minPrice: number,
-    maxPrice: number
+    maxPrice: number,
+    breadCrumbs: [string];
 }
