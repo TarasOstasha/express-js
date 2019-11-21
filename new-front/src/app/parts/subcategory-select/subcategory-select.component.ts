@@ -23,6 +23,6 @@ export class SubcategorySelectComponent implements OnInit {
   onChange(event) {
     console.log(event.name);
     this.breadCrumbs.splice(this.recurtionLevel, this.breadCrumbs.length - this.recurtionLevel);  // is there exist way to resolve more easier(clear)???! CUT
-    this.breadCrumbs.push(event.name + " >> ")
+    this.breadCrumbs.push(event.name)
   }
 }

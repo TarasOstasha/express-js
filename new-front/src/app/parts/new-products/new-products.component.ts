@@ -121,7 +121,7 @@ export class NewProductsComponent implements OnInit {
         //checkedCategory: this.state.checkedCategory,
         price: this.state.productPrice,
         description: this.quill.container.firstChild.innerHTML,
-        breadCrumbs: this.state.breadCrumbs
+        breadCrumbs: this.breadCrumbs
 
 
       }

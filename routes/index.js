@@ -413,7 +413,7 @@ router.post('/user-voute', cors(), async function (req, res) {
 })
 
 router.get('/mega-search', cors(), async (req, res) => {
-  req.query.breadCrumbs += ' '; // fixed query string, add space after the last query element
+  //req.query.breadCrumbs += ' '; // fixed query string, add space after the last query element
   //console.log('!BREADCRUMBS', req.query.breadCrumbs + '...');
   const breadCrumbs = req.query.breadCrumbs.split(',');
   //console.log('!BREADCRUMBS', breadCrumbs);
@@ -433,7 +433,6 @@ router.get('/mega-search', cors(), async (req, res) => {
 
       
     }
-    // looking for method how to work with array in mongo db request!!!
   })
   res.json(products);
 })
