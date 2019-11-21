@@ -425,15 +425,10 @@ router.get('/mega-search', cors(), async (req, res) => {
 
   //db.users.find({awards: {$elemMatch: {award:'National Medal', year:1975}}})
   const re = new RegExp(req.query.keywords, "g");
-  const products = await Product.find({
-    //productName: { $in: [ re ] } , // search exactly value
-    breadCrumbs: {
-      
-        "$all": breadCrumbs // find method instead $all
-
-      
-    }
-  })
+  let DBquery = {}
+  DBquery.productName = { $in: [ re ] } // search exactly value
+  if(breadCrumbs[0] !== '') DBquery.breadCrumbs = { "$all": breadCrumbs }  // find method instead $all
+  const products = await Product.find(DBquery);
   res.json(products);
 })
 //save edit product in component ProductComponent
