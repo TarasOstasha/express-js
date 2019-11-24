@@ -451,6 +451,17 @@ router.put('/edit-product', cors(), async (req, res) => {
   res.json('okayyy');
 })
 
+router.post('/contacts-mail', cors(), async (req, res)=>{
+  try {
+    console.log('request body from server side',req.body)
+    res.json('okkkkk!')
+  } catch (error) {
+    console.log(error, 'something went wrong');
+    res.json('something went wrong on server');
+  }
+
+})
+
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', cors(), (req, res) => {
   res.redirect('/index.html');

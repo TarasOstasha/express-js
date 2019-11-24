@@ -76,6 +76,10 @@ export class ApiService {
   editProduct(product) {
     return this.http.put('http://localhost:3000/edit-product', product, httpOptions).toPromise();
   }
+  contactsMail(mail) {
+    return this.http.post('http://localhost:3000/contacts-mail', mail, httpOptions).toPromise();
+
+  }
 }
 
 

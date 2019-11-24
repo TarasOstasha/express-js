@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
    }
 
   async ngOnInit() {
-    const  fromServer: any = await this.api.getProducts()
+    const fromServer: any = await this.api.getProducts()
       state.products = fromServer.products;
       this.errorHandler 
    

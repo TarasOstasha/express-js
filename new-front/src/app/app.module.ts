@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+
 //import {MatButtonModule} from '@angular/material/button';
 //import {MatCheckboxModule} from '@angular/material/checkbox';
 //import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -38,6 +39,7 @@ import { SubcategoryComponent } from './parts/subcategory/subcategory.component'
 import { SubcategorySelectComponent } from './parts/subcategory-select/subcategory-select.component';
 import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
 import { MegaSearchComponent } from './parts/mega-search/mega-search.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { MegaSearchComponent } from './parts/mega-search/mega-search.component';
     SubcategoryComponent,
     SubcategorySelectComponent,
     LinkCategoriesComponent,
-    MegaSearchComponent
+    MegaSearchComponent,
+    ContactsComponent
     
   ],
   imports: [
@@ -72,7 +75,8 @@ import { MegaSearchComponent } from './parts/mega-search/mega-search.component';
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
+  
     //MatButtonModule, MatCheckboxModule,
     // MatPaginator,
     // MatSort,

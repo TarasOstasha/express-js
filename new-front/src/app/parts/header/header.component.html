@@ -19,6 +19,9 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/about-us">About</a>
       </li>
+      <li class="nav-item">
+          <a class="nav-link" routerLink="/contacts">Contacts</a>
+        </li>
     </ul>
     <div class="search-wrapper form-inline my-2 my-lg-0">
       <input [(ngModel)]="state.search_input" (keyup)="searchTerm$.next($event.target.value)" class="form-control mr-sm-2" type="text" placeholder="Search">
