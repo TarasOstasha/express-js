@@ -58,6 +58,7 @@ export class ContactsComponent implements OnInit {
       console.log(this.contactsForm.status)
       if (this.contactsForm.status == "VALID") {
         const contactsData = {
+          userId: this.appState.header.user._id,
           name: this.contactsForm.controls.name.value,
           email: this.contactsForm.controls.email.value,
           subject: this.contactsForm.controls.subject.value,
@@ -66,13 +67,19 @@ export class ContactsComponent implements OnInit {
         const fromServer = await this.api.contactsMail(contactsData);
         console.log(fromServer)
         this.contactsForm.reset();
-
+        // sweet alert from https://lipis.github.io/bootstrap-sweetalert/
+        swal.fire({
+          icon: "success",
+          title: "success",
+          text: "Thanks For Request! We will contact you as soon as we can!",
+          type: "success"
+        })
       } else {
-        
         swal.fire({
           icon: "error",
           title: "Error",
-          text: "Please Fill Out The Form"
+          text: "Please Fill Out The Form",
+          type: "warning"
         })
       }
     } catch (error) {

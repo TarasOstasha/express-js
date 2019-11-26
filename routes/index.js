@@ -9,7 +9,7 @@ var passport = require('passport');
 const User = require('../models/user')
 const Product = require('../models/product');
 const log = console.log
-
+const ContactMessage = require('../models/contact-messagess');
 
 const cards = [
   {
@@ -454,7 +454,15 @@ router.put('/edit-product', cors(), async (req, res) => {
 router.post('/contacts-mail', cors(), async (req, res)=>{
   try {
     console.log('request body from server side',req.body)
-    res.json('okkkkk!')
+    const new_message = new ContactMessage({
+      userId: req.body.userId,
+      email: req.body.email,
+      name: req.body.name,
+      subject: req.body.subject,
+      message: req.body.message
+    });
+    new_message.save();
+    res.json('ok')
   } catch (error) {
     console.log(error, 'something went wrong');
     res.json('something went wrong on server');
