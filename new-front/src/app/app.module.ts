@@ -40,6 +40,7 @@ import { SubcategorySelectComponent } from './parts/subcategory-select/subcatego
 import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
 import { MegaSearchComponent } from './parts/mega-search/mega-search.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ContactsComponent } from './pages/contacts/contacts.component';
     SubcategorySelectComponent,
     LinkCategoriesComponent,
     MegaSearchComponent,
-    ContactsComponent
+    ContactsComponent,
+    AdminMessagesComponent
     
   ],
   imports: [

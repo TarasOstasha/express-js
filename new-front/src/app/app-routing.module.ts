@@ -8,6 +8,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { ProductComponent } from './pages/product/product.component';
 import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
 
 
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'p404', component: P404Component },
   { path: 'admin', component:  AdminComponent},
+  { path: 'admin-messages', component:  AdminMessagesComponent },
   { path: 'product/:productId', component: ProductComponent },
   { path: 'link-category/:crumbs', component: LinkCategoriesComponent },
   { path: 'contacts', component: ContactsComponent },

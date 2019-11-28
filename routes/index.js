@@ -9,7 +9,7 @@ var passport = require('passport');
 const User = require('../models/user')
 const Product = require('../models/product');
 const log = console.log
-const ContactMessage = require('../models/contact-messagess');
+const ContactMessage = require('../models/contact-messages');
 
 const cards = [
   {
@@ -426,8 +426,8 @@ router.get('/mega-search', cors(), async (req, res) => {
   //db.users.find({awards: {$elemMatch: {award:'National Medal', year:1975}}})
   const re = new RegExp(req.query.keywords, "g");
   let DBquery = {}
-  DBquery.productName = { $in: [ re ] } // search exactly value
-  if(breadCrumbs[0] !== '') DBquery.breadCrumbs = { "$all": breadCrumbs }  // find method instead $all
+  DBquery.productName = { $in: [re] } // search exactly value
+  if (breadCrumbs[0] !== '') DBquery.breadCrumbs = { "$all": breadCrumbs }  // find method instead $all
   const products = await Product.find(DBquery);
   res.json(products);
 })
@@ -451,9 +451,9 @@ router.put('/edit-product', cors(), async (req, res) => {
   res.json('okayyy');
 })
 
-router.post('/contacts-mail', cors(), async (req, res)=>{
+router.post('/contacts-mail', cors(), async (req, res) => {
   try {
-    console.log('request body from server side',req.body)
+    console.log('request body from server side', req.body)
     const new_message = new ContactMessage({
       userId: req.body.userId,
       email: req.body.email,
@@ -462,12 +462,32 @@ router.post('/contacts-mail', cors(), async (req, res)=>{
       message: req.body.message
     });
     new_message.save();
-    res.json('ok')
+    res.json('ok');
+    //res.json({new_message}) // I NEED THIS OBJ GET IN ADMIN-MESSAGES COMPONENT
   } catch (error) {
     console.log(error, 'something went wrong');
     res.json('something went wrong on server');
   }
+})
 
+router.get('/admin-notifications', cors(), async (req, res) => {
+  try {
+    // find method which return quantity of collection mongo DB
+    const notificationAmount = await ContactMessage.count();
+    res.json({
+      notificationAmount
+    });
+  } catch (error) {
+    console.log(error, 'something went wrong');
+    res.json('something went wrong on server');
+  }
+})
+
+router.get('/admin-messasges', cors(), async (req, res)=>{
+  const adminMessages = await ContactMessage.find({}); // get all documents from data base
+  res.json({
+    adminMessages
+  })
 })
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!

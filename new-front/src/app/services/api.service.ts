@@ -80,6 +80,13 @@ export class ApiService {
     return this.http.post('http://localhost:3000/contacts-mail', mail, httpOptions).toPromise();
 
   }
+
+  getAdminNotifications() {
+    return this.http.get('http://localhost:3000/admin-notifications',httpOptions).toPromise();
+  }
+  getAdminMessages() {
+    return this.http.get('http://localhost:3000/admin-messasges',httpOptions).toPromise();
+  }
 }
 
 

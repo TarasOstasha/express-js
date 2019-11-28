@@ -10954,3 +10954,14 @@
 #content-wrapper {
   background: white!important;
 }
+
+.active-notification {
+  animation-name: blink;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0%   { background-color: #007bff; }
+  50%  { background-color: darken(#007bff, 20%); }
+}

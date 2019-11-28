@@ -1,0 +1,47 @@
+<app-header [state]="appState.header" (onChanged)="headerHandler($event)"></app-header>
+
+<h1 class="head-customer-messages">
+  <i class="material-icons">report</i>
+  <i>Messages From Customers</i> 
+</h1>
+<input class="search-messages" type="text" placeholder="search">
+
+<ul class="customer-messages" *ngFor="let message of listMessages">
+  <li class="customer-messages-list">
+    <i class="material-icons">face</i>
+    <i>Name :{{ message.name }}</i> 
+  </li>
+  <li>
+    <i class="material-icons">email</i>
+    <i>@mail : {{ message.email }}</i>
+  </li>
+  <li>
+    <i class="material-icons">subject</i>
+    <i>Subject: {{ message.subject }}</i>
+  </li>
+  <li>
+    <i class="material-icons">message</i>
+    <i>Message: </i>
+  </li>
+  <div class="message-textarea" id="mess" >{{ message.message }}</div>
+</ul>
+<div class="customer-messagesPagination">
+    <ul class="pagination">
+      <li class="page-item disabled">
+        <span class="page-link">Previous</span>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active">
+        <span class="page-link">
+          2
+          <span class="sr-only">(current)</span>
+        </span>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+</div>
+
+<app-footer></app-footer>
