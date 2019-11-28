@@ -483,8 +483,15 @@ router.get('/admin-notifications', cors(), async (req, res) => {
   }
 })
 
-router.get('/admin-messasges', cors(), async (req, res)=>{
-  const adminMessages = await ContactMessage.find({}); // get all documents from data base
+router.get('/admin-messasges/:page', cors(), async (req, res)=>{
+  const page = req.params.page;
+  const perPage = 3;
+  const adminMessages = await ContactMessage
+    .find({})
+    .limit(perPage)
+    .skip(perPage * page); // get chunk of messages
+
+  console.log(req.params.page);
   res.json({
     adminMessages
   })

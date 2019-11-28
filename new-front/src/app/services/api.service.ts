@@ -84,8 +84,8 @@ export class ApiService {
   getAdminNotifications() {
     return this.http.get('http://localhost:3000/admin-notifications',httpOptions).toPromise();
   }
-  getAdminMessages() {
-    return this.http.get('http://localhost:3000/admin-messasges',httpOptions).toPromise();
+  getAdminMessages(currentPage) {
+    return this.http.get('http://localhost:3000/admin-messasges/' + currentPage, httpOptions).toPromise();
   }
 }
 
