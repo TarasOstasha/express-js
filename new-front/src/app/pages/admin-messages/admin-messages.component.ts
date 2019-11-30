@@ -29,12 +29,8 @@ export class AdminMessagesComponent implements OnInit {
   async ngOnInit() {
     //console.log(this.contactsForm);
     this.getMessages();
-    this.allNotifications = await this.api.getAdminNotifications();
-    this.notificationAmount = this.allNotifications.notificationAmount;
-    this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
-    this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
-    console.log('currentPageNgOnInit', this.currentPage);
-    console.log('pagesAmountArray', this.pagesAmountArray)
+    this.getNotifications();
+   
   }
 
   async getMessages() {
@@ -48,5 +44,18 @@ export class AdminMessagesComponent implements OnInit {
     this.currentPage = btnIndex;
     this.getMessages();
     console.log('currentPage-', this.currentPage)
+  }
+  async getNotifications() {
+    this.allNotifications = await this.api.getAdminNotifications();
+    this.notificationAmount = this.allNotifications.notificationAmount;
+    this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
+    this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
+    console.log('currentPageNgOnInit', this.currentPage);
+    console.log('pagesAmountArray', this.pagesAmountArray)
+  }
+
+  async moveToArchive(id) {
+    const fromServer: any = await this.api.moveToArchiveAdminMessages(id);
+    this.getNotifications();
   }
 }

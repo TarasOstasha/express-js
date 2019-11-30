@@ -85,7 +85,11 @@ export class ApiService {
     return this.http.get('http://localhost:3000/admin-notifications',httpOptions).toPromise();
   }
   getAdminMessages(currentPage, sizePage) {
-    return this.http.get('http://localhost:3000/admin-messasges/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
+    return this.http.get('http://localhost:3000/admin-messages/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
+  }
+  moveToArchiveAdminMessages(_id) {
+    return this.http.put('http://localhost:3000/move-to-archive-admin-messages', { _id }, httpOptions).toPromise();
+
   }
 }
 

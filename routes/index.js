@@ -10,6 +10,7 @@ const User = require('../models/user')
 const Product = require('../models/product');
 const log = console.log
 const ContactMessage = require('../models/contact-messages');
+const ContactMessageArchive = require('../models/contact-messages-archive');
 
 const cards = [
   {
@@ -483,7 +484,7 @@ router.get('/admin-notifications', cors(), async (req, res) => {
   }
 })
 
-router.get('/admin-messasges/:page', cors(), async (req, res)=>{
+router.get('/admin-messages/:page', cors(), async (req, res)=>{
   const page = req.params.page;
   const size = +req.query.size || 30;
   console.log('size', size);
@@ -491,11 +492,31 @@ router.get('/admin-messasges/:page', cors(), async (req, res)=>{
     .find({})
     .limit(size)
     .skip(size * page); // get chunk of messages
-
   console.log(req.params.page);
   res.json({
     adminMessages
   })
+})
+
+router.put('/move-to-archive-admin-messages', cors(), async (req, res)=>{
+  try {
+    const _id = req.body._id;
+    const adminMessage = await ContactMessage.findOne({ _id }); 
+    const adminMessageArchive = new ContactMessageArchive({
+      userId: adminMessage.userId,
+      email: adminMessage.email,
+      name: adminMessage.name,
+      subject: adminMessage.subject,
+      message: adminMessage.message
+    });
+    adminMessageArchive.save();
+    await ContactMessage.findByIdAndDelete({ _id });
+    console.log('adminMessage', adminMessage)
+    res.json('ok');
+  } catch (error) {
+    console.log(error);
+    res.json('something went wrong on server');
+  }
 })
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
