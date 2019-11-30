@@ -485,11 +485,12 @@ router.get('/admin-notifications', cors(), async (req, res) => {
 
 router.get('/admin-messasges/:page', cors(), async (req, res)=>{
   const page = req.params.page;
-  const perPage = 3;
+  const size = +req.query.size || 30;
+  console.log('size', size);
   const adminMessages = await ContactMessage
     .find({})
-    .limit(perPage)
-    .skip(perPage * page); // get chunk of messages
+    .limit(size)
+    .skip(size * page); // get chunk of messages
 
   console.log(req.params.page);
   res.json({
