@@ -9,7 +9,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { LinkCategoriesComponent } from './pages/link-categories/link-categories.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
-
+import { AdminMessagesArchiveComponent } from './pages/admin-messages-archive/admin-messages-archive.component';
 
 
 const routes: Routes = [
@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'p404', component: P404Component },
   { path: 'admin', component:  AdminComponent},
   { path: 'admin-messages', component:  AdminMessagesComponent },
+  { path: 'archive-messages', component: AdminMessagesArchiveComponent },
   { path: 'product/:productId', component: ProductComponent },
   { path: 'link-category/:crumbs', component: LinkCategoriesComponent },
   { path: 'contacts', component: ContactsComponent },

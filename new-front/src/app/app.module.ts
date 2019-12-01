@@ -41,6 +41,7 @@ import { LinkCategoriesComponent } from './pages/link-categories/link-categories
 import { MegaSearchComponent } from './parts/mega-search/mega-search.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
+import { AdminMessagesArchiveComponent } from './pages/admin-messages-archive/admin-messages-archive.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.co
     LinkCategoriesComponent,
     MegaSearchComponent,
     ContactsComponent,
-    AdminMessagesComponent
+    AdminMessagesComponent,
+    AdminMessagesArchiveComponent
     
   ],
   imports: [

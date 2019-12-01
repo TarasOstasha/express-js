@@ -5,21 +5,22 @@ import { IContactMessages } from '../../interfaces/contact-messages';
 declare var Array: any;
 
 @Component({
-  selector: 'app-admin-messages',
-  templateUrl: './admin-messages.component.html',
-  styleUrls: ['./admin-messages.component.less']
+  selector: 'app-admin-messages-archive',
+  templateUrl: './admin-messages-archive.component.html',
+  styleUrls: ['./admin-messages-archive.component.less']
 })
-export class AdminMessagesComponent implements OnInit {
+export class AdminMessagesArchiveComponent implements OnInit {
   appState: any;
   listMessages: Array<IContactMessages> = [];
-  sizePage = 3; // quantity of product per page
-  currentPage = 1; // current page in pagination
   allNotifications: any = {}; // all type of notifications in admin panel on the top level
   notificationAmount: number; // all messages from customer
+  //pagination variables
+  sizePage = 3; // quantity of product per page
+  currentPage = 1; // current page in pagination
   pagesAmount = 0; // length of pagination
   pagesAmountArray = [] // for rendering buttons of pagination
-  //selectedIndex: number = 1; // index pagination number
-
+  
+  
   constructor(
     private api: ApiService
   ) {
@@ -27,36 +28,29 @@ export class AdminMessagesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    //console.log(this.contactsForm);
-    this.getMessages();
+    this.getMessagesFromArchive();
     this.getNotifications();
-   
   }
 
-  async getMessages() {
-    const fromServer: any = await this.api.getAdminMessages(this.currentPage, this.sizePage);
-    this.listMessages = fromServer.adminMessages;
-    console.log('fromServer', fromServer);
-
-  }
   clickPagination(btnIndex: number) {
     console.log('index', btnIndex);
     this.currentPage = btnIndex;
-    this.getMessages();
-    console.log('currentPage-', this.currentPage)
+    this.getMessagesFromArchive();
   }
   async getNotifications() {
     this.allNotifications = await this.api.getAdminNotifications();
-    this.notificationAmount = this.allNotifications.notificationAmount;
+    this.notificationAmount = this.allNotifications.notificationAmountArchive;
     this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
     this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
-    console.log('currentPageNgOnInit', this.currentPage);
-    console.log('pagesAmountArray', this.pagesAmountArray)
+    //console.log('pagesAmountArray', this.pagesAmountArray)
   }
 
-  async moveToArchive(id) {
-    const fromServer: any = await this.api.moveToArchiveAdminMessages(id);
-    console.log('****ALL MESSAGES IN ARCHIVE***', fromServer)
+  async getMessagesFromArchive() {
     this.getNotifications();
+    //const fromServer: any = await this.api.getAdminMessagesFromArchive(this.currentPage, this.sizePage); //get all messages from server
+    
+    const fromServer: any = await this.api.getAdminMessagesFromArchive(this.currentPage, this.sizePage);
+    this.listMessages = fromServer.adminMessageFromArchive; //set to list messages data from object adminMessageFromArchive
+    console.log('getAdminMessagesArchive',fromServer, this.listMessages)
   }
 }

@@ -475,8 +475,10 @@ router.get('/admin-notifications', cors(), async (req, res) => {
   try {
     // find method which return quantity of collection mongo DB
     const notificationAmount = await ContactMessage.count();
+    const notificationAmountArchive = await ContactMessageArchive.count();
     res.json({
-      notificationAmount
+      notificationAmount,
+      notificationAmountArchive
     });
   } catch (error) {
     console.log(error, 'something went wrong');
@@ -484,7 +486,7 @@ router.get('/admin-notifications', cors(), async (req, res) => {
   }
 })
 
-router.get('/admin-messages/:page', cors(), async (req, res)=>{
+router.get('/admin-messages/:page', cors(), async (req, res) => {
   const page = req.params.page;
   const size = +req.query.size || 30;
   console.log('size', size);
@@ -498,10 +500,10 @@ router.get('/admin-messages/:page', cors(), async (req, res)=>{
   })
 })
 
-router.put('/move-to-archive-admin-messages', cors(), async (req, res)=>{
+router.put('/move-to-archive-admin-messages', cors(), async (req, res) => {
   try {
     const _id = req.body._id;
-    const adminMessage = await ContactMessage.findOne({ _id }); 
+    const adminMessage = await ContactMessage.findOne({ _id });
     const adminMessageArchive = new ContactMessageArchive({
       userId: adminMessage.userId,
       email: adminMessage.email,
@@ -512,10 +514,27 @@ router.put('/move-to-archive-admin-messages', cors(), async (req, res)=>{
     adminMessageArchive.save();
     await ContactMessage.findByIdAndDelete({ _id });
     console.log('adminMessage', adminMessage)
-    res.json('ok');
+    res.json({ adminMessage });
   } catch (error) {
     console.log(error);
     res.json('something went wrong on server');
+  }
+})
+
+//router.get('/admin-messages-archive:page', cors(), async (req, res) => {
+router.get('/admin-messages-archive/:page', cors(), async (req, res) => {
+
+  try {
+    const page = req.params.page;
+    const size = +req.query.size || 30;
+    //console.log('!!!Params', page)
+    const adminMessageFromArchive = await ContactMessageArchive.find({}).limit(size).skip(size * page);
+    //const adminMessageFromArchive = await ContactMessageArchive.find({});
+    res.json({adminMessageFromArchive})
+    
+
+  } catch (error) {
+    console.log(error);
   }
 })
 

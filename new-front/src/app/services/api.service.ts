@@ -89,7 +89,12 @@ export class ApiService {
   }
   moveToArchiveAdminMessages(_id) {
     return this.http.put('http://localhost:3000/move-to-archive-admin-messages', { _id }, httpOptions).toPromise();
-
+  }
+  // getAdminMessagesFromArchive(currentPage, sizePage) {
+  //   return this.http.get('http://localhost:3000/admin-messages-archive'+ currentPage + '?size=' + sizePage, httpOptions).toPromise();
+  // }
+  getAdminMessagesFromArchive(currentPage, sizePage) {
+    return this.http.get('http://localhost:3000/admin-messages-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
   }
 }
 
