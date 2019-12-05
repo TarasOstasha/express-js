@@ -50,8 +50,10 @@ export class AdminMessagesComponent implements OnInit {
     this.notificationAmount = this.allNotifications.notificationAmount;
     this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
     this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
-    console.log('currentPageNgOnInit', this.currentPage);
-    console.log('pagesAmountArray', this.pagesAmountArray)
+    this.pagesAmountArray.shift(); // remove first element (0) to start pagination from number 1
+    this.pagesAmountArray.push(this.pagesAmount); // add last page to array
+    //console.log('currentPageNgOnInit', this.currentPage);
+    //console.log('pagesAmountArray', this.pagesAmountArray)
   }
 
   async moveToArchive(id) {
