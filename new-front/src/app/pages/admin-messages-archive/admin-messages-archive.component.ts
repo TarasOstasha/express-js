@@ -15,7 +15,7 @@ export class AdminMessagesArchiveComponent implements OnInit {
   appState: any;
   listMessages: Array<IContactMessages> = [];
   allNotifications: any = {}; // all type of notifications in admin panel on the top level
-  notificationAmount: number; // all messages from customer
+  //notificationAmount: number; // all messages from customer
   //pagination variables
   sizePage = 3; // quantity of product per page
   currentPage = 1; // current page in pagination
@@ -43,8 +43,12 @@ export class AdminMessagesArchiveComponent implements OnInit {
   }
   async getNotifications() {
     this.allNotifications = await this.api.getAdminNotifications();
-    this.notificationAmount = this.allNotifications.notificationAmountArchive;
-    this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
+    //this.notificationAmount = this.allNotifications.notificationAmountArchive;
+    this.recalcPagination(this.allNotifications.notificationAmountArchive);
+  }
+
+  async recalcPagination(notificationAmount) {
+    this.pagesAmount = Math.ceil(notificationAmount / this.sizePage); // get quantity of pages in pagination
     this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
     this.pagesAmountArray.shift(); // remove first element (0) to start pagination from number 1
     this.pagesAmountArray.push(this.pagesAmount); // add last page to array
@@ -68,7 +72,8 @@ export class AdminMessagesArchiveComponent implements OnInit {
       size: this.sizePage
     });
     const fromServer: any = await this.api.getUniversalSearch(this.currentPage, queryString);
-    this.listMessages = fromServer;
-    console.log(fromServer)
+    this.listMessages = fromServer.documents;
+    this.recalcPagination(fromServer.amount);
+    console.log('fromServer', fromServer)
   }
 }

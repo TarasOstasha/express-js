@@ -543,39 +543,28 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
   try {
     const page = req.params.page;
     const size = +req.query.size || 30;
-    //const url = decodeURI(req.url);
-    //const queriesString = req.url.split('?')[1];
-    //const searchParams = new URLSearchParams(queriesString);
     const queries = req.query;
-    //const query = searchParams.get('query');
-    //console.log('queriesString', queriesString);
     const collection = {
       ContactMessageArchive,
       ContactMessage
     }
-    
     const regularExp = new RegExp(queries.query, "g");
     let DBquery = {
       $or:[]
     }
-
     let fieldsData = queries.fields.split(',');
     fieldsData.forEach((item, index, arr)=>{
-      //console.log('fieldsData', item, arr);
       DBquery.$or.push({
         [item]: regularExp //using [] fot item to get value from variable
       })
-
     })
-    //console.log('DBquery', DBquery);
-
-    const result = await collection[queries.fromModel].find(DBquery).limit(size).skip(size*page-size); 
-    res.json(result); 
+    const documents = await collection[queries.fromModel].find(DBquery).limit(size).skip(size*page-size); 
+    const amount = await collection[queries.fromModel].find(DBquery).count(); 
+    res.json({ documents, amount }); 
   } catch (error) {
     console.log(error);
     res.json('something went wrong on server');
   }
-  
 })
 
 
