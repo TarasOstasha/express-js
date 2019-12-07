@@ -521,18 +521,12 @@ router.put('/move-to-archive-admin-messages', cors(), async (req, res) => {
   }
 })
 
-//router.get('/admin-messages-archive:page', cors(), async (req, res) => {
 router.get('/admin-messages-archive/:page', cors(), async (req, res) => {
-
   try {
     const page = req.params.page;
     const size = +req.query.size || 30;
-    //console.log('!!!Params', page)
     const adminMessageFromArchive = await ContactMessageArchive.find({}).limit(size).skip(size * page - size);
-    //const adminMessageFromArchive = await ContactMessageArchive.find({});
     res.json({adminMessageFromArchive})
-    
-
   } catch (error) {
     console.log(error);
     res.json('something went wrong on server');
@@ -558,7 +552,7 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
         [item]: regularExp //using [] fot item to get value from variable
       })
     })
-    const documents = await collection[queries.fromModel].find(DBquery).limit(size).skip(size*page-size); 
+    const documents = await collection[queries.fromModel].find(DBquery).limit(size).skip(size * page - size); 
     const amount = await collection[queries.fromModel].find(DBquery).count(); 
     res.json({ documents, amount }); 
   } catch (error) {
