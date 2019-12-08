@@ -561,6 +561,12 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
   }
 })
 
+//leave it fo future
+// router.get('/all/:model/:page', cors(), async (req, res)=>{
+
+// })
+
+
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', cors(), (req, res) => {
