@@ -18,14 +18,14 @@ app.set('port', port);
 /**
  * SSL for HTTPS, HTTP2
  */
-const options = {
-  key: fs.readFileSync(__dirname + '/keys/server.key'),
-  cert: fs.readFileSync(__dirname + '/keys/server.crt')
-}
+// const options = {
+//   key: fs.readFileSync(__dirname + '/keys/server.key'),
+//   cert: fs.readFileSync(__dirname + '/keys/server.crt')
+// }
 /**
  * Create HTTPS server.
  */
-https.createServer(options ,app).listen(443);
+//https.createServer(options ,app).listen(443);
  
 /**
  * Create HTTP server.
