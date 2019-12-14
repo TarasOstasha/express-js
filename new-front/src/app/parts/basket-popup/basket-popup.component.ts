@@ -98,29 +98,11 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   }
 
   ngAfterViewInit() {
-    this.card = elements.create('card');
-    this.card.mount(this.cardInfo.nativeElement);
-    this.card.addEventListener('change', this.cardHandler);
-    const style = {
-      base: {
-        lineHeight: '24px',
-        fontFamily: 'monospace',
-        fontSmoothing: 'antialiased',
-        fontSize: '19px',
-        '::placeholder': {
-          color: 'purple'
-        }
-      }
-    }
-    this.card = elements.create('card', { style });
-    this.card.mount(this.cardInfo.nativeElement);
 
-    this.card.addEventListener('change', this.cardHandler);
   }
 
   ngOnDestroy() {
-    this.card.removeEventListener('change', this.cardHandler);
-    this.card.destroy();
+   
   }
   onChange({ error }) {
     if (error) {

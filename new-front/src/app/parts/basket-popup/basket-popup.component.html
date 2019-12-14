@@ -270,8 +270,22 @@
                   </div>
                 </div>
                 <div class="well">
-                  <button type="button" class="btn btn-success btn-lg btn-block">Place Order</button>
+                  <button type="button" class="btn btn-success btn-lg btn-block" onClick="window.elementsModal.toggleElementsModalVisibility();"> Place Order</button>
                 </div>
+                <!-- message succsess when payment submited -->
+                <div id="endstate" class="demo endstate">
+                    <div class="success-message">
+                      <div class="success-text">
+                        Your test payment was successful. <br />Complete the order by using
+                        the
+                        <a href="https://stripe.com/docs/payments/payment-intents/quickstart#fulfillment">payment_intent.succeeded
+                          webhook</a>.
+                      </div>
+                      <div>
+                        <a class="replay" href="/">Replay demo</a>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
