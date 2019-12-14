@@ -48,7 +48,7 @@ declare var elements: any;
 })
 export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   paymentForm: FormGroup; //set type
-  //@ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild('cardInfo') cardInfo: ElementRef;
 
   card: any;
   cardHandler = this.onChange.bind(this);
@@ -97,31 +97,31 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     this.state.products = this.storage.getBasketFromStorage()
   }
 
-  // ngAfterViewInit() {
-  //   this.card = elements.create('card');
-  //   this.card.mount(this.cardInfo.nativeElement);
-  //   this.card.addEventListener('change', this.cardHandler);
-  //   const style = {
-  //     base: {
-  //       lineHeight: '24px',
-  //       fontFamily: 'monospace',
-  //       fontSmoothing: 'antialiased',
-  //       fontSize: '19px',
-  //       '::placeholder': {
-  //         color: 'purple'
-  //       }
-  //     }
-  //   }
-  //   this.card = elements.create('card', { style });
-  //   this.card.mount(this.cardInfo.nativeElement);
+  ngAfterViewInit() {
+    this.card = elements.create('card');
+    this.card.mount(this.cardInfo.nativeElement);
+    this.card.addEventListener('change', this.cardHandler);
+    const style = {
+      base: {
+        lineHeight: '24px',
+        fontFamily: 'monospace',
+        fontSmoothing: 'antialiased',
+        fontSize: '19px',
+        '::placeholder': {
+          color: 'purple'
+        }
+      }
+    }
+    this.card = elements.create('card', { style });
+    this.card.mount(this.cardInfo.nativeElement);
 
-  //   this.card.addEventListener('change', this.cardHandler);
-  // }
+    this.card.addEventListener('change', this.cardHandler);
+  }
 
-  // ngOnDestroy() {
-  //   this.card.removeEventListener('change', this.cardHandler);
-  //   this.card.destroy();
-  // }
+  ngOnDestroy() {
+    this.card.removeEventListener('change', this.cardHandler);
+    this.card.destroy();
+  }
   onChange({ error }) {
     if (error) {
       this.error = error.message;

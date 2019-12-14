@@ -151,6 +151,7 @@ router.post('/search', cors(), function (req, res, next) {
 
 
 router.get('/products', cors(), function (req, res, next) {
+  console.log('get product is working')
   Product.find().then((products) => {
     res.json({ ok: true, products: products })
   }).catch((err) => {
@@ -565,6 +566,29 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
 // router.get('/all/:model/:page', cors(), async (req, res)=>{
 
 // })
+
+// Set your secret key: remember to change this to your live secret key in production
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+const stripe = require('stripe')('sk_test_ehdqOsyApE9vD2SR7ZJeAJ8M00ZpRuVV5y');
+
+const calculateOrderAmount = items => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1999;
+};
+router.post('/payment_intents', async (req, res) => {
+  let { currency, items } = req.body;
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: calculateOrderAmount(items),
+      currency
+    });
+    return res.status(200).json(paymentIntent);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
 
 
 

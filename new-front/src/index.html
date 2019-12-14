@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>NewFront</title>
@@ -14,21 +15,94 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
-</head>
-<body>
-  <app-root></app-root>
+  <link rel="stylesheet" href="./assets/test/demo.css" />
+  <link rel="stylesheet" href="./assets/test/elementsModal.css" />
   <script src="https://js.stripe.com/v3/"></script>
-  <script type="text/javascript">
-    var stripe = Stripe('pk_test_XXXXXXXXXXXXXXXXX'); // use your test publishable key
-    var elements = stripe.elements();
+  <script src="./assets/test/elementsModal.js"></script>
+</head>
+
+<body>
+  <div id="startstate" class="demo">
+    <h2>KAVHOLM</h2>
+    <div class="container">
+      <img alt="Kavholm dining chair" class="product-image" src="product.png" />
+      <div class="price-and-button-container">
+        <div>
+          <div class="product-name">Chair set</div>
+          <div class="product-price">$19.99</div>
+        </div>
+        <button type="button" class="btn" onClick="window.elementsModal.toggleElementsModalVisibility();">
+          Buy now
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="endstate" class="demo endstate">
+    <h2>KAVHOLM</h2>
+    <div class="success-message">
+      <div class="success-text">
+        Your test payment was successful. <br />Complete the order by using
+        the
+        <a href="https://stripe.com/docs/payments/payment-intents/quickstart#fulfillment">payment_intent.succeeded
+          webhook</a>.
+      </div>
+      <div>
+        <a class="replay" href="/">Replay demo</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    // Set your publishable key: remember to change this to your live publishable key in production
+    // See your keys here: https://dashboard.stripe.com/account/apikeys
+    // var stripe = Stripe('pk_test_PceEeS4ETBzPsWQwIdRHp5Hc00KqxrSBp6');
+
+
+
+
+
+
   </script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script>
+      window.elementsModal.create({
+        // the modal demo will handle non-zero currencies automatically
+        // items sent into the server can calculate their amounts and send back to the client
+        items: [{ sku: "sku_1234", quantity: 1 }],
+        // Supported currencies here https://stripe.com/docs/currencies#presentment-currencies
+        currency: "USD",
+        businessName: "KAVHOLM",
+        productName: "Chair",
+        customerEmail: "me@kavholm.com",
+        customerName: "Customer Kavholm"
+      });
+      // Remove the comment for this to automatically open the modal demo
+      // when the page is loaded
+      // window.elementsModal.toggleElementsModalVisibility();
+    </script>
+
+
+  <app-root></app-root>
+  <!-- <script src="https://js.stripe.com/v3/"></script> -->
+  <!-- <script type="text/javascript">
+    var stripe = Stripe('pk_test_PceEeS4ETBzPsWQwIdRHp5Hc00KqxrSBp6'); // use your test publishable key
+    var elements = stripe.elements();
+  </script> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
   <!-- <script src="assets/js/bootstrap.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.min.js"></script>
   <script src="assets/js/swal2.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.js"></script>
   <!-- bootstrap-slider - https://cdnjs.com/libraries/bootstrap-slider -->
+
 </body>
+
 </html>
