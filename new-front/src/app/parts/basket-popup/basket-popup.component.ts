@@ -233,7 +233,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
       // Supported currencies here https://stripe.com/docs/currencies#presentment-currencies
       currency: "USD",
       businessName: "KAVHOLM",
-      productName: "Chair",
+      productName: this.totalProductName(),
       customerEmail: "me@kavholm.com",
       customerName: "Customer Kavholm"
     });
@@ -248,7 +248,13 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
         clearInterval(checkPaymentWindow);
       } 
     },100)
-
+  }
+  totalProductName() {
+    let boughtProducts = '';
+    this.preparedProducts().map((item)=>{
+      boughtProducts += ` ${item.product.productName} (${item.amount}),  `
+    })
+    return boughtProducts;
   }
 
   testProduct() {
