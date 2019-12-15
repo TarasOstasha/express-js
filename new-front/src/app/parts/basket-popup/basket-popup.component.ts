@@ -168,11 +168,11 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   preparedProducts() {
     const result = [];
     this.state.products.map((product, i) => { //якщо є хоча б один в масиві резалт продукт
-      const alreadyExist = result.some((unitedProduct) => unitedProduct.product.id == product.id)
+      const alreadyExist = result.some((unitedProduct) => unitedProduct.product._id == product._id)
       if (alreadyExist) {
         let upIndex;
         result.map((unitedProduct, i) => {
-          if (unitedProduct.product.id == product.id) upIndex = i;
+          if (unitedProduct.product._id == product._id) upIndex = i;
         })
         result[upIndex].amount++
       } else {
@@ -188,7 +188,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     //видалити один продукт по id
     let oneDeleted = false;
     this.state.products.map((product, i) => {
-      if ((product.id == id) && !oneDeleted) {
+      if ((product._id == id) && !oneDeleted) {
         this.state.products.splice(i, 1)
         oneDeleted = true;
       }
@@ -198,11 +198,11 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   }
   deleteProduct(id) {
     //видалити всі продукти по id
-    this.state.products = this.state.products.filter(product => product.id != id)
+    this.state.products = this.state.products.filter(product => product._id != id)
   }
 
   minus(product) {
-    this.removeOne(product.id)
+    this.removeOne(product._id)
   }
   plus(product) {
     this.state.products.push(product);
@@ -226,6 +226,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
 
   paymentTransaction() {
     window.elementsModal.create({
+      totalPrice: this.totalPrice(),
       // the modal demo will handle non-zero currencies automatically
       // items sent into the server can calculate their amounts and send back to the client
       items: [{ sku: "sku_1234", quantity: 1 }],
@@ -249,6 +250,17 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     },100)
 
   }
+
+  testProduct() {
+    console.log('!!!Products Items!', this.state.products, this.preparedProducts());
+
+  }
+
+
+
+
+
+
 }
 
 

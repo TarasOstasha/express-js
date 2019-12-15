@@ -571,17 +571,17 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const stripe = require('stripe')('sk_test_ehdqOsyApE9vD2SR7ZJeAJ8M00ZpRuVV5y');
 
-const calculateOrderAmount = items => {
+const calculateOrderAmount = totalPrice => {
   // Replace this constant with a calculation of the order's amount
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  return 1999;
+  return +totalPrice * 100;
 };
 router.post('/payment_intents', async (req, res) => {
-  let { currency, items } = req.body;
+  let { currency, items, totalPrice } = req.body;
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmount(items),
+      amount: calculateOrderAmount(totalPrice),
       currency
     });
     return res.status(200).json(paymentIntent);
