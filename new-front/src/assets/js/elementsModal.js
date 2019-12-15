@@ -566,8 +566,6 @@ function createElements(content, paymentIntent, publicKey) {
   });
 }
 
-// Implement logic to handle the users authorization for payment.
-// Here you will want to redirect to a successful payments page, or update the page.
 function stripePaymentHandler() {
   toggleElementsModalVisibility();
   document.getElementById("endstate").style.display = "block";

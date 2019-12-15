@@ -21,6 +21,7 @@ import { ApiService } from '../../services/api.service';
 
 declare var stripe: any;
 declare var elements: any;
+declare var window:any;
 
 @Component({
   selector: 'app-basket-popup',
@@ -102,7 +103,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   }
 
   ngOnDestroy() {
-   
+
   }
   onChange({ error }) {
     if (error) {
@@ -222,5 +223,35 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   saveAdress() {
     console.log('adress', this.paymentForm);
   }
+
+  paymentTransaction() {
+    window.elementsModal.create({
+      // the modal demo will handle non-zero currencies automatically
+      // items sent into the server can calculate their amounts and send back to the client
+      items: [{ sku: "sku_1234", quantity: 1 }],
+      // Supported currencies here https://stripe.com/docs/currencies#presentment-currencies
+      currency: "USD",
+      businessName: "KAVHOLM",
+      productName: "Chair",
+      customerEmail: "me@kavholm.com",
+      customerName: "Customer Kavholm"
+    });
+  }
+
+  placeOrder() {
+    this.paymentTransaction();
+    const checkPaymentWindow = setInterval(()=>{
+      const paymentWindow = document.querySelector('.ElementsModal--modal');
+      if(paymentWindow) {
+        window.elementsModal.toggleElementsModalVisibility();
+        clearInterval(checkPaymentWindow);
+      } 
+    },100)
+
+  }
 }
+
+
+
+
 
