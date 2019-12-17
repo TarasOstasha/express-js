@@ -6,6 +6,11 @@
 //var stripe = Stripe('pk_test_PceEeS4ETBzPsWQwIdRHp5Hc00KqxrSBp6');
 
 // Change the host url to match where you host the server
+// var imported = document.createElement('script');
+// imported.src = 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js';
+// document.head.appendChild(imported);
+
+
 var HOST_URL = "http://localhost";
 
 function browserLocale() {
@@ -60,6 +65,7 @@ function calculateDisplayAmountFromCurrency(paymentIntent) {
 }
 
 function init(content, paymentIntent, publicKey) {
+  
   var amount = calculateDisplayAmountFromCurrency(paymentIntent);
   var modal = document.createElement("div");
   modal.className = "ElementsModal--modal";
@@ -568,8 +574,16 @@ function createElements(content, paymentIntent, publicKey) {
 
 function stripePaymentHandler() {
   toggleElementsModalVisibility();
-  document.getElementById("endstate").style.display = "block";
-  document.getElementById("startstate").style.display = "none";
+  //questions
+  // 1 use swal
+  swal.fire({
+    title: "Your payment has been submited",
+    text: "Fill out the form fields",
+    icon: "succsess",
+  });
+  //2 how can I get this elements if they located in the different folder???
+  //document.getElementById("endstate").style.display = "block";
+  //document.getElementById("startstate").style.display = "none";
 }
 
 window.elementsModal = (() => {

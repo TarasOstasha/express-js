@@ -19,9 +19,12 @@ import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, Valid
 import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
 
+
 declare var stripe: any;
 declare var elements: any;
-declare var window:any;
+declare var window: any;
+declare var swal: any;
+//declare var elementsModal: any;
 
 @Component({
   selector: 'app-basket-popup',
@@ -50,7 +53,7 @@ declare var window:any;
 export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   paymentForm: FormGroup; //set type
   @ViewChild('cardInfo') cardInfo: ElementRef;
-
+  @Input() it: any;
   card: any;
   cardHandler = this.onChange.bind(this);
   error: string;
@@ -72,9 +75,10 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     const paymantValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
 
     this.paymentForm = this.formBuilder.group({
-      'name': [this.state.paymentData.name, [Validators.required, Validators.minLength(2)]]
-      // 'firstName': [this.user.firstName, [Validators.required, Validators.minLength(3)]],
-      // 'lastName': [this.user.lastName, [Validators.required]],
+      //'name': [this.state.paymentData.name, [Validators.required, Validators.minLength(2)]],
+      'firstName': [this.state.paymentData.firstName, [Validators.required, Validators.minLength(5)]],
+      'lastName': [this.state.paymentData.lastName, [Validators.required, Validators.minLength(2)]],
+      'email': [this.state.paymentData.email, [Validators.required, Validators.minLength(5), this.mailValidator()]]
       // 'password': [this.user.password, [Validators.required, this.passwordConfirm()]],
       // //'password1': [this.user.password, [Validators.required,Validators.minLength(3),this.passwordsAreEqual()]],
 
@@ -95,16 +99,21 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   ngOnInit() {
     this.state.showPaymant = 'myClose';
     //quantity of products
-    this.state.products = this.storage.getBasketFromStorage()
+    this.state.products = this.storage.getBasketFromStorage();
+  }
+  //check email repeating from auth components!!!!! need to fix it   !!!!!!!
+  private mailValidator(): ValidatorFn {
+    const error_message = { mailValidator: { msg: `Invalid email` } };
+    const pattern: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return (control: AbstractControl) => {
+      const isValid = pattern.test(control.value);
+      return isValid ? null : error_message
+    }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { }
+  ngOnDestroy() { }
 
-  }
-
-  ngOnDestroy() {
-
-  }
   onChange({ error }) {
     if (error) {
       this.error = error.message;
@@ -113,19 +122,6 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     }
     this.cd.detectChanges();
   }
-
-  // async onSubmit(form: NgForm) {
-  //   const { token, error } = await stripe.createToken(this.card);
-
-  //   if (error) {
-  //     console.log('Something is wrong:', error);
-  //   } else {
-  //     console.log('Success!', token);
-  //     // ...send the token to the your backend to process the charge
-  //   }
-  // }
-
-
 
   private phoneValidator(): ValidatorFn {
     const pattern: RegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
@@ -149,7 +145,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     let result = [];
     for (var i in json) result.push([i, json[i]]);
     this.state.defaultData.states = result;
-    console.log(result);
+    //console.log(result);
   }
   // open checkout block with animation
   openCheckout() {
@@ -221,6 +217,9 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
 
 
   saveAdress() {
+    // if(this.paymentForm.value.email && this.paymentForm.value.firstName && this.paymentForm.value.lastName == null) {
+    //   alert('fill out the form fields')
+    // }
     console.log('adress', this.paymentForm);
   }
 
@@ -232,37 +231,53 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
       items: [{ sku: "sku_1234", quantity: 1 }],
       // Supported currencies here https://stripe.com/docs/currencies#presentment-currencies
       currency: "USD",
-      businessName: "KAVHOLM",
+      businessName: this.lastName,
       productName: this.totalProductName(),
-      customerEmail: "me@kavholm.com",
-      customerName: "Customer Kavholm"
+      customerEmail: this.email,
+      customerName: this.firstName
     });
   }
 
   placeOrder() {
+    //validation in place order
+    if(this.paymentForm.value.email  == null || 
+      this.paymentForm.value.firstName == null || 
+      this.paymentForm.value.lastName == null) {
+      swal.fire({
+        title: "Error",
+        text: "Fill out the form fields",
+        icon: "error",
+      })
+      return
+    }
+
     this.paymentTransaction();
-    const checkPaymentWindow = setInterval(()=>{
+    const checkPaymentWindow = setInterval(() => {
       const paymentWindow = document.querySelector('.ElementsModal--modal');
-      if(paymentWindow) {
+      if (paymentWindow) {
         window.elementsModal.toggleElementsModalVisibility();
         clearInterval(checkPaymentWindow);
-      } 
-    },100)
+      }
+    }, 100)
   }
   totalProductName() {
     let boughtProducts = '';
-    this.preparedProducts().map((item)=>{
+    this.preparedProducts().map((item) => {
       boughtProducts += ` ${item.product.productName} (${item.amount}),  `
     })
     return boughtProducts;
   }
+//QUESTION REF=GARDING VALIDATION. I'V GOT SOME ERORROR
 
   testProduct() {
     console.log('!!!Products Items!', this.state.products, this.preparedProducts());
 
   }
 
-
+  //get value payment from payment form fields 
+  get firstName() { return this.paymentForm.get('firstName').value } // getter to firstName 
+  get lastName() { return this.paymentForm.get('lastName').value } // getter to first name
+  get email() { return this.paymentForm.get('email').value } //getter to email
 
 
 

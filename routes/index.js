@@ -584,6 +584,7 @@ router.post('/payment_intents', async (req, res) => {
       amount: calculateOrderAmount(totalPrice),
       currency
     });
+    console.log('paymentIntent', paymentIntent);
     return res.status(200).json(paymentIntent);
   } catch (err) {
     return res.status(500).json({ error: err.message });
