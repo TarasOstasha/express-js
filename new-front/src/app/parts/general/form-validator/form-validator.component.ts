@@ -11,6 +11,9 @@ export class FormValidatorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    setInterval(()=>{
+      console.log(this.it)
+    },1000)
   }
 
 }

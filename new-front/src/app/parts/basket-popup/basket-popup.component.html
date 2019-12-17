@@ -118,11 +118,11 @@
                             <label for="inputname">First Name</label>
                             <input formControlName="firstName" type="text" class="form-control form-control-large"
                               id="inputname" placeholder="Enter name">
-                              <div *ngIf="!paymentForm.controls.firstName.valid && !paymentForm.controls.firstName.pristine" class="alert alert-danger">
+                              <!-- <div *ngIf="!paymentForm.controls.firstName.valid && !paymentForm.controls.firstName.pristine" class="alert alert-danger">
                                   Please write more then 3 symbols
-                              </div>
+                              </div> -->
 
-                            <!-- <app-form-validator [it]="firstName"></app-form-validator> -->
+                            <app-form-validator [it]="firstName"></app-form-validator>
 
                           </div>
                         </div>
@@ -325,7 +325,7 @@
             </div>
           </div>
 
-          
+
         </div>
       </div>
     </div>

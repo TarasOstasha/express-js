@@ -66,7 +66,9 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     private cd: ChangeDetectorRef
   ) {
     this.state = {} //check if needed
-    this.state.paymentData = {}
+    this.state.paymentData = {
+      firstName: ''
+    }
     // this.state.defaultData = {
     //   states: []
     // }
@@ -275,7 +277,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   }
 
   //get value payment from payment form fields 
-  get firstName() { return this.paymentForm.get('firstName').value } // getter to firstName 
+  get firstName() { return this.paymentForm.get('firstName') } // getter to firstName 
   get lastName() { return this.paymentForm.get('lastName').value } // getter to first name
   get email() { return this.paymentForm.get('email').value } //getter to email
 
