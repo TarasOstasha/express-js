@@ -15,7 +15,6 @@
   z-index: 100001 !important;
 }
 .ElementsModal--modal-content {
-  width: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -224,6 +223,7 @@
 }
 
 .StripeElement {
+  width: 100%;
   box-sizing: border-box;
   height: 40px;
   padding: 10px 12px;
@@ -236,6 +236,10 @@
   -webkit-transition: box-shadow 150ms ease;
   transition: box-shadow 150ms ease;
 }
+.ElementsModal--form > label {
+    width: 100%!important;
+}
+
 
 .StripeElement--focus {
   box-shadow: 0 1px 3px 0 rgb(207, 215, 223);

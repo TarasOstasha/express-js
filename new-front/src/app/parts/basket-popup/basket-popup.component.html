@@ -131,10 +131,10 @@
                             <label for="inputname">Last Name</label>
                             <input formControlName="lastName" type="text" class="form-control form-control-large"
                               id="inputname" placeholder="Enter name">
-                              <div *ngIf="!paymentForm.controls.lastName.valid && !paymentForm.controls.lastName.pristine" class="alert alert-danger">
+                              <!-- <div *ngIf="!paymentForm.controls.lastName.valid && !paymentForm.controls.lastName.pristine" class="alert alert-danger">
                                   Please write more then 3 symbols
-                              </div>
-                            <!-- <app-form-validator [it]="lastName"></app-form-validator> -->
+                              </div> -->
+                            <app-form-validator [it]="lastName"></app-form-validator>
                           </div>
                         </div>
                       </div>
@@ -142,10 +142,10 @@
                         <label for="inputname">email</label>
                         <input formControlName="email" type="text" class="form-control form-control-large"
                           id="inputname" placeholder="Enter name">
-                        <!-- <app-form-validator [it]="email"></app-form-validator> -->
-                        <div *ngIf="!paymentForm.controls.email.valid && !paymentForm.controls.email.pristine" class="alert alert-danger">
+                        <app-form-validator [it]="email"></app-form-validator>
+                        <!-- <div *ngIf="!paymentForm.controls.email.valid && !paymentForm.controls.email.pristine" class="alert alert-danger">
                             Please write correct email
-                        </div>
+                        </div> -->
                       </div>
 
 

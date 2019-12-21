@@ -65,7 +65,7 @@ function calculateDisplayAmountFromCurrency(paymentIntent) {
 }
 
 function init(content, paymentIntent, publicKey) {
-  
+  //console.log(stripe, elements)
   var amount = calculateDisplayAmountFromCurrency(paymentIntent);
   var modal = document.createElement("div");
   modal.className = "ElementsModal--modal";
@@ -480,11 +480,13 @@ function getPublicKey() {
 //     });
 }
 
+let paymentIntend_forStatus;
 function create(content) {
   Promise.all([createPaymentIntent(content), getPublicKey()]).then(function(
     result
   ) {
     var [paymentIntent, publicKey] = result;
+    paymentIntend_forStatus = paymentIntent;
     init(content, paymentIntent, publicKey);
   });
 
@@ -574,17 +576,27 @@ function createElements(content, paymentIntent, publicKey) {
 
 function stripePaymentHandler() {
   toggleElementsModalVisibility();
-  //questions
-  // 1 use swal
+
   swal.fire({
     title: "Your payment has been submited",
-    text: "Fill out the form fields",
+    text: "Thank you for purchasing",
     icon: "succsess",
   });
-  //2 how can I get this elements if they located in the different folder???
-  //document.getElementById("endstate").style.display = "block";
-  //document.getElementById("startstate").style.display = "none";
+  //approve fetch
+  fetch(HOST_URL + '/payment-intense-approve', {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    body: JSON.stringify({ paymentIntend_forStatus}) // token from back end, transaction
+  }).then((response)=>{
+    return response.json();
+  }).then((data)=>{
+    console.log(data);
+  })
 }
+//js fetch post request and create options
 
 window.elementsModal = (() => {
   return { create, toggleElementsModalVisibility };

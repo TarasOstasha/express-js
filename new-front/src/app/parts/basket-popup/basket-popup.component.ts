@@ -67,7 +67,9 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   ) {
     this.state = {} //check if needed
     this.state.paymentData = {
-      firstName: ''
+      firstName: '',
+      lastName:'',
+      email: ''
     }
     // this.state.defaultData = {
     //   states: []
@@ -99,6 +101,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   @Input() state: any;
 
   ngOnInit() {
+
     this.state.showPaymant = 'myClose';
     //quantity of products
     this.state.products = this.storage.getBasketFromStorage();
@@ -233,18 +236,18 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
       items: [{ sku: "sku_1234", quantity: 1 }],
       // Supported currencies here https://stripe.com/docs/currencies#presentment-currencies
       currency: "USD",
-      businessName: this.lastName,
+      businessName: this.lastName.value,
       productName: this.totalProductName(),
-      customerEmail: this.email,
-      customerName: this.firstName
+      customerEmail: this.email.value,
+      customerName: this.firstName.value,
     });
   }
 
   placeOrder() {
+    console.log(this.paymentForm.valid)
+
     //validation in place order
-    if(this.paymentForm.value.email  == null || 
-      this.paymentForm.value.firstName == null || 
-      this.paymentForm.value.lastName == null) {
+    if(!this.paymentForm.valid) {
       swal.fire({
         title: "Error",
         text: "Fill out the form fields",
@@ -252,7 +255,6 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
       })
       return
     }
-
     this.paymentTransaction();
     const checkPaymentWindow = setInterval(() => {
       const paymentWindow = document.querySelector('.ElementsModal--modal');
@@ -278,12 +280,15 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
 
   //get value payment from payment form fields 
   get firstName() { return this.paymentForm.get('firstName') } // getter to firstName 
-  get lastName() { return this.paymentForm.get('lastName').value } // getter to first name
-  get email() { return this.paymentForm.get('email').value } //getter to email
+  get lastName() { return this.paymentForm.get('lastName') } // getter to first name
+  get email() { return this.paymentForm.get('email') } //getter to email
 
 
-
-
+ //create method send message after purchase !!!
+ //validation shows css error but don't work correctly
+//counter + - doesn't work good
+// initial count of product in basket on main page
+//clear all input fields after place order
 }
 
 

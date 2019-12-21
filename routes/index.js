@@ -11,6 +11,7 @@ const Product = require('../models/product');
 const log = console.log
 const ContactMessage = require('../models/contact-messages');
 const ContactMessageArchive = require('../models/contact-messages-archive');
+const Transaction = require('../models/transaction');
 
 const cards = [
   {
@@ -527,7 +528,7 @@ router.get('/admin-messages-archive/:page', cors(), async (req, res) => {
     const page = req.params.page;
     const size = +req.query.size || 30;
     const adminMessageFromArchive = await ContactMessageArchive.find({}).limit(size).skip(size * page - size);
-    res.json({adminMessageFromArchive})
+    res.json({ adminMessageFromArchive })
   } catch (error) {
     console.log(error);
     res.json('something went wrong on server');
@@ -545,17 +546,17 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
     }
     const regularExp = new RegExp(queries.query, "g");
     let DBquery = {
-      $or:[]
+      $or: []
     }
     let fieldsData = queries.fields.split(',');
-    fieldsData.forEach((item, index, arr)=>{
+    fieldsData.forEach((item, index, arr) => {
       DBquery.$or.push({
         [item]: regularExp //using [] fot item to get value from variable
       })
     })
-    const documents = await collection[queries.fromModel].find(DBquery).limit(size).skip(size * page - size); 
-    const amount = await collection[queries.fromModel].find(DBquery).count(); 
-    res.json({ documents, amount }); 
+    const documents = await collection[queries.fromModel].find(DBquery).limit(size).skip(size * page - size);
+    const amount = await collection[queries.fromModel].find(DBquery).count();
+    res.json({ documents, amount });
   } catch (error) {
     console.log(error);
     res.json('something went wrong on server');
@@ -578,18 +579,42 @@ const calculateOrderAmount = totalPrice => {
   return +totalPrice * 100;
 };
 router.post('/payment_intents', async (req, res) => {
-  let { currency, items, totalPrice } = req.body;
   try {
-    const paymentIntent = await stripe.paymentIntents.create({
+    // 1 step
+    let { currency, items, totalPrice } = req.body;
+    const transaction = new Transaction(req.body);
+    await transaction.save();
+    // 2 step
+    const paymentIntent = await stripe.paymentIntents.create({ //token
       amount: calculateOrderAmount(totalPrice),
       currency
     });
+    await Transaction.findOneAndUpdate({
+      _id: transaction._id
+    }, {
+        status: 'intend (stage 2)',
+        paymentIntent // paymentIntent: paymentIntent
+    })
     console.log('paymentIntent', paymentIntent);
     return res.status(200).json(paymentIntent);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 });
+// 3 step
+router.post('/payment-intense-approve', async (req, res) => {
+  try {
+    //console.log('payment-intense-approve', req.body)
+    const transaction = await Transaction.findOneAndUpdate({
+      "paymentIntent.id": req.body.paymentIntend_forStatus.id 
+    }, {
+        status: 'success',
+    })
+    //console.log(transaction, 'stage 3!!!!')
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 
 
@@ -601,6 +626,9 @@ router.get('/*', cors(), (req, res) => {
 
 
 module.exports = router;
+
+//check data base(remove all ) fixed stage 2
+
 
 
 //show error mesages(this user is exist) in angular
