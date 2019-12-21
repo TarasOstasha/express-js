@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //import { state } from '@angular/animations';
 import { ApiService } from '../../services/api.service';
 import { SessionService } from '../../services/session.service';
+import { StorageService } from '../../services/storage.service'
 import  state  from '../../app-state';
 
 
@@ -17,6 +18,7 @@ export class MainComponent implements OnInit {
     
     private api: ApiService,
     private session: SessionService,
+    private storage: StorageService
     
   ) { 
     this.state = state;
@@ -24,6 +26,7 @@ export class MainComponent implements OnInit {
    }
 
   async ngOnInit() {
+    this.state.header.basket.products = this.storage.getBasketFromStorage();
     const fromServer: any = await this.api.getProducts()
       state.products = fromServer.products;
       this.errorHandler 

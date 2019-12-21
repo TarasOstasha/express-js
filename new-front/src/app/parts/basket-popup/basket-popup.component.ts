@@ -186,6 +186,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     return result;
   }
   removeOne(id) {
+   console.log(id, '')
     //видалити один продукт по id
     let oneDeleted = false;
     this.state.products.map((product, i) => {
@@ -198,11 +199,14 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     this.stateBack()
   }
   deleteProduct(id) {
+    console.log(id)
+    console.log(this.state.products.filter(product => product._id != id))
     //видалити всі продукти по id
-    this.state.products = this.state.products.filter(product => product._id != id)
+    this.state.products = this.state.products.filter(product => product._id != id);
   }
 
   minus(product) {
+    console.log(product, 'product-minus')
     this.removeOne(product._id)
   }
   plus(product) {

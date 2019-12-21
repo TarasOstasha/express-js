@@ -627,7 +627,7 @@ router.get('/*', cors(), (req, res) => {
 
 module.exports = router;
 
-//check data base(remove all ) fixed stage 2
+
 
 
 
