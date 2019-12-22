@@ -592,8 +592,11 @@ function stripePaymentHandler() {
     body: JSON.stringify({ paymentIntend_forStatus}) // token from back end, transaction
   }).then((response)=>{
     return response.json();
-  }).then((data)=>{
-    console.log(data);
+  }).then((result)=>{
+    console.log(result);
+    if(result.ok) alert('DO ALL(Clear trash, close window)');
+    //1 ->
+    //
   })
 }
 //js fetch post request and create options

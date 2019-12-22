@@ -12,6 +12,7 @@ const log = console.log
 const ContactMessage = require('../models/contact-messages');
 const ContactMessageArchive = require('../models/contact-messages-archive');
 const Transaction = require('../models/transaction');
+const mailer = require('../controllers/mail/mailer');
 
 const cards = [
   {
@@ -596,7 +597,7 @@ router.post('/payment_intents', async (req, res) => {
         paymentIntent // paymentIntent: paymentIntent
     })
     console.log('paymentIntent', paymentIntent);
-    return res.status(200).json(paymentIntent);
+    return res.json(paymentIntent);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -608,14 +609,22 @@ router.post('/payment-intense-approve', async (req, res) => {
     const transaction = await Transaction.findOneAndUpdate({
       "paymentIntent.id": req.body.paymentIntend_forStatus.id 
     }, {
-        status: 'success',
+        status: 'success'
     })
+    mailer.send('tdeveloper241@gmail.com', transaction.customerEmail, 'MEGASHOP: Your order has been submitted', 
+    `
+      <p>Your Price is ${transaction.totalPrice}</p>
+      <p>Product name is ${transaction.productName}</p>
+    `)
+    res.json({ 
+      ok: true,
+      message: 'Transaction Succsess' 
+    });
     //console.log(transaction, 'stage 3!!!!')
   } catch (error) {
     console.log(error)
   }
 })
-
 
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
@@ -629,7 +638,7 @@ module.exports = router;
 
 
 
-
+//add messages when payment have been confirmed 
 
 //show error mesages(this user is exist) in angular
 //login with facebook
