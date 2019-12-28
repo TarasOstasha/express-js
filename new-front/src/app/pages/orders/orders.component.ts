@@ -32,7 +32,7 @@ export class OrdersComponent implements OnInit {
     const queryString = toQueryString({
       query: this.searchString,
       fromModel: 'Transaction',
-      fields: ['productName'],
+      fields: ['productName', '', 'status'], // totalPrice - error???
       size: this.sizePage
     });
     const fromServer: any = await this.api.getUniversalSearch(this.currentPage, queryString);
@@ -53,6 +53,28 @@ export class OrdersComponent implements OnInit {
     console.log('index', btnIndex);
     this.currentPage = btnIndex;
     this.search();
+  }
+
+  k = 1;
+  //arrows in head table
+  statusProducts: boolean = false;
+  statusUsers: boolean = false;
+  // sort orders on the page
+  sortTableProduct(key) {
+    this.statusProducts = !this.statusProducts;
+    if (this.k == 1) this.k = -1
+    else this.k = 1;
+    this.transactionList = this.transactionList.sort((a, b) => {
+      var x = a[key]//.toLowerCase();
+      if (typeof x === 'string') {
+        x = x.toLowerCase();
+      }
+      var y = b[key]//.toLowerCase();
+      if (typeof y === 'string') {
+        y = y.toLowerCase();
+      }
+      return x < y ? -1 * this.k : x > y ? 1 * this.k : 0;
+    });
   }
 
 }
