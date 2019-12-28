@@ -12,10 +12,16 @@ import { toQueryString, getUrlQueries } from '../../my_models/stuff';
 export class OrdersComponent implements OnInit {
 
   constructor(private api: ApiService) { }
+  //pagination
   currentPage: number = 1;
-  searchString: string = 'tony'
-  sizePage = 3; // quantity of product per page
+  pagesAmount = 0; // length of pagination
+  pagesAmountArray = [] // for rendering buttons of pagination
+  //
+  searchString: string = ''
+  sizePage = 8; // quantity of product per page
   transactionList: any = [];
+
+
 
   ngOnInit() {
     this.search();
@@ -31,8 +37,22 @@ export class OrdersComponent implements OnInit {
     });
     const fromServer: any = await this.api.getUniversalSearch(this.currentPage, queryString);
     this.transactionList = fromServer.documents;
-    // this.recalcPagination(fromServer.amount);
+    this.recalcPagination(fromServer.amount);
     console.log('fromServer', this.transactionList)
+  }
+
+  async recalcPagination(notificationAmount) {
+    this.pagesAmount = Math.ceil(notificationAmount / this.sizePage); // get quantity of pages in pagination
+    this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
+    this.pagesAmountArray.shift(); // remove first element (0) to start pagination from number 1
+    this.pagesAmountArray.push(this.pagesAmount); // add last page to array
+    console.log('pagesAmountArray', this.pagesAmountArray)
+  }
+
+  clickPagination(btnIndex: number) {
+    console.log('index', btnIndex);
+    this.currentPage = btnIndex;
+    this.search();
   }
 
 }
