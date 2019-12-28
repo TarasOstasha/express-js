@@ -10,6 +10,7 @@ import { LinkCategoriesComponent } from './pages/link-categories/link-categories
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
 import { AdminMessagesArchiveComponent } from './pages/admin-messages-archive/admin-messages-archive.component';
+import { OrdersComponent } from './pages/orders/orders.component'
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'product/:productId', component: ProductComponent },
   { path: 'link-category/:crumbs', component: LinkCategoriesComponent },
   { path: 'contacts', component: ContactsComponent },
+  { path: 'orders', component: OrdersComponent},
   { path: '**', redirectTo: '/p404' } //should be last one
 ];
 

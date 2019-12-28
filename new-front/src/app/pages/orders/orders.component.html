@@ -1,0 +1,28 @@
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">№</th>
+      <th class="head-table-products" scope="col" (click)="sortTableProduct('title')"
+        [ngClass]="statusProducts ? 'on' : 'off'">Product</th>
+      <th class="head-table-products" scope="col" (click)="sortTableProduct('model')"
+        [ngClass]="statusProducts ? 'on' : 'off'">Price</th>
+      <th class="head-table-products" scope="col" (click)="sortTableProduct('stars.public')"
+        [ngClass]="statusProducts ? 'on' : 'off'">Status</th>
+      <th scope="col" (click)="sortTable('text')" [ngClass]="status ? 'on' : 'off'">show more</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr *ngFor="let transaction of transactionList; let i = index" [attr.data-index]="i">
+      <th scope="row">{{ i }}</th> 
+      <td>{{ transaction.productName }}</td>
+      <td>{{ transaction.totalPrice }} {{ transaction.currency }}</td>
+      <td>{{ transaction.status }}</td> 
+      <td>
+        <button class="btn btn-secondary">test</button>
+        <button class="btn btn-secondary">test</button>
+      </td>
+     
+    </tr>
+  </tbody>
+</table>

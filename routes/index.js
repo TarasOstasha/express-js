@@ -14,6 +14,7 @@ const ContactMessageArchive = require('../models/contact-messages-archive');
 const Transaction = require('../models/transaction');
 const mailer = require('../controllers/mail/mailer');
 
+
 const cards = [
   {
     productName: 'product1',
@@ -543,7 +544,8 @@ router.get('/universal-search/:page', cors(), async (req, res) => {
     const queries = req.query;
     const collection = {
       ContactMessageArchive,
-      ContactMessage
+      ContactMessage,
+      Transaction
     }
     const regularExp = new RegExp(queries.query, "g");
     let DBquery = {
