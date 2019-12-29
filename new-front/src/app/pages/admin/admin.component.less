@@ -10960,8 +10960,17 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
-
 @keyframes blink {
   0%   { background-color: #007bff; }
   50%  { background-color: darken(#007bff, 20%); }
+}
+
+.active-notification-yellow {
+  animation-name: blink-yellow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+@keyframes blink-yellow {
+  0%   { background-color: #ffc107; }
+  50%  { background-color: darken(#ffc107, 20%); }
 }

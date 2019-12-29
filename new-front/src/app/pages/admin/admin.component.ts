@@ -19,8 +19,10 @@ export class AdminComponent implements OnInit {
   searchTerm$ = new Subject<string>();
   state = appState.pages.admin;
   appState:any;
-  notificationAmount:string = '';
+  notificationAmount: number = 0;
   allNotifications:any = {}
+
+  transactionAmount: number = 0; 
 
   constructor(
     private api: ApiService,
@@ -42,6 +44,7 @@ export class AdminComponent implements OnInit {
 
       this.allNotifications = await this.api.getAdminNotifications();
       this.notificationAmount = this.allNotifications.notificationAmount;
+      this.transactionAmount = this.allNotifications.transactionAmount;
       //console.log(users)
       const results: any = await this.searchService.search(this.searchTerm$)
       //this.state.products = results;

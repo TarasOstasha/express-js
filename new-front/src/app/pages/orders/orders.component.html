@@ -2,12 +2,23 @@
   <thead class="thead-dark">
     <tr>
       <th colspan="5">
-          <h1 class="head-customer-messages">
-              <i class="material-icons">report</i>
-              <i> Transactions From Customers</i>
+        <div class="transaction-head">
+            <h1 class="head-customer-messages">
+                <!-- <i class="material-icons">report</i> -->
+                <i class="material-icons">payment</i>
+                <i> Transactions From Customers</i>
             </h1>
-            <input class="search-messages" type="text" placeholder="search" [(ngModel)]="searchString">
-            <button class="btn btn-secondary" (click)="search()">Search</button>
+            <div>
+                <div class="input-group mb-3">
+                    <input [(ngModel)]="searchString" type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button (click)="search()" class="btn btn-outline-secondary" type="button">Button</button>
+                    </div>
+                </div>
+                  <!-- <input class="search-messages" type="text" placeholder="search" [(ngModel)]="searchString"> -->
+                  <!-- <button class="btn btn-secondary" (click)="search()">Search</button> -->
+            </div>
+        </div>
       </th>
     </tr>
     <tr>
@@ -23,15 +34,15 @@
   </thead>
   <tbody>
 
-    <tr *ngFor="let transaction of transactionList; let i = index" [attr.data-index]="i">
-      <th scope="row">{{ i }}</th>
+    <tr *ngFor="let transaction of transactionList; let i = index" [attr.data-index]="i" [class]="(!checkStatus[i]) ? 'clear-row': 'active-row' ">
+      <th scope="row">{{ i+1 }}</th>
       <td>{{ transaction.productName }}</td>
       <td>{{ transaction.totalPrice }} {{ transaction.currency }}</td>
       <td>{{ transaction.status }}</td>
       <td>
-        <button class="btn btn-secondary">test</button>
-        <button class="btn btn-secondary">test</button>
-      </td>
+        <button (click)="transactionDone(i)" class="btn btn-success"><i class="fa fa-check"></i></button>
+        <button class="btn btn-secondary"><i class="fa fa-archive"></i></button>
+    </td>
 
     </tr>
   </tbody>

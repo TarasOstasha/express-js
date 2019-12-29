@@ -17,14 +17,19 @@ export class OrdersComponent implements OnInit {
   pagesAmount = 0; // length of pagination
   pagesAmountArray = [] // for rendering buttons of pagination
   //
+  allNotifications: any = {}; // all type of notifications in admin panel on the top level
+  notificationAmount: number; // all messages from customer
   searchString: string = ''
   sizePage = 8; // quantity of product per page
   transactionList: any = [];
+
+  checkStatus: any = [];
 
 
 
   ngOnInit() {
     this.search();
+    this.getNotifications();
   }
 
 
@@ -35,6 +40,7 @@ export class OrdersComponent implements OnInit {
       fields: ['productName', '', 'status'], // totalPrice - error???
       size: this.sizePage
     });
+
     const fromServer: any = await this.api.getUniversalSearch(this.currentPage, queryString);
     this.transactionList = fromServer.documents;
     this.recalcPagination(fromServer.amount);
@@ -76,5 +82,23 @@ export class OrdersComponent implements OnInit {
       return x < y ? -1 * this.k : x > y ? 1 * this.k : 0;
     });
   }
+
+  async getNotifications() {
+    //this.allNotifications = await this.api.getAdminNotifications();
+    //this.notificationAmount = this.allNotifications.notificationAmount;
+    //this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
+    //this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
+    //this.pagesAmountArray.shift(); // remove first element (0) to start pagination from number 1
+    //this.pagesAmountArray.push(this.pagesAmount); // add last page to array
+    //console.log('currentPageNgOnInit', this.currentPage);
+    //console.log('pagesAmountArray', this.pagesAmountArray)
+  }
+
+  transactionDone(index) {
+    console.log(index, 'current row')
+    this.checkStatus[index] = !this.checkStatus[index];
+    
+  }
+  
 
 }

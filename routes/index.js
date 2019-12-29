@@ -480,9 +480,11 @@ router.get('/admin-notifications', cors(), async (req, res) => {
     // find method which return quantity of collection mongo DB
     const notificationAmount = await ContactMessage.count();
     const notificationAmountArchive = await ContactMessageArchive.count();
+    const transactionAmount = await Transaction.count();
     res.json({
       notificationAmount,
-      notificationAmountArchive
+      notificationAmountArchive,
+      transactionAmount
     });
   } catch (error) {
     console.log(error, 'something went wrong');
