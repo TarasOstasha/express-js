@@ -61,7 +61,7 @@ export class AdminMessagesArchiveComponent implements OnInit {
 
     const fromServer: any = await this.api.getAdminMessagesFromArchive(this.currentPage, this.sizePage);
     this.listMessages = fromServer.adminMessageFromArchive; //set to list messages data from object adminMessageFromArchive
-    console.log('getAdminMessagesArchive', fromServer, this.listMessages)
+    console.log('getAdminMessagesArchive - ', fromServer, 'listMessages - ',this.listMessages)
   }
 
   async search() {

@@ -43,6 +43,7 @@ import { ContactsComponent } from './pages/contacts/contacts.component';
 import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
 import { AdminMessagesArchiveComponent } from './pages/admin-messages-archive/admin-messages-archive.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { OrdersComponent } from './pages/orders/orders.component';
     ContactsComponent,
     AdminMessagesComponent,
     AdminMessagesArchiveComponent,
-    OrdersComponent
+    OrdersComponent,
+    OrdersArchiveComponent
     
   ],
   imports: [

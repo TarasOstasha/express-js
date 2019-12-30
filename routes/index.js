@@ -12,6 +12,7 @@ const log = console.log
 const ContactMessage = require('../models/contact-messages');
 const ContactMessageArchive = require('../models/contact-messages-archive');
 const Transaction = require('../models/transaction');
+const TransactionArchive = require('../models/transaction-archive');
 const mailer = require('../controllers/mail/mailer');
 
 
@@ -527,12 +528,73 @@ router.put('/move-to-archive-admin-messages', cors(), async (req, res) => {
   }
 })
 
+// move from transaction to archive
+router.put('/transaction-archive', cors(), async (req, res)=>{
+  try {
+    const _id = req.body._id;
+    const transaction = await Transaction.findOne({ _id });
+    const transactionArchive = new TransactionArchive({
+      _id: transaction._id,
+      customerName: transaction.customerName,
+      customerEmail: transaction.customerEmail,
+      productName: transaction.productName,
+      totalPrice: transaction.totalPrice,
+      status: transaction.status
+    })
+    transactionArchive.save();
+    await Transaction.findByIdAndDelete({ _id });
+    console.log(transaction, '- transaction');
+    res.json({ transaction })
+  } catch (error) {
+    console.log(error);
+    res.json('something went wrong on server');
+  }
+})
+
+// move from archive transaction back to transaction
+router.put('/archive-to-transaction', cors(), async (req, res)=>{
+  try {
+    const _id = req.body._id;
+    console.log(_id);
+    const transactionArchive = await TransactionArchive.findOne({ _id });
+    const transaction = new Transaction({
+      _id: transactionArchive._id,
+      customerName: transactionArchive.customerName,
+      customerEmail: transactionArchive.customerEmail,
+      productName: transactionArchive.productName,
+      totalPrice: transactionArchive.totalPrice,
+      status: transactionArchive.status
+    })
+    transaction.save();
+    await TransactionArchive.findByIdAndDelete({ _id });
+    console.log(transaction, '- transaction');
+    res.json({ transactionArchive })
+  } catch (error) {
+    console.log(error);
+    res.json('something went wrong on server');
+  }
+})
+
+// admin messages archive
 router.get('/admin-messages-archive/:page', cors(), async (req, res) => {
   try {
     const page = req.params.page;
     const size = +req.query.size || 30;
     const adminMessageFromArchive = await ContactMessageArchive.find({}).limit(size).skip(size * page - size);
     res.json({ adminMessageFromArchive })
+  } catch (error) {
+    console.log(error);
+    res.json('something went wrong on server');
+  }
+})
+
+// transaction archive page
+router.get('/admin-transactions-archive/:page', cors(), async (req, res) => {
+  try {
+    const page = req.params.page;
+    const size = +req.query.size || 30;
+    const adminTransactionsFromArchive = await TransactionArchive.find({}).limit(size).skip(size * page - size);
+    res.json({ adminTransactionsFromArchive })
   } catch (error) {
     console.log(error);
     res.json('something went wrong on server');
@@ -622,7 +684,7 @@ router.post('/payment-intense-approve', async (req, res) => {
     `)
     res.json({ 
       ok: true,
-      message: 'Transaction Succsess' 
+      message: 'Transaction Success' 
     });
     //console.log(transaction, 'stage 3!!!!')
   } catch (error) {

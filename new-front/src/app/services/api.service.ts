@@ -90,13 +90,27 @@ export class ApiService {
   getAdminMessages(currentPage, sizePage) {
     return this.http.get(url + '/admin-messages/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
   }
+
   moveToArchiveAdminMessages(_id) {
     return this.http.put(url + '/move-to-archive-admin-messages', { _id }, httpOptions).toPromise();
+  }
+
+  moveToTransactionArchive(_id) {
+    return this.http.put( url + '/transaction-archive', { _id }, httpOptions ).toPromise();
+  }
+
+  moveToTransactionFromArchive(_id) {
+    return this.http.put( url + '/archive-to-transaction', { _id }, httpOptions ).toPromise();
   }
 
   getAdminMessagesFromArchive(currentPage, sizePage) {
     return this.http.get(url + '/admin-messages-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
   }
+  getTransactionsFromArchive(currentPage, sizePage) {
+    return this.http.get(url + '/admin-transactions-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
+
+  }  
+
   getUniversalSearch(currentPage, queryString) {
     return this.http.get(`${url}/universal-search/${currentPage}${queryString}`, httpOptions).toPromise();
 

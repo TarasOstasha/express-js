@@ -3,15 +3,15 @@ import { ApiService } from '../../services/api.service';
 import { toQueryString, getUrlQueries } from '../../my_models/stuff';
 
 
-
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.less']
+  selector: 'app-orders-archive',
+  templateUrl: './orders-archive.component.html',
+  styleUrls: ['./orders-archive.component.less']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersArchiveComponent implements OnInit {
 
   constructor(private api: ApiService) { }
+
   //pagination
   currentPage: number = 1;
   pagesAmount = 0; // length of pagination
@@ -22,14 +22,24 @@ export class OrdersComponent implements OnInit {
   searchString: string = ''
   sizePage = 8; // quantity of product per page
   transactionList: any = [];
-
   checkStatus: any = [];
-
+  //listTransactionsArchive: any = [];
 
 
   ngOnInit() {
-    this.search();
-    this.getNotifications();
+    this.getTransactionFromArchive();
+  }
+
+  async getTransactionFromArchive() {
+    const fromServer: any = await this.api.getTransactionsFromArchive(this.currentPage, this.sizePage);
+    this.transactionList = fromServer.adminTransactionsFromArchive; //set to list messages data from object adminMessageFromArchive
+    console.log('getTransactionFromArchive - ', fromServer, 'listTransactionsArchive - ', this.transactionList)
+  }
+
+  async moveToTransaction(id) {
+    const fromServer: any = await this.api.moveToTransactionFromArchive(id);
+    console.log('****ALL MESSAGES IN ARCHIVE***', fromServer);
+    //this.getNotifications();
   }
 
 
@@ -82,30 +92,5 @@ export class OrdersComponent implements OnInit {
       return x < y ? -1 * this.k : x > y ? 1 * this.k : 0;
     });
   }
-
-  async getNotifications() {
-    //this.allNotifications = await this.api.getAdminNotifications();
-    //this.notificationAmount = this.allNotifications.notificationAmount;
-    //this.pagesAmount = Math.ceil(this.notificationAmount / this.sizePage); // get quantity of pages in pagination
-    //this.pagesAmountArray = Array.from(Array(this.pagesAmount).keys()) // generate buttons from pagination
-    //this.pagesAmountArray.shift(); // remove first element (0) to start pagination from number 1
-    //this.pagesAmountArray.push(this.pagesAmount); // add last page to array
-    //console.log('currentPageNgOnInit', this.currentPage);
-    //console.log('pagesAmountArray', this.pagesAmountArray)
-  }
-
-  transactionDone(index) {
-    console.log(index, 'current row')
-    this.checkStatus[index] = !this.checkStatus[index];
-    
-  }
-
-  async moveToArchive(id) {
-    const fromServer: any = await this.api.moveToTransactionArchive(id);
-    console.log('****ALL MESSAGES IN ARCHIVE***', fromServer);
-    //this.getNotifications();
-
-  }
-  
 
 }
