@@ -44,7 +44,11 @@ const io  = require('socket.io').listen(server);
 io.on('connection', (socket)=>{
   console.log('socket connection');
   socket.emit('news', { 1 : 1 });
+  socket.on('client-msg', (msg)=>{
+    console.log(msg);
+  })
 })
+
 /**
  * Listen on provided port, on all network interfaces.
  */

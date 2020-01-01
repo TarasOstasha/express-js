@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+declare const socket;
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -21,9 +21,33 @@ export class ChatComponent implements OnInit {
     }
 
   ]
+  currentMsg: String;
+
   constructor() { }
 
   ngOnInit() {
+    console.log(this.usDate(new Date()))
+  }
+
+
+  usDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
+
+  sentMsg(msg) {
+    console.log(msg);
+    socket.emit('client-msg', msg);
   }
 
 }
