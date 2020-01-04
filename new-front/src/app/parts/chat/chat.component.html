@@ -103,7 +103,7 @@
               </ul>
             </div>
           </div>
-          <div class="card-body msg_card_body">
+          <div class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight" style="overflow: scroll; height: xyz;">
             <div [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' " *ngFor="let msg of chatMessages">
               <!-- client message -->                
               <div class="d-flex" *ngIf="msg.role == 'client' ">
@@ -112,23 +112,20 @@
                       </div>
                       <div class="msg_cotainer">
                         {{ msg.text }}
-                        <span class="msg_time">{{ msg.date }}</span>
+                        <span class="msg_time">{{ usDate(msg.date) }}</span>
                       </div>
                 </div>
                 <!-- manager message -->
                 <div class="d-flex" *ngIf="msg.role == 'manager'">
                     <div class="msg_cotainer_send">
                         {{ msg.text }}
-                        <span class="msg_time_send">{{ msg.date }}</span>
+                        <span class="msg_time_send">{{ usDate(msg.date) }}</span>
                       </div>
                       <div class="img_cont_msg">
                         <img [src]="msg.img" class="rounded-circle user_img_msg">
                       </div>
                 </div>
               </div>
-
-
-           
           </div>
           <div class="card-footer">
             <div class="input-group">

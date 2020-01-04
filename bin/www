@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
@@ -41,13 +40,7 @@ const io  = require('socket.io').listen(server);
 //var socket = io('http://localhost:4200', {transports: ['websocket', 'polling', 'flashsocket']});
 
 //io.set('origins', 'http://localhost:4200');
-io.on('connection', (socket)=>{
-  console.log('socket connection');
-  socket.emit('news', { 1 : 1 });
-  socket.on('client-msg', (msg)=>{
-    console.log(msg);
-  })
-})
+io.on('connection', require('../socket/socket'));
 
 /**
  * Listen on provided port, on all network interfaces.
