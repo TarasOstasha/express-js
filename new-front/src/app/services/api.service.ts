@@ -116,7 +116,10 @@ export class ApiService {
 
   }
 
-
+  createFingerPrint(systemInfo) {
+    console.log(systemInfo)
+    return this.http.post(url + '/session', systemInfo, httpOptions).toPromise(); 
+  }
 
   // getAll(model, currentPage, sizePage) {
   //   return this.http.get(`http://localhost:3000/all/${model}/${currentPage}?size=${sizePage}` , httpOptions).toPromise();

@@ -14,7 +14,7 @@ const ContactMessageArchive = require('../models/contact-messages-archive');
 const Transaction = require('../models/transaction');
 const TransactionArchive = require('../models/transaction-archive');
 const mailer = require('../controllers/mail/mailer');
-
+const bcrypt = require('bcrypt');
 
 const cards = [
   {
@@ -689,6 +689,21 @@ router.post('/payment-intense-approve', async (req, res) => {
     //console.log(transaction, 'stage 3!!!!')
   } catch (error) {
     console.log(error)
+  }
+})
+
+// finger print mechanism
+router.post('/session', async (req, res)=>{
+  try {
+    const systemInfo = req.body;
+    console.log(systemInfo, 'fingerPrint')
+
+    const random = Math.random();
+    const fingerPrint = await bcrypt.hash( systemInfo.appVersion + random, 10 );
+    res.json({ session: fingerPrint });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
   }
 })
 
