@@ -66,7 +66,11 @@ export class ChatComponent implements OnInit {
 
   }
 
-  async sentMsg() {
+  sendMsgEnter(event) {
+    if(event.keyCode == 13){ this.sendMsg() }
+  }
+
+  async sendMsg() {
     const message = {
       msg: this.currentMsg,
       session: await this.storage.getItem('session')

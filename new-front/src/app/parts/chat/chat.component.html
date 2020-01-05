@@ -132,10 +132,10 @@
               <div class="input-group-append">
                 <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
               </div>
-              <textarea [(ngModel)]="currentMsg" name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-              <div class="input-group-append">
-                <button (click)="sentMsg();" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
-              </div>
+                  <textarea (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                  <div class="input-group-append">
+                    <button (click)="sendMsg();" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
+                  </div>
             </div>
           </div>
         </div>
