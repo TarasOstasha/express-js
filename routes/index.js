@@ -698,8 +698,6 @@ router.post('/payment-intense-approve', async (req, res) => {
 router.post('/session', async (req, res) => {
   try {
     const systemInfo = req.body;
-    console.log(systemInfo, 'fingerPrint')
-
     const random = Math.random();
     const fingerPrint = await bcrypt.hash(systemInfo.appVersion + random, 10);
     const session = new Session({

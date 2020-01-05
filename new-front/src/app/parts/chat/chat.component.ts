@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { StorageService } from '../../services/storage.service';
+
 declare const socket;
 @Component({
   selector: 'app-chat',
@@ -25,7 +27,7 @@ export class ChatComponent implements OnInit {
   ]
   currentMsg: String;
 
-  constructor() { }
+  constructor( private storage: StorageService ) { }
 
   ngOnInit() {
     this.scrollToBottom();
@@ -64,14 +66,20 @@ export class ChatComponent implements OnInit {
 
   }
 
-  sentMsg(msg) {
-
-    console.log(msg);
-    socket.emit('client-msg', msg);
+  async sentMsg() {
+    const message = {
+      msg: this.currentMsg,
+      session: await this.storage.getItem('session')
+    }
+    console.log();
+    socket.emit('client-msg', message);
   }
 
-  getAllMessages() {
-    socket.emit('command', 'get-all-messages')
+  async getAllMessages() {
+    socket.emit('command', { 
+      session: await this.storage.getItem('session'), 
+      command: 'get-all-messages'
+    })
   }
 
   // scroll to bottom chat

@@ -6,7 +6,8 @@ module.exports = (socket)=>{
     socket.on('client-msg', (msg)=>{
       console.log(msg);
       const new_message = new Chat({
-        text: msg,
+        text: msg.msg,
+        session: msg.session,
         date: new Date(),
         role: 'client',
         img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg'
@@ -18,6 +19,6 @@ module.exports = (socket)=>{
 
     socket.on('command', async (command)=>{
         console.log('command', command)
-        if(command == 'get-all-messages') socket.emit('all-messages', await Chat.find({}))
+        if(command.command == 'get-all-messages') socket.emit('all-messages', await Chat.find({ session: command.session }))
     })
   }

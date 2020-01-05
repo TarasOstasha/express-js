@@ -2,11 +2,12 @@ let mongoose = require('mongoose');
 
 let chat = mongoose.model('chat', {
     created: { type: Date, default: Date.now },
-    userId: 'string',
-    text: 'string',
-    date: 'string',
-    role: 'string',
-    img: 'string'
+    userId: String,
+    text: String,
+    session: String,
+    date: String,
+    role: String,
+    img: String
 })
 
 module.exports = chat;
