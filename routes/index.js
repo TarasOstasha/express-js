@@ -15,6 +15,8 @@ const Transaction = require('../models/transaction');
 const TransactionArchive = require('../models/transaction-archive');
 const mailer = require('../controllers/mail/mailer');
 const bcrypt = require('bcrypt');
+const Session = require('../models/session');
+
 
 const cards = [
   {
@@ -529,7 +531,7 @@ router.put('/move-to-archive-admin-messages', cors(), async (req, res) => {
 })
 
 // move from transaction to archive
-router.put('/transaction-archive', cors(), async (req, res)=>{
+router.put('/transaction-archive', cors(), async (req, res) => {
   try {
     const _id = req.body._id;
     const transaction = await Transaction.findOne({ _id });
@@ -552,7 +554,7 @@ router.put('/transaction-archive', cors(), async (req, res)=>{
 })
 
 // move from archive transaction back to transaction
-router.put('/archive-to-transaction', cors(), async (req, res)=>{
+router.put('/archive-to-transaction', cors(), async (req, res) => {
   try {
     const _id = req.body._id;
     console.log(_id);
@@ -661,7 +663,7 @@ router.post('/payment_intents', async (req, res) => {
     }, {
         status: 'intend (stage 2)',
         paymentIntent // paymentIntent: paymentIntent
-    })
+      })
     console.log('paymentIntent', paymentIntent);
     return res.json(paymentIntent);
   } catch (err) {
@@ -673,18 +675,18 @@ router.post('/payment-intense-approve', async (req, res) => {
   try {
     //console.log('payment-intense-approve', req.body)
     const transaction = await Transaction.findOneAndUpdate({
-      "paymentIntent.id": req.body.paymentIntend_forStatus.id 
+      "paymentIntent.id": req.body.paymentIntend_forStatus.id
     }, {
         status: 'success'
-    })
-    mailer.send('tdeveloper241@gmail.com', transaction.customerEmail, 'MEGASHOP: Your order has been submitted', 
-    `
+      })
+    mailer.send('tdeveloper241@gmail.com', transaction.customerEmail, 'MEGASHOP: Your order has been submitted',
+      `
       <p>Your Price is ${transaction.totalPrice}</p>
       <p>Product name is ${transaction.productName}</p>
     `)
-    res.json({ 
+    res.json({
       ok: true,
-      message: 'Transaction Success' 
+      message: 'Transaction Success'
     });
     //console.log(transaction, 'stage 3!!!!')
   } catch (error) {
@@ -693,13 +695,21 @@ router.post('/payment-intense-approve', async (req, res) => {
 })
 
 // finger print mechanism
-router.post('/session', async (req, res)=>{
+router.post('/session', async (req, res) => {
   try {
     const systemInfo = req.body;
     console.log(systemInfo, 'fingerPrint')
 
     const random = Math.random();
-    const fingerPrint = await bcrypt.hash( systemInfo.appVersion + random, 10 );
+    const fingerPrint = await bcrypt.hash(systemInfo.appVersion + random, 10);
+    const session = new Session({
+      //userId: String,
+      appVersion: systemInfo.appVersion,
+      fingerPrint: fingerPrint,
+      random: random,
+      ip: req.ip
+    })
+    session.save();
     res.json({ session: fingerPrint });
   } catch (error) {
     console.log(error);
