@@ -73,9 +73,12 @@ export class ChatComponent implements OnInit {
     }
     console.log();
     socket.emit('client-msg', message);
+    this.currentMsg = ''
   }
 
   async getAllMessages() {
+    if(!await this.storage.getItem('session')) return 
+    
     socket.emit('command', { 
       session: await this.storage.getItem('session'), 
       command: 'get-all-messages'
