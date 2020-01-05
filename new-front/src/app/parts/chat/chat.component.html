@@ -89,8 +89,9 @@
                 <p>1767 Messages</p>
               </div>
               <div class="video_cam">
-                <span><i class="fa fa-video"></i></span>
-                <span><i class="fa fa-phone"></i></span>
+                <span><i (click)="collapse()" class="fa fa-window-minimize"></i></span>
+                <!-- <span><i class="fa fa-video"></i></span> -->
+                <!-- <span><i class="fa fa-phone"></i></span> -->
               </div>
             </div>
             <span id="action_menu_btn"><i class="fa fa-ellipsis-v"></i></span>
@@ -103,7 +104,8 @@
               </ul>
             </div>
           </div>
-          <div class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight" style="overflow: scroll; height: xyz;">
+          <!-- card-body -->
+          <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight" style="overflow: scroll; height: xyz;">
             <div [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' " *ngFor="let msg of chatMessages">
               <!-- client message -->                
               <div class="d-flex" *ngIf="msg.role == 'client' ">
@@ -127,7 +129,8 @@
                 </div>
               </div>
           </div>
-          <div class="card-footer">
+          <!-- card-body-footer -->
+          <div *ngIf="!collapsed" class="card-footer">
             <div class="input-group">
               <div class="input-group-append">
                 <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>

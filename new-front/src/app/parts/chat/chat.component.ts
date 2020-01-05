@@ -28,6 +28,8 @@ export class ChatComponent implements OnInit {
   currentMsg: String;
 
   constructor( private storage: StorageService ) { }
+  collapsed: boolean = true;
+
 
   ngOnInit() {
     this.scrollToBottom();
@@ -95,6 +97,10 @@ export class ChatComponent implements OnInit {
         console.log(this.myScrollContainer.nativeElement.scrollTop, this.myScrollContainer.nativeElement.scrollHeight)
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch(err) { }                 
-}
+  }
+
+  collapse() {
+    this.collapsed = !this.collapsed
+  }
 
 }
