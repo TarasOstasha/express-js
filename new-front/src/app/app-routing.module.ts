@@ -10,8 +10,9 @@ import { LinkCategoriesComponent } from './pages/link-categories/link-categories
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { AdminMessagesComponent } from './pages/admin-messages/admin-messages.component';
 import { AdminMessagesArchiveComponent } from './pages/admin-messages-archive/admin-messages-archive.component';
-import { OrdersComponent } from './pages/orders/orders.component'
-import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.component'
+import { OrdersComponent } from './pages/orders/orders.component';
+import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.component';
+import { ManagerPageComponent } from './pages/manager-page/manager-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'contacts', component: ContactsComponent },
   { path: 'orders', component: OrdersComponent},
   { path: 'transaction-archive', component: OrdersArchiveComponent },
+  { path: 'manager', component: ManagerPageComponent },
   { path: '**', redirectTo: '/p404' } //should be last one
 ];
 
