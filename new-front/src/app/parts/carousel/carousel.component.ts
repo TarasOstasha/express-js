@@ -33,10 +33,10 @@ export class CarouselComponent implements OnInit {
     },
     {
       img: 'assets/img/18-420_Nike_Paul_George_3_Heroes_04_Surface-02_rectangle_1600.jpg'
-    },
-    {
-      img: 'assets/img/2U3A5415.jpg'
     }
+    // {
+    //   img: 'assets/img/2U3A5415.jpg'
+    // }
 
   ]
   slidePointer = 0;
