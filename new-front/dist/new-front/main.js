@@ -4404,7 +4404,10 @@ __webpack_require__.r(__webpack_exports__);
 var httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Content-Type': 'application/json' })
 };
-var url = 'http://localhost'; //http://localhost:3000
+if (location.hostname == 'localhost')
+    var url = 'http://localhost'; //dev
+else
+    var url = ''; //production
 var ApiService = /** @class */ (function () {
     function ApiService(http) {
         this.http = http;

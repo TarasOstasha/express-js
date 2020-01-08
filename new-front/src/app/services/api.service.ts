@@ -6,7 +6,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const url = 'http://localhost'; //http://localhost:3000
+
+if(location.hostname == 'localhost') var url = 'http://localhost'; //dev
+else var url = ''; //production
+ 
 @Injectable({
   providedIn: 'root'
 })
