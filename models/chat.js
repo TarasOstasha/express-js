@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-let chat = mongoose.model('chat', {
+let Chat = mongoose.model('chat', {
     created: { type: Date, default: Date.now },
     userId: String,
     text: String,
@@ -10,4 +10,4 @@ let chat = mongoose.model('chat', {
     img: String
 })
 
-module.exports = chat;
+module.exports = Chat;

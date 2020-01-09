@@ -32,6 +32,7 @@ export class ChatComponent implements OnInit {
 
 
   ngOnInit() {
+    this.goToRoom();
     this.scrollToBottom();
     this.getAllMessages();
     socket.on('message-finish', (new_message)=>{
@@ -84,11 +85,7 @@ export class ChatComponent implements OnInit {
 
   async getAllMessages() {
     if(!await this.storage.getItem('session')) return 
-    
-    socket.emit('command', { 
-      session: await this.storage.getItem('session'), 
-      command: 'get-all-messages'
-    })
+    socket.emit('get-all-messages', await this.storage.getItem('session'))
   }
 
   // scroll to bottom chat
@@ -101,6 +98,10 @@ export class ChatComponent implements OnInit {
 
   collapse() {
     this.collapsed = !this.collapsed
+  }
+
+  async goToRoom() {
+    socket.emit('create', await this.storage.getItem('session'))
   }
 
 }

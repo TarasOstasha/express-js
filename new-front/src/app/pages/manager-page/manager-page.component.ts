@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
+import { Session } from 'protractor';
 
 declare const socket;
 @Component({
@@ -31,29 +32,30 @@ export class ManagerPageComponent implements OnInit {
       //img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
       online: true,
       name: 'unknown user',
-
-
+      fingerPrint: 'fdgfgdf2vfvfdvd'
     }
   ]
 
-  constructor( private storage: StorageService ) { }
+  constructor(private storage: StorageService) { }
 
 
   ngOnInit() {
     this.getAllSession();
     this.scrollToBottom();
-    this.getAllMessages();
-    setTimeout(()=>{},500) // fixed showing chat messages on the page
-    socket.on('message-finish', (new_message)=>{
+    this.getAllMessages(this.session[0].fingerPrint);
+    setTimeout(() => { }, 500) // fixed showing chat messages on the page
+    socket.on('message-finish', (new_message) => {
       console.log(new_message);
-      this.chatMessages.push( new_message );
+      this.chatMessages.push(new_message);
       console.log(this.chatMessages)
     })
-    socket.on('all-messages', (allMessages)=>{
+    socket.on('all-messages', (allMessages) => {
+      this.chatMessages = [];
       this.chatMessages.push(...allMessages);
     })
 
-    socket.on('all-session', (allSession)=>{
+    socket.on('all-session', (allSession) => {
+      console.log('allSession', allSession)
       this.session.push(...allSession);
     })
     console.log(this.usDate(new Date()))
@@ -61,7 +63,7 @@ export class ManagerPageComponent implements OnInit {
 
 
   usDate(date) {
-    if(typeof date == 'string') { date = new Date(date) }
+    if (typeof date == 'string') { date = new Date(date) }
 
     var monthNames = [
       "January", "February", "March",
@@ -78,12 +80,12 @@ export class ManagerPageComponent implements OnInit {
 
     //return day + ' ' + monthNames[monthIndex] + ' ' + year;
 
-    return hour + ':'  + min + ' | ' + day + ' ' + monthNames[monthIndex] + ' ' + year;
+    return hour + ':' + min + ' | ' + day + ' ' + monthNames[monthIndex] + ' ' + year;
 
   }
 
   sendMsgEnter(event) {
-    if(event.keyCode == 13){ this.sendMsg() }
+    if (event.keyCode == 13) { this.sendMsg() }
   }
 
   async sendMsg() {
@@ -96,30 +98,31 @@ export class ManagerPageComponent implements OnInit {
     this.currentMsg = ''
   }
 
-  async getAllMessages() {
-    if(!await this.storage.getItem('session')) return 
-    
-    socket.emit('command', { 
-      session: await this.storage.getItem('session'), 
-      command: 'get-all-messages'
-    })
+  async getAllMessages(fingerPrint) {
+    //if (!await this.storage.getItem('session')) return
+    socket.emit('get-all-messages', fingerPrint) // ??? first fake obj
   }
 
   async getAllSession() {
-    socket.emit('command', { 
-      session: await this.storage.getItem('session'), 
-      command: 'get-all-session'
-    })
+    socket.emit('get-all-session', '')
   }
 
   // scroll to bottom chat
   scrollToBottom(): void {
     try {
-        console.log(this.myScrollContainer.nativeElement.scrollTop, this.myScrollContainer.nativeElement.scrollHeight)
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }                 
+      console.log(this.myScrollContainer.nativeElement.scrollTop, this.myScrollContainer.nativeElement.scrollHeight)
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
- 
+  char(word) {
+    if (word) return word[0]
+    else return 's'
+  }
+
+  chooseUser(user) {
+    this.getAllMessages(user.fingerPrint);
+    console.log(user)
+  }
 
 }

@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-let session = mongoose.model('session', {
+let Session = mongoose.model('session', {
     created: { type: Date, default: Date.now },
     userId: String,
     appVersion: String,
@@ -9,4 +9,4 @@ let session = mongoose.model('session', {
     ip: String
 })
 
-module.exports = session;
+module.exports = Session;
