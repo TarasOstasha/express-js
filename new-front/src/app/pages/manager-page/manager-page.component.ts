@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 import { Session } from 'protractor';
 
@@ -10,6 +10,7 @@ declare const socket;
 })
 export class ManagerPageComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
 
   chatMessages = [
     {
@@ -35,14 +36,14 @@ export class ManagerPageComponent implements OnInit {
       fingerPrint: 'fdgfgdf2vfvfdvd'
     }
   ]
+  currentSession: any;
+
 
   constructor(private storage: StorageService) { }
 
 
   ngOnInit() {
     this.getAllSession();
-    this.scrollToBottom();
-    this.getAllMessages(this.session[0].fingerPrint);
     setTimeout(() => { }, 500) // fixed showing chat messages on the page
     socket.on('message-finish', (new_message) => {
       console.log(new_message);
@@ -50,17 +51,30 @@ export class ManagerPageComponent implements OnInit {
       console.log(this.chatMessages)
     })
     socket.on('all-messages', (allMessages) => {
-      this.chatMessages = [];
-      this.chatMessages.push(...allMessages);
+      //this.chatMessages = [];
+      //this.chatMessages.push(...allMessages);
+      this.chatMessages = allMessages;
+      this.scrollToBottom();
     })
 
     socket.on('all-session', (allSession) => {
       console.log('allSession', allSession)
+      if (allSession.length > 0) this.currentSession = allSession[0]
+      else this.currentSession = {}
+      this.session = [];
       this.session.push(...allSession);
+      this.getAllMessages(this.session[0].fingerPrint);
+
+    })
+
+    socket.on('refresh-session-list', () => {
+      this.getAllSession()
     })
     console.log(this.usDate(new Date()))
   }
-
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
 
   usDate(date) {
     if (typeof date == 'string') { date = new Date(date) }
@@ -91,7 +105,7 @@ export class ManagerPageComponent implements OnInit {
   async sendMsg() {
     const message = {
       msg: this.currentMsg,
-      session: await this.storage.getItem('session')
+      session: this.currentSession.fingerPrint
     }
     console.log();
     socket.emit('manager-msg', message);
@@ -101,16 +115,17 @@ export class ManagerPageComponent implements OnInit {
   async getAllMessages(fingerPrint) {
     //if (!await this.storage.getItem('session')) return
     socket.emit('get-all-messages', fingerPrint) // ??? first fake obj
+
   }
 
   async getAllSession() {
+    //console.log('get-all-session')
     socket.emit('get-all-session', '')
   }
 
   // scroll to bottom chat
   scrollToBottom(): void {
     try {
-      console.log(this.myScrollContainer.nativeElement.scrollTop, this.myScrollContainer.nativeElement.scrollHeight)
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
   }
@@ -121,8 +136,14 @@ export class ManagerPageComponent implements OnInit {
   }
 
   chooseUser(user) {
+    this.currentSession = user;
     this.getAllMessages(user.fingerPrint);
-    console.log(user)
+    console.log(user, ' - USER')
   }
+
+  delMessage(user) {
+    socket.emit('remove-session', user.fingerPrint);
+  }
+
 
 }

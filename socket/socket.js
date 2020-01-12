@@ -36,13 +36,18 @@ module.exports = (socket)=>{
 
 
     socket.on('get-all-messages', async(session)=>{
-        //console.log('get-all-messages')
+        console.log('get-all-messages', session)
         socket.emit('all-messages', await Chat.find({ session: session }))
     })
 
     socket.on('get-all-session', async()=>{
        // console.log('get-all-session')
         socket.emit('all-session', await Session.find({}))
+    })
+
+    socket.on('remove-session', async (fingerPrint)=>{
+      await Session.findOneAndRemove({ fingerPrint });
+      socket.emit('refresh-session-list');
     })
   }
 

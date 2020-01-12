@@ -1,12 +1,21 @@
-<div class="slider-wrapper" id="container">
-  <ul class="slider-list">
-    <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn" >
-      <!-- <div class="slide-wrapper" *ngIf="i==slidePointer" [@slideInOut1]> -->
-          <img class="slide-wrapper" [src]=slide.img *ngIf="i==slidePointer" [@slideInOut1]>
-      <!-- </div> -->
-    </li> 
-  </ul>
-  <button class="left-slide-btn" (click)=moveLeft()><i class="fa fa-chevron-circle-left slide-icon"></i></button> 
-  <button class="right-slide-btn" (click)=moveRight()><i class="fa fa-chevron-circle-right slide-icon"></i></button> 
+<div class="container-fluid container-fluid-carousel">
+  <div class="slider-wrapper" id="container">
+    <ul class="slider-list">
+      <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn">
+        <!-- <div class="slide-wrapper" *ngIf="i==slidePointer" [@slideInOut1]> -->
+        <img class="slide-wrapper" [src]=slide.img *ngIf="i==slidePointer" [@slideInOut1]>
+        <!-- </div> -->
+      </li>
+      <div class="btn-left" (click)=moveLeft()>
+        <button class="left-slide-btn" ><i class="fa fa-chevron-circle-left slide-icon"></i></button>
+      </div>
+      <div class="btn-right" (click)=moveRight()>
+        <button class="right-slide-btn" ><i class="fa fa-chevron-circle-right slide-icon"></i></button>
+      </div>
+      <!-- <button class="left-slide-btn btn-visible-hover" (click)=moveLeft()><i class="fa fa-chevron-circle-left slide-icon"></i></button> -->
+      <!-- <button class="right-slide-btn btn-visible-hover" (click)=moveRight()><i class="fa fa-chevron-circle-right slide-icon"></i></button> -->
+    </ul>
+    <!-- <button class="left-slide-btn" (click)=moveLeft()><i class="fa fa-chevron-circle-left slide-icon"></i></button> 
+    <button class="right-slide-btn" (click)=moveRight()><i class="fa fa-chevron-circle-right slide-icon"></i></button>  -->
+  </div>
 </div>
-

@@ -1,18 +1,53 @@
+.container-fluid-carousel {
+    padding: 0;
+    margin-bottom: 8%;
+    &:hover {
+        .btn-left {
+            width: 100%;
+        }
+        .btn-right {
+            width: 100%;
+        }
+        .left-slide-btn {
+            -webkit-transform: translate(-2%, -2%);
+            -ms-transform: translate(-2%, 2%);
+            transform: translate(-2%, 2%);
+            white-space: nowrap;
+            left: 8%;
+        }
+        .right-slide-btn {
+            -webkit-transform: translate(-2%, -2%);
+            -ms-transform: translate(-2%, 2%);
+            transform: translate(-2%, 2%);
+            white-space: nowrap;
+            right: 8%;
+        }
+    }
+}
 .slide-wrapper {
     width: 100%;
-    position: absolute;
+    //position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    max-width: 1438px;
+    //max-width: 1438px;
 }
 .slider-list {
     position: relative;
-    padding: 0;
-    margin: 0;
-    height: 800px;
+    //padding: 0;
+    //margin: 0;
+    //overflow: hidden;
+    padding-bottom: 50%;
+    //height: 800px;
     li {
         list-style: none;
+        //position: relative;
+        img {
+            position: absolute;
+            width: 100%;
+            height: auto;
+        }
+ 
     }
 }
 .left-slide-btn,
@@ -33,13 +68,29 @@
 }
 .left-slide-btn {
     top: 45%;
-    left: 2%;
+    left: 4%;
 }
 .right-slide-btn {
     top: 45%;
-    right: 2%;
+    right: 4%;
 }
 .slider-wrapper {
     position: relative;
     //display: flex;
+}
+.btn-left {
+    position: absolute;
+    left: -5%;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    transition: .5s ease;
+}
+.btn-right {
+    position: absolute;
+    right: -5%;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    transition: .5s ease;
 }

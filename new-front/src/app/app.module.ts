@@ -47,6 +47,7 @@ import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.co
 import { ChatComponent } from './parts/chat/chat.component';
 import { ManagerPageComponent } from './pages/manager-page/manager-page.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

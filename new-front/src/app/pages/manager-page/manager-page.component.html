@@ -27,6 +27,7 @@
                   <span>{{ user.name }}</span>
                   <p>{{ user.name }} is online</p>
                 </div>
+                <button (click)="delMessage(user)" type="button" class="btn btn-danger">Remove</button>
               </div>
             </li>
           </ul>
@@ -63,7 +64,8 @@
           </div>
         </div>
         <!-- card-body -->
-        <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight"
+        <!-- <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight" -->
+        <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe
           style="overflow: scroll; height: xyz;">
           <div
             [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' "
