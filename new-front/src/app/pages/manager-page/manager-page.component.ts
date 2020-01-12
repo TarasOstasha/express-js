@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 import { Session } from 'protractor';
 
@@ -36,10 +36,10 @@ export class ManagerPageComponent implements OnInit {
       fingerPrint: 'fdgfgdf2vfvfdvd'
     }
   ]
-  currentSession: any;
+  currentSession: any = {}
 
 
-  constructor(private storage: StorageService) { }
+  constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { }
 
 
   ngOnInit() {
@@ -54,7 +54,9 @@ export class ManagerPageComponent implements OnInit {
       //this.chatMessages = [];
       //this.chatMessages.push(...allMessages);
       this.chatMessages = allMessages;
+      this.cdr.detectChanges();
       this.scrollToBottom();
+      console.log('all messages - ', allMessages)
     })
 
     socket.on('all-session', (allSession) => {
@@ -138,7 +140,7 @@ export class ManagerPageComponent implements OnInit {
   chooseUser(user) {
     this.currentSession = user;
     this.getAllMessages(user.fingerPrint);
-    console.log(user, ' - USER')
+    console.log(user.fingerPrint, ' - USER')
   }
 
   delMessage(user) {
