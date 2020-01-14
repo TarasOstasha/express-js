@@ -26,6 +26,7 @@ export class ChatComponent implements OnInit {
 
   ]
   currentMsg: String;
+  oldMsgLength: Number;
 
   constructor( private storage: StorageService ) { }
   collapsed: boolean = true;
@@ -35,6 +36,7 @@ export class ChatComponent implements OnInit {
     this.goToRoom();
     this.scrollToBottom();
     this.getAllMessages();
+    socket.on('reload-msg-list', this.getAllMessages());
     socket.on('message-finish', (new_message)=>{
       console.log(new_message);
       this.chatMessages.push( new_message );
@@ -42,6 +44,7 @@ export class ChatComponent implements OnInit {
     })
     socket.on('all-messages', (allMessages)=>{
       this.chatMessages.push(...allMessages);
+      //change detector
     })
     console.log(this.usDate(new Date()))
   }
@@ -104,4 +107,21 @@ export class ChatComponent implements OnInit {
     socket.emit('create', await this.storage.getItem('session'))
   }
 
+  redMsg() {
+    socket.emit('mark-as-red', this.checkNewMsg() )
+    console.log(this.checkNewMsg())
+
+  }
+
+  checkNewMsg() {
+    const unRedMsg = [];
+    this.chatMessages.map((msg: any)=>{
+      if(!msg.isRed) unRedMsg.push(msg._id);
+    })
+    return unRedMsg;
+  }
+
 }
+
+
+//чому в нас 2 старих а не нові повідомлення

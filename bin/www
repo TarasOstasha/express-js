@@ -9,6 +9,7 @@ var http = require('http');
 var https = require('https');
 var fs = require('fs');
 
+const socket = require('../socket/socket');
 /**
  * Get port from environment and store in Express.
  */
@@ -33,14 +34,7 @@ https.createServer(options ,app).listen(443);
 
 var server = http.createServer(app);
 
-/**
- * Create socket server.
- */
-const io  = require('socket.io').listen(server);
-//var socket = io('http://localhost:4200', {transports: ['websocket', 'polling', 'flashsocket']});
 
-//io.set('origins', 'http://localhost:4200');
-io.on('connection', require('../socket/socket'));
 
 /**
  * Listen on provided port, on all network interfaces.

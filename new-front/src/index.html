@@ -23,7 +23,7 @@
 
 <body>
 <script>
-  const socket = io.connect('http://localhost:80');
+  const socket = io.connect('http://localhost:3001');
   socket.on('news', (data)=>{
     console.log(data);
   })  

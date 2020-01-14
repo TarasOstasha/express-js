@@ -14,7 +14,7 @@
               </div>
               <div class="user_info">
                 <span>Chat with Admin</span>
-                <p [class]=" ( chatMessages.length > 0 ) ? 'animated bounce' : '' ">{{ chatMessages.length }} Messages</p>
+                <p [class]=" ( chatMessages.length > 0 ) ? 'animated bounce' : '' ">{{ checkNewMsg().length }} Messages</p>
               </div>
               <div class="video_cam">
                 <span><i (click)="collapse()" class="fa fa-window-minimize"></i></span>
@@ -61,7 +61,7 @@
               <div class="input-group-append">
                 <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
               </div>
-                  <textarea (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                  <textarea (focus)="redMsg()" (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
                   <div class="input-group-append">
                     <button (click)="sendMsg();" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
                   </div>

@@ -47,6 +47,7 @@ export class ManagerPageComponent implements OnInit {
     setTimeout(() => { }, 500) // fixed showing chat messages on the page
     socket.on('message-finish', (new_message) => {
       console.log(new_message);
+      this.cdr.detectChanges(); // force rebinding
       this.chatMessages.push(new_message);
       console.log(this.chatMessages)
     })
@@ -54,7 +55,7 @@ export class ManagerPageComponent implements OnInit {
       //this.chatMessages = [];
       //this.chatMessages.push(...allMessages);
       this.chatMessages = allMessages;
-      this.cdr.detectChanges();
+      this.cdr.detectChanges(); // force rebinding
       this.scrollToBottom();
       console.log('all messages - ', allMessages)
     })

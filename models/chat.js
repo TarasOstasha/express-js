@@ -7,7 +7,8 @@ let Chat = mongoose.model('chat', {
     session: String,
     date: String,
     role: String,
-    img: String
+    img: String,
+    isRed: Boolean
 })
 
 module.exports = Chat;
