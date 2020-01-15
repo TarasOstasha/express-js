@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
     })
     new_message.save();
     socket.emit('message-finish', new_message);
+    socket.to(msg.session).emit('message-finish', new_message)
   })
 
 
@@ -61,10 +62,11 @@ io.on('connection', (socket) => {
     socket.emit('refresh-session-list');
   })
 
-  socket.on('mark-as-red', async (msgIdList)=>{
+  socket.on('mark-as-red', async (msgIdList, session)=>{
+    console.log('1', session)
     const promises = msgIdList.map( async (_id)=> await Chat.findByIdAndUpdate({ _id }, { isRed: true }) );
     await Promise.all(promises);
-    socket.emit('reload-msg-list');
+    socket.emit('all-messages', await Chat.find({ session: session }));
   })
 
 

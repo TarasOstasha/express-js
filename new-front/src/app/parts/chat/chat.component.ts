@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 
 declare const socket;
@@ -28,7 +28,7 @@ export class ChatComponent implements OnInit {
   currentMsg: String;
   oldMsgLength: Number;
 
-  constructor( private storage: StorageService ) { }
+  constructor( private storage: StorageService, private cdr: ChangeDetectorRef ) { }
   collapsed: boolean = true;
 
 
@@ -36,15 +36,20 @@ export class ChatComponent implements OnInit {
     this.goToRoom();
     this.scrollToBottom();
     this.getAllMessages();
+
     socket.on('reload-msg-list', this.getAllMessages());
+
     socket.on('message-finish', (new_message)=>{
       console.log(new_message);
+      this.cdr.detectChanges(); // force rebinding
       this.chatMessages.push( new_message );
       console.log(this.chatMessages)
     })
     socket.on('all-messages', (allMessages)=>{
-      this.chatMessages.push(...allMessages);
-      //change detector
+      this.chatMessages = allMessages;
+      this.cdr.detectChanges(); // force rebinding
+      //this.chatMessages.push(...allMessages);
+      console.log('allMessages chat - ', allMessages)
     })
     console.log(this.usDate(new Date()))
   }
@@ -89,6 +94,7 @@ export class ChatComponent implements OnInit {
   async getAllMessages() {
     if(!await this.storage.getItem('session')) return 
     socket.emit('get-all-messages', await this.storage.getItem('session'))
+    //socket.emit('get-all-messages', fingerPrint)
   }
 
   // scroll to bottom chat
@@ -107,17 +113,21 @@ export class ChatComponent implements OnInit {
     socket.emit('create', await this.storage.getItem('session'))
   }
 
-  redMsg() {
-    socket.emit('mark-as-red', this.checkNewMsg() )
+  async redMsg() {
+    socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session') )
     console.log(this.checkNewMsg())
 
   }
 
   checkNewMsg() {
     const unRedMsg = [];
+    console.log('1 - ', this.chatMessages)
     this.chatMessages.map((msg: any)=>{
       if(!msg.isRed) unRedMsg.push(msg._id);
+       console.log('2 - ', msg.isRed)
+
     })
+    console.log('3 - ', unRedMsg);
     return unRedMsg;
   }
 

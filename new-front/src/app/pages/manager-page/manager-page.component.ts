@@ -45,6 +45,7 @@ export class ManagerPageComponent implements OnInit {
   ngOnInit() {
     this.getAllSession();
     setTimeout(() => { }, 500) // fixed showing chat messages on the page
+    
     socket.on('message-finish', (new_message) => {
       console.log(new_message);
       this.cdr.detectChanges(); // force rebinding
