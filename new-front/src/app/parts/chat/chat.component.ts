@@ -11,26 +11,26 @@ export class ChatComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   chatMessages = [
-    {
-      img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
-      text: 'Hi, how are you samim?',
-      date: '8:40 AM, Today',
-      role: 'client',
-    },
-    {
-      img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
-      text: 'Hi, how are you samim?',
-      date: '8:40 AM, Today',
-      role: 'manager',
-    }
+    // {
+    //   img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
+    //   text: 'Hi, how are you samim?',
+    //   date: '8:40 AM, Today',
+    //   role: 'client',
+    // },
+    // {
+    //   img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
+    //   text: 'Hi, how are you samim?',
+    //   date: '8:40 AM, Today',
+    //   role: 'manager',
+    // }
 
   ]
   currentMsg: String;
   oldMsgLength: Number;
 
-  constructor( private storage: StorageService, private cdr: ChangeDetectorRef ) { }
+  constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { }
   collapsed: boolean = true;
-
+  flagName: boolean = false;
 
   ngOnInit() {
     this.goToRoom();
@@ -39,13 +39,13 @@ export class ChatComponent implements OnInit {
 
     socket.on('reload-msg-list', this.getAllMessages());
 
-    socket.on('message-finish', (new_message)=>{
+    socket.on('message-finish', (new_message) => {
       console.log(new_message);
       this.cdr.detectChanges(); // force rebinding
-      this.chatMessages.push( new_message );
+      this.chatMessages.push(new_message);
       console.log(this.chatMessages)
     })
-    socket.on('all-messages', (allMessages)=>{
+    socket.on('all-messages', (allMessages) => {
       this.chatMessages = allMessages;
       this.cdr.detectChanges(); // force rebinding
       //this.chatMessages.push(...allMessages);
@@ -56,7 +56,7 @@ export class ChatComponent implements OnInit {
 
 
   usDate(date) {
-    if(typeof date == 'string') { date = new Date(date) }
+    if (typeof date == 'string') { date = new Date(date) }
 
     var monthNames = [
       "January", "February", "March",
@@ -73,12 +73,12 @@ export class ChatComponent implements OnInit {
 
     //return day + ' ' + monthNames[monthIndex] + ' ' + year;
 
-    return hour + ':'  + min + ' | ' + day + ' ' + monthNames[monthIndex] + ' ' + year;
+    return hour + ':' + min + ' | ' + day + ' ' + monthNames[monthIndex] + ' ' + year;
 
   }
 
   sendMsgEnter(event) {
-    if(event.keyCode == 13){ this.sendMsg() }
+    if (event.keyCode == 13) { this.sendMsg() }
   }
 
   async sendMsg() {
@@ -92,7 +92,7 @@ export class ChatComponent implements OnInit {
   }
 
   async getAllMessages() {
-    if(!await this.storage.getItem('session')) return 
+    if (!await this.storage.getItem('session')) return
     socket.emit('get-all-messages', await this.storage.getItem('session'))
     //socket.emit('get-all-messages', fingerPrint)
   }
@@ -100,9 +100,9 @@ export class ChatComponent implements OnInit {
   // scroll to bottom chat
   scrollToBottom(): void {
     try {
-        console.log(this.myScrollContainer.nativeElement.scrollTop, this.myScrollContainer.nativeElement.scrollHeight)
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }                 
+      console.log(this.myScrollContainer.nativeElement.scrollTop, this.myScrollContainer.nativeElement.scrollHeight)
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
   collapse() {
@@ -113,25 +113,47 @@ export class ChatComponent implements OnInit {
     socket.emit('create', await this.storage.getItem('session'))
   }
 
-  async redMsg() {
-    socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session') )
+  async readMsg() {
+    socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session'))
     console.log(this.checkNewMsg())
 
   }
 
   checkNewMsg() {
     const unRedMsg = [];
-    console.log('1 - ', this.chatMessages)
-    this.chatMessages.map((msg: any)=>{
-      if(!msg.isRed) unRedMsg.push(msg._id);
-       console.log('2 - ', msg.isRed)
+    // console.log('1 - ', this.chatMessages)
+    this.chatMessages.map((msg: any) => {
+      if (!msg.isRead) unRedMsg.push(msg._id);
+      // console.log('2 - ', msg.isRed)
 
     })
-    console.log('3 - ', unRedMsg);
+    // console.log('3 - ', unRedMsg);
     return unRedMsg;
+  }
+
+
+
+  async togglePreview(event) {
+    const userName = event.target.value;
+    if (event.keyCode == 13) {
+      const message = {
+        userName: userName,
+        msg: 'Client Name: ' + userName,
+        session: await this.storage.getItem('session')
+      }
+      //this.flagName = !this.flagName;
+      socket.emit('first-client-msg', message);
+    }
+  }
+
+  async clearMsg() {
+    socket.emit('clear-messages', await this.storage.getItem('session'))
   }
 
 }
 
 
-//чому в нас 2 старих а не нові повідомлення
+//move data from input to backend and DB
+//put name into html another component(manager)
+//if name already used -> hide block name initialization
+//stop scroll 

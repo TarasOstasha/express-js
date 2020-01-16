@@ -22,12 +22,14 @@
                   <!-- change img  -->
                   <!-- <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img"> -->
                   <img [src]=" 'assets/img/chat/' + char(user.fingerPrint) + '.jpg' " class="rounded-circle user_img">
+                  
                   <span [class]=" (user.online) ? 'online_icon' : 'online_ico offline' " ></span>
                   <span class="offline"></span>
                 </div>
                 <div class="user_info">
-                  <span>{{ user.name }}</span>
-                  <p>{{ user.name }} is online</p>
+                  
+                  <span>{{ user.userName }}</span>
+                  <p>{{ user.userName }} is online</p>
                 </div>
                 <button (click)="delMessage(user)" type="button" class="btn btn-danger">Remove</button>
               </div>
@@ -49,7 +51,7 @@
             </div>
             <div class="user_info">
               <span>Chat with Admin</span>
-              <p [class]=" ( chatMessages.length > 0 ) ? 'animated bounce' : '' ">{{ chatMessages.length }} Messages</p>
+              <p [class]=" ( chatMessages.length > 0 ) ? 'animated bounce' : '' ">{{ checkNewMsg().length }} Messages</p>
             </div>
             <div class="video_cam">
               <span><i class="fa fa-window-minimize"></i></span>
@@ -73,7 +75,7 @@
             [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' "
             *ngFor="let msg of chatMessages">
             <!-- client message -->
-            <div class="d-flex" *ngIf="msg.role == 'client' ">
+            <div class="d-flex" *ngIf="msg.role == 'client' " [style.background]="(msg.isReadClient) ? '' : 'grey' ">
               <div class="img_cont_msg">
                 <img [src]="msg.img" class="rounded-circle user_img_msg">
               </div>
@@ -83,9 +85,9 @@
               </div>
             </div>
             <!-- manager message -->
-            <div class="d-flex" *ngIf="msg.role == 'manager'">
+            <div class="d-flex" *ngIf="msg.role == 'manager'" >
               <div class="msg_cotainer_send">
-                {{ msg.text }}
+                {{ msg.text }} 
                 <span class="msg_time_send">{{ usDate(msg.date) }}</span>
               </div>
               <div class="img_cont_msg">
@@ -100,7 +102,7 @@
             <div class="input-group-append">
               <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
             </div>
-            <textarea (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg"
+            <textarea  (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg"
               placeholder="Type your message..."></textarea>
             <div class="input-group-append">
               <button (click)="sendMsg();" class="input-group-text send_btn"><i

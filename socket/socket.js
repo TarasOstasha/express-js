@@ -16,19 +16,13 @@ io.on('connection', (socket) => {
   socket.on('create', function (room) {
     socket.join(room);
   });
+  socket.on('first-client-msg', async (msg)=>{
+    createClientMsg(msg);
+    console.log('1', msg)
+    await Session.findOneAndUpdate({ fingerPrint: msg.session }, { userName: msg.userName });
+  })
   socket.on('client-msg', (msg) => {
-    console.log('message from client', msg);
-    const new_message = new Chat({
-      text: msg.msg,
-      session: msg.session,
-      date: new Date(),
-      role: 'client',
-      img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg'
-    })
-    new_message.save();
-    socket.emit('message-finish', new_message);
-    socket.to(msg.session).emit('message-finish', new_message)
-    console.log('new_message', msg)
+    createClientMsg(msg);
   })
 
   socket.on('manager-msg', (msg) => {
@@ -38,7 +32,8 @@ io.on('connection', (socket) => {
       session: msg.session,
       date: new Date(),
       role: 'manager',
-      img: 'https://i.pinimg.com/originals/ac/b9/90/acb990190ca1ddbb9b20db303375bb58.jpg'
+      img: 'https://i.pinimg.com/originals/ac/b9/90/acb990190ca1ddbb9b20db303375bb58.jpg',
+      isReadManager: true
     })
     new_message.save();
     socket.emit('message-finish', new_message);
@@ -64,11 +59,33 @@ io.on('connection', (socket) => {
 
   socket.on('mark-as-red', async (msgIdList, session)=>{
     console.log('1', session)
-    const promises = msgIdList.map( async (_id)=> await Chat.findByIdAndUpdate({ _id }, { isRed: true }) );
+    const promises = msgIdList.map( async (_id)=> await Chat.findByIdAndUpdate({ _id }, { isRead: true }) );
     await Promise.all(promises);
     socket.emit('all-messages', await Chat.find({ session: session }));
   })
 
+  socket.on('clear-messages', async (session)=>{
+    console.log('1234')
+    await Chat.deleteMany({ session })
+    socket.emit('all-messages', await Chat.find({ session: session }));
+  })
+
+  function createClientMsg(msg) {
+    console.log('message from client', msg);
+    const new_message = new Chat({
+      userName: msg.userName,
+      text: msg.msg,
+      session: msg.session,
+      date: new Date(),
+      role: 'client',
+      img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
+      isReadClient: true
+    })
+    new_message.save();
+    socket.emit('message-finish', new_message);
+    socket.to(msg.session).emit('message-finish', new_message)
+    console.log('new_message', new_message)
+  }
 
 });
 

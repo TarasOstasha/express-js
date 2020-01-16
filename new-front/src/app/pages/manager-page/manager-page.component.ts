@@ -13,18 +13,18 @@ export class ManagerPageComponent implements OnInit {
 
 
   chatMessages = [
-    {
-      img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
-      text: 'Hi, how are you samim?',
-      date: '8:40 AM, Today',
-      role: 'client',
-    },
-    {
-      img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
-      text: 'Hi, how are you samim?',
-      date: '8:40 AM, Today',
-      role: 'manager',
-    }
+    // {
+    //   img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
+    //   text: 'Hi, how are you samim?',
+    //   date: '8:40 AM, Today',
+    //   role: 'client',
+    // },
+    // {
+    //   img: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
+    //   text: 'Hi, how are you samim?',
+    //   date: '8:40 AM, Today',
+    //   role: 'manager',
+    // }
 
   ]
   currentMsg: String;
@@ -45,7 +45,7 @@ export class ManagerPageComponent implements OnInit {
   ngOnInit() {
     this.getAllSession();
     setTimeout(() => { }, 500) // fixed showing chat messages on the page
-    
+
     socket.on('message-finish', (new_message) => {
       console.log(new_message);
       this.cdr.detectChanges(); // force rebinding
@@ -53,8 +53,6 @@ export class ManagerPageComponent implements OnInit {
       console.log(this.chatMessages)
     })
     socket.on('all-messages', (allMessages) => {
-      //this.chatMessages = [];
-      //this.chatMessages.push(...allMessages);
       this.chatMessages = allMessages;
       this.cdr.detectChanges(); // force rebinding
       this.scrollToBottom();
@@ -76,6 +74,7 @@ export class ManagerPageComponent implements OnInit {
     })
     console.log(this.usDate(new Date()))
   }
+
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
@@ -149,5 +148,19 @@ export class ManagerPageComponent implements OnInit {
     socket.emit('remove-session', user.fingerPrint);
   }
 
+  // async readMsg() {
+  //   socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session') )
+  //   console.log(this.checkNewMsg())
+
+  // }
+
+  checkNewMsg() {
+    const unRedMsg = [];
+    this.chatMessages.map((msg: any)=>{
+      if(!msg.isRead) unRedMsg.push(msg._id);
+
+    })
+    return unRedMsg;
+  }
 
 }
