@@ -76,6 +76,12 @@ io.on('connection', (socket) => {
     socket.emit('all-messages', await Chat.find({ session }));
   })
 
+  socket.on('typing', (session, role)=>{
+    console.log('typing', session, role)
+    socket.to(session).emit('typing-from-back', role );
+    //socket.emit('typing-from-back', role );
+  })
+
   function createClientMsg(msg) {
     console.log('message from client', msg);
     const new_message = new Chat({

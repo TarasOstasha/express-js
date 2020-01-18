@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit {
   constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { }
   collapsed: boolean = true;
   flagName: boolean = false;
+  oponentTyping: boolean = false;
 
   ngOnInit() {
     this.goToRoom();
@@ -52,6 +53,13 @@ export class ChatComponent implements OnInit {
       console.log('allMessages chat - ', allMessages)
     })
     console.log(this.usDate(new Date()))
+
+    socket.on('typing-from-back', (role)=>{
+      console.log('typing from back')
+      this.oponentTyping = true;
+      setTimeout(()=> this.oponentTyping = false, 1000 );
+      this.cdr.detectChanges(); // force rebinding
+    })
   }
 
 
@@ -77,8 +85,10 @@ export class ChatComponent implements OnInit {
 
   }
 
-  sendMsgEnter(event) {
+  async typing(event) {
     if (event.keyCode == 13) { this.sendMsg() }
+    else socket.emit('typing', await this.storage.getItem('session'), 'client');
+    
   }
 
   async sendMsg() {
@@ -149,6 +159,10 @@ export class ChatComponent implements OnInit {
   async clearMsg() {
     socket.emit('clear-messages', await this.storage.getItem('session'))
   }
+
+  // async session() {
+  //   return await this.storage.getItem('session');  // in progress
+  // }
 
 }
 

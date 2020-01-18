@@ -62,6 +62,9 @@
           </div>
         </div>
       </div>
+      <div *ngIf="oponentTyping" class="msg-body-bottom">
+        <img src="assets/img/chat/typing.gif">
+      </div>
     </div>
     <!-- card-body-footer -->
     <div *ngIf="!collapsed" class="card-footer">
@@ -69,7 +72,7 @@
         <div class="input-group-append">
           <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
         </div>
-        <textarea (focus)="readMsg()" (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name=""
+        <textarea (focus)="readMsg()" (keydown)="typing($event)" [(ngModel)]="currentMsg" name=""
           class="form-control type_msg" placeholder="Type your message..."></textarea>
         <div class="input-group-append">
           <button (click)="sendMsg();" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
