@@ -114,7 +114,7 @@ export class ChatComponent implements OnInit {
   }
 
   async readMsg() {
-    socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session'))
+    socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session'), 'client')
     console.log(this.checkNewMsg())
 
   }

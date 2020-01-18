@@ -42,7 +42,7 @@
       <div [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' "
         *ngFor="let msg of chatMessages">
         <!-- client message -->
-        <div class="d-flex" *ngIf="msg.role == 'client' " >
+        <div class="d-flex" *ngIf="msg.role == 'client' " [style.background-color]="(msg.isReadManager) ? '' : 'grey' ">
           <div class="img_cont_msg">
             <img [src]="msg.img" class="rounded-circle user_img_msg">
           </div>
@@ -52,9 +52,9 @@
           </div>
         </div>
         <!-- manager message -->
-        <div class="d-flex" *ngIf="msg.role == 'manager'" [style.background]="(msg.isReadManager) ? '' : 'grey' ">
+        <div class="d-flex" *ngIf="msg.role == 'manager'">
           <div class="msg_cotainer_send">
-            {{ msg.text }}
+              {{ msg.text }} 
             <span class="msg_time_send">{{ usDate(msg.date) }}</span>
           </div>
           <div class="img_cont_msg">
@@ -74,7 +74,7 @@
         <div class="input-group-append">
           <button (click)="sendMsg();" class="input-group-text send_btn"><i class="fa fa-location-arrow"></i></button>
         </div>
-        <button (click)="redMsg()">READ</button>
+        <button (click)="readMsg()">READ</button>
         <button (click)="clearMsg()">Clear MSG</button>
 
       </div>

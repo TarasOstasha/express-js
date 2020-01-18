@@ -75,17 +75,18 @@
             [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' "
             *ngFor="let msg of chatMessages">
             <!-- client message -->
-            <div class="d-flex" *ngIf="msg.role == 'client' " [style.background]="(msg.isReadClient) ? '' : 'grey' ">
+            <div class="d-flex" *ngIf="msg.role == 'client' " >
               <div class="img_cont_msg">
                 <img [src]="msg.img" class="rounded-circle user_img_msg">
               </div>
               <div class="msg_cotainer">
+                  <!-- isReadClient - {{ isReadClient }} | -->
                 {{ msg.text }}
                 <span class="msg_time">{{ usDate(msg.date) }}</span>
               </div>
             </div>
             <!-- manager message -->
-            <div class="d-flex" *ngIf="msg.role == 'manager'" >
+            <div class="d-flex" *ngIf="msg.role == 'manager'" [style.background]="(msg.isReadClient) ? '' : 'grey' ">
               <div class="msg_cotainer_send">
                 {{ msg.text }} 
                 <span class="msg_time_send">{{ usDate(msg.date) }}</span>
@@ -102,7 +103,7 @@
             <div class="input-group-append">
               <span class="input-group-text attach_btn"><i class="fa fa-paperclip"></i></span>
             </div>
-            <textarea  (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg"
+            <textarea (focus)="readMsg()"  (keydown)="sendMsgEnter($event)" [(ngModel)]="currentMsg" name="" class="form-control type_msg"
               placeholder="Type your message..."></textarea>
             <div class="input-group-append">
               <button (click)="sendMsg();" class="input-group-text send_btn"><i

@@ -10,14 +10,10 @@
     </div>
     <div class="col-md-9">
       <h2 class="h2Title">New Collection</h2>
-
       <div class="row">
-        
-            <app-card *ngFor="let card of state.products" [state]="card" [userId]="state.header.user._id"
+        <app-card *ngFor="let card of state.products" [state]="card" [userId]="state.header.user._id"
         (onChanged)="cardHandler($event)" class="col-xs-12 col-sm-6 col-md-4 card-wrapper"></app-card>
-        
       </div>
-      
       <app-product-slider [userId]="state.header.user._id" [products]="state.products"></app-product-slider>
     </div>
   </div>

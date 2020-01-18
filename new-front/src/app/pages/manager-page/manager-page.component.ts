@@ -148,11 +148,11 @@ export class ManagerPageComponent implements OnInit {
     socket.emit('remove-session', user.fingerPrint);
   }
 
-  // async readMsg() {
-  //   socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session') )
-  //   console.log(this.checkNewMsg())
+  async readMsg() {
+    socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session'), 'manager')
+    console.log(this.checkNewMsg())
 
-  // }
+  }
 
   checkNewMsg() {
     const unRedMsg = [];

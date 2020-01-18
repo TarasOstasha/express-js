@@ -57,17 +57,23 @@ io.on('connection', (socket) => {
     socket.emit('refresh-session-list');
   })
 
-  socket.on('mark-as-red', async (msgIdList, session)=>{
+  socket.on('mark-as-red', async (msgIdList, session, role)=>{
     console.log('1', session)
-    const promises = msgIdList.map( async (_id)=> await Chat.findByIdAndUpdate({ _id }, { isRead: true }) );
+
+    const promises = msgIdList.map( async (_id)=> await Chat.findByIdAndUpdate(
+      { _id }, 
+      (role == 'client') ? { isReadClient: true } : (role == 'manager') ? { isReadManager: true } : {} 
+    ) );
     await Promise.all(promises);
-    socket.emit('all-messages', await Chat.find({ session: session }));
+    //socket.emit('all-messages', await Chat.find({ session: session }));
+    socket.to(session).emit('all-messages', await Chat.find({ session }) );
+
   })
 
   socket.on('clear-messages', async (session)=>{
     console.log('1234')
     await Chat.deleteMany({ session })
-    socket.emit('all-messages', await Chat.find({ session: session }));
+    socket.emit('all-messages', await Chat.find({ session }));
   })
 
   function createClientMsg(msg) {
