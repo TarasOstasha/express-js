@@ -141,8 +141,6 @@ export class ChatComponent implements OnInit {
     return unRedMsg;
   }
 
-
-
   async togglePreview(event) {
     const userName = event.target.value;
     if (event.keyCode == 13) {
@@ -166,8 +164,3 @@ export class ChatComponent implements OnInit {
 
 }
 
-
-//move data from input to backend and DB
-//put name into html another component(manager)
-//if name already used -> hide block name initialization
-//stop scroll 

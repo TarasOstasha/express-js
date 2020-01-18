@@ -37,6 +37,7 @@ export class ManagerPageComponent implements OnInit {
     }
   ]
   currentSession: any = {}
+  oponentTyping: boolean = false;
 
 
   constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { }
@@ -72,6 +73,13 @@ export class ManagerPageComponent implements OnInit {
     socket.on('refresh-session-list', () => {
       this.getAllSession()
     })
+
+    socket.on('typing-from-back', (role)=>{
+      console.log('typing from back')
+      this.oponentTyping = true;
+      setTimeout(()=> this.oponentTyping = false, 1000 );
+      this.cdr.detectChanges(); // force rebinding
+    })
     console.log(this.usDate(new Date()))
   }
 
@@ -101,8 +109,9 @@ export class ManagerPageComponent implements OnInit {
 
   }
 
-  sendMsgEnter(event) {
+  async typing(event) {
     if (event.keyCode == 13) { this.sendMsg() }
+    else socket.emit('typing', await this.storage.getItem('session'), 'manager');
   }
 
   async sendMsg() {
