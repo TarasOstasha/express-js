@@ -719,7 +719,8 @@ router.post('/session', async (req, res) => {
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', async (req, res, next) => {
-  const html = await pfs.readFile('../new-front/dist/new-front/index.html');
+  console.log('333')
+  const html = await pfs.readFile('new-front/dist/new-front/index.html');
   res.end(html);
   // res.redirect('/index.html');
 });
