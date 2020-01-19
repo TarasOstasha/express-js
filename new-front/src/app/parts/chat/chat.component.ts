@@ -57,7 +57,11 @@ export class ChatComponent implements OnInit {
     socket.on('typing-from-back', (role)=>{
       console.log('typing from back')
       this.oponentTyping = true;
-      setTimeout(()=> this.oponentTyping = false, 1000 );
+      setTimeout(()=> { 
+        console.log('setTimeout', this.oponentTyping)
+        this.oponentTyping = false 
+        this.cdr.detectChanges(); // force rebinding
+      }, 1000)
       this.cdr.detectChanges(); // force rebinding
     })
   }
