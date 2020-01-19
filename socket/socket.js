@@ -108,6 +108,8 @@ module.exports = {};
 
 
 
+//error when you open in another pc
+//messages not uncount when you read msg
 
 
 

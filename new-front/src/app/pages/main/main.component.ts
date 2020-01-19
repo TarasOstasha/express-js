@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
    }
 
   async ngOnInit() {
-    setTimeout(()=> alert('Hi Guys, Thank you for visit us.\n Our web site is on develop \n If you have any question write us on tonyjoss1990@gmail.com'), 1000)
+    // setTimeout(()=> alert('Hi Guys, Thank you for visit us.\n Our web site is on develop \n If you have any question write us on tonyjoss1990@gmail.com'), 1000)
     this.state.header.basket.products = this.storage.getBasketFromStorage();
     const fromServer: any = await this.api.getProducts()
       state.products = fromServer.products;

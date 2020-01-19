@@ -717,11 +717,11 @@ router.post('/session', async (req, res) => {
 
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
-router.get('/*', cors(), (req, res) => {
-  res.redirect('/index.html');
+router.get('/*', async (req, res, next) => {
+  const html = await fs.readFile('../new-front/dist/new-front/index.html');
+  res.end(html);
+  // res.redirect('/index.html');
 });
-
-
 
 module.exports = router;
 

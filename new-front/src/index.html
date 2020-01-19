@@ -23,7 +23,9 @@
 
 <body>
 <script>
-  const socket = io.connect('http://localhost:3001');
+  if(location.hostname == 'localhost') var url = 'http://localhost'; //dev
+  else var url = ''; //production
+  const socket = io.connect(url + ':3001');
   socket.on('news', (data)=>{
     console.log(data);
   })  
