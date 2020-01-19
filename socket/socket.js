@@ -10,6 +10,7 @@ var io = require('socket.io')(serverIo);
 //var socket = io('http://localhost:4200', {transports: ['websocket', 'polling', 'flashsocket']});
 
 //io.set('origins', 'http://localhost:4200');
+io.origins("http://tonyjoss.com:3001")
 io.on('connection', (socket) => {
   console.log('socket connection');
   //socket.broadcast.emit('news', { 1 : 1 });
