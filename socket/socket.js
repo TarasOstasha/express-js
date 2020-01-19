@@ -11,7 +11,7 @@ var io = require('socket.io')(serverIo);
 
 //io.set('origins', 'http://localhost:4200');
 //io.origins("http://tonyjoss.com:3001")
-io.set("origins","*");
+io.set("origins","http://tonyjoss.com:3001");
 io.set('transports', [
   'websocket'
 , 'flashsocket'
@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
 
 });
 
-serverIo.listen(3001,{origins: '*:*'});
+serverIo.listen(3001);
 
 module.exports = {};
 
