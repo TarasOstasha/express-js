@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 var cors = require('cors');
 const fs = require('fs');
+const pfs = fs.promises;
 const myFs = require('../lib/fs');
 const myFilters = require('../lib/filters');
 const myRequest = require('../lib/req-func');
@@ -718,7 +719,7 @@ router.post('/session', async (req, res) => {
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', async (req, res, next) => {
-  const html = await fs.readFile('../new-front/dist/new-front/index.html');
+  const html = await pfs.readFile('../new-front/dist/new-front/index.html');
   res.end(html);
   // res.redirect('/index.html');
 });
