@@ -37,6 +37,7 @@ const appState = {
           paymentData: {}
         },
         searchResult: [],
+        
       },
       products: [],
       productPage: 1,

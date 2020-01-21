@@ -38,53 +38,66 @@ export class ManagerPageComponent implements OnInit {
   ]
   currentSession: any = {}
   oponentTyping: boolean = false;
-
+  volumeStatus: boolean = true;
 
   constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { }
+  public msgSound;
 
 
   ngOnInit() {
-    this.getAllSession();
-    setTimeout(() => { }, 500) // fixed showing chat messages on the page
-
-    socket.on('message-finish', (new_message) => {
-      console.log(new_message);
-      this.cdr.detectChanges(); // force rebinding
-      this.chatMessages.push(new_message);
-      console.log(this.chatMessages)
-    })
-    socket.on('all-messages', (allMessages) => {
-      this.chatMessages = allMessages;
-      this.cdr.detectChanges(); // force rebinding
-      this.scrollToBottom();
-      console.log('all messages - ', allMessages)
-    })
-
-    socket.on('all-session', (allSession) => {
-      console.log('allSession', allSession)
-      if (allSession.length > 0) this.currentSession = allSession[0]
-      else this.currentSession = {}
-      this.session = [];
-      this.session.push(...allSession);
-      this.getAllMessages(this.session[0].fingerPrint);
-
-    })
-
-    socket.on('refresh-session-list', () => {
-      this.getAllSession()
-    })
-
-    socket.on('typing-from-back', (role)=>{
-      console.log('typing from back')
-      this.oponentTyping = true;
-      setTimeout(()=> { 
-        console.log('setTimeout', this.oponentTyping)
-        this.oponentTyping = false 
+    try {
+      this.getAllSession();
+      setTimeout(() => { }, 500) // fixed showing chat messages on the page
+      // audio
+      this.msgSound = new Audio('../assets/audio/filling-your-inbox.mp3');
+      this.msgSound.load();
+      socket.on('message-finish', (new_message) => {
         this.cdr.detectChanges(); // force rebinding
-      }, 1000)
-      this.cdr.detectChanges(); // force rebinding
-    })
-    console.log(this.usDate(new Date()))
+        this.chatMessages.push(new_message);
+        console.log(this.chatMessages)
+        this.msgSound.play();
+        if (!this.volumeStatus) {
+          this.msgSound.pause();
+          this.msgSound.currentTime = 0;
+          console.log(this.volumeStatus)
+        }
+      })
+      socket.on('all-messages', (allMessages) => {
+        this.chatMessages = allMessages;
+        this.cdr.detectChanges(); // force rebinding
+        this.scrollToBottom();
+        console.log('all messages - ', allMessages)
+      })
+
+      socket.on('all-session', (allSession) => {
+        console.log('allSession', allSession)
+        if (allSession.length > 0) this.currentSession = allSession[0]
+        else this.currentSession = {}
+        this.session = [];
+        this.session.push(...allSession);
+        this.getAllMessages(this.session[0].fingerPrint);
+
+      })
+
+      socket.on('refresh-session-list', () => {
+        this.getAllSession()
+      })
+
+      socket.on('typing-from-back', (role) => {
+        console.log('typing from back')
+        this.oponentTyping = true;
+        setTimeout(() => {
+          console.log('setTimeout', this.oponentTyping)
+          this.oponentTyping = false
+          this.cdr.detectChanges(); // force rebinding
+        }, 1000)
+        this.cdr.detectChanges(); // force rebinding
+      })
+      console.log(this.usDate(new Date()))
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   ngAfterViewChecked() {
@@ -169,11 +182,15 @@ export class ManagerPageComponent implements OnInit {
 
   checkNewMsg() {
     const unRedMsg = [];
-    this.chatMessages.map((msg: any)=>{
-      if(!msg.isRead) unRedMsg.push(msg._id);
+    this.chatMessages.map((msg: any) => {
+      if (!msg.isRead) unRedMsg.push(msg._id);
 
     })
     return unRedMsg;
+  }
+
+  toogleVolume() {
+    this.volumeStatus = !this.volumeStatus;
   }
 
 }

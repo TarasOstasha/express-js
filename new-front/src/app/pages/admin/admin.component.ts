@@ -188,6 +188,7 @@ export class AdminComponent implements OnInit {
   clickPagination1(currentPage) {
     this.state.table.product.page = currentPage;
   }
+  
 }
 
 //read about getter and setter!!!

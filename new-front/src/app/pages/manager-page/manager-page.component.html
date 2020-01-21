@@ -57,7 +57,12 @@
               <span><i class="fa fa-window-minimize"></i></span>
             </div>
           </div>
-          <span id="action_menu_btn"><i class="fa fa-ellipsis-v"></i></span>
+          <span class="volume-icon" (click)="toogleVolume()">
+              <div>
+                  <i [ngClass]=" (volumeStatus) ? 'fa fa-bell' : 'fa fa-bell-slash' "></i>
+                  <!-- <i class="fa fa-bell"></i> -->
+              </div>
+            </span>
           <div class="action_menu">
             <ul>
               <li><i class="fa fa-user-circle"></i> View profile</li>

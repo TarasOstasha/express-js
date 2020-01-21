@@ -20,7 +20,12 @@
           <span><i (click)="collapse()" class="fa fa-window-minimize"></i></span>
         </div>
       </div>
-      <span id="action_menu_btn"><i class="fa fa-ellipsis-v"></i></span>
+      <span class="volume-icon" (click)="toogleVolume()">
+        <div>
+            <i [ngClass]=" (volumeStatus) ? 'fa fa-bell' : 'fa fa-bell-slash' "></i>
+            <!-- <i class="fa fa-bell"></i> -->
+        </div>
+      </span>
       <div class="action_menu">
         <ul>
           <li><i class="fa fa-user-circle"></i> View profile</li>
@@ -31,7 +36,8 @@
       </div>
     </div>
     <!-- card-body -->
-    <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight"
+    <!-- <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight" -->
+    <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe
       style="overflow: scroll; height: xyz;">
     <!-- card request name -->
       <div class="name-user" *ngIf="chatMessages.length == 0;">

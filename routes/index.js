@@ -314,7 +314,7 @@ router.post('/upload2', async (req, res) => {
     // var-s
     let productId = 'test';
     let load_type = req.body.load_type
-    let user_folder = './public/uploads/' //+ productId
+    let user_folder = './public/uploads' //+ productId
     let path = user_folder + '/' + req.body.name
     // Logs
     log(req.body)
