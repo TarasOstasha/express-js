@@ -95,7 +95,7 @@ export class NewProductsComponent implements OnInit {
     try {
       let imgs = [];
       for (let i = 0; i < this.files.length; i++) {
-        imgs.push('http://localhost:3000/uploads/' + this.files[i].name);
+        imgs.push('http://localhost/uploads/' + this.files[i].name);
       }
       const newProduct = {
         //img: this.state.currentNewProductImg,
@@ -161,7 +161,7 @@ export class NewProductsComponent implements OnInit {
     //log('file', file)
     //log('file size', file.size)
     //log('TIMES:::::: ', times)
-    this.state.currentNewProductImg = 'http://localhost:3000/uploads/' + file.name;
+    this.state.currentNewProductImg = 'http://localhost/uploads/' + file.name;
     //preview
     //const preview: any = document.querySelector('img');
     for (let i = 0; i < this.files.length; i++) {

@@ -1,3 +1,5 @@
+<app-header [state]="state.header" (onChanged)="headerHandler($event)"></app-header>
+
 <!-- https://bootsnipp.com/snippets/nNg98 source -->
 <div class="container-fluid h-100">
   <div class="row justify-content-center h-100">
@@ -124,3 +126,5 @@
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>

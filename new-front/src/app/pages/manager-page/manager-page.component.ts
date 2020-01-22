@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 import { Session } from 'protractor';
+import  state  from '../../app-state';
+import { ApiService } from '../../services/api.service';
 
 declare const socket;
 @Component({
@@ -39,13 +41,27 @@ export class ManagerPageComponent implements OnInit {
   currentSession: any = {}
   oponentTyping: boolean = false;
   volumeStatus: boolean = true;
+  //appState:any;
+  state:any;
+  allNotifications: any = {}; // all type of notifications in admin panel on the top level
+  chatMsqAmount: number; // all messages from customer
+  
 
-  constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { }
+
+  constructor(
+    private storage: StorageService, 
+    private cdr: ChangeDetectorRef,
+    private api: ApiService
+  ) { 
+    this.state = state;
+    //this.appState = state;
+  }
   public msgSound;
 
 
   ngOnInit() {
     try {
+      this.state.header.basket.products = this.storage.getBasketFromStorage(); //get all basket products
       this.getAllSession();
       setTimeout(() => { }, 500) // fixed showing chat messages on the page
       // audio
@@ -66,11 +82,11 @@ export class ManagerPageComponent implements OnInit {
         this.chatMessages = allMessages;
         this.cdr.detectChanges(); // force rebinding
         this.scrollToBottom();
-        console.log('all messages - ', allMessages)
+        //console.log('all messages - ', allMessages)
       })
 
       socket.on('all-session', (allSession) => {
-        console.log('allSession', allSession)
+        //console.log('allSession', allSession)
         if (allSession.length > 0) this.currentSession = allSession[0]
         else this.currentSession = {}
         this.session = [];
@@ -93,7 +109,7 @@ export class ManagerPageComponent implements OnInit {
         }, 1000)
         this.cdr.detectChanges(); // force rebinding
       })
-      console.log(this.usDate(new Date()))
+      //console.log(this.usDate(new Date()))
     } catch (error) {
       console.log(error)
     }
@@ -192,5 +208,7 @@ export class ManagerPageComponent implements OnInit {
   toogleVolume() {
     this.volumeStatus = !this.volumeStatus;
   }
+
+
 
 }

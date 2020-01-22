@@ -14,6 +14,7 @@ const ContactMessage = require('../models/contact-messages');
 const ContactMessageArchive = require('../models/contact-messages-archive');
 const Transaction = require('../models/transaction');
 const TransactionArchive = require('../models/transaction-archive');
+const Chat = require('../models/chat');
 const mailer = require('../controllers/mail/mailer');
 const bcrypt = require('bcrypt');
 const Session = require('../models/session');
@@ -485,10 +486,13 @@ router.get('/admin-notifications', cors(), async (req, res) => {
     const notificationAmount = await ContactMessage.count();
     const notificationAmountArchive = await ContactMessageArchive.count();
     const transactionAmount = await Transaction.count();
+    const unreadMsg = await Chat.find({ isReadManager: undefined });
+    const unreadMsgAmount = unreadMsg.length;
     res.json({
       notificationAmount,
       notificationAmountArchive,
-      transactionAmount
+      transactionAmount,
+      unreadMsgAmount
     });
   } catch (error) {
     console.log(error, 'something went wrong');
