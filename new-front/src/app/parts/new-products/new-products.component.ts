@@ -126,7 +126,20 @@ export class NewProductsComponent implements OnInit {
 
       }
       const fromServer: any = await this.api.addProduct(newProduct)
-      if (fromServer.ok) alert('new product has been created');
+      if (fromServer.ok) {
+        //alert('new product has been created');
+        swal.fire({
+          title: "New product has been created!",
+          text: "File successfully added",
+          icon: "success",
+        })
+        this.state.colorProducts = [];
+        this.state.sizes =
+        this.state.productName =
+        this.state.productPrice =
+        this.quill.container.firstChild.innerHTML =
+        this.breadCrumbs = '';
+      }
     } catch (error) {
       console.log(error);
     }
