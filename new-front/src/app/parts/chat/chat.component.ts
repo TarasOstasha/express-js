@@ -31,58 +31,76 @@ export class ChatComponent implements OnInit {
   volumeStatus: boolean = true;
   appState: any;
 
-  constructor(private storage: StorageService, private cdr: ChangeDetectorRef) { 
+  constructor(private storage: StorageService, private cdr: ChangeDetectorRef) {
     //this.appState = appState;
   }
   collapsed: boolean = true;
   flagName: boolean = false;
   oponentTyping: boolean = false;
   public msgSound;
+  workingTime = { hours: 0 }
 
   ngOnInit() {
-    this.goToRoom();
-    this.scrollToBottom();
-    this.getAllMessages();
-    // audio
-    this.msgSound = new Audio('../assets/audio/clearly.mp3');
-    this.msgSound.load();
+    try {
+      this.goToRoom();
+      this.scrollToBottom();
+      this.getAllMessages();
+      // audio
+      this.msgSound = new Audio('../assets/audio/clearly.mp3');
+      this.msgSound.load();
 
-    socket.on('reload-msg-list', this.getAllMessages());
+      socket.on('reload-msg-list', this.getAllMessages());
 
-    socket.on('message-finish', (new_message) => {
-      console.log(new_message);
-      this.cdr.detectChanges(); // force rebinding
-      this.chatMessages.push(new_message);
-      this.msgSound.play();
-      if(!this.volumeStatus) {
-        this.msgSound.pause();
-        this.msgSound.currentTime = 0;
-        console.log(this.volumeStatus)
-      }
-      //console.log(this.chatMessages)
-    })
-    socket.on('all-messages', (allMessages) => {
-      this.chatMessages = allMessages;
-      this.cdr.detectChanges(); // force rebinding
-      //this.chatMessages.push(...allMessages);
-      //console.log('allMessages chat - ', allMessages)
-    })
-    //console.log(this.usDate(new Date()))
-
-    socket.on('typing-from-back', (role) => {
-      console.log('typing from back')
-      this.oponentTyping = true;
-      setTimeout(() => {
-        console.log('setTimeout', this.oponentTyping)
-        this.oponentTyping = false
+      socket.on('message-finish', (new_message) => {
+        console.log(new_message);
+        this.chatMessages.push(new_message);
+        this.msgSound.play();
+        if (!this.volumeStatus) {
+          this.msgSound.pause();
+          this.msgSound.currentTime = 0;
+          console.log(this.volumeStatus)
+        }
         this.cdr.detectChanges(); // force rebinding
-      }, 1000)
-      this.cdr.detectChanges(); // force rebinding
-    })
+        //console.log(this.chatMessages)
+      })
+      socket.on('all-messages', (allMessages) => {
+        try {
+          this.chatMessages = allMessages;
+          this.cdr.detectChanges(); // force rebinding
+          //this.chatMessages.push(...allMessages);
+          //console.log('allMessages chat - ', allMessages)
+        } catch (error) {
+          console.log(error);
+
+        }
+
+      })
+      //console.log(this.usDate(new Date()))
+
+      socket.on('typing-from-back', (role) => {
+        console.log('typing from back')
+        this.oponentTyping = true;
+        setTimeout(() => {
+          console.log('setTimeout', this.oponentTyping)
+          this.oponentTyping = false
+          this.cdr.detectChanges(); // force rebinding
+        }, 1000)
+        this.cdr.detectChanges(); // force rebinding
+      })
+    } catch (error) {
+      console.log(error);
+    }
+
+    var date = new Date(); // get date
+    this.workingTime = { hours : date.getHours() }; // get current hour
+    console.log(this.isWorkingTime(), this.workingTime)
   }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
+  }
+  isWorkingTime() {
+    return this.workingTime.hours > 9 && this.workingTime.hours < 17
   }
 
 
@@ -147,6 +165,7 @@ export class ChatComponent implements OnInit {
 
   collapse() {
     this.collapsed = !this.collapsed
+    //this.workingTime();
   }
 
   async goToRoom() {
@@ -187,7 +206,7 @@ export class ChatComponent implements OnInit {
   async clearMsg() {
     socket.emit('clear-messages', await this.storage.getItem('session'))
   }
- 
+
   toogleVolume() {
     this.volumeStatus = !this.volumeStatus;
   }

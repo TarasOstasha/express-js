@@ -22,8 +22,8 @@
       </div>
       <span class="volume-icon" (click)="toogleVolume()">
         <div>
-            <i [ngClass]=" (volumeStatus) ? 'fa fa-bell' : 'fa fa-bell-slash' "></i>
-            <!-- <i class="fa fa-bell"></i> -->
+          <i [ngClass]=" (volumeStatus) ? 'fa fa-bell' : 'fa fa-bell-slash' "></i>
+          <!-- <i class="fa fa-bell"></i> -->
         </div>
       </span>
       <div class="action_menu">
@@ -37,18 +37,28 @@
     </div>
     <!-- card-body -->
     <!-- <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight" -->
-    <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe
-      style="overflow: scroll; height: xyz;">
-    <!-- card request name -->
-      <div class="name-user" *ngIf="chatMessages.length == 0;">
+    <div *ngIf="!collapsed" class="card-body msg_card_body" #scrollMe style="overflow: scroll; height: xyz;">
+
+      <!-- notification time out of work -->
+      <div *ngIf="!isWorkingTime()" class="out-of-work-notification">
+        <p>
           Hi, it's a pleasure to see you here <br>
-          Please, enter your Name <br>
-          <input (keydown)="togglePreview($event)" type="text" name="user-name">
-        </div>
+          Unfortunately, our agent is not available right now. <br>
+          Please, leave a message here ... 
+        </p>
+      </div>
+
+      <!-- card request name -->
+      <div class="name-user" *ngIf="chatMessages.length == 0 && isWorkingTime()">
+        Hi, it's a pleasure to see you here <br>
+        Please, enter your Name <br>
+        <input (keydown)="togglePreview($event)" type="text" name="user-name">
+      </div>
       <div [class]="(msg.role == 'client' ) ? 'd-flex justify-content-start mb-4' : 'd-flex justify-content-end mb-4' "
         *ngFor="let msg of chatMessages">
         <!-- client message -->
-        <div class="d-flex" *ngIf="msg.role == 'client' " [style.background-color]="(msg.isReadManager) ? '' : 'grey' ">
+        <div class="d-flex msg" *ngIf="msg.role == 'client' "
+          [style.background-color]="(msg.isReadManager) ? '' : 'rgba(211,211,211,.1)' ">
           <div class="img_cont_msg">
             <img [src]="msg.img" class="rounded-circle user_img_msg">
           </div>
@@ -60,7 +70,7 @@
         <!-- manager message -->
         <div class="d-flex" *ngIf="msg.role == 'manager'">
           <div class="msg_cotainer_send">
-              {{ msg.text }} 
+            {{ msg.text }}
             <span class="msg_time_send">{{ usDate(msg.date) }}</span>
           </div>
           <div class="img_cont_msg">

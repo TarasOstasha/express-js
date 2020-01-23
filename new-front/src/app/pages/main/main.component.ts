@@ -35,7 +35,6 @@ export class MainComponent implements OnInit {
 
     this.session.getUser()
       .then((dataFromLocalStorage: any) => {
-        state.header.isLogged = true;
         state.header.user.name = dataFromLocalStorage.user.firstName || dataFromLocalStorage.user.username;
       })
       .catch( this.errorHandler )

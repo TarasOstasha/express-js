@@ -68,15 +68,20 @@ export class ManagerPageComponent implements OnInit {
       this.msgSound = new Audio('../assets/audio/filling-your-inbox.mp3');
       this.msgSound.load();
       socket.on('message-finish', (new_message) => {
-        this.cdr.detectChanges(); // force rebinding
-        this.chatMessages.push(new_message);
-        console.log(this.chatMessages)
-        this.msgSound.play();
-        if (!this.volumeStatus) {
-          this.msgSound.pause();
-          this.msgSound.currentTime = 0;
-          console.log(this.volumeStatus)
+        try {
+          this.cdr.detectChanges(); // force rebinding
+          this.chatMessages.push(new_message);
+          console.log(this.chatMessages)
+          this.msgSound.play();
+          if (!this.volumeStatus) {
+            this.msgSound.pause();
+            this.msgSound.currentTime = 0;
+            //console.log(this.volumeStatus)
+          }
+        } catch (error) {
+          console.log(error)
         }
+
       })
       socket.on('all-messages', (allMessages) => {
         this.chatMessages = allMessages;
@@ -152,8 +157,8 @@ export class ManagerPageComponent implements OnInit {
       msg: this.currentMsg,
       session: this.currentSession.fingerPrint
     }
-    console.log();
     socket.emit('manager-msg', message);
+    console.log(message);
     this.currentMsg = ''
   }
 
@@ -183,7 +188,7 @@ export class ManagerPageComponent implements OnInit {
   chooseUser(user) {
     this.currentSession = user;
     this.getAllMessages(user.fingerPrint);
-    console.log(user.fingerPrint, ' - USER')
+    //console.log(user.fingerPrint, ' - USER')
   }
 
   delMessage(user) {
@@ -192,7 +197,7 @@ export class ManagerPageComponent implements OnInit {
 
   async readMsg() {
     socket.emit('mark-as-red', this.checkNewMsg(), await this.storage.getItem('session'), 'manager')
-    console.log(this.checkNewMsg())
+    //console.log(this.checkNewMsg())
 
   }
 

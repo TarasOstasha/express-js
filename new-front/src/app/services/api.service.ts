@@ -128,6 +128,10 @@ export class ApiService {
     return this.http.get(url + '/chat-client-msg', httpOptions).toPromise();
   }
 
+  getUserInfoIfLogged() {
+    return this.http.get(url + '/get-user-info-if-logged', httpOptions).toPromise();
+  }
+
   // getAll(model, currentPage, sizePage) {
   //   return this.http.get(`http://localhost:3000/all/${model}/${currentPage}?size=${sizePage}` , httpOptions).toPromise();
   // }

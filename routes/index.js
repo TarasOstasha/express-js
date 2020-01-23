@@ -720,10 +720,22 @@ router.post('/session', async (req, res) => {
   }
 })
 
+router.get('/get-user-info-if-logged', async(req, res)=>{
+  try {
+    const user = {
+      firstName: req.user.firstName
+    }
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+})
+
 
 //redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
 router.get('/*', async (req, res, next) => {
-  console.log('333')
+  console.log('726', req.user, new Date())
   const html = await pfs.readFile('new-front/dist/new-front/index.html');
   res.end(html);
   // res.redirect('/index.html');
