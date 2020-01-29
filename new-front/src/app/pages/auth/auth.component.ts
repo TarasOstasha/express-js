@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, Valid
 import { User } from '../../interfaces/user';
 import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
-
+import { Router } from '@angular/router';
+import appState from '../../app-state';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -27,11 +28,14 @@ export class AuthComponent implements OnInit {
     role: 'Guest',
     notes: null
   };
+  appState: any;
   constructor(
     private formBuilder: FormBuilder,
     private storage: StorageService,
-    private api: ApiService
+    private api: ApiService,
+    private router: Router
   ) {
+    this.appState = appState;
     const pwdValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
 
 
@@ -110,8 +114,12 @@ export class AuthComponent implements OnInit {
       this.userForm.reset()
       console.log('result', fromServer);
       if (fromServer.ok) {
-        this.state.header.isLogged = true;
-        this.state.header.user.name = fromServer.user.firstName;
+        // this.state.header.isLogged = true;
+        // this.state.header.user.name = fromServer.user.firstName;
+        this.appState.header.isLogged = true;
+        this.appState.header.user.name = fromServer.user.firstName;
+        this.router.navigateByUrl('/');
+        
       }
     } catch (error) {
       console.log(error)

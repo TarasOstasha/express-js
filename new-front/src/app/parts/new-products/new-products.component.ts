@@ -14,12 +14,20 @@ export class NewProductsComponent implements OnInit {
   @Input() state: any;
   @Input() breadCrumbs;
   @Input() categories;
+
+  // preview: any = {
+  //   reader: {
+  //     result: "assets/img/400x300.png"
+  //   }
+  // }
+  quill: any;
+
   constructor(
     private api: ApiService,
   ) { }
-  quill: any;
+ 
   ngOnInit() {
-
+   // console.log('preview', this.preview.reader.result)
     console.log('sizes in product creating', this.state.sizes)
     let toolBarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -122,8 +130,6 @@ export class NewProductsComponent implements OnInit {
         price: this.state.productPrice,
         description: this.quill.container.firstChild.innerHTML,
         breadCrumbs: this.breadCrumbs
-
-
       }
       const fromServer: any = await this.api.addProduct(newProduct)
       if (fromServer.ok) {
@@ -140,6 +146,13 @@ export class NewProductsComponent implements OnInit {
         this.quill.container.firstChild.innerHTML =
         this.breadCrumbs = '';
       }
+      this.state.previews = [];
+      this.state.previews[0] = {
+        reader:{
+          result: "assets/img/400x300.png"
+        }
+      }
+      
     } catch (error) {
       console.log(error);
     }
