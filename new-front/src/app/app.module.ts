@@ -47,6 +47,7 @@ import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.co
 import { ChatComponent } from './parts/chat/chat.component';
 import { ManagerPageComponent } from './pages/manager-page/manager-page.component';
 import { Card2Component } from './parts/card/card2/card2.component';
+import { MegaSearch2Component } from './parts/mega-search/mega-search2/mega-search2.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { Card2Component } from './parts/card/card2/card2.component';
     OrdersArchiveComponent,
     ChatComponent,
     ManagerPageComponent,
-    Card2Component
+    Card2Component,
+    MegaSearch2Component
     
   ],
   imports: [

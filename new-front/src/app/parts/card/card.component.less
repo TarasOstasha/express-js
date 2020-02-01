@@ -184,7 +184,9 @@ body {
 .ul-color {
 	//margin-left: 27px;
 	padding: 10px 27px;
-	display: inline-block;
+	display: flex;
+    align-items: center;
+    justify-content: flex-end;
 	li {
 		float: left;
 		list-style: none;
@@ -213,9 +215,13 @@ body {
 				height: 24px;
 				margin-left: -4px;
 				margin-top: -4px;
-				position: absolute;
+				//position: absolute;
 				width: 24px;
 			}
+		}
+		a:hover {
+			height: 18px;
+			width: 18px;
 		}
 	}
 }
