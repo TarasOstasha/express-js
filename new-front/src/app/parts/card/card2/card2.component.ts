@@ -14,6 +14,7 @@ export class Card2Component implements OnInit {
   @Input() state: any
   @Input() userId: string;
   @Input() index: number;
+  
   productCardClass: string = '';
   moveArrow: string = '';
 
@@ -21,18 +22,31 @@ export class Card2Component implements OnInit {
   carouselSlideWidth = 335;
   carouselWidth = 0;
   isAnimating = false;
+  carousel:any;
+  //t = [0,1,2,3,4] // use imgSlides !!!
+  hoverBlocked: boolean = false;
 
 
-  constructor() { }
-
-  ngOnInit() {
-    this.jqueryCardMethod()
-    const t = [0,1,2,3,4]
-    t.map((i)=>{
-      this.carouselInit(i);
-    })
+  constructor() {
   }
 
+  ngOnInit() {
+    this.carousel = `#carousel-${this.index} ul`;
+    this.jqueryCardMethod()
+    //const t = [0,1,2,3,4]
+    //this.t.map((i)=>{
+      this.carouselInit(this.index);
+    //})
+  }
+
+  imgSlides: any = [
+    { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png' },
+    { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png' },
+    { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png' },
+    { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png' },
+    { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png' },
+    { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png' }
+  ]
 
   buyProduct(event) {
     event.stopPropagation();
@@ -64,17 +78,27 @@ export class Card2Component implements OnInit {
 
   // Lift card and show stats on Mouseover
   hover() {
-    console.log('11111')
-    this.productCardClass = 'animate';
+    console.log('try hover')
+    //this.hoverBlocked = true;
+    //if(!this.hoverBlocked) {
+      console.log('hover')
+      this.productCardClass = 'animate';
+      this.moveArrow = 'visible';
+
+   // }
     //$('#product-card').addClass('animate');
     //$('div.carouselNext, div.carouselPrev').addClass('visible');
-    this.moveArrow = 'visible';
     //$('#product-card').removeClass('animate');			
     //$('div.carouselNext, div.carouselPrev').removeClass('visible');
   }
   unhover() {
+    this.flipBack()
+    //this.hoverBlocked = false;
+    console.log('unhover')
     this.productCardClass = '';
     this.moveArrow = '';
+    //продукт фронт 0 = блок
+    //продукт бек 0 = ноне
   }
 
   // Flip card to the back side
@@ -111,13 +135,14 @@ export class Card2Component implements OnInit {
           $(`${cx}, ${cy}`).addClass('s1');
           setTimeout(function () { $(`${cx}, ${cy}`).addClass('s2'); }, 100);
           setTimeout(function () { $(`${cx}, ${cy}`).addClass('s3'); }, 200);
-          $('div.carouselNext, div.carouselPrev').addClass('visible');
+          //$('div.carouselNext, div.carouselPrev').addClass('visible');
         }, 100);
       }, 100);
     }, 150);
   }
   // Flip card back to the front side
-  flipBack(index) {
+  flipBack() {
+    const index = this.index;
     const productCard = '#product-card-' + index;
     const productFront = '#product-front-' + index;
     const productBack = '#product-back-' + index;
@@ -151,33 +176,46 @@ export class Card2Component implements OnInit {
     }, 150);
   }
 
- 
+  newLeftSlide(direction) {
+    
+   // const carousel = `#carousel-${index} ul`;
+    var currentLeft = Math.abs(parseInt($(this.carousel).css("left")));
+    var newLeft = (direction == 'left') ? currentLeft - this.carouselSlideWidth : currentLeft + this.carouselSlideWidth
+    console.log(newLeft, currentLeft,this.carouselSlideWidth)
+    return newLeft;
+  }
+
+  //
+  
+  slidePointer = 0;
+  endSlider = this.imgSlides.length - 1; // останній елемент в масиві
+  startSlider = this.imgSlides[0]; // 1 елемент в масиві
+  //
+  
 
   // Load Previous Image
-  arrPrev(index) {
-    const carousel = `#carousel-${index} ul`;
-    var currentLeft = Math.abs(parseInt($(carousel).css("left")));
-    var newLeft = currentLeft - this.carouselSlideWidth;
-    console.log(currentLeft, newLeft)
-
+  arrPrev() {
+    this.slidePointer--;
+    console.log(this.newLeftSlide('left'));
+    
     //if (newLeft < 0 || this.isAnimating === true) { return; }
     console.log('next')
-    $(carousel).css({
-      'left': "-" + newLeft + "px",
+    $(this.carousel).css({
+      'left': "-" + this.newLeftSlide('left') + "px",
       "transition": "300ms ease-out"
     });
     this.isAnimating = true;
     setTimeout(function () { this.isAnimating = false; }, 300);
   }
+
+     
   // Load Next Image
-  arrNext(index) {
-    const carousel = `#carousel-${index} ul`;
-    var currentLeft = Math.abs(parseInt($(carousel).css("left")));
-    var newLeft = currentLeft + this.carouselSlideWidth;
+  arrNext() {
+    this.slidePointer++;
 
     //if (newLeft == this.carouselWidth || this.isAnimating === true) { return; }
-    $(carousel).css({
-      'left': "-" + newLeft + "px",
+    $(this.carousel).css({
+      'left': "-" + this.newLeftSlide('right') + "px",
       "transition": "300ms ease-out"
     });
     this.isAnimating = true;
@@ -188,8 +226,6 @@ export class Card2Component implements OnInit {
   carouselInit(index) {
     //var carousel = $('#carousel ul');
     const carousel = `#carousel-${index} ul`;
-
-  
 
     $(carousel + ' li').each(function () {
       this.carouselWidth += this.carouselSlideWidth;

@@ -52,19 +52,26 @@
               <div class="shadow"></div>
                 <div [id]=" 'carousel-' + index">
                     <ul>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png" alt="" /></li>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png" alt="" /></li>
+                        <li *ngFor="let slide of imgSlides;let cardSliderIndex = index">
+                          <img [src]="slide.img" alt="">
+                          {{cardSliderIndex}}
+                        </li>
+                        <!-- <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png" alt="" /></li>
                         <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png" alt="" /></li>
                         <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png" alt="" /></li>
                         <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png" alt="" /></li>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png" alt="" /></li>
+                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png" alt="" /></li> -->
                     </ul>
                     <div class="arrows-perspective">
-                        <div (click)="arrPrev(index)" class="carouselPrev" [class]=" 'carouselPrev ' + moveArrow">
+                        <div (click)="arrPrev(index)" [class]="(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' ">
+
+                        <!-- <div (click)="arrPrev(index)" [class]="(slidePointer > 0) ? '' : 'hide ' + 'carouselPrev ' + moveArrow"> -->
                             <div class="y"></div>
                           <div class="x"></div>
                         </div>
-                        <div (click)="arrNext(index)" class="carouselNext" [class]=" 'carouselNext ' + moveArrow">
+                        
+                        <!-- <div (click)="arrNext(index)" [class]=" (slidePointer < imgSlides.length-1) ? '' : 'hide ' + 'carouselNext ' + moveArrow"> -->
+                        <div (click)="arrNext(index)" [class]="(slidePointer < imgSlides.length-1) ? 'carouselNext ' + moveArrow : 'hideArrow' ">
                             <div class="y"></div>
                           <div class="x"></div>
                         </div>
@@ -76,4 +83,6 @@
                 </div>
             </div>	  
         </div>	
+        
     </div>	
+  

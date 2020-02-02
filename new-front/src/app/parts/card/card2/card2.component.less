@@ -484,11 +484,14 @@ div[id^="carousel"] li{
 }
 .carouselNext{
 	top:0;
-	right: -26px;
-	-webkit-transform: rotateY( -117deg );
-         -moz-transform: rotateY( -117deg );
-           -o-transform: rotateY( -117deg );
-              transform: rotateY( -117deg );
+	//right: -26px;
+	right: 0;
+	-webkit-transform: rotateY( 0deg );
+
+	// -webkit-transform: rotateY( -117deg );
+  //        -moz-transform: rotateY( -117deg );
+  //          -o-transform: rotateY( -117deg );
+  //             transform: rotateY( -117deg );
 			  transition: all 200ms ease-out; 			
 
 }
@@ -503,12 +506,13 @@ div[id^="carousel"] li{
 			  transition: all 200ms ease-out; 
 }
 .carouselPrev{		
-	left:-26px;
+	//left:-26px;
+	left: 0;
 	top:0;
-	-webkit-transform: rotateY( 117deg );
-         -moz-transform: rotateY( 117deg );
-           -o-transform: rotateY( 117deg );
-              transform: rotateY( 117deg );
+	//-webkit-transform: rotateY( 117deg );
+         //-moz-transform: rotateY( 117deg );
+           //-o-transform: rotateY( 117deg );
+              //transform: rotateY( 117deg );
 			  transition: all 200ms ease-out; 
 
 }
@@ -548,4 +552,8 @@ div[id^="carousel"] .carouselNext .y{
 	-ms-transform: rotate(135deg); 	
 	-webkit-transform: rotate(135deg); 
 	transform: rotate(135deg);		
+}
+
+.hideArrow {
+	display: none;
 }
