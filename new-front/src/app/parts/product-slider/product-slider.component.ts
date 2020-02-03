@@ -7,7 +7,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '
 })
 export class ProductSliderComponent implements OnInit {
   //@ViewChild('measure') mesuareWidth: ElementRef;
-
+  @Input() state: any
+  @Input() index: number;
   
   @Input() products
   @Input() userId

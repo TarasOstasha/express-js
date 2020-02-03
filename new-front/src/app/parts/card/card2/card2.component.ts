@@ -32,7 +32,6 @@ export class Card2Component implements OnInit {
 
   ngOnInit() {
     this.carousel = `#carousel-${this.index} ul`;
-    this.jqueryCardMethod()
     //const t = [0,1,2,3,4]
     //this.t.map((i)=>{
       this.carouselInit(this.index);
@@ -120,14 +119,16 @@ export class Card2Component implements OnInit {
       
       $(productCard + ' div.shadow').show().fadeTo(80, 1, function () {
         $(`${productFront}, ${productFront} div.shadow`).hide();
+        
       });
     }, 50);
 
     setTimeout(function () {
       this.productCardClass = 'flip190';
       //$('#product-card').removeClass('flip90').addClass('flip190');
-      $(productBack).show().find('div.shadow').show().fadeTo(90, 0);
+      $(productBack).show().find('div.shadow').show().fadeTo(90, 0); // this line is flip card to another side
       
+
       setTimeout(function () {
         $(productCard).removeClass('flip190').addClass('flip180').find('div.shadow').hide();
         setTimeout(function () {
@@ -233,37 +234,7 @@ export class Card2Component implements OnInit {
     //$(carousel).css('width', this.carouselWidth);
   }
 
-jqueryCardMethod() {
-  // Lift card and show stats on Mouseover
-  // 	$('#product-card').hover(function(){
-
-  // });	
-
-  // Flip card to the back side
-  //$('#view_details').click(function () { });
-
-  // Flip card back to the front side
-  //$('#flip-back').click(function () { });
-
-
-  /* ----  Image Gallery Carousel   ---- */
-
- 
-
-  // building the width of the carousel
-
-
-
-  // Load Next Image
-  //$('div.carouselNext').on('click', function () {});
-
-  // Load Previous Image
-  //$('div.carouselPrev').on('click', function () {});
-}
-
-
-
-
+  
 
 }
 

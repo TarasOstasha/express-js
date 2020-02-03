@@ -1,7 +1,10 @@
+<h2 class="h2-class">Most Popular</h2>
 <div class="arrow-slider">
   <div class="container-card" (document:mousemove)="onMouseMove($event)" (mousedown)="click('down', $event)"  (mouseup)="click('up', $event)">
     <div id="measure" class="measure-card" [style.left.px]="position"> 
-      <app-card *ngFor="let card of products;let i = index;" [state]="card" [userId]="userId" (onChanged)="cardHandler($event)"></app-card>
+      <!-- OLD VERSION OF PRODUCT SLIDER -->
+      <!-- <app-card *ngFor="let card of products;let i = index;" [state]="card" [userId]="userId" (onChanged)="cardHandler($event)"></app-card> -->
+      <app-card2 *ngFor="let card of products; let i = index" [index]="i" [state]="card" [userId]="userId" (onChanged)="cardHandler($event)"></app-card2>
     </div>
   </div>
   <div class="wrapper-btn">
