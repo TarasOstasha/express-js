@@ -558,3 +558,39 @@ div[id^="carousel"] .carouselNext .y{
 	display: none;
 }
 
+.product-view{	
+	position:absolute;
+	top:60px;
+	left:50%;
+	margin-left:-85px;	
+	border:2px solid #fff;
+	color:#fff;
+	font-size:19px;
+	text-align:center;
+	text-transform:uppercase;
+	font-weight:700;
+	padding:10px 0;
+	width:172px;	
+	opacity:0;
+	-webkit-transition: all 200ms ease-out; 
+       -moz-transition: all 200ms ease-out; 
+         -o-transition: all 200ms ease-out; 
+            transition: all 200ms ease-out; 
+}
+.product-view:hover{	
+	background:#fff;
+	//color:#48cfad;
+	color: #000000;
+	cursor:pointer;
+}
+div[id^="product-card"].animate .product-view {
+	opacity:1;
+	width:152px;
+	font-size:15px;
+	margin-left:-75px;
+	top:60px;
+	-webkit-transition: all 200ms ease-out; 
+       -moz-transition: all 200ms ease-out; 
+         -o-transition: all 200ms ease-out; 
+            transition: all 200ms ease-out; 		
+}

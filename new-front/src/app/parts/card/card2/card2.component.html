@@ -5,6 +5,7 @@
                 <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt.png" alt="" /> -->
                 <img class="product-img" [src]="state.imgs[this.state.img]" alt="img" />
                 <div class="image_overlay"></div>
+                <div class="product-view" routerLink="/product/{{state._id}}">product info</div>
                 <div (click)="detail(index)" id="view_details">View details</div>
                 <div class="stats">
                     <div class="stats-container">
@@ -52,15 +53,11 @@
               <div class="shadow"></div>
                 <div [id]=" 'carousel-' + index">
                     <ul>
-                        <li *ngFor="let slide of imgSlides;let cardSliderIndex = index">
-                          <img [src]="slide.img" alt="">
-                          {{cardSliderIndex}}
+                        <!-- <li *ngFor="let slide of imgSlides;let cardSliderIndex = index"> -->
+                          <!-- <img [src]="slide.img" alt=""> -->
+                        <li *ngFor="let slide of state.imgs;let cardSliderIndex = index">                        
+                          <img style="width:100%" [src]="slide" alt="">
                         </li>
-                        <!-- <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png" alt="" /></li>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png" alt="" /></li>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png" alt="" /></li>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png" alt="" /></li>
-                        <li><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large3.png" alt="" /></li> -->
                     </ul>
                     <div class="arrows-perspective">
                         <div (click)="arrPrev(index)" [class]="(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' ">

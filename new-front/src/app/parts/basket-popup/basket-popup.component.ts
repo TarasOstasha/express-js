@@ -277,10 +277,10 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   }
 //QUESTION REF=GARDING VALIDATION. I'V GOT SOME ERORROR
 
-  testProduct() {
-    console.log('!!!Products Items!', this.state.products, this.preparedProducts());
+  // testProduct() {
+  //   console.log('!!!Products Items!', this.state.products, this.preparedProducts());
 
-  }
+  // }
 
   //get value payment from payment form fields 
   get firstName() { return this.paymentForm.get('firstName') } // getter to firstName 
