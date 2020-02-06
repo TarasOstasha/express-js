@@ -28,7 +28,7 @@ export class Card2Component implements OnInit {
   
   unhoverCardPoint: boolean = true;
   hoverFlip: boolean = false;
-
+  hideFront: boolean = false;
 
   constructor() {
   }
@@ -100,10 +100,16 @@ export class Card2Component implements OnInit {
 
   flip(index) {
     this.hoverFlip = true;
+    setTimeout(()=>{
+      this.hideFront = true;
+    }, 150)
   }
 
   close() {
     this.hoverFlip = false;
+    setTimeout(()=>{
+      this.hideFront = false;
+    }, 150)
   }
 
   // Flip card to the back side

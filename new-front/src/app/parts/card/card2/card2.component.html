@@ -92,7 +92,7 @@
     <div [class]="(hoverFlip) ? 'flip-card-inner-hover flip-card-inner' : 'flip-card-inner' ">
 
       <!-- --- -->
-      <div class="card mb-3 flip-card-front">
+      <div class="card mb-3 flip-card-front" [style.display]="(hideFront) ? 'none' : 'block'  ">
         <h3 class="card-header"></h3>
 
         <div class="card-img-2">
