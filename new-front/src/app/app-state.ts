@@ -1,4 +1,5 @@
 const appState = {
+  hostName: (location.hostname == 'localhost') ? 'http://localhost/' : '/',
   //general
   products: [],
   breadCrumbs: [],

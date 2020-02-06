@@ -1,5 +1,5 @@
 import { OnInit, Component, EventEmitter, Input, Output } from '@angular/core';
-
+import  appState  from '../../../app-state';
 import * as $ from 'jquery';
 
 @Component({
@@ -29,7 +29,7 @@ export class Card2Component implements OnInit {
   unhoverCardPoint: boolean = true;
   hoverFlip: boolean = false;
   hideFront: boolean = false;
-
+  url =  appState.hostName;
   constructor() {
   }
 

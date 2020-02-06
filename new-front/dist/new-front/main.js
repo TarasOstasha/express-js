@@ -197,6 +197,7 @@ var AppRoutingModule = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var appState = {
+    hostName: (location.hostname == 'localhost') ? 'http://localhost/' : '/',
     //general
     products: [],
     breadCrumbs: [],
@@ -3161,7 +3162,7 @@ var CardComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div id=\"make-3D-space\">\n  <div [id]=\" 'product-card-' + index \" (mouseenter)=\"hover()\" (mouseleave)=\"unhover()\" [class]=\"productCardClass\">\n\n\n    <div [id]=\" 'product-front-' + index \">\n      <div class=\"shadow\"></div> -->\n<!-- <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt.png\" alt=\"\" /> -->\n<!-- <img class=\"product-img\" [src]=\"state.imgs[this.state.img]\" alt=\"img\" />\n      <div class=\"image_overlay\"></div>\n      <div class=\"product-view\" routerLink=\"/product/{{state._id}}\">product info</div> -->\n<!-- <div (click)=\"detail(index)\" id=\"view_details\">View details</div> -->\n<!-- <div class=\"stats\">\n        <div class=\"stats-container\">\n          <span (click)=buyProduct($event) class=\"product_price\">{{ state.price }}</span> -->\n<!-- <button id=\" test-{{i}} \">Test</button> -->\n<!-- <span class=\"product_name\">{{ state.productName }}</span>\n          <p>Men's running shirt</p>\n          <div class=\"product-options\"> -->\n<!-- RATING -->\n<!-- <app-rating [user]=\"userId\" [productId]=\"state._id\" [ratingPublic]=\"state.stars.public\"\n              [ratingPrivate]=\"starPrivate()\">\n            </app-rating> -->\n<!-- SIZES -->\n<!-- <div class=\"product-size\">\n              <strong>SIZES</strong>\n              <h4>{{ state.size }}</h4>\n              <ul class=\"ul-size\">\n                <li *ngFor=\"let size of state.sizes\">\n                  <a (click)=\"onSelectSize(size); $event.stopPropagation()\" href=\"javascript:void(0)\"\n                    [class.active]=\"size == state.selectedSize\">\n                    {{ size }}</a>\n                </li>\n              </ul>\n            </div> -->\n<!-- COLORS -->\n<!-- <div class=\"colors-block\">\n              <strong>COLORS</strong>\n              <ul class=\"ul-color\">\n                <li *ngFor=\"let color of state.colorProducts\">\n                  <a [style.background]=\"color\" (click)=\"state.selectedColor = color; $event.stopPropagation()\"\n                    [class.active]=\"color == state.selectedColor\">\n                  </a>\n                </li>\n              </ul>\n            </div>\n\n          </div>\n        </div>\n      </div>\n    </div>\n\n\n    <div [id]=\" 'product-back-' + index \" [class]=\"productBackClass\">\n      <div class=\"shadow\"></div>\n      <div [id]=\" 'carousel-' + index\">\n        <ul> -->\n<!-- <li *ngFor=\"let slide of imgSlides;let cardSliderIndex = index\"> -->\n<!-- <img [src]=\"slide.img\" alt=\"\"> -->\n<!-- <li *ngFor=\"let slide of state.imgs;let cardSliderIndex = index\">\n            <img style=\"width:100%\" [src]=\"slide\" alt=\"\">\n          </li>\n        </ul>\n        <div class=\"arrows-perspective\">\n          <div (click)=\"arrPrev(index)\" [class]=\"(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' \"> -->\n\n<!-- <div (click)=\"arrPrev(index)\" [class]=\"(slidePointer > 0) ? '' : 'hide ' + 'carouselPrev ' + moveArrow\"> -->\n<!-- <div class=\"y\"></div>\n            <div class=\"x\"></div>\n          </div> -->\n\n<!-- <div (click)=\"arrNext(index)\" [class]=\" (slidePointer < imgSlides.length-1) ? '' : 'hide ' + 'carouselNext ' + moveArrow\"> -->\n<!-- <div (click)=\"arrNext(index)\"\n            [class]=\"(slidePointer < imgSlides.length-1) ? 'carouselNext ' + moveArrow : 'hideArrow' \">\n            <div class=\"y\"></div>\n            <div class=\"x\"></div>\n          </div>\n        </div>\n      </div>\n      <div (click)=\"flipBack(index)\" id=\"flip-back\">\n        <div [id]=\" 'cy-' + index\"></div>\n        <div [id]=\" 'cx-' + index\"></div>\n      </div>\n    </div>\n\n\n  </div>\n</div> -->\n\n\n<div id=\"make-3D-space\">\n  <div class=\"flip-card\">\n    <div [class]=\"(hoverFlip) ? 'flip-card-inner-hover flip-card-inner' : 'flip-card-inner' \">\n\n      <!-- --- -->\n      <div class=\"card mb-3 flip-card-front\" [style.display]=\"(hideFront) ? 'none' : 'block'  \">\n        <h3 class=\"card-header\"></h3>\n\n        <div class=\"card-img-2\">\n            <div class=\"card-img\">\n                <img class=\"product-img\" [src]=\"state.imgs[this.state.img]\" alt=\"img\" />\n                <div *ngIf=\"!hoverFlip\" class=\"image_overlay\"></div>\n            </div>\n            <div class=\"product-view\" routerLink=\"/product/{{state._id}}\">product info</div>\n            <div (click)=\"flip()\" class=\"view_details\">View details</div>\n          <div class=\"stats\">\n            <div class=\"stats-container\">\n              <span (click)=buyProduct($event) class=\"product_price\">{{ state.price }}</span>\n              <span class=\"product_name\">{{ state.productName }}</span>\n              <p>Men's running shirt</p>\n              <div class=\"product-options\"> \n                <!-- RATING -->\n                <app-rating [user]=\"userId\" [productId]=\"state._id\" [ratingPublic]=\"state.stars.public\"\n                  [ratingPrivate]=\"starPrivate()\">\n                </app-rating>\n                <!-- SIZES -->\n                <div class=\"product-size\">\n                  <strong>SIZES</strong>\n                  <h4>{{ state.size }}</h4>\n                  <ul class=\"ul-size\">\n                    <li *ngFor=\"let size of state.sizes\">\n                      <a (click)=\"onSelectSize(size); $event.stopPropagation()\" href=\"javascript:void(0)\"\n                        [class.active]=\"size == state.selectedSize\">\n                        {{ size }}</a>\n                    </li>\n                  </ul>\n                </div>\n                <!-- COLORS -->\n                <div class=\"colors-block\"> \n                  <strong>COLORS</strong>\n                  <ul class=\"ul-color\">\n                    <li *ngFor=\"let color of state.colorProducts\">\n                      <a [style.background]=\"color\" (click)=\"state.selectedColor = color; $event.stopPropagation()\"\n                        [class.active]=\"color == state.selectedColor\">\n                      </a>\n                    </li>\n                  </ul>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div (click)=\"flip()\" class=\"view\">More</div>\n        <div class=\"card-body\">\n          <p class=\"card-text\">...</p>\n        </div>\n      </div>\n\n      <!-- --- -->\n      <div class=\"card mb-3 flip-card-back\">\n        <div class=\"card-body\">\n          <p class=\"card-text\"></p>\n        </div>\n        <div class=\"card-body\">\n        </div>\n        <div [id]=\" 'carousel-' + index\">\n          <ul style=\"transition: .3s;display:flex\">\n            <li *ngFor=\"let slide of state.imgs; let cardSliderIndex = index\">\n              <img style=\"width:100%\" [src]=\"slide\" alt=\"\">\n            </li>\n          </ul>\n          <div class=\"arrows-perspective\">\n            <div (click)=\"arrPrev(index)\" [class]=\"(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' \">\n              <div class=\"y\"></div>\n              <div class=\"x\"></div>\n            </div>\n            <div (click)=\"arrNext(index)\"\n              [class]=\"(slidePointer < imgSlides.length-1) ? 'carouselNext ' + moveArrow : 'hideArrow' \">\n              <div class=\"y\"></div>\n              <div class=\"x\"></div>\n            </div>\n          </div>\n          <div (click)=\"close()\" id=\"flip-back\">\n            <div id=\"cy\" class=\"s1 s2 s3\"></div>\n            <div id=\"cx\" class=\"s1 s2 s3\"></div>\n          </div>\n        </div>\n        <!-- <div class=\"card-footer text-muted\">Урок:</div> -->\n      </div>\n\n    </div>\n\n  </div>\n</div>"
+module.exports = "<!-- <div id=\"make-3D-space\">\n  <div [id]=\" 'product-card-' + index \" (mouseenter)=\"hover()\" (mouseleave)=\"unhover()\" [class]=\"productCardClass\">\n\n\n    <div [id]=\" 'product-front-' + index \">\n      <div class=\"shadow\"></div> -->\n<!-- <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt.png\" alt=\"\" /> -->\n<!-- <img class=\"product-img\" [src]=\"state.imgs[this.state.img]\" alt=\"img\" />\n      <div class=\"image_overlay\"></div>\n      <div class=\"product-view\" routerLink=\"/product/{{state._id}}\">product info</div> -->\n<!-- <div (click)=\"detail(index)\" id=\"view_details\">View details</div> -->\n<!-- <div class=\"stats\">\n        <div class=\"stats-container\">\n          <span (click)=buyProduct($event) class=\"product_price\">{{ state.price }}</span> -->\n<!-- <button id=\" test-{{i}} \">Test</button> -->\n<!-- <span class=\"product_name\">{{ state.productName }}</span>\n          <p>Men's running shirt</p>\n          <div class=\"product-options\"> -->\n<!-- RATING -->\n<!-- <app-rating [user]=\"userId\" [productId]=\"state._id\" [ratingPublic]=\"state.stars.public\"\n              [ratingPrivate]=\"starPrivate()\">\n            </app-rating> -->\n<!-- SIZES -->\n<!-- <div class=\"product-size\">\n              <strong>SIZES</strong>\n              <h4>{{ state.size }}</h4>\n              <ul class=\"ul-size\">\n                <li *ngFor=\"let size of state.sizes\">\n                  <a (click)=\"onSelectSize(size); $event.stopPropagation()\" href=\"javascript:void(0)\"\n                    [class.active]=\"size == state.selectedSize\">\n                    {{ size }}</a>\n                </li>\n              </ul>\n            </div> -->\n<!-- COLORS -->\n<!-- <div class=\"colors-block\">\n              <strong>COLORS</strong>\n              <ul class=\"ul-color\">\n                <li *ngFor=\"let color of state.colorProducts\">\n                  <a [style.background]=\"color\" (click)=\"state.selectedColor = color; $event.stopPropagation()\"\n                    [class.active]=\"color == state.selectedColor\">\n                  </a>\n                </li>\n              </ul>\n            </div>\n\n          </div>\n        </div>\n      </div>\n    </div>\n\n\n    <div [id]=\" 'product-back-' + index \" [class]=\"productBackClass\">\n      <div class=\"shadow\"></div>\n      <div [id]=\" 'carousel-' + index\">\n        <ul> -->\n<!-- <li *ngFor=\"let slide of imgSlides;let cardSliderIndex = index\"> -->\n<!-- <img [src]=\"slide.img\" alt=\"\"> -->\n<!-- <li *ngFor=\"let slide of state.imgs;let cardSliderIndex = index\">\n            <img style=\"width:100%\" [src]=\"slide\" alt=\"\">\n          </li>\n        </ul>\n        <div class=\"arrows-perspective\">\n          <div (click)=\"arrPrev(index)\" [class]=\"(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' \"> -->\n\n<!-- <div (click)=\"arrPrev(index)\" [class]=\"(slidePointer > 0) ? '' : 'hide ' + 'carouselPrev ' + moveArrow\"> -->\n<!-- <div class=\"y\"></div>\n            <div class=\"x\"></div>\n          </div> -->\n\n<!-- <div (click)=\"arrNext(index)\" [class]=\" (slidePointer < imgSlides.length-1) ? '' : 'hide ' + 'carouselNext ' + moveArrow\"> -->\n<!-- <div (click)=\"arrNext(index)\"\n            [class]=\"(slidePointer < imgSlides.length-1) ? 'carouselNext ' + moveArrow : 'hideArrow' \">\n            <div class=\"y\"></div>\n            <div class=\"x\"></div>\n          </div>\n        </div>\n      </div>\n      <div (click)=\"flipBack(index)\" id=\"flip-back\">\n        <div [id]=\" 'cy-' + index\"></div>\n        <div [id]=\" 'cx-' + index\"></div>\n      </div>\n    </div>\n\n\n  </div>\n</div> -->\n\n\n<div id=\"make-3D-space\">\n  <div class=\"flip-card\">\n    <div [class]=\"(hoverFlip) ? 'flip-card-inner-hover flip-card-inner' : 'flip-card-inner' \">\n\n      <!-- --- -->\n      <div class=\"card mb-3 flip-card-front\" [style.display]=\"(hideFront) ? 'none' : 'block'  \">\n        <h3 class=\"card-header\"></h3>\n\n        <div class=\"card-img-2\">\n            <div class=\"card-img\">\n                <img class=\"product-img\" [src]=\"url + state.imgs[this.state.img]\" alt=\"img\" />\n                <div *ngIf=\"!hoverFlip\" class=\"image_overlay\"></div>\n            </div>\n            <div class=\"product-view\" routerLink=\"/product/{{state._id}}\">product info</div>\n            <div (click)=\"flip()\" class=\"view_details\">View details</div>\n          <div class=\"stats\">\n            <div class=\"stats-container\">\n              <span (click)=buyProduct($event) class=\"product_price\">{{ state.price }}</span>\n              <span class=\"product_name\">{{ state.productName }}</span>\n              <p>Men's running shirt</p>\n              <div class=\"product-options\"> \n                <!-- RATING -->\n                <app-rating [user]=\"userId\" [productId]=\"state._id\" [ratingPublic]=\"state.stars.public\"\n                  [ratingPrivate]=\"starPrivate()\">\n                </app-rating>\n                <!-- SIZES -->\n                <div class=\"product-size\">\n                  <strong>SIZES</strong>\n                  <h4>{{ state.size }}</h4>\n                  <ul class=\"ul-size\">\n                    <li *ngFor=\"let size of state.sizes\">\n                      <a (click)=\"onSelectSize(size); $event.stopPropagation()\" href=\"javascript:void(0)\"\n                        [class.active]=\"size == state.selectedSize\">\n                        {{ size }}</a>\n                    </li>\n                  </ul>\n                </div>\n                <!-- COLORS -->\n                <div class=\"colors-block\"> \n                  <strong>COLORS</strong>\n                  <ul class=\"ul-color\">\n                    <li *ngFor=\"let color of state.colorProducts\">\n                      <a [style.background]=\"color\" (click)=\"state.selectedColor = color; $event.stopPropagation()\"\n                        [class.active]=\"color == state.selectedColor\">\n                      </a>\n                    </li>\n                  </ul>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div (click)=\"flip()\" class=\"view\">More</div>\n        <div class=\"card-body\">\n          <p class=\"card-text\">...</p>\n        </div>\n      </div>\n\n      <!-- --- -->\n      <div class=\"card mb-3 flip-card-back\">\n        <div class=\"card-body\">\n          <p class=\"card-text\"></p>\n        </div>\n        <div class=\"card-body\">\n        </div>\n        <div [id]=\" 'carousel-' + index\">\n          <ul style=\"transition: .3s;display:flex\">\n            <li *ngFor=\"let slide of state.imgs; let cardSliderIndex = index\">\n              <img style=\"width:100%\" [src]=\"url + slide\" alt=\"\">\n            </li>\n          </ul>\n          <div class=\"arrows-perspective\">\n            <div (click)=\"arrPrev(index)\" [class]=\"(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' \">\n              <div class=\"y\"></div>\n              <div class=\"x\"></div>\n            </div>\n            <div (click)=\"arrNext(index)\"\n              [class]=\"(slidePointer < imgSlides.length-1) ? 'carouselNext ' + moveArrow : 'hideArrow' \">\n              <div class=\"y\"></div>\n              <div class=\"x\"></div>\n            </div>\n          </div>\n          <div (click)=\"close()\" id=\"flip-back\">\n            <div id=\"cy\" class=\"s1 s2 s3\"></div>\n            <div id=\"cx\" class=\"s1 s2 s3\"></div>\n          </div>\n        </div>\n        <!-- <div class=\"card-footer text-muted\">Урок:</div> -->\n      </div>\n\n    </div>\n\n  </div>\n</div>"
 
 /***/ }),
 
@@ -3188,8 +3189,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Card2Component", function() { return Card2Component; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _app_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app-state */ "./src/app/app-state.ts");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -3207,6 +3210,7 @@ var Card2Component = /** @class */ (function () {
         this.unhoverCardPoint = true;
         this.hoverFlip = false;
         this.hideFront = false;
+        this.url = _app_state__WEBPACK_IMPORTED_MODULE_2__["default"].hostName;
         this.imgSlides = [
             { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large.png' },
             { img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt-large2.png' },
@@ -3302,19 +3306,19 @@ var Card2Component = /** @class */ (function () {
         this.productCardClass = 'flip-10';
         setTimeout(function () {
             this.productCardClass = 'flip90';
-            jquery__WEBPACK_IMPORTED_MODULE_2__(productCard + ' div.shadow').show().fadeTo(80, 1, function () {
-                jquery__WEBPACK_IMPORTED_MODULE_2__(productFront + ", " + productFront + " div.shadow").hide();
+            jquery__WEBPACK_IMPORTED_MODULE_3__(productCard + ' div.shadow').show().fadeTo(80, 1, function () {
+                jquery__WEBPACK_IMPORTED_MODULE_3__(productFront + ", " + productFront + " div.shadow").hide();
             });
         }, 50);
         setTimeout(function () {
             //this.productCardClass = 'flip190';
-            jquery__WEBPACK_IMPORTED_MODULE_2__(productBack).show().find('div.shadow').show().fadeTo(90, 0); // hide shadow
+            jquery__WEBPACK_IMPORTED_MODULE_3__(productBack).show().find('div.shadow').show().fadeTo(90, 0); // hide shadow
             setTimeout(function () {
                 _this.productBackClass = 'flip0';
                 setTimeout(function () {
-                    jquery__WEBPACK_IMPORTED_MODULE_2__(cx + ", " + cy).addClass('s1');
-                    setTimeout(function () { jquery__WEBPACK_IMPORTED_MODULE_2__(cx + ", " + cy).addClass('s2'); }, 100);
-                    setTimeout(function () { jquery__WEBPACK_IMPORTED_MODULE_2__(cx + ", " + cy).addClass('s3'); }, 200);
+                    jquery__WEBPACK_IMPORTED_MODULE_3__(cx + ", " + cy).addClass('s1');
+                    setTimeout(function () { jquery__WEBPACK_IMPORTED_MODULE_3__(cx + ", " + cy).addClass('s2'); }, 100);
+                    setTimeout(function () { jquery__WEBPACK_IMPORTED_MODULE_3__(cx + ", " + cy).addClass('s3'); }, 200);
                 }, 100);
             }, 100);
         }, 150);
@@ -3332,23 +3336,23 @@ var Card2Component = /** @class */ (function () {
         setTimeout(function () {
             //this.productCardClass = '';
             this.productCardClass = 'flip190';
-            jquery__WEBPACK_IMPORTED_MODULE_2__(productBack + ' div.shadow').css('opacity', 0).fadeTo(100, 1, function () {
-                jquery__WEBPACK_IMPORTED_MODULE_2__(productBack + ", " + productBack + " div.shadow").hide();
-                jquery__WEBPACK_IMPORTED_MODULE_2__(productFront + ", " + productFront + " div.shadow").show();
+            jquery__WEBPACK_IMPORTED_MODULE_3__(productBack + ' div.shadow').css('opacity', 0).fadeTo(100, 1, function () {
+                jquery__WEBPACK_IMPORTED_MODULE_3__(productBack + ", " + productBack + " div.shadow").hide();
+                jquery__WEBPACK_IMPORTED_MODULE_3__(productFront + ", " + productFront + " div.shadow").show();
             });
         }, 50);
         setTimeout(function () {
             //this.productCardClass = '';
             this.productCardClass = 'flip-10';
-            jquery__WEBPACK_IMPORTED_MODULE_2__(productFront + ' div.shadow').show().fadeTo(100, 0);
+            jquery__WEBPACK_IMPORTED_MODULE_3__(productFront + ' div.shadow').show().fadeTo(100, 0);
             setTimeout(function () {
-                jquery__WEBPACK_IMPORTED_MODULE_2__(productFront + ' div.shadow').hide();
-                jquery__WEBPACK_IMPORTED_MODULE_2__(cx + ", " + cy).removeClass('s1 s2 s3');
+                jquery__WEBPACK_IMPORTED_MODULE_3__(productFront + ' div.shadow').hide();
+                jquery__WEBPACK_IMPORTED_MODULE_3__(cx + ", " + cy).removeClass('s1 s2 s3');
             }, 100);
         }, 150);
     };
     Card2Component.prototype.newLeftSlide = function (direction) {
-        var currentLeft = Math.abs(parseInt(jquery__WEBPACK_IMPORTED_MODULE_2__(this.carousel).css("left")));
+        var currentLeft = Math.abs(parseInt(jquery__WEBPACK_IMPORTED_MODULE_3__(this.carousel).css("left")));
         var newLeft = (direction == 'left') ? currentLeft - this.carouselSlideWidth : currentLeft + this.carouselSlideWidth;
         console.log(newLeft, currentLeft, this.carouselSlideWidth);
         return newLeft;
@@ -3357,7 +3361,7 @@ var Card2Component = /** @class */ (function () {
     // Load Previous Image
     Card2Component.prototype.arrPrev = function () {
         this.slidePointer--;
-        jquery__WEBPACK_IMPORTED_MODULE_2__(this.carousel).css({
+        jquery__WEBPACK_IMPORTED_MODULE_3__(this.carousel).css({
             'left': "-" + this.newLeftSlide('left') + "px"
         });
         this.isAnimating = true;
@@ -3366,7 +3370,7 @@ var Card2Component = /** @class */ (function () {
     // Load Next Image
     Card2Component.prototype.arrNext = function () {
         this.slidePointer++;
-        jquery__WEBPACK_IMPORTED_MODULE_2__(this.carousel).css({
+        jquery__WEBPACK_IMPORTED_MODULE_3__(this.carousel).css({
             'left': "-" + this.newLeftSlide('right') + "px"
         });
         this.isAnimating = true;
@@ -3375,7 +3379,7 @@ var Card2Component = /** @class */ (function () {
     // building the width of the carousel
     Card2Component.prototype.carouselInit = function (index) {
         var carousel = "#carousel-" + index + " ul";
-        jquery__WEBPACK_IMPORTED_MODULE_2__(carousel + ' li').each(function () {
+        jquery__WEBPACK_IMPORTED_MODULE_3__(carousel + ' li').each(function () {
             this.carouselWidth += this.carouselSlideWidth;
         });
     };
@@ -4279,6 +4283,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/api.service */ "./src/app/services/api.service.ts");
+/* harmony import */ var _app_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../app-state */ "./src/app/app-state.ts");
+
 
 
 
@@ -4288,6 +4294,7 @@ var NewProductsComponent = /** @class */ (function () {
     function NewProductsComponent(api) {
         var _this = this;
         this.api = api;
+        this.url = _app_state__WEBPACK_IMPORTED_MODULE_3__["default"].hostName;
         this.refreshCategories = function () { return _this.refreshCategoriesOnServer(); }; //refresh on server side
         this.max_size_req = 10000; //99999
         this.files = {};
@@ -4368,7 +4375,7 @@ var NewProductsComponent = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         imgs = [];
                         for (i = 0; i < this.files.length; i++) {
-                            imgs.push('http://localhost/uploads/' + this.files[i].name);
+                            imgs.push('uploads/' + this.files[i].name);
                         }
                         newProduct = {
                             //img: this.state.currentNewProductImg,
@@ -5022,16 +5029,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _app_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../app-state */ "./src/app/app-state.ts");
+
 
 
 
 var httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Content-Type': 'application/json' })
 };
-if (location.hostname == 'localhost')
-    var url = 'http://localhost'; //dev
-else
-    var url = ''; //production
+// 
+// if(location.hostname == 'localhost') var url = 'http://localhost'; //dev
+// else var url = ''; //production
+var url = _app_state__WEBPACK_IMPORTED_MODULE_3__["default"].hostName;
 var ApiService = /** @class */ (function () {
     function ApiService(http) {
         this.http = http;
@@ -5040,92 +5049,92 @@ var ApiService = /** @class */ (function () {
         return this.http.get('./assets/data/' + json).toPromise();
     };
     ApiService.prototype.login = function (userData) {
-        return this.http.post(url + '/login', userData, httpOptions).toPromise();
+        return this.http.post(url + 'login', userData, httpOptions).toPromise();
     };
     ApiService.prototype.register = function (userData) {
-        return this.http.post(url + '/register', userData, httpOptions).toPromise();
+        return this.http.post(url + 'register', userData, httpOptions).toPromise();
     };
     ApiService.prototype.getProduct = function (id) {
-        return this.http.get(url + '/product/' + id).toPromise(); //productID
+        return this.http.get(url + 'product/' + id).toPromise(); //productID
     };
     ApiService.prototype.getTodos = function () {
-        return this.http.get(url + '/todos'); //leave becouse we don't use it
+        return this.http.get(url + 'todos'); //leave becouse we don't use it
     };
     ApiService.prototype.setTodos = function (todos) {
-        return this.http.post(url + '/todos', todos, httpOptions); //leave becouse we don't use it
+        return this.http.post(url + 'todos', todos, httpOptions); //leave becouse we don't use it
     };
     ApiService.prototype.getSessionInfo = function () {
-        return this.http.get(url + '/session-info').toPromise();
+        return this.http.get(url + 'session-info').toPromise();
     };
     ApiService.prototype.getProducts = function () {
-        return this.http.get(url + '/products').toPromise();
+        return this.http.get(url + 'products').toPromise();
     };
     // search() {
     //   return this.http.get(url + '/search'); // dont know
     // }
     ApiService.prototype.getUsers = function () {
-        return this.http.get(url + '/users').toPromise();
+        return this.http.get(url + 'users').toPromise();
     };
     ApiService.prototype.setCategories = function (productCategories) {
-        return this.http.post(url + '/categories', productCategories, httpOptions).toPromise();
+        return this.http.post(url + 'categories', productCategories, httpOptions).toPromise();
     };
     ApiService.prototype.getCategories = function () {
-        return this.http.get(url + '/categories').toPromise();
+        return this.http.get(url + 'categories').toPromise();
     };
     ApiService.prototype.addProduct = function (newProduct) {
-        return this.http.post(url + '/products', newProduct, httpOptions).toPromise();
+        return this.http.post(url + 'products', newProduct, httpOptions).toPromise();
     };
     ApiService.prototype.upload = function (obj) {
-        return this.http.post(url + '/upload2', obj, httpOptions).toPromise();
+        return this.http.post(url + 'upload2', obj, httpOptions).toPromise();
     };
     ApiService.prototype.addUserStatistic = function (obj) {
-        return this.http.post(url + '/user-statistic', obj, httpOptions).toPromise();
+        return this.http.post(url + 'user-statistic', obj, httpOptions).toPromise();
     };
     ApiService.prototype.addVoute = function (obj) {
-        return this.http.post(url + '/user-voute', obj, httpOptions).toPromise();
+        return this.http.post(url + 'user-voute', obj, httpOptions).toPromise();
     };
     ApiService.prototype.megaSearch = function (queryString) {
-        return this.http.get(url + "/mega-search" + queryString).toPromise();
+        return this.http.get(url + "mega-search" + queryString).toPromise();
     };
     ApiService.prototype.editProduct = function (product) {
-        return this.http.put(url + '/edit-product', product, httpOptions).toPromise();
+        return this.http.put(url + 'edit-product', product, httpOptions).toPromise();
     };
     ApiService.prototype.contactsMail = function (mail) {
-        return this.http.post(url + '/contacts-mail', mail, httpOptions).toPromise();
+        return this.http.post(url + 'contacts-mail', mail, httpOptions).toPromise();
     };
     ApiService.prototype.getAdminNotifications = function () {
-        return this.http.get(url + '/admin-notifications', httpOptions).toPromise();
+        return this.http.get(url + 'admin-notifications', httpOptions).toPromise();
     };
     ApiService.prototype.getAdminMessages = function (currentPage, sizePage) {
-        return this.http.get(url + '/admin-messages/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
+        return this.http.get(url + 'admin-messages/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
     };
     ApiService.prototype.moveToArchiveAdminMessages = function (_id) {
-        return this.http.put(url + '/move-to-archive-admin-messages', { _id: _id }, httpOptions).toPromise();
+        return this.http.put(url + 'move-to-archive-admin-messages', { _id: _id }, httpOptions).toPromise();
     };
     ApiService.prototype.moveToTransactionArchive = function (_id) {
-        return this.http.put(url + '/transaction-archive', { _id: _id }, httpOptions).toPromise();
+        return this.http.put(url + 'transaction-archive', { _id: _id }, httpOptions).toPromise();
     };
     ApiService.prototype.moveToTransactionFromArchive = function (_id) {
-        return this.http.put(url + '/archive-to-transaction', { _id: _id }, httpOptions).toPromise();
+        return this.http.put(url + 'archive-to-transaction', { _id: _id }, httpOptions).toPromise();
     };
     ApiService.prototype.getAdminMessagesFromArchive = function (currentPage, sizePage) {
-        return this.http.get(url + '/admin-messages-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
+        return this.http.get(url + 'admin-messages-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
     };
     ApiService.prototype.getTransactionsFromArchive = function (currentPage, sizePage) {
-        return this.http.get(url + '/admin-transactions-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
+        return this.http.get(url + 'admin-transactions-archive/' + currentPage + '?size=' + sizePage, httpOptions).toPromise();
     };
     ApiService.prototype.getUniversalSearch = function (currentPage, queryString) {
-        return this.http.get(url + "/universal-search/" + currentPage + queryString, httpOptions).toPromise();
+        return this.http.get(url + "universal-search/" + currentPage + queryString, httpOptions).toPromise();
     };
     ApiService.prototype.createFingerPrint = function (systemInfo) {
         console.log(systemInfo);
-        return this.http.post(url + '/session', systemInfo, httpOptions).toPromise();
+        return this.http.post(url + 'session', systemInfo, httpOptions).toPromise();
     };
     ApiService.prototype.getClientMsgFromChat = function () {
-        return this.http.get(url + '/chat-client-msg', httpOptions).toPromise();
+        return this.http.get(url + 'chat-client-msg', httpOptions).toPromise();
     };
     ApiService.prototype.getUserInfoIfLogged = function () {
-        return this.http.get(url + '/get-user-info-if-logged', httpOptions).toPromise();
+        return this.http.get(url + 'get-user-info-if-logged', httpOptions).toPromise();
     };
     ApiService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import  appState  from '../../app-state';
+
 //import { state } from '@angular/animations';
 declare var Quill: any;
 declare var swal: any;
 var log = console.log;
+
+
 @Component({
   selector: 'app-new-products',
   templateUrl: './new-products.component.html',
@@ -21,7 +25,7 @@ export class NewProductsComponent implements OnInit {
   //   }
   // }
   quill: any;
-
+  url =  appState.hostName;
   constructor(
     private api: ApiService,
   ) { }
@@ -103,7 +107,7 @@ export class NewProductsComponent implements OnInit {
     try {
       let imgs = [];
       for (let i = 0; i < this.files.length; i++) {
-        imgs.push('http://localhost/uploads/' + this.files[i].name);
+        imgs.push('uploads/' + this.files[i].name);
       }
       const newProduct = {
         //img: this.state.currentNewProductImg,

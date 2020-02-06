@@ -97,7 +97,7 @@
 
         <div class="card-img-2">
             <div class="card-img">
-                <img class="product-img" [src]="state.imgs[this.state.img]" alt="img" />
+                <img class="product-img" [src]="url + state.imgs[this.state.img]" alt="img" />
                 <div *ngIf="!hoverFlip" class="image_overlay"></div>
             </div>
             <div class="product-view" routerLink="/product/{{state._id}}">product info</div>
@@ -155,7 +155,7 @@
         <div [id]=" 'carousel-' + index">
           <ul style="transition: .3s;display:flex">
             <li *ngFor="let slide of state.imgs; let cardSliderIndex = index">
-              <img style="width:100%" [src]="slide" alt="">
+              <img style="width:100%" [src]="url + slide" alt="">
             </li>
           </ul>
           <div class="arrows-perspective">
