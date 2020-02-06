@@ -16,6 +16,7 @@ export class Card2Component implements OnInit {
   @Input() index: number;
   
   productCardClass: string = '';
+  productBackClass: string = 'flip90';
   moveArrow: string = '';
 
   //relative to card back carousel
@@ -24,7 +25,9 @@ export class Card2Component implements OnInit {
   isAnimating = false;
   carousel:any;
   //t = [0,1,2,3,4] // use imgSlides !!!
-  hoverBlocked: boolean = false;
+  
+  unhoverCardPoint: boolean = true;
+  hoverFlip: boolean = false;
 
 
   constructor() {
@@ -75,7 +78,7 @@ export class Card2Component implements OnInit {
 
   // Lift card and show stats on Mouseover
   hover() {
-    console.log('try hover')
+    //alert('try hover')
     //this.hoverBlocked = true;
     //if(!this.hoverBlocked) {
       console.log('hover')
@@ -90,12 +93,17 @@ export class Card2Component implements OnInit {
   }
   unhover() {
     this.flipBack()
-    //this.hoverBlocked = false;
     console.log('unhover')
     this.productCardClass = '';
     this.moveArrow = '';
-    //продукт фронт 0 = блок
-    //продукт бек 0 = ноне
+  }
+
+  flip(index) {
+    this.hoverFlip = true;
+  }
+
+  close() {
+    this.hoverFlip = false;
   }
 
   // Flip card to the back side
@@ -105,36 +113,25 @@ export class Card2Component implements OnInit {
     const productBack = '#product-back-' + index;
     const cx = '#cx-' + index;
     const cy = '#cy-' + index;
-    
-    //$('div.carouselNext, div.carouselPrev').removeClass('visible');
     this.moveArrow = '';
-    //$('#product-card').addClass('flip-10');
-    this.productCardClass = 'flip-10';
+   this.productCardClass = 'flip-10';
+
     setTimeout(function () {
       this.productCardClass = 'flip90';
-      
-     // $('#product-card').removeClass('flip-10').addClass('flip90')
-      
       $(productCard + ' div.shadow').show().fadeTo(80, 1, function () {
         $(`${productFront}, ${productFront} div.shadow`).hide();
-        
       });
     }, 50);
 
-    setTimeout(function () {
-      this.productCardClass = 'flip190';
-      //$('#product-card').removeClass('flip90').addClass('flip190');
-      $(productBack).show().find('div.shadow').show().fadeTo(90, 0); // this line is flip card to another side
-      
-
-      setTimeout(function () {
-        $(productCard).removeClass('flip190').addClass('flip180').find('div.shadow').hide();
+    setTimeout( ()=> {
+      //this.productCardClass = 'flip190';
+      $(productBack).show().find('div.shadow').show().fadeTo(90, 0);  // hide shadow
+      setTimeout( ()=> {
+        this.productBackClass = 'flip0'
         setTimeout(function () {
-          $(productCard).css('transition', '100ms ease-out');
           $(`${cx}, ${cy}`).addClass('s1');
           setTimeout(function () { $(`${cx}, ${cy}`).addClass('s2'); }, 100);
           setTimeout(function () { $(`${cx}, ${cy}`).addClass('s3'); }, 200);
-          //$('div.carouselNext, div.carouselPrev').addClass('visible');
         }, 100);
       }, 100);
     }, 150);
@@ -150,11 +147,9 @@ export class Card2Component implements OnInit {
     this.productCardClass = '';
     this.productCardClass = 'flip190';
 
-    //$('#product-card').removeClass('flip180').addClass('flip190');
     setTimeout(function () {
-      this.productCardClass = '';
+      //this.productCardClass = '';
       this.productCardClass = 'flip190';
-      //$('#product-card').removeClass('flip190').addClass('flip90');
 
       $(productBack + ' div.shadow').css('opacity', 0).fadeTo(100, 1, function () {
         $(`${productBack}, ${productBack} div.shadow`).hide();
@@ -163,21 +158,18 @@ export class Card2Component implements OnInit {
     }, 50);
 
     setTimeout(function () {
-      this.productCardClass = '';
+      //this.productCardClass = '';
       this.productCardClass = 'flip-10';
-      //$('#product-card').removeClass('flip90').addClass('flip-10');
       $(productFront + ' div.shadow').show().fadeTo(100, 0);
+
       setTimeout(function () {
         $(productFront + ' div.shadow').hide();
-        $(productCard).removeClass('flip-10').css('transition', '100ms ease-out');
         $(`${cx}, ${cy}`).removeClass('s1 s2 s3');
       }, 100);
     }, 150);
   }
 
   newLeftSlide(direction) {
-    
-   // const carousel = `#carousel-${index} ul`;
     var currentLeft = Math.abs(parseInt($(this.carousel).css("left")));
     var newLeft = (direction == 'left') ? currentLeft - this.carouselSlideWidth : currentLeft + this.carouselSlideWidth
     console.log(newLeft, currentLeft,this.carouselSlideWidth)
@@ -195,13 +187,8 @@ export class Card2Component implements OnInit {
   // Load Previous Image
   arrPrev() {
     this.slidePointer--;
-    console.log(this.newLeftSlide('left'));
-    
-    //if (newLeft < 0 || this.isAnimating === true) { return; }
-    console.log('next')
     $(this.carousel).css({
-      'left': "-" + this.newLeftSlide('left') + "px",
-      "transition": "300ms ease-out"
+      'left': "-" + this.newLeftSlide('left') + "px"
     });
     this.isAnimating = true;
     setTimeout(function () { this.isAnimating = false; }, 300);
@@ -211,11 +198,8 @@ export class Card2Component implements OnInit {
   // Load Next Image
   arrNext() {
     this.slidePointer++;
-
-    //if (newLeft == this.carouselWidth || this.isAnimating === true) { return; }
     $(this.carousel).css({
-      'left': "-" + this.newLeftSlide('right') + "px",
-      "transition": "300ms ease-out"
+      'left': "-" + this.newLeftSlide('right') + "px"
     });
     this.isAnimating = true;
     setTimeout(function () { this.isAnimating = false; }, 300);
@@ -223,15 +207,16 @@ export class Card2Component implements OnInit {
 
    // building the width of the carousel
   carouselInit(index) {
-    //var carousel = $('#carousel ul');
     const carousel = `#carousel-${index} ul`;
 
     $(carousel + ' li').each(function () {
       this.carouselWidth += this.carouselSlideWidth;
     });
-    //$(carousel).css('width', this.carouselWidth);
   }
 
+
+
+  //2  edition
   
 
 }
