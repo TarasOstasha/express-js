@@ -11,8 +11,8 @@
                     </div>
                     <input [(ngModel)]="queries.keywords" type="text" class="form-control" aria-label="Default"
                         aria-describedby="inputGroup-sizing-default" placeholder="Search">
-                        <span>{{ queries.minPrice }}</span>
-                        <span>{{ queries.maxPrice }}</span>
+                    <span>{{ queries.minPrice }}</span>
+                    <span>{{ queries.maxPrice }}</span>
                 </div>
             </div>
             <div class="col-md-6 input-group-select">
@@ -158,10 +158,10 @@
                             <i class="fa fa-search-plus"></i>
                         </span>
                     </div>
-                    <input [(ngModel)]="queries.keywords" type="text" class="form-control mega-search-input" aria-label="Default"
-                        aria-describedby="inputGroup-sizing-default" placeholder="Search">
-                        <span>{{ queries.minPrice }}</span>
-                        <span>{{ queries.maxPrice }}</span>
+                    <input [(ngModel)]="queries.keywords" type="text" class="form-control mega-search-input"
+                        aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search">
+                    <span>{{ queries.minPrice }}</span>
+                    <span>{{ queries.maxPrice }}</span>
                 </div>
             </div>
             <div class="col-md-12 input-group-select">
@@ -171,9 +171,7 @@
                             <i class="fa fa-align-justify"></i>
                         </span>
 
-                        <app-subcategory-select 
-                            [breadCrumbs]="appState.breadCrumbs" 
-                            [recurtionLevel]="0"
+                        <app-subcategory-select [breadCrumbs]="appState.breadCrumbs" [recurtionLevel]="0"
                             [categories]="appState.productCategories">
                         </app-subcategory-select>
 
@@ -286,7 +284,7 @@
                 class="fa fa-filter"></i>Filter</button>
     </div>
     <!-- I THINK BREAD CRUMBS DONT NEEDED FOR THIS SIDE BAR MENU -->
-    
+
     <!-- <div class="bread-crumbs">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -300,3 +298,147 @@
         (onChanged)="cardHandler($event)">
     </app-card> -->
 </div>
+
+
+
+<!-- !!!!!?????????######********** -->
+
+<header class="header">
+    <div class="container">
+        <h1 class="page-header">Filter Panel Group</h1>
+    </div>
+</header>
+
+<div class="primary">
+    <div class="container-filter">
+        <div>
+            <!-- -------------------------------------------------- -->
+
+            <div class="">
+                <div class="filter-menu mobile">
+                    <div class="form">
+                        <div class="panel panel-mobile">
+                            <div class="panel-heading" role="tab" id="headingFiltersMobile">
+                                <input (ngModelChange)="changed($event)" [(ngModel)]="queries.keywords" type="text" class="form-control"
+                                    aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                                    placeholder="Search">
+
+                                <a class="panel-title accordion-toggle" role="button" data-toggle="collapse"
+                                    href="#collapseFiltersMobile" aria-expanded="false"
+                                    aria-controls="collapseFiltersMobile">
+                                    Filter
+                                </a>
+                                <div class="panel-body">
+                                    <hr />
+                                    <button class="btn btn-primary" type="submit">Apply Filters</button>
+                                    <a class="btn btn-sm btn-link pull-right" href="#">Clear Selections</a>
+                                </div><!-- /.panel-body -->
+                            </div><!-- /.panel-heading -->
+                            <div id="collapseFiltersMobile" class="panel-collapse collapse in" role="tabpanel"
+                                aria-labelledby="headingFiltersMobile">
+                                <div class="panel-body">
+                                    <div class="panel-group" id="filter-menu-mobile" role="tablist"
+                                        aria-multiselectable="true">
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <a class="panel-title accordion-toggle" role="button"
+                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
+                                                    href="#collapseOneMobile" aria-expanded="true"
+                                                    aria-controls="collapseOneMobile">
+                                                    Career Stage
+                                                </a><!-- /.panel-title -->
+                                            </div><!-- /.panel-heading -->
+                                            <div id="collapseOneMobile" class="panel-collapse collapse in"
+                                                role="tabpanel" aria-labelledby="headingOneMobile">
+                                                <div class="panel-body">
+                                                    <div class="checkbox"><label><input type="checkbox"
+                                                                name="career_state[]" value="recent_graduate">Recent
+                                                            Graduate</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox"
+                                                                name="career_state[]" value="imposter_syndrome">Imposter
+                                                            Syndrome</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox"
+                                                                name="career_state[]" value="wise_old_head">Wise Old
+                                                            Head</label></div>
+                                                </div><!-- /.panel-body -->
+                                            </div><!-- /.panel-collapse -->
+                                        </div><!-- /.panel -->
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingTwoMobile">
+                                                <a class="panel-title accordion-toggle collapsed" role="button"
+                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
+                                                    href="#collapseTwoMobile" aria-expanded="false"
+                                                    aria-controls="collapseTwoMobile">
+                                                    Topic
+                                                </a><!-- /.panel-title -->
+                                            </div><!-- /.panel-heading -->
+                                            <div id="collapseTwoMobile" class="panel-collapse collapse" role="tabpanel"
+                                                aria-labelledby="headingTwoMobile">
+                                                <div class="panel-body">
+                                                    <div class="checkbox"><label><input type="checkbox" name="topic[]"
+                                                                value="politics">Politics</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="topic[]"
+                                                                value="religion">Religion</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="topic[]"
+                                                                value="music">Music</label></div>
+                                                </div><!-- /.panel-body -->
+                                            </div><!-- /.panel-collapse -->
+                                        </div><!-- /.panel -->
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingThreeMobile">
+                                                <a class="panel-title accordion-toggle collapsed" role="button"
+                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
+                                                    href="#collapseThreeMobile" aria-expanded="false"
+                                                    aria-controls="collapseThreeMobile">
+                                                    Format
+                                                </a><!-- /.panel-title -->
+                                            </div><!-- /.panel-heading -->
+                                            <div id="collapseThreeMobile" class="panel-collapse collapse"
+                                                role="tabpanel" aria-labelledby="headingThreeMobile">
+                                                <div class="panel-body">
+                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
+                                                                value="magazine">Magazine</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
+                                                                value="website">Website</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
+                                                                value="vine">Vine</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
+                                                                value="tweet">Tweet</label></div>
+                                                </div><!-- /.panel-body -->
+                                            </div><!-- /.panel-collapse -->
+                                        </div><!-- /.panel -->
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingFourMobile">
+                                                <a class="panel-title accordion-toggle collapsed" role="button"
+                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
+                                                    href="#collapseFourMobile" aria-expanded="false"
+                                                    aria-controls="collapseFourMobile">
+                                                    Status
+                                                </a><!-- /.panel-title -->
+                                            </div><!-- /.panel-heading -->
+                                            <div id="collapseFourMobile" class="panel-collapse collapse" role="tabpanel"
+                                                aria-labelledby="headingFourMobile">
+                                                <div class="panel-body">
+                                                    <div class="checkbox"><label><input type="checkbox" name="status[]"
+                                                                value="single">Single</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="status[]"
+                                                                value="married">Married</label></div>
+                                                    <div class="checkbox"><label><input type="checkbox" name="status[]"
+                                                                value="its_complicated">It's complicated</label></div>
+                                                </div><!-- /.panel-body -->
+                                            </div><!-- /.panel-collapse -->
+                                        </div><!-- /.panel -->
+                                    </div><!-- /.panel-group -->
+                                </div><!-- /.panel-body -->
+                            </div><!-- /.panel-collapse -->
+                        </div><!-- /.panel -->
+                    </div>
+                </div><!-- /.filter-menu -->
+            </div>
+        </div>
+
+    </div><!-- /.container -->
+</div><!-- /.primary -->

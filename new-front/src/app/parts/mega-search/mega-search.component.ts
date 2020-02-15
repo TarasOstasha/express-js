@@ -4,6 +4,8 @@ import { ApiService } from '../../services/api.service';
 import { log, toQueryString, getUrlQueries } from '../../my_models/stuff';
 import { Queries } from '../../interfaces/queries';
 import appState from '../../app-state';
+import { Subject, Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged} from "rxjs/operators"; 
 
 declare const $: any;
 
@@ -16,10 +18,12 @@ export class MegaSearchComponent implements OnInit {
 
 
 
+
   queries: Queries = getUrlQueries();
   state: any;
   appState: any;
-
+  modelChanged = new Subject<string>();
+  searchResult$: Observable<any[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +32,11 @@ export class MegaSearchComponent implements OnInit {
   ) {
     this.state = appState;
     this.appState = appState;
+    this.modelChanged
+      .pipe( debounceTime(300) )
+      .subscribe(() => {
+        this.search();
+      })
   }
 
   async ngOnInit() {
@@ -82,6 +91,9 @@ export class MegaSearchComponent implements OnInit {
     }
   }
 
+  changed() {
+    this.modelChanged.next();
+  }
 
 
 
