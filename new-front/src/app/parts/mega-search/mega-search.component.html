@@ -319,9 +319,9 @@
                     <div class="form">
                         <div class="panel panel-mobile">
                             <div class="panel-heading" role="tab" id="headingFiltersMobile">
-                                <input (ngModelChange)="changed($event)" [(ngModel)]="queries.keywords" type="text" class="form-control"
-                                    aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                                    placeholder="Search">
+                                <input (ngModelChange)="changed($event)" [(ngModel)]="queries.keywords" type="text"
+                                    class="form-control" aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default" placeholder="Search">
 
                                 <a class="panel-title accordion-toggle" role="button" data-toggle="collapse"
                                     href="#collapseFiltersMobile" aria-expanded="false"
@@ -330,8 +330,11 @@
                                 </a>
                                 <div class="panel-body">
                                     <hr />
-                                    <button class="btn btn-primary" type="submit">Apply Filters</button>
-                                    <a class="btn btn-sm btn-link pull-right" href="#">Clear Selections</a>
+                                    <div class="button-success">
+                                        <button (click)="search()" type="button" class="btn btn-success">search</button>
+                                    </div>
+                                    <!-- <button class="btn btn-primary" type="submit">Apply Filters</button>
+                                    <a class="btn btn-sm btn-link pull-right" href="#">Clear Selections</a> -->
                                 </div><!-- /.panel-body -->
                             </div><!-- /.panel-heading -->
                             <div id="collapseFiltersMobile" class="panel-collapse collapse in" role="tabpanel"
@@ -339,76 +342,102 @@
                                 <div class="panel-body">
                                     <div class="panel-group" id="filter-menu-mobile" role="tablist"
                                         aria-multiselectable="true">
+
                                         <div class="panel panel-mobile">
                                             <div class="panel-heading" role="tab" id="headingOneMobile">
-                                                <a class="panel-title accordion-toggle" role="button"
-                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
-                                                    href="#collapseOneMobile" aria-expanded="true"
-                                                    aria-controls="collapseOneMobile">
-                                                    Career Stage
-                                                </a><!-- /.panel-title -->
+                                                <div class="panel-title ">
+                                                    <app-subcategory-select [breadCrumbs]="appState.breadCrumbs"
+                                                        [recurtionLevel]="0" [categories]="appState.productCategories">
+                                                    </app-subcategory-select>
+                                                </div>
                                             </div><!-- /.panel-heading -->
-                                            <div id="collapseOneMobile" class="panel-collapse collapse in"
-                                                role="tabpanel" aria-labelledby="headingOneMobile">
-                                                <div class="panel-body">
-                                                    <div class="checkbox"><label><input type="checkbox"
-                                                                name="career_state[]" value="recent_graduate">Recent
-                                                            Graduate</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox"
-                                                                name="career_state[]" value="imposter_syndrome">Imposter
-                                                            Syndrome</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox"
-                                                                name="career_state[]" value="wise_old_head">Wise Old
-                                                            Head</label></div>
-                                                </div><!-- /.panel-body -->
-                                            </div><!-- /.panel-collapse -->
                                         </div><!-- /.panel -->
 
                                         <div class="panel panel-mobile">
-                                            <div class="panel-heading" role="tab" id="headingTwoMobile">
-                                                <a class="panel-title accordion-toggle collapsed" role="button"
-                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
-                                                    href="#collapseTwoMobile" aria-expanded="false"
-                                                    aria-controls="collapseTwoMobile">
-                                                    Topic
-                                                </a><!-- /.panel-title -->
-                                            </div><!-- /.panel-heading -->
-                                            <div id="collapseTwoMobile" class="panel-collapse collapse" role="tabpanel"
-                                                aria-labelledby="headingTwoMobile">
-                                                <div class="panel-body">
-                                                    <div class="checkbox"><label><input type="checkbox" name="topic[]"
-                                                                value="politics">Politics</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox" name="topic[]"
-                                                                value="religion">Religion</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox" name="topic[]"
-                                                                value="music">Music</label></div>
-                                                </div><!-- /.panel-body -->
-                                            </div><!-- /.panel-collapse -->
-                                        </div><!-- /.panel -->
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <div class="panel-title ">
+                                                    <select class="filter-category">
+                                                        <option selected="selected">Choose BestSeller</option>
+                                                        <option>example1</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="panel panel-mobile">
-                                            <div class="panel-heading" role="tab" id="headingThreeMobile">
-                                                <a class="panel-title accordion-toggle collapsed" role="button"
-                                                    data-toggle="collapse" data-parent="#filter-menu-mobile"
-                                                    href="#collapseThreeMobile" aria-expanded="false"
-                                                    aria-controls="collapseThreeMobile">
-                                                    Format
-                                                </a><!-- /.panel-title -->
-                                            </div><!-- /.panel-heading -->
-                                            <div id="collapseThreeMobile" class="panel-collapse collapse"
-                                                role="tabpanel" aria-labelledby="headingThreeMobile">
-                                                <div class="panel-body">
-                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
-                                                                value="magazine">Magazine</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
-                                                                value="website">Website</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
-                                                                value="vine">Vine</label></div>
-                                                    <div class="checkbox"><label><input type="checkbox" name="format[]"
-                                                                value="tweet">Tweet</label></div>
-                                                </div><!-- /.panel-body -->
-                                            </div><!-- /.panel-collapse -->
-                                        </div><!-- /.panel -->
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <div class="panel-title ">
+                                                    <select class="filter-category">
+                                                        <option selected="selected">Choose New Products</option>
+                                                        <option>example1</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <div class="panel-title ">
+                                                    <div class="btn-group">
+                                                        <button *ngIf="!sortByPriceFlag" (click)="sortByPrice()">
+                                                            <i class="fa fa-arrow-up"></i>
+                                                            from lover to hight</button>
+                                                        <button *ngIf="sortByPriceFlag" (click)="sortByPrice()">
+                                                            <i class="fa fa-arrow-down"></i>
+                                                            from hight to lover
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <div class="panel-title ">
+                                                    <select class="filter-category">
+                                                        <option selected="selected">Choose By Star (from 1-5)</option>
+                                                        <option>
+                                                            1
+                                                        </option>
+                                                        <option>
+                                                            2
+                                                        </option>
+                                                        <option>
+                                                            3
+                                                        </option>
+                                                        <option>
+                                                            4
+                                                        </option>
+                                                        <option>
+                                                            5
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <div class="panel-title ">
+                                                    <div (mouseup)="rangePrice()" id="rangeBox">
+                                                        <!-- using this plugin - https://www.npmjs.com/package/bootstrap-slider and https://github.com/seiyria/bootstrap-slider-->
+                                                        <input style="width:100%;" id="range" type="text" id="range" step="1" precision="2"
+                                                            value="7" scale="logarithmic" name="somename"
+                                                            data-provide="slider" data-slider-min="10"
+                                                            data-slider-max="1000" data-slider-step="1"
+                                                            data-slider-value="[0,950]">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-mobile">
+                                            <div class="panel-heading" role="tab" id="headingOneMobile">
+                                                <div class="panel-title ">
+
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="panel panel-mobile">
                                             <div class="panel-heading" role="tab" id="headingFourMobile">
@@ -430,11 +459,11 @@
                                                                 value="its_complicated">It's complicated</label></div>
                                                 </div><!-- /.panel-body -->
                                             </div><!-- /.panel-collapse -->
-                                        </div><!-- /.panel -->
-                                    </div><!-- /.panel-group -->
-                                </div><!-- /.panel-body -->
-                            </div><!-- /.panel-collapse -->
-                        </div><!-- /.panel -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div><!-- /.filter-menu -->
             </div>

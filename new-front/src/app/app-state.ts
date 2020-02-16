@@ -2,6 +2,7 @@ const appState = {
   hostName: (location.hostname == 'localhost') ? 'http://localhost/' : '/',
   //general
   products: [],
+  showedProducts: [],
   breadCrumbs: [],
   productCategories: {name:'hight-level',subCategories:[]},
   //header
