@@ -24,6 +24,9 @@ export class MegaSearchComponent implements OnInit {
   appState: any;
   modelChanged = new Subject<string>();
   searchResult$: Observable<any[]>;
+  defaultMinRange = 0;
+  defaultMaxRange  = 1000;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +40,8 @@ export class MegaSearchComponent implements OnInit {
       .subscribe(() => {
         this.search();
       })
+    this.queries.minPrice = this.defaultMinRange;
+    this.queries.maxPrice = this.defaultMaxRange;
   }
 
   async ngOnInit() {
@@ -45,18 +50,9 @@ export class MegaSearchComponent implements OnInit {
     });
 
     $("#range").on("slide", (slideEvt)=> {
-      log(slideEvt.value)
-      this.queries.minPrice = slideEvt.value[0]; // get from 1 val
-      this.queries.maxPrice = slideEvt.value[1]; // get second
-      const min = this.queries.minPrice;
-      const max = this.queries.maxPrice;
-
-      this.appState.showedProducts = this.appState.products.filter(product=>{
-        console.log(this.queries.minPrice)
-        if(product.price > min && product.price < max) return true
-      })
+      //log(slideEvt.value)
+      this.minMaxFileter(slideEvt); 
     });
-
 
     log('appState', this.appState)
     let crumbs = this.route.snapshot.paramMap.get('crumbs');
@@ -67,7 +63,21 @@ export class MegaSearchComponent implements OnInit {
     //log(fromServer)
   }
 
+  minMaxFileter(slideEvt) {
+    if(slideEvt) {
+      this.queries.minPrice = slideEvt.value[0]; // get from 1 val
+      this.queries.maxPrice = slideEvt.value[1]; // get second
+    }
+    const min = this.queries.minPrice;
+    const max = this.queries.maxPrice;
 
+    this.appState.showedProducts = this.appState.products.filter(product=>{
+      console.log(this.queries.minPrice)
+      if(product.price > min && product.price < max) return true
+    })
+  }
+
+  
   async search() {
     try {
       this.queries.breadCrumbs = this.appState.breadCrumbs;
@@ -94,8 +104,8 @@ export class MegaSearchComponent implements OnInit {
       this.appState.products = this.appState.products.sort((a, b) => a.price - b.price);
     } else {
       this.appState.products = this.appState.products.sort((a, b) => b.price - a.price);
-
     }
+    this.minMaxFileter(null);
   }
 
   changed() {
