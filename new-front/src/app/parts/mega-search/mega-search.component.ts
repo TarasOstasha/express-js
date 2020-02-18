@@ -5,7 +5,7 @@ import { log, toQueryString, getUrlQueries } from '../../my_models/stuff';
 import { Queries } from '../../interfaces/queries';
 import appState from '../../app-state';
 import { Subject, Observable } from "rxjs";
-import { debounceTime, distinctUntilChanged} from "rxjs/operators"; 
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 declare const $: any;
 
@@ -25,7 +25,8 @@ export class MegaSearchComponent implements OnInit {
   modelChanged = new Subject<string>();
   searchResult$: Observable<any[]>;
   defaultMinRange = 0;
-  defaultMaxRange  = 1000;
+  defaultMaxRange = 1000;
+  selectedStarsAmount;
 
 
   constructor(
@@ -36,7 +37,7 @@ export class MegaSearchComponent implements OnInit {
     this.state = appState;
     this.appState = appState;
     this.modelChanged
-      .pipe( debounceTime(300) )
+      .pipe(debounceTime(300))
       .subscribe(() => {
         this.search();
       })
@@ -45,13 +46,14 @@ export class MegaSearchComponent implements OnInit {
   }
 
   async ngOnInit() {
+    
     $("#range").slider({
       //reversed : true
     });
 
-    $("#range").on("slide", (slideEvt)=> {
+    $("#range").on("slide", (slideEvt) => {
       //log(slideEvt.value)
-      this.minMaxFileter(slideEvt); 
+      this.refreshMinMaxRange(slideEvt);
     });
 
     log('appState', this.appState)
@@ -63,21 +65,36 @@ export class MegaSearchComponent implements OnInit {
     //log(fromServer)
   }
 
-  minMaxFileter(slideEvt) {
-    if(slideEvt) {
-      this.queries.minPrice = slideEvt.value[0]; // get from 1 val
-      this.queries.maxPrice = slideEvt.value[1]; // get second
-    }
-    const min = this.queries.minPrice;
-    const max = this.queries.maxPrice;
-
-    this.appState.showedProducts = this.appState.products.filter(product=>{
-      console.log(this.queries.minPrice)
-      if(product.price > min && product.price < max) return true
-    })
+  refreshMinMaxRange(slideEvt) {
+    this.queries.minPrice = slideEvt.value[0]; // get from 1 val
+    this.queries.maxPrice = slideEvt.value[1]; // get second
+    this.allFilters();
   }
 
-  
+  allFilters() {
+    const products = Object.assign(this.appState.products);
+    console.log(products)
+    this.appState.showedProducts = this.minMaxFilter(products, this.queries.minPrice, this.queries.maxPrice);
+    console.log(this.appState.showedProducts)
+    this.appState.showedProducts = this.minMaxFilterStars(this.appState.showedProducts, this.selectedStarsAmount);
+    console.log(this.appState.showedProducts)
+  }
+
+  minMaxFilter(products, min, max) {
+    return products.filter(product => (product.price > min && product.price < max) ? true : false)
+  }
+
+  minMaxFilterStars(products, starsAmount) {
+    //return products.filter(product => (product.stars.public == starsAmount) ? true : false)
+    return products.filter(product => {
+      console.log(product.stars.public, starsAmount, product.stars.public == starsAmount)
+      return (product.stars.public == starsAmount) ? true : false} ) 
+   
+  }
+
+
+
+
   async search() {
     try {
       this.queries.breadCrumbs = this.appState.breadCrumbs;
@@ -88,11 +105,7 @@ export class MegaSearchComponent implements OnInit {
     } catch (error) {
       log(error);
     }
-
-
-
   }
-
 
   toggleFilter = true;
   sortByPriceFlag = false;
@@ -105,7 +118,7 @@ export class MegaSearchComponent implements OnInit {
     } else {
       this.appState.products = this.appState.products.sort((a, b) => b.price - a.price);
     }
-    this.minMaxFileter(null);
+    this.allFilters();
   }
 
   changed() {
@@ -124,7 +137,7 @@ export class MegaSearchComponent implements OnInit {
     // })
   }
 
-
+  
 
   //add html filter block
 }

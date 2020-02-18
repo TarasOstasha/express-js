@@ -90,27 +90,20 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        {{selectedStarsAmount}} dfgsdgsdgs
                                         <div class="panel panel-mobile">
                                             <div class="panel-heading" role="tab" id="headingOneMobile">
                                                 <div class="panel-title ">
-                                                    <select class="filter-category">
+                                                    <select [(ngModel)]="selectedStarsAmount" (ngModelChange)="allFilters()" 
+                                                            class="filter-category">
                                                         <option selected="selected">Choose By Star (from 1-5)</option>
-                                                        <option>
-                                                            1
+                                                        <option [selected]="option.selected == true" [value]="option.amount" *ngFor="let option of [{amount:1},{amount:2},{amount:3},{amount:4},{amount:5}]">
+                                                            {{ option.amount }}
                                                         </option>
-                                                        <option>
-                                                            2
-                                                        </option>
-                                                        <option>
-                                                            3
-                                                        </option>
-                                                        <option>
-                                                            4
-                                                        </option>
-                                                        <option>
-                                                            5
-                                                        </option>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
                                                     </select>
                                                 </div>
                                             </div>
