@@ -1,0 +1,27 @@
+<!-- !!!!!?????????######********** -->
+
+<header class="header">
+    <div class="container">
+        <h4 class="page-header">Categories</h4>
+    </div>
+</header>
+<div class="primary">
+    <div class="container-filter">
+        <div>
+            <!-- -------------------------------------------------- -->
+            <div class="">
+                <div class="filter-menu mobile">
+                    <div class="form">
+                        <app-subcategory-accordion 
+                            [breadCrumbs]="appState.breadCrumbs" 
+                            [recurtionLevel]="0"
+                            [categories]="appState.productCategories">
+                        </app-subcategory-accordion>
+
+                    </div>
+                </div><!-- /.filter-menu -->
+            </div>
+        </div>
+
+    </div><!-- /.container -->
+</div><!-- /.primary -->

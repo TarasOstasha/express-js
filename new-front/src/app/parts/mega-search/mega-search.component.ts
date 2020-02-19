@@ -26,7 +26,7 @@ export class MegaSearchComponent implements OnInit {
   searchResult$: Observable<any[]>;
   defaultMinRange = 0;
   defaultMaxRange = 1000;
-  selectedStarsAmount;
+  selectedStarsAmount = 1;
 
 
   constructor(
@@ -87,8 +87,8 @@ export class MegaSearchComponent implements OnInit {
   minMaxFilterStars(products, starsAmount) {
     //return products.filter(product => (product.stars.public == starsAmount) ? true : false)
     return products.filter(product => {
-      console.log(product.stars.public, starsAmount, product.stars.public == starsAmount)
-      return (product.stars.public == starsAmount) ? true : false} ) 
+      console.log(product.stars.public, starsAmount, product.stars.public >= starsAmount)
+      return (product.stars.public >= starsAmount) ? true : false} ) 
    
   }
 

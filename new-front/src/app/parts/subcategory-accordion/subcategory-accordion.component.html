@@ -1,0 +1,69 @@
+<!-- <select (ngModelChange)="onChange($event)" class="form-control select-categories" id="exampleFormControlSelect1"
+  [(ngModel)]="state.checkedCategory" [ngModelOptions]="{standalone: true}">
+  <option selected disabled>Choose a category</option>
+  <option *ngFor="let category of categories.subCategories" [ngValue]="category">{{ category.name }}
+  </option>
+</select> -->
+
+<div class="primary">
+  <div class="container-filter">
+    <div>
+      <!-- -------------------------------------------------- -->
+      <div class="">
+        <div class="filter-menu mobile">
+          <div class="form">
+            <div *ngFor="let category of categories.subCategories;let i = index" class="panel panel-mobile">
+              <div class="panel-heading" role="tab" id="headingFiltersMobile">
+                <a [class]="(category.subCategories.length == 0) ? 'panel-title': 'panel-title accordion-toggle' " role="button" data-toggle="collapse"
+                  [attr.href]=" '#collapseFiltersMobileCategory' + i" aria-expanded="false"
+                  [attr.aria-controls]="collapseFiltersMobileCategory">
+                   {{ category.name }}
+                  <!-- name of category -->
+                </a>
+              </div>
+              <div [id]=" 'collapseFiltersMobileCategory' + i" class="panel-collapse collapse in" role="tabpanel"
+                aria-labelledby="headingFiltersMobile">
+                <div class="panel-body">
+                  <div class="panel-group" id="filter-menu-mobile" role="tablist" aria-multiselectable="true">
+
+                    <div class="panel panel-mobile">
+                      <div class="panel-heading" role="tab" id="headingFourMobile">
+                        <a class="panel-title accordion-toggle collapsed" role="button" data-toggle="collapse"
+                          data-parent="#filter-menu-mobile" href="#collapseFourMobile" aria-expanded="false"
+                          aria-controls="collapseFourMobile">
+                          <app-subcategory-accordion 
+                            [breadCrumbs]="breadCrumbs" 
+                            [recurtionLevel]="recurtionLevel + 1"
+                            *ngIf="state.checkedCategory.subCategories.length != 0" 
+                            [categories]="state.checkedCategory">
+                          </app-subcategory-accordion>
+                          <!-- name of sub category -->
+                        </a>
+                      </div>
+                      <div id="collapseFourMobile" class="panel-collapse collapse" role="tabpanel"
+                        aria-labelledby="headingFourMobile">
+                        <div class="panel-body">
+                          <div class="checkbox"><label><input type="checkbox" name="status[]"
+                                value="single">Single</label></div>
+                          <div class="checkbox"><label><input type="checkbox" name="status[]"
+                                value="married">Married</label></div>
+                          <div class="checkbox"><label><input type="checkbox" name="status[]"
+                                value="its_complicated">It's
+                              complicated</label></div>
+                        </div><!-- /.panel-body -->
+                      </div><!-- /.panel-collapse -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.filter-menu -->
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+</div><!-- /.primary -->
+
+
+<!-- {{ recurtionLevel }}- {{ state.checkedCategory.name }} -->

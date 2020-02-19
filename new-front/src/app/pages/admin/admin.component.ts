@@ -106,7 +106,10 @@ export class AdminComponent implements OnInit {
   async getproductCategories() {
     console.log('getproductCategories')
     const fromServer: any = await this.api.getCategories()
-    console.log('getproductCategories', fromServer)
+    //
+    fromServer.subCategories.map(item=> console.log(item.name))
+    //
+    console.log('getproductCategories', fromServer.subCategories)
 
     appState.productCategories = fromServer;
     this.errorHandler

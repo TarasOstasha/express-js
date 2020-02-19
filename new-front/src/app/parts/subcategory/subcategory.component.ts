@@ -14,7 +14,6 @@ export class SubcategoryComponent implements OnInit {
 
   ngOnInit() {
     if(this.category == undefined) this.category = {name:'test1', subCategories: []}
-
   }
 
   delCategory(i) {
