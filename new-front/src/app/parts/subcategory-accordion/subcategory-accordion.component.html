@@ -12,23 +12,25 @@
       <div class="">
         <div class="filter-menu mobile">
           <div class="form">
-            <div *ngFor="let category of categories.subCategories;let i = index" class="panel panel-mobile">
+            <div *ngFor="let category of categories.subCategories;let i = index;" class="panel panel-mobile">
               <div class="panel-heading" role="tab" id="headingFiltersMobile">
-                <a [class]="(category.subCategories.length == 0) ? 'panel-title': 'panel-title accordion-toggle' " role="button" data-toggle="collapse"
-                  [attr.href]=" '#collapseFiltersMobileCategory' + i" aria-expanded="false"
-                  [attr.aria-controls]="collapseFiltersMobileCategory">
-                   {{ category.name }}
+                <a (click)="toogleCategory(category.name)" 
+                  [routerLink]="['/categories',category.name]" 
+                  [class]="(category.subCategories.length == 0) ? 'panel-title': 'panel-title accordion-toggle' " 
+                  role="button" data-toggle="collapse">
+                   {{ category.name }}--{{appState.subcategoryAccordion.items.test}}
                   <!-- name of category -->
                 </a>
               </div>
-              <div [id]=" 'collapseFiltersMobileCategory' + i" class="panel-collapse collapse in" role="tabpanel"
-                aria-labelledby="headingFiltersMobile">
+              <!-- <div  [id]=" 'collapseFiltersMobileCategory' + i" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFiltersMobile"> -->
+              <div [class]="( getItemState(category.name) ) ? 'panel-collapse' : 'panel-collapse collapse in' ">
+               
                 <div class="panel-body">
-                  <div class="panel-group" id="filter-menu-mobile" role="tablist" aria-multiselectable="true">
+                  <div class="panel-group" id="filter-menu-mobile" role="tablist" aria-multiselectable="false">
 
                     <div class="panel panel-mobile">
                       <div class="panel-heading" role="tab" id="headingFourMobile">
-                        <a class="panel-title accordion-toggle collapsed" role="button" data-toggle="collapse"
+                        <a  class="panel-title accordion-toggle collapsed" role="button" data-toggle="collapse"
                           data-parent="#filter-menu-mobile" href="#collapseFourMobile" aria-expanded="false"
                           aria-controls="collapseFourMobile">
                           <app-subcategory-accordion 
@@ -43,6 +45,7 @@
                       <div id="collapseFourMobile" class="panel-collapse collapse" role="tabpanel"
                         aria-labelledby="headingFourMobile">
                         <div class="panel-body">
+                          <!-- SUB-SUB CATEGORY -->
                           <div class="checkbox"><label><input type="checkbox" name="status[]"
                                 value="single">Single</label></div>
                           <div class="checkbox"><label><input type="checkbox" name="status[]"
@@ -50,8 +53,8 @@
                           <div class="checkbox"><label><input type="checkbox" name="status[]"
                                 value="its_complicated">It's
                               complicated</label></div>
-                        </div><!-- /.panel-body -->
-                      </div><!-- /.panel-collapse -->
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -5,6 +5,12 @@ const appState = {
   showedProducts: [],
   breadCrumbs: [],
   productCategories: {name:'hight-level',subCategories:[]},
+  subcategoryAccordion: {
+    items: {
+      example1: false,
+      example2: false
+    }
+  },
   //header
   header: {
     isLogged: false,

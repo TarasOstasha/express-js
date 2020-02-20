@@ -50,6 +50,7 @@ import { Card2Component } from './parts/card/card2/card2.component';
 import { MegaSearch2Component } from './parts/mega-search/mega-search2/mega-search2.component';
 import { CategoryBlockComponent } from './parts/category-block/category-block.component';
 import { SubcategoryAccordionComponent } from './parts/subcategory-accordion/subcategory-accordion.component';
+import { CategoriesComponent } from './parts/categories/categories.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { SubcategoryAccordionComponent } from './parts/subcategory-accordion/sub
     Card2Component,
     MegaSearch2Component,
     CategoryBlockComponent,
-    SubcategoryAccordionComponent
+    SubcategoryAccordionComponent,
+    CategoriesComponent
     
   ],
   imports: [

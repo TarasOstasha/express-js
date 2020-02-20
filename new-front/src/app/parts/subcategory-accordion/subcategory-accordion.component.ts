@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import appState from 'src/app/app-state';
 
 @Component({
   selector: 'app-subcategory-accordion',
@@ -9,12 +10,13 @@ export class SubcategoryAccordionComponent implements OnInit {
   @Input() categories;
   @Input() recurtionLevel;
   @Input() breadCrumbs;
+  appState:any = appState;
 
   constructor() { }
 
   ngOnInit() {
   }
-  
+
   state = {
     checkedCategory: {
       name: 'chop',
@@ -27,5 +29,16 @@ export class SubcategoryAccordionComponent implements OnInit {
     this.breadCrumbs.splice(this.recurtionLevel, this.breadCrumbs.length - this.recurtionLevel);  // is there exist way to resolve more easier(clear)???! CUT
     this.breadCrumbs.push(event.name)
   }
+
+  toogleCategory(category) {
+    this.appState.subcategoryAccordion.items[category] = !this.appState.subcategoryAccordion.items[category];
+  }
+
+  getItemState(category) {
+    return appState.subcategoryAccordion.items[category]
+  }
+
+  alert = ()=> alert('hello')
+
 
 }

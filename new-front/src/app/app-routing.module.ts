@@ -14,6 +14,7 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.component';
 import { ManagerPageComponent } from './pages/manager-page/manager-page.component';
 import { Card2Component } from './parts/card/card2/card2.component';
+import { CategoriesComponent } from './parts/categories/categories.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'transaction-archive', component: OrdersArchiveComponent },
   { path: 'manager', component: ManagerPageComponent },
   { path: 'card2', component: Card2Component },  // just for develop, after must removed
+  { path: 'categories/:category', component: CategoriesComponent },
   { path: '**', redirectTo: '/p404' } //should be last one
 ];
 
