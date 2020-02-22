@@ -15,9 +15,6 @@
             
             <div *ngFor="let category of categories.subCategories;let i = index;" class="panel panel-mobile">
 
-
-
-
               <div class="panel-heading" id="headingFiltersMobile">
                 <a (click)="toogleCategory(category)" [routerLink]="['/categories',category.name]" class="panel-title">
                   <div class="category-title">
@@ -28,10 +25,7 @@
                 </a>
               </div>
               <div *ngIf="category.open && category.subCategories.length != 0">
-              
-
-
-
+            
                 <div class="panel-body">
                   <div class="panel-group" id="filter-menu-mobile">
                     <div class="panel panel-mobile">
@@ -50,9 +44,6 @@
                     </div>
                   </div>
                 </div>
-
-
-
 
               </div>
             </div>
