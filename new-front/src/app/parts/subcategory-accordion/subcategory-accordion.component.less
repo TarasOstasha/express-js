@@ -148,12 +148,14 @@ float:right;
     color: @gray-dark;
     font-weight: bold;
     display: block;
-    padding: 16px;    
+    padding: 0px;    
   }
-  
+  .panel-title-toggle {
+    margin: 0 0 0 5px;
+  }
   a.panel-title {
     color: @gray-dark;
-
+    //margin: 0 0 0 5px;
     &:hover,
     &:focus {
       color: @gray-dark;
@@ -162,13 +164,13 @@ float:right;
   }
   
   .panel-body {
-    padding: 16px;
+    //padding: 16px;
   }
 }
 
 /* Inner Panels */
 .filter-menu .panel-group {
-  margin: -16px;
+  //margin: -16px;
 
   .panel-title {
     background: #eee;
@@ -267,4 +269,18 @@ body {
   bottom: 0;
   width: 100%;
   height: @footer-height;
+}
+.category-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  //transition: .3s;
+}
+.fa {
+  transition: .3s;
 }

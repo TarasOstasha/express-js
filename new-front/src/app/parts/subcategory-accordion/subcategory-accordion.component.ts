@@ -15,6 +15,7 @@ export class SubcategoryAccordionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+     console.log(this.recurtionLevel)
   }
 
   state = {
@@ -31,12 +32,15 @@ export class SubcategoryAccordionComponent implements OnInit {
   }
 
   toogleCategory(category) {
-    this.appState.subcategoryAccordion.items[category] = !this.appState.subcategoryAccordion.items[category];
+    this.appState.subcategoryAccordion.items[category.name] = !this.appState.subcategoryAccordion.items[category.name];
+    category.open = !category.open;
   }
 
   getItemState(category) {
     return appState.subcategoryAccordion.items[category]
   }
+
+  
 
   alert = ()=> alert('hello')
 
