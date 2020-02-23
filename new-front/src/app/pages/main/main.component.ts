@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { state } from '@angular/animations';
 import { ApiService } from '../../services/api.service';
-import { SessionService } from '../../services/session.service';
-import { StorageService } from '../../services/storage.service'
-import  state  from '../../app-state';
+import state from '../../app-state';
 
 
 @Component({
@@ -13,35 +11,19 @@ import  state  from '../../app-state';
 })
 export class MainComponent implements OnInit {
   state: any; //remove
-  appState:any;
+  appState: any;
   constructor(
-    
+
     private api: ApiService,
-    private session: SessionService,
-    private storage: StorageService
-    
-  ) { 
+
+  ) {
     this.state = state;
     this.appState = state;
-   }
+  }
 
   async ngOnInit() {
     // setTimeout(()=> alert('Hi Guys, Thank you for visit us.\n Our web site is on develop \n If you have any question write us on tonyjoss1990@gmail.com'), 1000)
-    this.state.header.basket.products = this.storage.getBasketFromStorage();
-    const fromServer: any = await this.api.getProducts()
-      state.products = fromServer.products;
-      this.errorHandler 
-   
 
-    this.session.getUser()
-      .then((dataFromLocalStorage: any) => {
-        state.header.user.name = dataFromLocalStorage.user.firstName || dataFromLocalStorage.user.username;
-      })
-      .catch( this.errorHandler )
-  }
-
-   errorHandler(err) {
-    console.log(err);
   }
 
   cardHandler(product) {

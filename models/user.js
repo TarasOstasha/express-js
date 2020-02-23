@@ -19,6 +19,7 @@ let User = mongoose.model('User', {
     firstName: String,
     lastName: String,
     date_of_birth: Date,
+    role: String,
     phone_verif: Boolean,
     active: Boolean,
     last_login: { type: Date, default: Date.now },

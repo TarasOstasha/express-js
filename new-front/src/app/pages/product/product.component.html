@@ -3,7 +3,7 @@
 	<div class="card">
 		<div class="container-fliud">
 			<div class="wrapper row">
-				<button *ngIf="!editFlag" (click)="editForAdmin()" class="btn btn-primary edit">Edit</button>
+				<button *ngIf="!editFlag && state.header.user.role == 'admin' " (click)="editForAdmin()" class="btn btn-primary edit">Edit</button>
 				<button *ngIf="editFlag" (click)="saveForAdmin(state.product)"
 					class="btn btn-primary edit save">Save</button>
 				<div class="preview col-md-6">
@@ -12,13 +12,13 @@
 
 						<div *ngFor="let img of state.product.imgs; let i = index;"
 							[class]="( state.activeSliderImg[i] ) ? 'tab-pane active' : 'tab-pane' " id="pic-{{ 1+i }}">
-							<img [src]="img" />
+							<img [src]="url + img" />
 						</div>
 					</div>
 					<ul class="preview-thumbnail nav nav-tabs">
 						<li (click)="changeImg(i)" *ngFor="let img of state.product.imgs; let i = index;"
 							[class]="( state.activeSliderImg[i] ) ? 'active' : '' ">
-							<a><img [src]="img" /></a>
+							<a><img [src]="url + img" /></a>
 						</li>
 					</ul>
 

@@ -233,6 +233,7 @@ router.post('/register', cors(), async (req, res) => {
     if (user) return res.json({ ok: false, message: 'this user already exist' });
 
     const new_user = new User({
+      role: 'user',
       username: req.body.email,
       firstName: req.body.firstName,
       lastName: req.body.lastName,

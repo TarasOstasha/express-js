@@ -13,6 +13,7 @@ export class ProductComponent implements OnInit {
   editFlag: boolean = false;
   newSize;
   newColor;
+  url =  state.hostName;
   //private api: ApiService
 
   constructor(

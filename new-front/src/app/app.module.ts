@@ -51,7 +51,7 @@ import { MegaSearch2Component } from './parts/mega-search/mega-search2/mega-sear
 import { CategoryBlockComponent } from './parts/category-block/category-block.component';
 import { SubcategoryAccordionComponent } from './parts/subcategory-accordion/subcategory-accordion.component';
 import { CategoriesComponent } from './parts/categories/categories.component';
-
+import { IsAdminGuard } from './guard/is-admin.guard';
 
 @NgModule({
   declarations: [
@@ -87,7 +87,8 @@ import { CategoriesComponent } from './parts/categories/categories.component';
     MegaSearch2Component,
     CategoryBlockComponent,
     SubcategoryAccordionComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    
     
   ],
   imports: [
@@ -105,7 +106,7 @@ import { CategoriesComponent } from './parts/categories/categories.component';
     // MatSort,
     // MatTableDataSource
   ],
-  providers: [ApiService, StorageService, SearchService],
+  providers: [ApiService, StorageService, SearchService, IsAdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

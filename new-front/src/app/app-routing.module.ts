@@ -15,6 +15,7 @@ import { OrdersArchiveComponent } from './pages/orders-archive/orders-archive.co
 import { ManagerPageComponent } from './pages/manager-page/manager-page.component';
 import { Card2Component } from './parts/card/card2/card2.component';
 import { CategoriesComponent } from './parts/categories/categories.component';
+import { IsAdminGuard } from './guard/is-admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -22,7 +23,7 @@ const routes: Routes = [
   { path: 'about-us', component: AboutUsComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'p404', component: P404Component },
-  { path: 'admin', component:  AdminComponent},
+  { path: 'admin', component:  AdminComponent, canActivate: [IsAdminGuard]},
   { path: 'admin-messages', component:  AdminMessagesComponent },
   { path: 'archive-messages', component: AdminMessagesArchiveComponent },
   { path: 'product/:productId', component: ProductComponent },

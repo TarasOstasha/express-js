@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import appState from '../../app-state';
+declare var location: any;
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -105,6 +106,7 @@ export class AuthComponent implements OnInit {
   }
   async signIn() {
     try {
+      if(location.port == 4200) { return alert('login works only on port 80(not cross domain)') }
       const userData = {
         email: this.userForm.controls.email.value,
         password: this.pwd.value

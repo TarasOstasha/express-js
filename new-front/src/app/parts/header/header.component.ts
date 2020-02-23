@@ -43,6 +43,8 @@ export class HeaderComponent implements OnInit {
     alert('see profile preferenses');
   }
 
-
+  logOut() {
+    localStorage.clear();
+  }
 
 }

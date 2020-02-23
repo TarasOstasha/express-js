@@ -16,7 +16,8 @@ const appState = {
     isLogged: false,
     user: {
       name: '',
-      _id: 'unlogged'
+      _id: 'unlogged',
+      role: 'user'
     },
     basket: {
       open: false,
