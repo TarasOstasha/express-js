@@ -4,6 +4,8 @@ import { SearchService } from '../../services/search.service';
 import { Subject } from 'rxjs';
 import { Pipe, PipeTransform } from '@angular/core';
 import appState from '../../app-state';
+import { ViewportScroller } from '@angular/common';
+
 //import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 
@@ -26,7 +28,9 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private viewportScroller: ViewportScroller
+    
   ) { 
     this.appState = appState;
   }
@@ -192,6 +196,17 @@ export class AdminComponent implements OnInit {
   //pagination of Products Data Table
   clickPagination1(currentPage) {
     this.state.table.product.page = currentPage;
+  }
+  // clear all localstorage when logout
+  logOut() {
+    localStorage.clear();
+  }
+
+  public onClick(elementId: string): void { 
+    setTimeout(()=>{
+      this.viewportScroller.scrollToAnchor(elementId);
+    },1000)
+    
   }
   
 }

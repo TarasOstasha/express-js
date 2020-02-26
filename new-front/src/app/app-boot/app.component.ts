@@ -22,7 +22,7 @@ export class AppComponent {
 
   async ngOnInit(){
     
-    setInterval(()=> console.log(this.appState), 5000)
+    console.log(this.appState)
     try {
       this.fingerPrint.checkIfItExist();
       this.getUserInfo();

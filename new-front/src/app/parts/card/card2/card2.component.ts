@@ -36,7 +36,7 @@ export class Card2Component implements OnInit {
   ngOnInit() {
     this.carousel = `#carousel-${this.index} ul`;
     this.carouselInit(this.index);
-    console.log(this.state.imgs, '-this.state.imgs')
+    //console.log(this.state.imgs, '-this.state.imgs')
   }
 
   imgSlides: any = [

@@ -15,10 +15,12 @@ export class SessionService {
   }
   async getUser() {
     try {
+      //if user exist -> return user
       const json = localStorage.getItem('user');
       if (json == 'undefined') this.removeUser();
       if (json && json !== 'undefined') return JSON.parse(json);
 
+      //if not exist user -> get user from back
       const fromServer: any = await this.api.getSessionInfo();
       if (fromServer.user) { this.setUser(fromServer); return fromServer } //if session
       //else res('no session') //if no session

@@ -17,7 +17,7 @@ export class RatingComponent implements OnChanges {
 
   }
   ngOnInit() {
-    console.log('ratingPrivate', this.ratingPrivate)
+    //console.log('ratingPrivate', this.ratingPrivate)
   }
   checkedStar(icon) {
     console.log(icon); //send data to server

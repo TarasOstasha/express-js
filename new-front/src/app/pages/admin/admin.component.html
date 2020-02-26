@@ -26,10 +26,10 @@
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html">Start bootsrtap</a>
+    <a class="navbar-brand mr-1" href="index.html">Admin Panel</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-      <i class="fa fa-bars"></i>
+      <!-- <i class="fa fa-bars"></i> -->
     </button>
 
     <!-- Navbar Search -->
@@ -47,42 +47,18 @@
 
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-bell fa-fw"></i>
-          <span class="badge badge-danger">9+</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-envelope fa-fw"></i>
-          <span class="badge badge-danger">7</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Activity Log</a>
+          <!-- name of admin -->
+          <a class="dropdown-item">Admin - {{ appState.header.user.name }}</a>
+          <!-- <a class="dropdown-item" href="#">Activity Log</a> -->
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <!-- logOut -->
+          <a class="dropdown-item" (click)="logOut()" href="/logout">Logout</a>
         </div>
       </li>
     </ul>
@@ -116,12 +92,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fa fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="#awesomePart" >
           <i class="fa fa-fw fa-table"></i>
           <span>Tables</span></a>
       </li>
@@ -209,20 +180,8 @@
           </div>
         </div>
         <app-new-products [categories]="appState.productCategories" [breadCrumbs]="appState.breadCrumbs" [state]="state.newProduct"></app-new-products>
-
-        <!-- Area Chart Example-->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fa fa-chart-area"></i>
-            Area Chart Example</div>
-          <div class="card-body">
-            <canvas id="myAreaChart" width="100%" height="30"></canvas>
-          </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
-
         <!-- DataTables Products -->
-        <div class="row">
+        <div class="row" id="awesomePart">
           <div class="col-sm-12 col-md-6">
             <label>Show entries
               <select [(ngModel)]="state.table.product.range">

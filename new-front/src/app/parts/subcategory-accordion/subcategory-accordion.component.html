@@ -16,7 +16,7 @@
             <div *ngFor="let category of categories.subCategories;let i = index;" class="panel panel-mobile">
 
               <div class="panel-heading" id="headingFiltersMobile">
-                <a (click)="toogleCategory(category)" [routerLink]="['/categories',category.name]" class="panel-title">
+                <a (click)="toogleCategory(category)" class="panel-title">
                   <div class="category-title">
                     <span>{{ category.name }}</span>
                     <i *ngIf="category.subCategories.length != 0" [class]="(category.open) ? 'fa fa-angle-up rotate-180' : 'fa fa-angle-up' "></i>

@@ -19,6 +19,7 @@ export class IsAdminGuard implements CanActivate {
 
   async canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ) {
     const user: any = await this.session.getUser();
+    console.log(user.rol, 'role')
     if (user.role == 'admin') {
       console.log('guard admin')
       return true;

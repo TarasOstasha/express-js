@@ -5,6 +5,7 @@ import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import appState from '../../app-state';
+import { SessionService } from '../../services/session.service';
 declare var location: any;
 @Component({
   selector: 'app-auth',
@@ -34,7 +35,8 @@ export class AuthComponent implements OnInit {
     private formBuilder: FormBuilder,
     private storage: StorageService,
     private api: ApiService,
-    private router: Router
+    private router: Router,
+    private session: SessionService
   ) {
     this.appState = appState;
     const pwdValidators: ValidatorFn[] = [Validators.required, Validators.minLength(6), Validators.maxLength(20)];
@@ -120,8 +122,8 @@ export class AuthComponent implements OnInit {
         // this.state.header.user.name = fromServer.user.firstName;
         this.appState.header.isLogged = true;
         this.appState.header.user.name = fromServer.user.firstName;
-        this.router.navigateByUrl('/');
-        
+        this.session.getUser() // set user to local storage
+        setInterval(()=> this.router.navigateByUrl('/') ,500);
       }
     } catch (error) {
       console.log(error)
