@@ -19,4 +19,5 @@ const parseQuery = (queryString) => {
 const getUrlQueries:any = () => parseQuery(location.search); // get query from url
 //create setQuery
 
+
 export { log, toQueryString, parseQuery, getUrlQueries };

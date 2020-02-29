@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import appState from 'src/app/app-state';
 import { Router } from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { toQueryString } from '../../my_models/stuff';
 @Component({
   selector: 'app-subcategory-accordion',
   templateUrl: './subcategory-accordion.component.html',
@@ -19,10 +21,11 @@ export class SubcategoryAccordionComponent implements OnInit {
     event.stopPropagation();
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private api: ApiService) { }
 
   ngOnInit() {
     this.urlTail = this.getUrlTail();
+    this.getProductsBYCategory();
   }
 
   state = {
@@ -39,6 +42,8 @@ export class SubcategoryAccordionComponent implements OnInit {
     this.appState.subcategoryAccordion.items[category.name] = !this.appState.subcategoryAccordion.items[category.name];
     category.open = !category.open;
     this.router.navigate(['/categories/' + this.breadCrumbs.join('-')]);
+
+    this.getProductsBYCategory();
   }
 
   getItemState(category) {
@@ -50,6 +55,15 @@ export class SubcategoryAccordionComponent implements OnInit {
     return urlArr[urlArr.length - 1].split('-');
   }
 
+
+
+  async getProductsBYCategory() {
+
+    const queryString = toQueryString({ breadCrumbs: this.breadCrumbs.join('-') });
+    const fromServer = await this.api.megaSearch(queryString);
+    console.log(fromServer);
+    this.appState.showedProducts = fromServer;
+  }
 
   alert = () => alert('hello')
 
