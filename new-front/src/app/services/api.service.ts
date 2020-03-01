@@ -19,7 +19,9 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
-  
+  getImgUrlsSlider() {
+    return this.http.get(url + 'img-urls-slider').toPromise();
+  }
 
   getJson(json) {
     return this.http.get('./assets/data/' + json).toPromise();

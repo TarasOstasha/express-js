@@ -18,6 +18,9 @@ const Chat = require('../models/chat');
 const mailer = require('../controllers/mail/mailer');
 const bcrypt = require('bcrypt');
 const Session = require('../models/session');
+var path = require("path");
+
+
 
 
 const cards = [
@@ -46,7 +49,7 @@ const cards = [
 ];
 
 router.post('/upload', function (req, res) {
-  console.log('test form route', req.files)
+  //console.log('test form route', req.files)
   if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -159,7 +162,7 @@ router.post('/search', cors(), function (req, res, next) {
 
 
 router.get('/products', cors(), function (req, res, next) {
-  console.log('get product is working')
+  //console.log('get product is working')
   Product.find().then((products) => {
     res.json({ ok: true, products: products })
   }).catch((err) => {
@@ -392,7 +395,7 @@ router.post('/user-statistic', cors(), function (req, res, next) {
 
 
 router.post('/user-voute', cors(), async function (req, res) {
-  console.log('user-voute')
+  //console.log('user-voute')
   const voute = req.body;
   //step 1 
   const product = await Product.findOneAndUpdate({
@@ -444,7 +447,7 @@ router.get('/mega-search', cors(), async (req, res) => {
 })
 //save edit product in component ProductComponent
 router.put('/edit-product', cors(), async (req, res) => {
-  console.log('SIZES!!!', req.body.sizes)
+  //console.log('SIZES!!!', req.body.sizes)
   const productObj = req.body; // get all product object (state)
   const editedName = productObj.productName; //  get productName from user side
   const editedSize = productObj.sizes; // get sizes array
@@ -458,13 +461,13 @@ router.put('/edit-product', cors(), async (req, res) => {
     description: editDescription,
     colorProducts: editColor
   }, { new: true });
-  console.log('!!!!!!!!!!product', product, editedSize)
+  //console.log('!!!!!!!!!!product', product, editedSize)
   res.json('okayyy');
 })
 
 router.post('/contacts-mail', cors(), async (req, res) => {
   try {
-    console.log('request body from server side', req.body)
+    //console.log('request body from server side', req.body)
     const new_message = new ContactMessage({
       userId: req.body.userId,
       email: req.body.email,
@@ -504,12 +507,12 @@ router.get('/admin-notifications', cors(), async (req, res) => {
 router.get('/admin-messages/:page', cors(), async (req, res) => {
   const page = req.params.page;
   const size = +req.query.size || 30;
-  console.log('size', size);
+  //console.log('size', size);
   const adminMessages = await ContactMessage
     .find({})
     .limit(size)
     .skip(size * page - size); // get chunk of messages
-  console.log(req.params.page);
+  // console.log(req.params.page);
   res.json({
     adminMessages
   })
@@ -528,7 +531,7 @@ router.put('/move-to-archive-admin-messages', cors(), async (req, res) => {
     });
     adminMessageArchive.save();
     await ContactMessage.findByIdAndDelete({ _id });
-    console.log('adminMessage', adminMessage)
+    //console.log('adminMessage', adminMessage)
     res.json({ adminMessage });
   } catch (error) {
     console.log(error);
@@ -551,7 +554,7 @@ router.put('/transaction-archive', cors(), async (req, res) => {
     })
     transactionArchive.save();
     await Transaction.findByIdAndDelete({ _id });
-    console.log(transaction, '- transaction');
+    //console.log(transaction, '- transaction');
     res.json({ transaction })
   } catch (error) {
     console.log(error);
@@ -563,7 +566,7 @@ router.put('/transaction-archive', cors(), async (req, res) => {
 router.put('/archive-to-transaction', cors(), async (req, res) => {
   try {
     const _id = req.body._id;
-    console.log(_id);
+    //console.log(_id);
     const transactionArchive = await TransactionArchive.findOne({ _id });
     const transaction = new Transaction({
       _id: transactionArchive._id,
@@ -575,7 +578,7 @@ router.put('/archive-to-transaction', cors(), async (req, res) => {
     })
     transaction.save();
     await TransactionArchive.findByIdAndDelete({ _id });
-    console.log(transaction, '- transaction');
+    //console.log(transaction, '- transaction');
     res.json({ transactionArchive })
   } catch (error) {
     console.log(error);
@@ -670,7 +673,7 @@ router.post('/payment_intents', async (req, res) => {
         status: 'intend (stage 2)',
         paymentIntent // paymentIntent: paymentIntent
       })
-    console.log('paymentIntent', paymentIntent);
+    //console.log('paymentIntent', paymentIntent);
     return res.json(paymentIntent);
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -721,13 +724,30 @@ router.post('/session', async (req, res) => {
   }
 })
 
-router.get('/get-user-info-if-logged', async(req, res)=>{
+router.get('/get-user-info-if-logged', async (req, res) => {
   try {
-    console.log(req.user)
+    //console.log(req.user)
     const user = {
       firstName: (req.user) ? req.user.firstName : null
     }
     res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+})
+
+router.get('/img-urls-slider', async (req, res) => {
+  try {
+    dataImg = [];
+    var files = fs.readdirSync(module.parent.path + '/public/uploads/slider-main-page/');
+    // remove system file - .DS_Store
+    if(files[0] == '.DS_Store') files.splice(0,1);
+    files.map((img) => {
+      const currentImg = { img: 'uploads/slider-main-page/' + img }
+      dataImg.push(currentImg)
+    })
+    res.json(dataImg)
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

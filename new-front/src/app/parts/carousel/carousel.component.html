@@ -1,9 +1,9 @@
 <div class="container-fluid container-fluid-carousel">
   <div class="slider-wrapper" id="container">
     <ul class="slider-list">
-      <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn">
+      <li *ngFor="let slide of imgSlides; index as i; trackBy: trackByFn"> 
         <!-- <div class="slide-wrapper" *ngIf="i==slidePointer" [@slideInOut1]> -->
-        <img class="slide-wrapper" [src]=slide.img *ngIf="i==slidePointer" [@slideInOut1]>
+        <img class="slide-wrapper" [src]= "url + slide.img" *ngIf="i==slidePointer" [@slideInOut1]>
         <!-- </div> -->
       </li>
       <div class="btn-left" (click)=moveLeft()>

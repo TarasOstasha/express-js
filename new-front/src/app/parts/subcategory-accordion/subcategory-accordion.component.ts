@@ -56,7 +56,7 @@ export class SubcategoryAccordionComponent implements OnInit {
   }
 
 
-
+// fiter category
   async getProductsBYCategory() {
 
     const queryString = toQueryString({ breadCrumbs: this.breadCrumbs.join('-') });
