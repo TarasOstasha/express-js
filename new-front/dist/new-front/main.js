@@ -3546,7 +3546,7 @@ var Card2Component = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid container-fluid-carousel\">\n  <div class=\"slider-wrapper\" id=\"container\">\n    <ul class=\"slider-list\">\n      <li *ngFor=\"let slide of imgSlides; index as i; trackBy: trackByFn\">\n        <!-- <div class=\"slide-wrapper\" *ngIf=\"i==slidePointer\" [@slideInOut1]> -->\n        <img class=\"slide-wrapper\" [src]=slide.img *ngIf=\"i==slidePointer\" [@slideInOut1]>\n        <!-- </div> -->\n      </li>\n      <div class=\"btn-left\" (click)=moveLeft()>\n        <button class=\"left-slide-btn\" ><i class=\"fa fa-chevron-circle-left slide-icon\"></i></button>\n      </div>\n      <div class=\"btn-right\" (click)=moveRight()>\n        <button class=\"right-slide-btn\" ><i class=\"fa fa-chevron-circle-right slide-icon\"></i></button>\n      </div>\n      <!-- <button class=\"left-slide-btn btn-visible-hover\" (click)=moveLeft()><i class=\"fa fa-chevron-circle-left slide-icon\"></i></button> -->\n      <!-- <button class=\"right-slide-btn btn-visible-hover\" (click)=moveRight()><i class=\"fa fa-chevron-circle-right slide-icon\"></i></button> -->\n    </ul>\n    <!-- <button class=\"left-slide-btn\" (click)=moveLeft()><i class=\"fa fa-chevron-circle-left slide-icon\"></i></button> \n    <button class=\"right-slide-btn\" (click)=moveRight()><i class=\"fa fa-chevron-circle-right slide-icon\"></i></button>  -->\n  </div>\n</div>"
+module.exports = "<div class=\"container-fluid container-fluid-carousel\">\n  <div class=\"slider-wrapper\" id=\"container\">\n    <ul class=\"slider-list\">\n      <li *ngFor=\"let slide of imgSlides; index as i; trackBy: trackByFn\"> \n        <!-- <div class=\"slide-wrapper\" *ngIf=\"i==slidePointer\" [@slideInOut1]> -->\n        <img class=\"slide-wrapper\" [src]= \"url + slide.img\" *ngIf=\"i==slidePointer\" [@slideInOut1]>\n        <!-- </div> -->\n      </li>\n      <div class=\"btn-left\" (click)=moveLeft()>\n        <button class=\"left-slide-btn\" ><i class=\"fa fa-chevron-circle-left slide-icon\"></i></button>\n      </div>\n      <div class=\"btn-right\" (click)=moveRight()>\n        <button class=\"right-slide-btn\" ><i class=\"fa fa-chevron-circle-right slide-icon\"></i></button>\n      </div>\n      <!-- <button class=\"left-slide-btn btn-visible-hover\" (click)=moveLeft()><i class=\"fa fa-chevron-circle-left slide-icon\"></i></button> -->\n      <!-- <button class=\"right-slide-btn btn-visible-hover\" (click)=moveRight()><i class=\"fa fa-chevron-circle-right slide-icon\"></i></button> -->\n    </ul>\n    <!-- <button class=\"left-slide-btn\" (click)=moveLeft()><i class=\"fa fa-chevron-circle-left slide-icon\"></i></button> \n    <button class=\"right-slide-btn\" (click)=moveRight()><i class=\"fa fa-chevron-circle-right slide-icon\"></i></button>  -->\n  </div>\n</div>"
 
 /***/ }),
 
@@ -3574,30 +3574,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/api.service */ "./src/app/services/api.service.ts");
+/* harmony import */ var _app_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../app-state */ "./src/app/app-state.ts");
+
+
 
 
 
 var CarouselComponent = /** @class */ (function () {
-    function CarouselComponent() {
+    function CarouselComponent(api) {
+        this.api = api;
+        this.url = _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].hostName;
         this.test = 'test taras';
-        this.imgSlides = [
-            {
-                img: 'assets/img/image.jpg',
-            },
-            {
-                img: 'assets/img/2015-Nike-Mag-02_hd_1600.jpg'
-            },
-            {
-                img: 'assets/img/18-420_Nike_Paul_George_3_Heroes_04_Surface-02_rectangle_1600.jpg'
-            }
-            // {
-            //   img: 'assets/img/2U3A5415.jpg'
-            // }
-        ];
+        this.imgSlides = [];
+        // imgSlides: any = [
+        //   {
+        //     img: 'assets/img/image.jpg',
+        //   },
+        //   {
+        //     img: 'assets/img/2015-Nike-Mag-02_hd_1600.jpg'
+        //   },
+        //   {
+        //     img: 'assets/img/18-420_Nike_Paul_George_3_Heroes_04_Surface-02_rectangle_1600.jpg'
+        //   }
+        // {
+        //   img: 'assets/img/2U3A5415.jpg'
+        // }
+        //]
         this.slidePointer = 0;
-        this.endSlider = this.imgSlides.length - 1; // останній елемент в масиві
-        this.startSlider = this.imgSlides[0]; // 1 елемент в масиві
     }
+    CarouselComponent.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var fromServer;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        //slider 24
+                        setInterval(this.moveRight, 5000);
+                        return [4 /*yield*/, this.api.getImgUrlsSlider()];
+                    case 1:
+                        fromServer = _a.sent();
+                        console.log(fromServer, 'slider-mainpage');
+                        this.imgSlides = fromServer;
+                        this.endSlider = this.imgSlides.length - 1; // останній елемент в масиві
+                        this.startSlider = this.imgSlides[0]; // 1 елемент в масиві
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     CarouselComponent.prototype.moveLeft = function () {
         if (this.slidePointer == 0)
             this.slidePointer = this.endSlider;
@@ -3605,16 +3630,15 @@ var CarouselComponent = /** @class */ (function () {
             this.slidePointer--;
     };
     CarouselComponent.prototype.moveRight = function () {
+        console.log('before', this.slidePointer);
         this.startSlider = 'test';
         if (this.slidePointer == this.endSlider) { //тут оприділяю що в нас наш каунтер дійшов до кінця масиву
             this.slidePointer = 0; // обнуляю каунтер 
+            console.log('if');
         }
         else
             this.slidePointer++; // тут каунтер збільшую 
-    };
-    CarouselComponent.prototype.ngOnInit = function () {
-        //slider 24
-        setInterval(this.moveRight, 5000);
+        console.log('after', this.slidePointer, this.endSlider);
     };
     CarouselComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -3633,7 +3657,7 @@ var CarouselComponent = /** @class */ (function () {
             ],
             styles: [__webpack_require__(/*! ./carousel.component.less */ "./src/app/parts/carousel/carousel.component.less")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"]])
     ], CarouselComponent);
     return CarouselComponent;
 }());
@@ -5505,6 +5529,9 @@ var ApiService = /** @class */ (function () {
     function ApiService(http) {
         this.http = http;
     }
+    ApiService.prototype.getImgUrlsSlider = function () {
+        return this.http.get(url + 'img-urls-slider').toPromise();
+    };
     ApiService.prototype.getJson = function (json) {
         return this.http.get('./assets/data/' + json).toPromise();
     };
