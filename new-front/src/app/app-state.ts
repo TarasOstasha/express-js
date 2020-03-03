@@ -4,7 +4,7 @@ const appState = {
   products: [],
   showedProducts: [],
   breadCrumbs: [],
-  productCategories: {name:'hight-level',subCategories:[]},
+  productCategories: { name: 'hight-level', subCategories: [] },
   subcategoryAccordion: {
     items: {
       example1: false,
@@ -29,7 +29,7 @@ const appState = {
     },
     searchResult: []
   },
-//pages
+  //pages
   pages: {
     admin: {
       header: {
@@ -46,7 +46,7 @@ const appState = {
           paymentData: {}
         },
         searchResult: [],
-        
+
       },
       products: [],
       productPage: 1,
@@ -61,13 +61,13 @@ const appState = {
         color: '',
         colorProducts: [],
         standartSizes: [{ size: 6, checked: true },
-                        { size: 7, checked: true },
-                        { size: 8, checked: true },
-                        { size: 9, checked: true },
-                        { size: 10, checked: true },
-                        { size: 11, checked: true },
-                        { size: 12, checked: true }
-                      ],
+        { size: 7, checked: true },
+        { size: 8, checked: true },
+        { size: 9, checked: true },
+        { size: 10, checked: true },
+        { size: 11, checked: true },
+        { size: 12, checked: true }
+        ],
         sizes: [],
 
         currentNewProductImg: 'assets/img/sws1.png',
@@ -99,6 +99,12 @@ const appState = {
       productSearchResult: [], // idea???
       userSearchResult: [] // idea???
     }
+  },
+
+  // for auth component
+  checked_form: 'login',
+  error: {
+    dublicate_user: false
   }
 
 }

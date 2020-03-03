@@ -336,6 +336,11 @@ var appState = {
             productSearchResult: [],
             userSearchResult: [] // idea???
         }
+    },
+    // for auth component
+    checked_form: 'login',
+    error: {
+        dublicate_user: false
     }
 };
 /* harmony default export */ __webpack_exports__["default"] = (appState);
@@ -1356,7 +1361,7 @@ var AdminComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header [state]=\"state.header\" (onChanged)=\"headerHandler($event)\"></app-header>\n<div class=\"container\">\n  <div class=\"row\" style=\"margin-top:20px\">\n    <div class=\"col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 auth-block\" [ngSwitch]=\"state.checked_form\">\n\n      <!-- FORM -->\n      <form class=\"form-signIn\" *ngSwitchCase=\" 'login' \" [formGroup]=\"userForm\">\n        <fieldset>\n          <h2>Please Sign In Test</h2>\n          <hr class=\"colorgraph\">\n\n\n          <!-- form-group email -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"email\" id=\"email\" type=\"email\" formControlName=\"email\"\n              placeholder=\"email\">\n            <app-form-validator [it]=\"email\"></app-form-validator>\n          </div>\n\n          <!-- form-group password -->\n          <fieldset formGroupName=\"passwords\">\n              <div class=\"form-group\">\n                  <input type=\"password\" name=\"pwd\" id=\"pwd\" class=\"form-control input-lg\" placeholder=\"Password\" \n                  formControlName=\"pwd\"> \n                  <app-form-validator [it]=\"pwd\"></app-form-validator> \n                </div>\n          </fieldset>\n          <span class=\"button-checkbox\">\n            <button type=\"button\" class=\"btn\" data-color=\"info\">Remember Me</button>\n            <input type=\"checkbox\" name=\"remember_me\" id=\"remember_me\" checked=\"checked\" class=\"hidden\">\n            <a href=\"\" class=\"btn btn-link pull-right\">Forgot Password?</a>\n          </span>\n          <hr class=\"colorgraph\">\n          <div class=\"row\">\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-success btn-block\" (click)=\"signIn()\">Sign In</a>\n              <!-- <input c type=\"submit\" class=\"btn btn-lg btn-success btn-block\" value=\"Sign In\"> -->\n            </div>\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-primary btn-block\" (click)=\"state.checked_form = 'register' \">Sign Up</a>\n            </div>\n          </div>\n        </fieldset>\n      </form>\n      <!-- signUp-Form -->\n      <form class=\"form-signUp\" *ngSwitchCase=\" 'register' \" [formGroup]=\"userForm\">\n        <fieldset>\n          <h2>Please Sign Up</h2>\n          <hr class=\"colorgraph\">\n\n          <!-- first name -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"firstName\" id=\"firstName\" type=\"text\" formControlName=\"firstName\"\n              placeholder=\"First Name\">\n            <app-form-validator [it]=\"firstName\"></app-form-validator>\n          </div>\n\n          <!-- last name -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"lastName\" id=\"lastName\" type=\"text\" formControlName=\"lastName\"\n              placeholder=\"Last Name\">\n            <app-form-validator [it]=\"lastName\"></app-form-validator>\n          </div>\n\n          <!-- email -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"firstName\" id=\"email\" type=\"email\" formControlName=\"email\"\n              placeholder=\"Email Address\">\n            <app-form-validator [it]=\"email\"></app-form-validator>\n          </div>\n\n          <div *ngIf=\"state.error.dublicate_user\" class=\"alert alert-dismissible alert-danger\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n            <strong>Oh snap!</strong> User is alrerady exist. Please enter another email or Sign In\n          </div>\n\n          <fieldset formGroupName=\"passwords\">\n            <!-- password -->\n            <div class=\"form-group\">\n              <input type=\"password\" name=\"password\" id=\"password\" class=\"form-control input-lg\" placeholder=\"Password\"\n                formControlName=\"pwd\">\n              <!-- <app-validator-message [field]=\"secondFormGroup.get('passwords').get('pwd')\"></app-validator-message> -->\n              <app-form-validator [it]=\"pwd\"></app-form-validator>\n            </div>\n\n            <!-- confirm password -->\n            <div class=\"form-group\">\n              <input type=\"password\" name=\"confirm\" id=\"password-confirm\" class=\"form-control input-lg\"\n                placeholder=\"Confirm Password\" formControlName=\"confirm\">\n              <app-form-validator [it]=\"confirm\"></app-form-validator>\n            </div>\n            <!-- mix validation: confirm, passwords -->\n            <!-- equal -->\n            <div *ngIf=\" !confirm.pristine && passwords.errors && passwords.errors.passwordsAreEqual\"\n              class=\"alert alert-danger\">\n              {{passwords.errors.passwordsAreEqual.msg}}\n            </div>\n          </fieldset>\n          <hr class=\"colorgraph\">\n          <div class=\"row\">\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-success btn-block\" (click)=\"state.checked_form = 'login' \">Sign In</a>\n            </div>\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-primary btn-block\" (click)=\"register()\">Register</a>\n            </div>\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-success btn-block\" href=\"http://localhost:3000/api/auth/facebook\">Log with\n                Facebook</a>\n            </div>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n<app-footer></app-footer>\n\n\n<a href=\"/api/auth/facebook\">Login via Facebook </a>"
+module.exports = "<app-header [state]=\"appState.header\" (onChanged)=\"headerHandler($event)\"></app-header>\n<div class=\"container\">\n  <div class=\"row\" style=\"margin-top:20px\">\n    <div class=\"col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 auth-block\" [ngSwitch]=\"appState.checked_form\">\n\n      <!-- FORM -->\n      <form class=\"form-signIn\" *ngSwitchCase=\" 'login' \" [formGroup]=\"userForm\">\n        <fieldset>\n          <h2>Please Sign In Test</h2>\n          <hr class=\"colorgraph\">\n\n\n          <!-- form-group email -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"email\" id=\"email\" type=\"email\" formControlName=\"email\"\n              placeholder=\"email\">\n            <app-form-validator [it]=\"email\"></app-form-validator>\n          </div>\n\n          <!-- form-group password -->\n          <fieldset formGroupName=\"passwords\">\n              <div class=\"form-group\">\n                  <input type=\"password\" name=\"pwd\" id=\"pwd\" class=\"form-control input-lg\" placeholder=\"Password\" \n                  formControlName=\"pwd\"> \n                  <app-form-validator [it]=\"pwd\"></app-form-validator> \n                </div>\n          </fieldset>\n          <span class=\"button-checkbox\">\n            <button type=\"button\" class=\"btn\" data-color=\"info\">Remember Me</button>\n            <input type=\"checkbox\" name=\"remember_me\" id=\"remember_me\" checked=\"checked\" class=\"hidden\">\n            <a href=\"\" class=\"btn btn-link pull-right\">Forgot Password?</a>\n          </span>\n          <hr class=\"colorgraph\">\n          <div class=\"row\">\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-success btn-block\" (click)=\"signIn()\">Sign In</a>\n              <!-- <input c type=\"submit\" class=\"btn btn-lg btn-success btn-block\" value=\"Sign In\"> -->\n            </div>\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-primary btn-block\" (click)=\"appState.checked_form = 'register' \">Sign Up</a>\n            </div>\n          </div>\n        </fieldset>\n      </form>\n      <!-- signUp-Form -->\n      <form class=\"form-signUp\" *ngSwitchCase=\" 'register' \" [formGroup]=\"userForm\">\n        <fieldset>\n          <h2>Please Sign Up</h2>\n          <hr class=\"colorgraph\">\n\n          <!-- first name -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"firstName\" id=\"firstName\" type=\"text\" formControlName=\"firstName\"\n              placeholder=\"First Name\">\n            <app-form-validator [it]=\"firstName\"></app-form-validator>\n          </div>\n\n          <!-- last name -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"lastName\" id=\"lastName\" type=\"text\" formControlName=\"lastName\"\n              placeholder=\"Last Name\">\n            <app-form-validator [it]=\"lastName\"></app-form-validator>\n          </div>\n\n          <!-- email -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" name=\"firstName\" id=\"email\" type=\"email\" formControlName=\"email\"\n              placeholder=\"Email Address\">\n            <app-form-validator [it]=\"email\"></app-form-validator>\n          </div>\n\n          <div *ngIf=\"appState.error.dublicate_user\" class=\"alert alert-dismissible alert-danger\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n            <strong>Oh snap!</strong> User is alrerady exist. Please enter another email or Sign In\n          </div>\n\n          <fieldset formGroupName=\"passwords\">\n            <!-- password -->\n            <div class=\"form-group\">\n              <input type=\"password\" name=\"password\" id=\"password\" class=\"form-control input-lg\" placeholder=\"Password\"\n                formControlName=\"pwd\">\n              <!-- <app-validator-message [field]=\"secondFormGroup.get('passwords').get('pwd')\"></app-validator-message> -->\n              <app-form-validator [it]=\"pwd\"></app-form-validator>\n            </div>\n\n            <!-- confirm password -->\n            <div class=\"form-group\">\n              <input type=\"password\" name=\"confirm\" id=\"password-confirm\" class=\"form-control input-lg\"\n                placeholder=\"Confirm Password\" formControlName=\"confirm\">\n              <app-form-validator [it]=\"confirm\"></app-form-validator>\n            </div>\n            <!-- mix validation: confirm, passwords -->\n            <!-- equal -->\n            <div *ngIf=\" !confirm.pristine && passwords.errors && passwords.errors.passwordsAreEqual\"\n              class=\"alert alert-danger\">\n              {{passwords.errors.passwordsAreEqual.msg}}\n            </div>\n          </fieldset>\n          <hr class=\"colorgraph\">\n          <div class=\"row\">\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-success btn-block\" (click)=\"appState.checked_form = 'login' \">Sign In</a>\n            </div>\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-primary btn-block\" (click)=\"register()\">Register</a>\n            </div>\n            <div class=\"col-xs-6 col-sm-6 col-md-6\">\n              <a class=\"btn btn-lg btn-success btn-block\" href=\"http://localhost:3000/api/auth/facebook\">Log with\n                Facebook</a>\n            </div>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n<app-footer></app-footer>\n\n\n<a href=\"/api/auth/facebook\">Login via Facebook </a>"
 
 /***/ }),
 
@@ -1420,22 +1425,6 @@ var AuthComponent = /** @class */ (function () {
             role: 'Guest',
             notes: null
         };
-        this.state = {
-            header: {
-                isLogged: false,
-                user: {
-                    name: ''
-                },
-                basket: {
-                    open: false,
-                    products: []
-                }
-            },
-            checked_form: 'login',
-            error: {
-                dublicate_user: false
-            }
-        };
         this.appState = _app_state__WEBPACK_IMPORTED_MODULE_6__["default"];
         var pwdValidators = [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(20)];
         this.userForm = this.formBuilder.group({
@@ -1470,9 +1459,25 @@ var AuthComponent = /** @class */ (function () {
             return isEqual ? null : error_message;
         };
     };
+    // state = {
+    //   header: {
+    //     isLogged: false,
+    //     user: {
+    //       name: ''
+    //     },
+    //     basket: {
+    //       open: false,
+    //       products: []
+    //     }
+    //   },
+    //   checked_form: 'login',
+    //   error: {
+    //     dublicate_user: false
+    //   }
+    // }
     AuthComponent.prototype.ngOnInit = function () {
         console.log('this is pwd', this.pwd);
-        this.state.header.basket.products = this.storage.getBasketFromStorage();
+        this.appState.header.basket.products = this.storage.getBasketFromStorage();
         // setInterval(() => {
         //   console.log(this.userForm)
         // }, 1000)
@@ -1499,8 +1504,8 @@ var AuthComponent = /** @class */ (function () {
                         this.userForm.reset();
                         console.log('result', fromServer);
                         if (fromServer.ok) {
-                            // this.state.header.isLogged = true;
-                            // this.state.header.user.name = fromServer.user.firstName;
+                            this.storage.clearItem('user');
+                            this.storage.clearItem('session');
                             this.appState.header.isLogged = true;
                             this.appState.header.user.name = fromServer.user.firstName;
                             this.session.getUser(); // set user to local storage
@@ -1535,7 +1540,7 @@ var AuthComponent = /** @class */ (function () {
                         fromServer = _a.sent();
                         this.userForm.reset();
                         if (fromServer.ok == false)
-                            this.state.error.dublicate_user = true;
+                            this.appState.error.dublicate_user = true;
                         console.log('result', fromServer);
                         return [3 /*break*/, 3];
                     case 2:
@@ -5314,7 +5319,7 @@ module.exports = "<select (ngModelChange)=\"onChange($event)\" class=\"form-cont
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".select-categories {\n  border-radius: none!important;\n  background-color: rgba(255, 255, 255, 0.1);\n  color: #fff;\n  border: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy90b255am9zcy9EZXNrdG9wL215QXBwL2V4cHJlc3MtanMvbmV3LWZyb250L3NyYy9hcHAvcGFydHMvc3ViY2F0ZWdvcnktc2VsZWN0L3N1YmNhdGVnb3J5LXNlbGVjdC5jb21wb25lbnQubGVzcyIsInNyYy9hcHAvcGFydHMvc3ViY2F0ZWdvcnktc2VsZWN0L3N1YmNhdGVnb3J5LXNlbGVjdC5jb21wb25lbnQubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUVJLDZCQUFBO0VBQ0EsMENBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtBQ0FKIiwiZmlsZSI6InNyYy9hcHAvcGFydHMvc3ViY2F0ZWdvcnktc2VsZWN0L3N1YmNhdGVnb3J5LXNlbGVjdC5jb21wb25lbnQubGVzcyIsInNvdXJjZXNDb250ZW50IjpbIi5zZWxlY3QtY2F0ZWdvcmllcyB7XG4gICAgLy93aWR0aDogO1xuICAgIGJvcmRlci1yYWRpdXM6IG5vbmUhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LDI1NSwyNTUsMC4xKTtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBib3JkZXI6IG5vbmU7XG59IiwiLnNlbGVjdC1jYXRlZ29yaWVzIHtcbiAgYm9yZGVyLXJhZGl1czogbm9uZSFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcbiAgY29sb3I6ICNmZmY7XG4gIGJvcmRlcjogbm9uZTtcbn1cbiJdfQ== */"
+module.exports = ".select-categories {\n  border-radius: none!important;\n  background-color: rgba(255, 255, 255, 0.1);\n  color: #000;\n  border: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy90b255am9zcy9EZXNrdG9wL215QXBwL2V4cHJlc3MtanMvbmV3LWZyb250L3NyYy9hcHAvcGFydHMvc3ViY2F0ZWdvcnktc2VsZWN0L3N1YmNhdGVnb3J5LXNlbGVjdC5jb21wb25lbnQubGVzcyIsInNyYy9hcHAvcGFydHMvc3ViY2F0ZWdvcnktc2VsZWN0L3N1YmNhdGVnb3J5LXNlbGVjdC5jb21wb25lbnQubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUVJLDZCQUFBO0VBQ0EsMENBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtBQ0FKIiwiZmlsZSI6InNyYy9hcHAvcGFydHMvc3ViY2F0ZWdvcnktc2VsZWN0L3N1YmNhdGVnb3J5LXNlbGVjdC5jb21wb25lbnQubGVzcyIsInNvdXJjZXNDb250ZW50IjpbIi5zZWxlY3QtY2F0ZWdvcmllcyB7XG4gICAgLy93aWR0aDogO1xuICAgIGJvcmRlci1yYWRpdXM6IG5vbmUhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LDI1NSwyNTUsMC4xKTtcbiAgICBjb2xvcjogIzAwMDtcbiAgICBib3JkZXI6IG5vbmU7XG59IiwiLnNlbGVjdC1jYXRlZ29yaWVzIHtcbiAgYm9yZGVyLXJhZGl1czogbm9uZSFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcbiAgY29sb3I6ICMwMDA7XG4gIGJvcmRlcjogbm9uZTtcbn1cbiJdfQ== */"
 
 /***/ }),
 
@@ -5879,6 +5884,9 @@ var StorageService = /** @class */ (function () {
         return Promise.resolve().then(function () {
             return localStorage.getItem(key);
         });
+    };
+    StorageService.prototype.clearItem = function (key) {
+        localStorage.removeItem(key);
     };
     StorageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

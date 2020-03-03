@@ -82,26 +82,26 @@ export class AuthComponent implements OnInit {
   }
 
 
-  state = {
-    header: {
-      isLogged: false,
-      user: {
-        name: ''
-      },
-      basket: {
-        open: false,
-        products: []
-      }
-    },
-    checked_form: 'login',
-    error: {
-      dublicate_user: false
-    }
-  }
+  // state = {
+  //   header: {
+  //     isLogged: false,
+  //     user: {
+  //       name: ''
+  //     },
+  //     basket: {
+  //       open: false,
+  //       products: []
+  //     }
+  //   },
+  //   checked_form: 'login',
+  //   error: {
+  //     dublicate_user: false
+  //   }
+  // }
 
   ngOnInit() {
     console.log('this is pwd', this.pwd);
-    this.state.header.basket.products = this.storage.getBasketFromStorage()
+    this.appState.header.basket.products = this.storage.getBasketFromStorage()
     // setInterval(() => {
     //   console.log(this.userForm)
     // }, 1000)
@@ -118,8 +118,8 @@ export class AuthComponent implements OnInit {
       this.userForm.reset()
       console.log('result', fromServer);
       if (fromServer.ok) {
-        // this.state.header.isLogged = true;
-        // this.state.header.user.name = fromServer.user.firstName;
+        this.storage.clearItem('user');
+        this.storage.clearItem('session');
         this.appState.header.isLogged = true;
         this.appState.header.user.name = fromServer.user.firstName;
         this.session.getUser() // set user to local storage
@@ -140,7 +140,7 @@ export class AuthComponent implements OnInit {
       }
       const fromServer: any = await this.api.register(userData)
       this.userForm.reset()
-      if (fromServer.ok == false) this.state.error.dublicate_user = true;
+      if (fromServer.ok == false) this.appState.error.dublicate_user = true;
 
       console.log('result', fromServer);
     } catch (error) {
