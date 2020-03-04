@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import appState from '../../app-state';
 import { SessionService } from '../../services/session.service';
 declare var location: any;
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -31,6 +32,7 @@ export class AuthComponent implements OnInit {
     notes: null
   };
   appState: any;
+  url =  appState.hostName;
   constructor(
     private formBuilder: FormBuilder,
     private storage: StorageService,
