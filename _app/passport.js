@@ -33,11 +33,11 @@ var config = {
         callbackURL: "http://127.0.0.1:3600/auth/github/callback"
     },
     google: {
-        clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
-        clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
-        // callbackURL: 'http://127.0.0.1:3600/auth/google/callback'
-        callbackURL: 'https://tonyjoss.com/auth/google/callback'//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
-        // callbackURL: `${process.env.HOST}:3600/auth/google/callback`
+        // clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
+        // clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
+        // // callbackURL: 'http://127.0.0.1:3600/auth/google/callback'
+        // callbackURL: 'https://tonyjoss.com/auth/google/callback'//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
+        // // callbackURL: `${process.env.HOST}:3600/auth/google/callback`
 
     },
     instagram: {
@@ -85,15 +85,11 @@ passport.use(new LocalStrategy({
 }));
 
 passport.use(new GoogleStrategy({
-    // clientID: config.google.clientID,
-    // clientSecret: config.google.clientSecret,
-    // callbackURL: config.google.callbackURL
-
-    clientID: '92005282075-9mhfnmoa0kve9gbhg46vvdpgcsl1ko9j.apps.googleusercontent.com', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
-    clientSecret: 'sIkzPyHKsbxkHIU6-xsZTbii', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
-    // callbackURL: 'http://127.0.0.1:3600/auth/google/callback'
+   
+    clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
+    clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
     callbackURL: 'https://tonyjoss.com/auth/google/callback'//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
-    // callbackURL: `${process.env.HOST}:3600/auth/google/callback`
+
 
 },
     function (request, accessToken, refreshToken, profile, done) {
