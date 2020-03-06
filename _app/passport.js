@@ -86,9 +86,9 @@ passport.use(new LocalStrategy({
 
 passport.use(new GoogleStrategy({
    
-    clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
-    clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
-    callbackURL: 'https://tonyjoss.com/auth/google/callback'//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
+    clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', 
+    clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', 
+    callbackURL: 'https://tonyjoss.com/auth/google/callback'
 
 
 },
