@@ -96,8 +96,7 @@ passport.use(new GoogleStrategy({
         // log-s
         log('google profile: ', profile)
         // var-s
-        //var email = ''
-        var email = profile.email
+        var email = ''
         let id = profile.id
         let username = profile.displayName
 
