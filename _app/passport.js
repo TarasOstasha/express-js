@@ -9,11 +9,11 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 //import passportGoogle from 'passport-google-oauth'
 // var TwitterStrategy = require('passport-twitter').Strategy;
 // var GithubStrategy = require('passport-github2').Strategy;
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+//var GoogleStrategy = require('passport-google-oauth20').Strategy;
 // var InstagramStrategy = require('passport-instagram').Strategy;
 var User = require('../models/user.js');
 let log = console.log
-
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var config = {
     facebook: {

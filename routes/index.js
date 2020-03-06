@@ -194,9 +194,13 @@ const google_scope = [
   'https://www.googleapis.com/auth/plus.login',
   'https://www.googleapis.com/auth/plus.profile.emails.read'
 ]
-router.get('/api/auth/google', passport.authenticate('google', { scope: google_scope }));
+//router.get('/api/auth/google', passport.authenticate('google', { scope: google_scope }));
 //router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => res.redirect(process.env.AUTH_callback));
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => res.redirect('/'));
+
+app.get('api/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => res.redirect('/'));
 
 
 
