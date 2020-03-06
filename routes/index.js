@@ -191,10 +191,8 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', { failur
 // google
 //
 const google_scope = [
-  //'https://www.googleapis.com/auth/plus.login',
-  //'https://www.googleapis.com/auth/plus.profile.emails.read'
-  'https://www.googleapis.com/auth/userinfo.profile',
-  'https://www.googleapis.com/auth/userinfo.email'
+  'https://www.googleapis.com/auth/plus.login',
+  'https://www.googleapis.com/auth/plus.profile.emails.read'
 ]
 router.get('/api/auth/google', passport.authenticate('google', { scope: google_scope }));
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => res.redirect(process.env.AUTH_callback));
