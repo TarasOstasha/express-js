@@ -198,7 +198,7 @@ const google_scope = [
 //router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => res.redirect(process.env.AUTH_callback));
 
 router.get('api/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+  passport.authenticate('google', { scope: google_scope }));
 router.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => res.redirect('/'));
 
