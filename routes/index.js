@@ -21,7 +21,35 @@ const Session = require('../models/session');
 var path = require("path");
 
 
+router.get('/all-users', (req, res, next) => {
+  User.find({}, function (err, users) {
+      res.send(users);
+  });
+});
 
+
+router.get('/user', (req, res, next) => {
+  res.send(req.user);
+});
+
+
+router.get('/clean', (req, res, next) => {
+  User.remove({}, () => { }); // !!!!!!!!!!!!!!!!!!!!!!
+  res.send('clean');
+});
+
+
+router.get('/send-mail', (req, res, next) => {
+  mailer.send(
+      'Vitaliy <we.js.clan@gmail.com> ', // from
+      'shadespiritenator@gmail.com', // to
+      'Nodemailer test', // subject
+      'Hello Gmail 2- ' + new Date(), // text
+  )
+  console.dir(req.headers)
+  console.dir(req.rawHeaders)
+  res.send({ m: 'Hello!' })
+});
 
 const cards = [
   {
