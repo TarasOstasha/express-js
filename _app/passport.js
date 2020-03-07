@@ -15,56 +15,57 @@ var User = require('../models/user.js');
 let log = console.log
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-var config = {
-    facebook: {
-        clientID: '606330336522613', //process.env.FB_ID,  // '455174914848353',
-        clientSecret: '2ac98be6f4897dee347d645f9e537b74', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
-        callbackURL: 'https://tonyjoss.com/auth/facebook/callback'//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
-        // callbackURL: `${process.env.HOST}:3600/auth/facebook/callback`
-    },
-    twitter: {
-        consumerKey: 'get_your_own',
-        consumerSecret: 'get_your_own',
-        callbackURL: "http://127.0.0.1:3600/auth/twitter/callback"
-    },
-    github: {
-        clientID: 'get_your_own',
-        clientSecret: 'get_your_own',
-        callbackURL: "http://127.0.0.1:3600/auth/github/callback"
-    },
-    google: {
-        // clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', //process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
-        // clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', //process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
-        // // callbackURL: 'http://127.0.0.1:3600/auth/google/callback'
-        // callbackURL: 'https://tonyjoss.com/auth/google/callback'//process.env.GP_CLB //'http://r4.okm.pub:3600/auth/google/callback'
-        // // callbackURL: `${process.env.HOST}:3600/auth/google/callback`
-
-    },
-    instagram: {
-        clientID: 'get_your_own',
-        clientSecret: 'get_your_own',
-        callbackURL: 'http://127.0.0.1:3600/auth/instagram/callback'
-    }
-};
-
 
 //
 // serialize and deserialize
 //
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
     log('serializeUser: ' + user._id);
     done(null, user._id);
 })
 
-passport.deserializeUser(function (id, done) {
-    User.findById(id, function (err, user) {
-        log(user)
-        if (!err) done(null, user)
-        else done(err, null)
+passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+        (!err) ? done(null, user) : done(err, null);
     });
 })
 
+async function createUser(strategy, profile, done) {
 
+    const newUser = new User({
+        username: profile.displayName,
+        created: Date.now(),
+        wallets: {
+            USD: {
+                balance: 0
+            }
+        }
+    });
+
+    if (strategy == 'google') {
+        const email = profile.emails[0].value;
+        newUser.email = email;
+        newUser.google = {
+            id: profile.id,
+            username: profile.displayName,
+            email: email,
+        }
+    }
+
+    if (strategy == 'facebook') {
+        const email = (profile.email) ? profile.email : '';
+        newUser.email = email;
+        newUser.facebook = {
+            id: profile.id,
+            username: profile.displayName,
+            email: email
+        }
+    }
+
+    await newUser.save();
+    done(null, newUser);
+    log("USER SAVED !!!");
+}
 
 //
 // LocalStrategys
@@ -85,111 +86,56 @@ passport.use(new LocalStrategy({
 }));
 
 passport.use(new GoogleStrategy({
-   
-    clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com', 
-    clientSecret: 'SATBdfSYF_tMPF65sJIukSxF', 
-    callbackURL: 'https://tonyjoss.com/auth/google/callback'
-
-
-},
-    function (request, accessToken, refreshToken, profile, done) {
-        // log-s
-        log('google profile: ', profile)
-        // var-s
-        var email = ''
-        let id = profile.id
-        let username = profile.displayName
-
-        User.findOne({ 'google.id': profile.id }, function (err, user) {
-
-            if (err) log(err)
-
-            if (!err && user !== null) {
-                done(null, user);
-            } else {
-
-                log(profile)
-
-                if (profile.email) email = profile.email
-
-                user = new User()
-
-                user.google.id = id,
-                    user.google.username = username,
-                    user.google.email = email,
-                    user.username = username,
-                    user.email = email,
-                    user.created = Date.now()
-                user.wallets =
-                    {
-                        USD: {
-                            balance: 0
-                        }
-                    }
-
-                user.save(function (err) {
-                    if (err) log(err)
-                    else {
-                        log("saving user ...");
-                        done(null, user);
-                    }
-                })
-            }
-        })
+    clientID: '92005282075-90e7p38q48s6vvq6er9hk92k9jh56tcn.apps.googleusercontent.com',
+    clientSecret: 'SATBdfSYF_tMPF65sJIukSxF',
+    callbackURL: 'https://tonyjoss.com/auth/google/callback',
+    //clientID: process.env.GP_ID, //'706111676047-g5j86f7ipga7ant19ii0shaltrooac36.apps.googleusercontent.com',
+    //clientSecret: process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
+    //callbackURL: process.env.GP_CLB, //'http://r4.okm.pub:3600/auth/google/callback'
+    passReqToCallback: true
+  },
+    async (request, accessToken, refreshToken, profile, done) => {
+      try {
+        log('google profile: '.info, profile);
+        const user = await User.findOne({ 'google.id': profile.id });
+  
+        (user)
+          ? done(null, user)
+          : createUser('google', profile, done);
+  
+      } catch (error) {
+        log(error)
+      }
     }
-))
-
-module.exports = passport.use(new FacebookStrategy({
-    clientID: config.facebook.clientID,
-    clientSecret: config.facebook.clientSecret,
-    callbackURL: config.facebook.callbackURL
-},
-    function (accessToken, refreshToken, profile, done) {
-        // logs
-        log('facebook profile: '.info, profile)
-        // var-s
-        let email = ''
-        let id = profile.id
-        let username = profile.displayName
-
-        User.findOne({ 'facebook.id': profile.id }, function (err, user) {
-
-            if (err) log(err)
-
-            if (!err && user !== null) done(null, user)
-            else {
-
-                if (profile.email) email = profile.email
-
-                user = new User()
-
-                user.facebook.id = id,
-                    user.facebook.username = username,
-                    user.facebook.email = email,
-                    user.username = username,
-                    user.firstName = username,
-                    user.email = email,
-                    user.created = Date.now()
-                user.wallets =
-                    {
-                        USD: {
-                            balance: 0
-                        }
-                    }
-
-                user.save(function (err) {
-                    if (err) log(err)
-                    else {
-                        log("saving user ...")
-                        done(null, user)
-                    }
-                })
-
-            }
-        })
+  ))
+  
+  module.exports = passport.use(new FacebookStrategy({
+    clientID: '606330336522613', //process.env.FB_ID,  // '455174914848353',
+    clientSecret: '2ac98be6f4897dee347d645f9e537b74', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
+    callbackURL: 'https://tonyjoss.com/auth/facebook/callback',//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
+    // clientID: process.env.FB_ID,  // '455174914848353',
+    // clientSecret: process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
+    // callbackURL: process.env.FB_CLB, // 'http://r4.okm.pub:3600/auth/facebook/callback'
+    profileFields: ['id', 'displayName', 'link', 'email', 'name', 'picture.type(large)']
+    // passReqToCallback : true,
+  },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        log('facebook profile: '.info, profile);
+        const user = await User.findOne({ 'facebook.id': profile.id });
+  
+        (user)
+          ? done(null, user)
+          : createUser('facebook', profile, done);
+  
+      } catch (error) {
+        log(error)
+      }
     }
-))
+  ))
 
+
+//////////////////////////
 // passport.use(new TwitterStrategy({
 //   consumerKey: config.twitter.consumerKey,
 //   consumerSecret: config.twitter.consumerSecret,
