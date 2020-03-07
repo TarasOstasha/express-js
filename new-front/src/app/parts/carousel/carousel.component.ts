@@ -69,13 +69,13 @@ export class CarouselComponent implements OnInit {
   }
 
   moveRight() {
-    console.log('before', this.slidePointer)
+    //console.log('before', this.slidePointer)
     this.startSlider = 'test';
     if (this.slidePointer == this.endSlider) { //тут оприділяю що в нас наш каунтер дійшов до кінця масиву
       this.slidePointer = 0; // обнуляю каунтер 
-      console.log('if')
+      //console.log('if')
     } else this.slidePointer++;  // тут каунтер збільшую 
-    console.log('after', this.slidePointer, this.endSlider)
+    //console.log('after', this.slidePointer, this.endSlider)
 
 
   }

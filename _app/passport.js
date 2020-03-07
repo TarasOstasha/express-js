@@ -116,7 +116,7 @@ passport.use(new GoogleStrategy({
     // clientID: process.env.FB_ID,  // '455174914848353',
     // clientSecret: process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
     // callbackURL: process.env.FB_CLB, // 'http://r4.okm.pub:3600/auth/facebook/callback'
-    //profileFields: ['id', 'displayName', 'link', 'email', 'name', 'picture.type(large)']
+    profileFields: ['id', 'displayName', 'link', 'email', 'name', 'picture.type(large)']
     // passReqToCallback : true,
   },
     async (accessToken, refreshToken, profile, done) => {
