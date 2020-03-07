@@ -19,7 +19,7 @@ var config = {
     facebook: {
         clientID: '606330336522613', //process.env.FB_ID,  // '455174914848353',
         clientSecret: '2ac98be6f4897dee347d645f9e537b74', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
-        callbackURL: 'http://localhost/auth/facebook/callback'//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
+        callbackURL: 'https://tonyjoss.com/auth/facebook/callback'//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
         // callbackURL: `${process.env.HOST}:3600/auth/facebook/callback`
     },
     twitter: {
