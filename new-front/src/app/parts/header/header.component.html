@@ -63,7 +63,7 @@
       <ul class="wrapper-button-registration">
           <li id="signIn">
             <a *ngIf="!state.isLogged" routerLink="/auth">Sign In</a>
-            <a class="link-ptofile" *ngIf="state.isLogged"(click)="showProfile()">{{ state.user.name }}</a>&nbsp;&nbsp;  {{appSate.header.user.name}}
+            <a class="link-ptofile" *ngIf="state.isLogged"(click)="showProfile()">{{ state.user.name }}</a>&nbsp;&nbsp;  {{state.user | json}}
             <a *ngIf="state.isLogged" (click)="logOut()" href="/logout">Sign Out</a>
           </li>
       </ul>
