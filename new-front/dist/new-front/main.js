@@ -120,9 +120,14 @@ var AppComponent = /** @class */ (function () {
                     case 1:
                         fromServer = _a.sent();
                         console.log('result getUserInfo', fromServer);
-                        if (fromServer.firstName || fromServer.userName) {
+                        //if (fromServer.firstName || fromServer.userName) {
+                        if (fromServer.firstName) {
                             this.appState.header.isLogged = true;
                             this.appState.header.user.name = fromServer.firstName;
+                        }
+                        else if (fromServer.userName) {
+                            this.appState.header.isLogged = true;
+                            this.appState.header.user.name = fromServer.userName;
                         }
                         return [2 /*return*/];
                 }
@@ -3636,15 +3641,15 @@ var CarouselComponent = /** @class */ (function () {
             this.slidePointer--;
     };
     CarouselComponent.prototype.moveRight = function () {
-        console.log('before', this.slidePointer);
+        //console.log('before', this.slidePointer)
         this.startSlider = 'test';
         if (this.slidePointer == this.endSlider) { //тут оприділяю що в нас наш каунтер дійшов до кінця масиву
             this.slidePointer = 0; // обнуляю каунтер 
-            console.log('if');
+            //console.log('if')
         }
         else
             this.slidePointer++; // тут каунтер збільшую 
-        console.log('after', this.slidePointer, this.endSlider);
+        //console.log('after', this.slidePointer, this.endSlider)
     };
     CarouselComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

@@ -41,9 +41,13 @@ export class AppComponent {
   async getUserInfo() {
     const fromServer: any = await this.api.getUserInfoIfLogged();
     console.log('result getUserInfo', fromServer);
-    if (fromServer.firstName || fromServer.userName) {
+    //if (fromServer.firstName || fromServer.userName) {
+    if (fromServer.firstName) {
       this.appState.header.isLogged = true;
-      this.appState.header.user.name = fromServer.firstName || fromServer.userName
+      this.appState.header.user.name = fromServer.firstName
+    }else if(fromServer.userName) {
+      this.appState.header.isLogged = true;
+      this.appState.header.user.name = fromServer.userName
     }
   }
 
