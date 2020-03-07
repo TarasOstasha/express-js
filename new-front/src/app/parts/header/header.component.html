@@ -64,7 +64,8 @@
           <li id="signIn">
             <a *ngIf="!state.isLogged" routerLink="/auth">Sign In</a>
             <!-- <a class="link-ptofile" *ngIf="state.isLogged"(click)="showProfile()">{{ state.user.name }}</a>&nbsp;&nbsp; -->
-            <a class="link-ptofile" *ngIf="state.isLogged"(click)="showProfile()">{{ appState.header.user.name }}</a>&nbsp;&nbsp;
+            <a class="link-ptofile" (click)="showProfile()">{{ state.user.name }}</a>&nbsp;&nbsp;
+            
             <a *ngIf="state.isLogged" (click)="logOut()" href="/logout">Sign Out</a>
           </li>
       </ul>
