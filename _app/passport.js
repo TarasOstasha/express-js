@@ -33,7 +33,7 @@ passport.deserializeUser((id, done) => {
 async function createUser(strategy, profile, done) {
 
     const newUser = new User({
-        username: profile.displayName,
+        userName: profile.displayName,
         created: Date.now(),
         wallets: {
             USD: {
@@ -47,7 +47,7 @@ async function createUser(strategy, profile, done) {
         newUser.email = email;
         newUser.google = {
             id: profile.id,
-            username: profile.displayName,
+            userName: profile.displayName,
             email: email,
         }
     }
@@ -57,7 +57,7 @@ async function createUser(strategy, profile, done) {
         newUser.email = email;
         newUser.facebook = {
             id: profile.id,
-            username: profile.displayName,
+            userName: profile.displayName,
             email: email
         }
     }

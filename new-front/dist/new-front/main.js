@@ -120,7 +120,7 @@ var AppComponent = /** @class */ (function () {
                     case 1:
                         fromServer = _a.sent();
                         console.log('result getUserInfo', fromServer);
-                        if (fromServer.firstName) {
+                        if (fromServer.firstName || fromServer.userName) {
                             this.appState.header.isLogged = true;
                             this.appState.header.user.name = fromServer.firstName;
                         }
