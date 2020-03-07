@@ -123,7 +123,8 @@ var AppComponent = /** @class */ (function () {
                         if (fromServer.firstName || fromServer.userName) {
                             this.appState.header.isLogged = true;
                             console.log('isLogged - ', this.appState.header.isLogged, fromServer.header.user.name, ' -userName');
-                            this.appState.header.user.name = fromServer.firstName;
+                            //this.appState.header.user.name = fromServer.firstName  OLD
+                            this.appState.header.user.name = fromServer.userName;
                         }
                         return [2 /*return*/];
                 }
