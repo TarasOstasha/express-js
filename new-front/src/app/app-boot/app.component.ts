@@ -45,7 +45,7 @@ export class AppComponent {
       this.appState.header.isLogged = true;
       console.log('isLogged - ', this.appState.header.isLogged, fromServer.header.user.name, ' -userName');
       //this.appState.header.user.name = fromServer.firstName  OLD
-      this.appState.header.user.name = fromServer.userName 
+      this.appState.header.userName.name = fromServer.userName 
 
     }
   }
