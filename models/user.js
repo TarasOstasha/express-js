@@ -9,7 +9,7 @@ let User = mongoose.model('User', {
     purchases_made: [],
     saved_numbers: [],
 
-    username: { type: String, index: true, required: true, unique: true },
+    userName: { type: String, index: true, required: true, unique: true },
     password: { type: String },
     email: { type: String, unique: true},
     email_token: String,
