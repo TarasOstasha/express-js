@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('header LOGIN NAME', this.state.header.user.name);
   }
   //showBasked: boolean = false;
   onShowBasket(): void {
