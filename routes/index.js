@@ -760,6 +760,17 @@ router.get('/get-user-info-if-logged', async (req, res) => {
     const user = {
       firstName: (req.user) ? req.user.firstName : null
     }
+    if(req.user) {
+      var user = {
+        firstName: req.user.firstName,
+        userName: req.user.userName,
+        isLogged: true
+      }
+    } else {
+      var user = {
+        isLogged: false
+      }
+    }
     res.json(user);
   } catch (error) {
     console.log(error);
