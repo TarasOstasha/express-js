@@ -88,26 +88,7 @@ router.get('/', async function (req, res) {
 router.get('/about-us', function (req, res, next) {
   res.render('about-us', { title: 'hello world', list: ['a', 'b'] });
 });
-// const todos = [
-//       {
-//         'id': 1,
-//         'title': 'to do my home work',
-//         'completed': false,
-//         'editing': false
-//       },
-//       {
-//         'id': 2,
-//         'title': 'to do my exersises',
-//         'completed': false,
-//         'editing': false
-//       },
-//       {
-//         'id': 3,
-//         'title': 'to do my lundry',
-//         'completed': false,
-//         'editing': false
-//       },
-//     ]
+
 router.get('/todos', cors(), function (req, res, next) {
   fs.readFile('task.json', 'UTF-8', (err, todosjSON) => {
     const todos = JSON.parse(todosjSON);
@@ -152,14 +133,9 @@ router.get('/search', cors(), function (req, res, next) {
   })
 });
 
-
-
 router.post('/search', cors(), function (req, res, next) {
   res.json(cards);
 });
-
-
-
 
 router.get('/products', cors(), function (req, res, next) {
   //console.log('get product is working')
@@ -180,27 +156,43 @@ router.get('/product/:id', cors(), function (req, res, next) {
   });
 });
 
+const successRedirect = '/main';
+const failureRedirect = '/auth/login';
+const redirects = { successRedirect, failureRedirect }
 
+
+//
+// facebook
+// 
+router.get(
+  '/api/auth/facebook',
+  passport.authenticate('facebook'),
+  (req, res) => { }
+);
+router.get(
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', redirects),
+  (req, res) => { }
+);
 
 // facebook
 // 
-router.get('/api/auth/facebook', passport.authenticate('facebook'), (req, res) => { });
-router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => res.redirect('/'));
+//router.get('/api/auth/facebook', passport.authenticate('facebook'), (req, res) => { });
+//router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => res.redirect('/'));
 
 
+  //
 // google
 //
-const google_scope = [
-  'https://www.googleapis.com/auth/plus.login',
-  'https://www.googleapis.com/auth/plus.profile.emails.read'
-]
-router.get('/api/auth/google', 
-  passport.authenticate('google', { scope: google_scope }));
-router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/' }), (req, res) => res.redirect(process.env.AUTH_callback));
-
-
-
+router.get(
+  '/api/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', redirects),
+  (req, res) => { }
+);
 
 
 
