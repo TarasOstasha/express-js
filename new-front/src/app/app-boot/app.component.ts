@@ -43,7 +43,9 @@ export class AppComponent {
     console.log('result getUserInfo', fromServer);
     if (fromServer.firstName || fromServer.userName) {
       this.appState.header.isLogged = true;
-      this.appState.header.user.name = fromServer.firstName || fromServer.userName
+     // this.appState.header.user.name = fromServer.firstName 
+     this.appState.header.user.name = fromServer.userName 
+
     }
   }
 
