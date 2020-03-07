@@ -756,7 +756,7 @@ router.post('/session', async (req, res) => {
 
 router.get('/get-user-info-if-logged', async (req, res) => {
   try {
-    //console.log(req.user)
+    console.log(req.user)
     // const user = {
     //   firstName: (req.user) ? req.user.firstName : null
     // }
