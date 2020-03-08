@@ -80,50 +80,44 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var fromServer, user, error_1;
+            var fromServer, error_1;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         console.log(this.appState);
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([1, 3, , 4]);
                         this.fingerPrint.checkIfItExist();
-                        this.getUserInfo();
+                        this.setUserInfo();
                         this.appState.header.basket.products = this.storage.getBasketFromStorage();
                         return [4 /*yield*/, this.api.getProducts()];
                     case 2:
                         fromServer = _a.sent();
                         _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].products = fromServer.products;
-                        return [4 /*yield*/, this.session.getUser()];
+                        return [3 /*break*/, 4];
                     case 3:
-                        user = _a.sent();
-                        console.log(user, '---dataFromLocalStorage');
-                        _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.role = user.role;
-                        _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.name = user.firstName || user.username;
-                        return [3 /*break*/, 5];
-                    case 4:
                         error_1 = _a.sent();
                         console.log(error_1);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    AppComponent.prototype.getUserInfo = function () {
+    AppComponent.prototype.setUserInfo = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var fromServer;
+            var user;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.api.getUserInfoIfLogged()];
+                    case 0: return [4 /*yield*/, this.session.getUser()];
                     case 1:
-                        fromServer = _a.sent();
-                        console.log('result getUserInfo', fromServer);
-                        if (fromServer.firstName || fromServer.userName) {
+                        user = _a.sent();
+                        console.log(user, '---dataFromLocalStorage');
+                        if (user.firstName || user.userName) {
                             this.appState.header.isLogged = true;
-                            console.log('isLogged - ', this.appState.header.isLogged, this.appState.header.userName, ' -userName');
-                            this.appState.header.user.name = fromServer.firstName;
+                            _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.role = user.role;
+                            _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.name = user.firstName || user.userName;
                         }
                         return [2 /*return*/];
                 }

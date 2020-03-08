@@ -281,9 +281,7 @@ router.post('/register', cors(), async (req, res) => {
   }
 });
 
-router.get('/session-info', cors(), (req, res) => {
-  res.json({ user: req.user })
-});
+
 
 //get all users
 router.get('/users', cors(), async (req, res) => {
@@ -753,6 +751,10 @@ router.post('/session', async (req, res) => {
     res.sendStatus(500);
   }
 })
+
+router.get('/session-info', cors(), (req, res) => {
+  res.json({ user: req.user })
+});
 
 router.get('/get-user-info-if-logged', async (req, res) => {
   try {

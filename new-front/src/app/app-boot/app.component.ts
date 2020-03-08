@@ -15,38 +15,41 @@ export class AppComponent {
   title = 'new-front';
   appState: any = appState;
   constructor(
-    private fingerPrint: FingerprintService, 
+    private fingerPrint: FingerprintService,
     private api: ApiService, private session: SessionService,
     private storage: StorageService) {
   }
 
-  async ngOnInit(){
-    
+  async ngOnInit() {
+
     console.log(this.appState)
     try {
       this.fingerPrint.checkIfItExist();
-      this.getUserInfo();
+      this.setUserInfo();
       this.appState.header.basket.products = this.storage.getBasketFromStorage();
       const fromServer: any = await this.api.getProducts()
       appState.products = fromServer.products;
-      const user: any = await this.session.getUser();
-      console.log(user, '---dataFromLocalStorage')
-      appState.header.user.role = user.role;
-      appState.header.user.name = user.firstName || user.username;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async getUserInfo() {
-    const fromServer: any = await this.api.getUserInfoIfLogged();
-    console.log('result getUserInfo', fromServer);
-    if (fromServer.firstName || fromServer.userName) {
+  async setUserInfo() {
+    const user: any = await this.session.getUser();
+    console.log(user, '---dataFromLocalStorage')
+    if (user.firstName || user.userName) {
       this.appState.header.isLogged = true;
-      console.log('isLogged - ', this.appState.header.isLogged, this.appState.header.userName, ' -userName');
-      this.appState.header.user.name = fromServer.firstName  
-
+      appState.header.user.role = user.role;
+      appState.header.user.name = user.firstName || user.userName;
     }
+
+    // const fromServer: any = await this.api.getUserInfoIfLogged();
+    // console.log('result getUserInfo', fromServer);
+
+    //   console.log('isLogged - ', this.appState.header.isLogged, this.appState.header.userName, ' -userName');
+    //   this.appState.header.user.name = fromServer.firstName || fromServer.userName;
+
+    // }
   }
 
 
