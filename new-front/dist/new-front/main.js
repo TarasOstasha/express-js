@@ -119,7 +119,7 @@ var AppComponent = /** @class */ (function () {
                             this.appState.header.isLogged = true;
                             _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.role = user.role;
                             _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.name = user.firstName || user.userName;
-                            this.cdr.detectChanges(); // force rebinding
+                            //this.cdr.detectChanges(); // force rebinding
                         }
                         console.log(_app_state__WEBPACK_IMPORTED_MODULE_4__["default"]);
                         return [2 /*return*/];
@@ -5822,7 +5822,7 @@ var SessionService = /** @class */ (function () {
                         if (fromServer.user) { //if session 
                             console.log(' session - if user ');
                             this.setUser(fromServer);
-                            return [2 /*return*/, fromServer];
+                            return [2 /*return*/, fromServer.user];
                         }
                         else
                             return [2 /*return*/, ('no session')]; //if no session

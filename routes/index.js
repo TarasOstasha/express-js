@@ -267,7 +267,7 @@ router.post('/register', cors(), async (req, res) => {
 
     const new_user = new User({
       role: 'user',
-      username: req.body.email,
+      userName: req.body.email,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,

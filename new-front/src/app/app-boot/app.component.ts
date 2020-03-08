@@ -42,7 +42,7 @@ export class AppComponent {
       this.appState.header.isLogged = true;
       appState.header.user.role = user.role;
       appState.header.user.name = user.firstName || user.userName;
-      this.cdr.detectChanges(); // force rebinding
+      //this.cdr.detectChanges(); // force rebinding
     }
     console.log(appState)
   }

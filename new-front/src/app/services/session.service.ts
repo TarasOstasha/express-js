@@ -27,7 +27,7 @@ export class SessionService {
       if (fromServer.user) { //if session 
       console.log(' session - if user ')
         this.setUser(fromServer);
-        return fromServer
+        return fromServer.user
       } else return ('no session') //if no session
 
     } catch (error) {
