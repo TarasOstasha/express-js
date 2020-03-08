@@ -30,6 +30,35 @@ passport.deserializeUser((id, done) => {
     });
 })
 
+async function createOrUpdateUser(strategy, profile, done) {
+    var user = null;
+    if (strategy == 'google') {
+        const email = profile.emails[0].value;
+        user = await User.findByIdAndUpdate({ email }, {
+            google: {
+                id: profile.id,
+                userName: profile.displayName,
+                email: email,
+            }
+        })
+    }
+    if (strategy == 'facebook') {
+        const email = (profile.email) ? profile.email : '';
+        user = await User.findByIdAndUpdate({ email }, {
+            facebook: {
+                id: profile.id,
+                userName: profile.displayName,
+                email: email
+            }
+        })
+    }
+    if(!user) createUser(strategy, profile, done);
+    else {
+        done(null, newUser);
+        log("USER Updated !!!");
+    }
+}
+
 async function createUser(strategy, profile, done) {
 
     const newUser = new User({
@@ -73,8 +102,8 @@ async function createUser(strategy, profile, done) {
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-}, function (username, password, done) {
-    User.findOne({ username: username }, function (err, user) { // request to data base
+}, function (userName, password, done) {
+    User.findOne({ userName: userName }, function (err, user) { // request to data base
         return err
             ? done(err)
             : user
@@ -93,23 +122,23 @@ passport.use(new GoogleStrategy({
     //clientSecret: process.env.GP_KEY, //'IdHthb-IWhRRyGtl1K5dNd38',
     //callbackURL: process.env.GP_CLB, //'http://r4.okm.pub:3600/auth/google/callback'
     passReqToCallback: true
-  },
+},
     async (request, accessToken, refreshToken, profile, done) => {
-      try {
-        log('google profile: '.info, profile);
-        const user = await User.findOne({ 'google.id': profile.id });
-  
-        (user)
-          ? done(null, user)
-          : createUser('google', profile, done);
-  
-      } catch (error) {
-        log(error)
-      }
+        try {
+            log('google profile: '.info, profile);
+            const user = await User.findOne({ 'google.id': profile.id });
+
+            (user)
+                ? done(null, user)
+                : createOrUpdateUser('google', profile, done);
+
+        } catch (error) {
+            log(error)
+        }
     }
-  ))
-  
-  module.exports = passport.use(new FacebookStrategy({
+))
+
+module.exports = passport.use(new FacebookStrategy({
     clientID: '606330336522613', //process.env.FB_ID,  // '455174914848353',
     clientSecret: '2ac98be6f4897dee347d645f9e537b74', //process.env.FB_KEY, //'30a983716bd55cf5f36e1626fe3b20b8',
     callbackURL: 'https://tonyjoss.com/auth/facebook/callback',//process.env.FB_CLB // 'http://r4.okm.pub:3600/auth/facebook/callback'
@@ -118,21 +147,21 @@ passport.use(new GoogleStrategy({
     // callbackURL: process.env.FB_CLB, // 'http://r4.okm.pub:3600/auth/facebook/callback'
     profileFields: ['id', 'displayName', 'link', 'email', 'name', 'picture.type(large)']
     // passReqToCallback : true,
-  },
+},
     async (accessToken, refreshToken, profile, done) => {
-      try {
-        log('facebook profile: '.info, profile);
-        const user = await User.findOne({ 'facebook.id': profile.id });
-  
-        (user)
-          ? done(null, user)
-          : createUser('facebook', profile, done);
-  
-      } catch (error) {
-        log(error)
-      }
+        try {
+            log('facebook profile: '.info, profile);
+            const user = await User.findOne({ 'facebook.id': profile.id });
+
+            (user)
+                ? done(null, user)
+                : createOrUpdateUser('facebook', profile, done);
+
+        } catch (error) {
+            log(error)
+        }
     }
-  ))
+))
 
 
 //////////////////////////

@@ -1507,7 +1507,7 @@ var AuthComponent = /** @class */ (function () {
                             this.storage.clearItem('user');
                             this.storage.clearItem('session');
                             this.appState.header.isLogged = true;
-                            this.appState.header.user.name = fromServer.user.firstName;
+                            this.appState.header.user.name = fromServer.user.firstName || fromServer.user.userName;
                             this.session.getUser(); // set user to local storage
                             setInterval(function () { return _this.router.navigateByUrl('/'); }, 500);
                         }

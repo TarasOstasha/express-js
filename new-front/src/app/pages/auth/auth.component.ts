@@ -123,7 +123,7 @@ export class AuthComponent implements OnInit {
         this.storage.clearItem('user');
         this.storage.clearItem('session');
         this.appState.header.isLogged = true;
-        this.appState.header.user.name = fromServer.user.firstName;
+        this.appState.header.user.name = fromServer.user.firstName || fromServer.user.userName;
         this.session.getUser() // set user to local storage
         setInterval(()=> this.router.navigateByUrl('/') ,500);
       }
