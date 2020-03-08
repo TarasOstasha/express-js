@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FingerprintService } from '../services/fingerprint.service'
 import { ApiService } from '../services/api.service';
 import appState from '../app-state';
@@ -17,6 +17,7 @@ export class AppComponent {
   constructor(
     private fingerPrint: FingerprintService,
     private api: ApiService, private session: SessionService,
+    private cdr: ChangeDetectorRef,
     private storage: StorageService) {
   }
 
@@ -41,7 +42,9 @@ export class AppComponent {
       this.appState.header.isLogged = true;
       appState.header.user.role = user.role;
       appState.header.user.name = user.firstName || user.userName;
+      this.cdr.detectChanges(); // force rebinding
     }
+    console.log(appState)
   }
 
 

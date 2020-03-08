@@ -70,10 +70,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(fingerPrint, api, session, storage) {
+    function AppComponent(fingerPrint, api, session, cdr, storage) {
         this.fingerPrint = fingerPrint;
         this.api = api;
         this.session = session;
+        this.cdr = cdr;
         this.storage = storage;
         this.title = 'new-front';
         this.appState = _app_state__WEBPACK_IMPORTED_MODULE_4__["default"];
@@ -118,7 +119,9 @@ var AppComponent = /** @class */ (function () {
                             this.appState.header.isLogged = true;
                             _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.role = user.role;
                             _app_state__WEBPACK_IMPORTED_MODULE_4__["default"].header.user.name = user.firstName || user.userName;
+                            this.cdr.detectChanges(); // force rebinding
                         }
+                        console.log(_app_state__WEBPACK_IMPORTED_MODULE_4__["default"]);
                         return [2 /*return*/];
                 }
             });
@@ -132,6 +135,7 @@ var AppComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_fingerprint_service__WEBPACK_IMPORTED_MODULE_2__["FingerprintService"],
             _services_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"], _services_session_service__WEBPACK_IMPORTED_MODULE_5__["SessionService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
             _services_storage_service__WEBPACK_IMPORTED_MODULE_6__["StorageService"]])
     ], AppComponent);
     return AppComponent;
