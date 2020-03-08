@@ -34,7 +34,7 @@ async function createOrUpdateUser(strategy, profile, done) {
     var user = null;
     if (strategy == 'google') {
         const email = profile.emails[0].value;
-        user = await User.findByIdAndUpdate({ email }, {
+        user = await User.findOneAndUpdate({ email }, {
             google: {
                 id: profile.id,
                 userName: profile.displayName,
@@ -44,7 +44,7 @@ async function createOrUpdateUser(strategy, profile, done) {
     }
     if (strategy == 'facebook') {
         const email = (profile.email) ? profile.email : '';
-        user = await User.findByIdAndUpdate({ email }, {
+        user = await User.findOneAndUpdate({ email }, {
             facebook: {
                 id: profile.id,
                 userName: profile.displayName,
