@@ -42,14 +42,6 @@ export class AppComponent {
       appState.header.user.role = user.role;
       appState.header.user.name = user.firstName || user.userName;
     }
-
-    // const fromServer: any = await this.api.getUserInfoIfLogged();
-    // console.log('result getUserInfo', fromServer);
-
-    //   console.log('isLogged - ', this.appState.header.isLogged, this.appState.header.userName, ' -userName');
-    //   this.appState.header.user.name = fromServer.firstName || fromServer.userName;
-
-    // }
   }
 
 

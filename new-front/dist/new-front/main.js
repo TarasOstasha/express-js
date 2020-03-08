@@ -5791,7 +5791,6 @@ __webpack_require__.r(__webpack_exports__);
 var SessionService = /** @class */ (function () {
     function SessionService(api) {
         this.api = api;
-        this.fake = JSON.parse('{"user":{"wallets":{"USD":{"balance":0}},"facebook":{"id":"2712492348826122","username":"Taras Ostasha","email":""},"purchases_made":[],"saved_numbers":[],"linked_users":[],"_id":"5d063f55ba40b4ee185dea94","last_login":"2019-06-16T13:08:37.543Z","last_appeal":"2019-06-16T13:08:37.543Z","username":"Taras Ostasha","email":"","created":"2019-06-16T13:08:37.546Z","__v":0}}');
     }
     //3 set user
     SessionService.prototype.setUser = function (fromServer) {
@@ -5809,19 +5808,20 @@ var SessionService = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         json = localStorage.getItem('user');
                         if (json == 'undefined')
-                            this.removeUser();
+                            this.removeUser(); // clean garbage
                         if (json && json !== 'undefined')
-                            return [2 /*return*/, JSON.parse(json)];
+                            return [2 /*return*/, JSON.parse(json)]; // if json exist
                         return [4 /*yield*/, this.api.getSessionInfo()];
                     case 1:
                         fromServer = _a.sent();
-                        if (fromServer.user) {
+                        console.log(' session - from server user ', fromServer);
+                        if (fromServer.user) { //if session 
+                            console.log(' session - if user ');
                             this.setUser(fromServer);
                             return [2 /*return*/, fromServer];
-                        } //if session
-                        //else res('no session') //if no session
+                        }
                         else
-                            return [2 /*return*/, this.fake];
+                            return [2 /*return*/, ('no session')]; //if no session
                         return [3 /*break*/, 3];
                     case 2:
                         error_1 = _a.sent();
