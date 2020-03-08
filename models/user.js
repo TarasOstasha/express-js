@@ -10,7 +10,7 @@ let User = mongoose.model('User', {
     saved_numbers: [],
 
     //userName: { type: String, index: true, required: true, unique: true },
-    userName: { type: String, index: true, required: true },
+    userName: { type: String, index: true },
     password: { type: String },
     email: { type: String, unique: true},
     email_token: String,
