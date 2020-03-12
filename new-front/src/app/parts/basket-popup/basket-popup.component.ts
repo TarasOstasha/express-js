@@ -24,6 +24,7 @@ declare var stripe: any;
 declare var elements: any;
 declare var window: any;
 declare var swal: any;
+declare var paypal: any
 //declare var elementsModal: any;
 
 @Component({
@@ -68,7 +69,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     this.state = {} //check if needed
     this.state.paymentData = {
       firstName: '',
-      lastName:'',
+      lastName: '',
       email: ''
     }
     // this.state.defaultData = {
@@ -101,7 +102,27 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   @Input() state: any;
 
   ngOnInit() {
+    paypal.Buttons({
+      createOrder: (data, actions)=> {
+        // This function sets up the details of the transaction, including the amount and line item details.
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: this.totalPrice()
+            }
+          }]
+        });
+      },
+      onApprove: (data, actions)=> {
+        // This function captures the funds from the transaction.
+        return actions.order.capture().then( (details)=> {
+          // This function shows a transaction success message to your buyer.
+          this.paymentTransactionPayPal()//.bind(this);
+          alert('Transaction completed by ' + details.payer.name.given_name);
 
+        })//;
+      }
+    }).render('#paypal-button-container')
     this.state.showPaymant = 'myClose';
     //quantity of products
     this.state.products = this.storage.getBasketFromStorage();
@@ -186,7 +207,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     return result;
   }
   removeOne(id) {
-   console.log(id, '')
+    console.log(id, '')
     //видалити один продукт по id
     let oneDeleted = false;
     this.state.products.map((product, i) => {
@@ -247,11 +268,24 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     });
   }
 
+  async paymentTransactionPayPal() {
+    const fromServer: any = await this.api.payPalPayment({
+      totalPrice: this.totalPrice(),
+      items: [{ sku: "sku_1234", quantity: 1 }],
+      currency: "USD",
+      businessName: this.lastName.value,
+      productName: this.totalProductName(),
+      customerEmail: this.email.value,
+      customerName: this.firstName.value,
+    })
+    console.log(fromServer)
+  }
+
   placeOrder() {
     console.log(this.paymentForm.valid)
 
     //validation in place order
-    if(!this.paymentForm.valid) {
+    if (!this.paymentForm.valid) {
       swal.fire({
         title: "Error",
         text: "Fill out the form fields",
@@ -275,7 +309,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     })
     return boughtProducts;
   }
-//QUESTION REF=GARDING VALIDATION. I'V GOT SOME ERORROR
+  //QUESTION REF=GARDING VALIDATION. I'V GOT SOME ERORROR
 
   // testProduct() {
   //   console.log('!!!Products Items!', this.state.products, this.preparedProducts());
@@ -288,11 +322,11 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   get email() { return this.paymentForm.get('email') } //getter to email
 
 
- //create method send message after purchase !!!
- //validation shows css error but don't work correctly
-//counter + - doesn't work good
-// initial count of product in basket on main page
-//clear all input fields after place order
+  //create method send message after purchase !!!
+  //validation shows css error but don't work correctly
+  //counter + - doesn't work good
+  // initial count of product in basket on main page
+  //clear all input fields after place order
 }
 
 

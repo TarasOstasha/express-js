@@ -730,6 +730,24 @@ router.post('/payment-intense-approve', async (req, res) => {
     console.log(error)
   }
 })
+// PAYPAL Approve
+router.post('/paypal-approve', async(req, res)=>{
+  try {
+    const transaction = new Transaction(req.body);
+    await transaction.save();
+    mailer.send('garbiche.bucket@gmail.com', transaction.customerEmail, 'ExampleShop: Your order has been submitted',
+    `
+    <p>Your Price is ${transaction.totalPrice}</p>
+    <p>Product name is ${transaction.productName}</p>
+  `)
+  res.json({
+    ok: true,
+    message: 'Transaction Success'
+  });
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // finger print mechanism
 router.post('/session', async (req, res) => {

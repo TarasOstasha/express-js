@@ -116,6 +116,10 @@ export class ApiService {
 
   }  
 
+  payPalPayment(obj){
+    return this.http.post( url + 'paypal-approve', obj, httpOptions).toPromise();
+  }
+
   getUniversalSearch(currentPage, queryString) {
     return this.http.get(`${url}universal-search/${currentPage}${queryString}`, httpOptions).toPromise();
 
