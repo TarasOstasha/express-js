@@ -54,7 +54,7 @@ async function createOrUpdateUser(strategy, profile, done) {
     }
     if(!user) createUser(strategy, profile, done);
     else {
-        done(null, newUser);
+        done(null, user);
         log("USER Updated !!!");
     }
 }
