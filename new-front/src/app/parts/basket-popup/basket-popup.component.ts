@@ -58,6 +58,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   card: any;
   cardHandler = this.onChange.bind(this);
   error: string;
+  paymentType: String;
 
 
   constructor(
@@ -102,27 +103,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   @Input() state: any;
 
   ngOnInit() {
-    paypal.Buttons({
-      createOrder: (data, actions)=> {
-        // This function sets up the details of the transaction, including the amount and line item details.
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: this.totalPrice()
-            }
-          }]
-        });
-      },
-      onApprove: (data, actions)=> {
-        // This function captures the funds from the transaction.
-        return actions.order.capture().then( (details)=> {
-          // This function shows a transaction success message to your buyer.
-          this.paymentTransactionPayPal()//.bind(this);
-          alert('Transaction completed by ' + details.payer.name.given_name);
 
-        })//;
-      }
-    }).render('#paypal-button-container')
     this.state.showPaymant = 'myClose';
     //quantity of products
     this.state.products = this.storage.getBasketFromStorage();
@@ -255,6 +236,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
 
   paymentTransaction() {
     window.elementsModal.create({
+      type: 'stripe',
       totalPrice: this.totalPrice(),
       // the modal demo will handle non-zero currencies automatically
       // items sent into the server can calculate their amounts and send back to the client
@@ -268,17 +250,50 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     });
   }
 
-  async paymentTransactionPayPal() {
+  async paymentTransactionPayPal(details) {
     const fromServer: any = await this.api.payPalPayment({
+      type: 'paypall',
       totalPrice: this.totalPrice(),
       items: [{ sku: "sku_1234", quantity: 1 }],
       currency: "USD",
-      businessName: this.lastName.value,
+      businessName: details.payer.name.given_name,
       productName: this.totalProductName(),
-      customerEmail: this.email.value,
-      customerName: this.firstName.value,
+      customerEmail: details.payer.email_address,
+      customerName: details.payer.name.surname,
+      paymentData: details
     })
     console.log(fromServer)
+    if (fromServer.ok) {
+      this.state.products = []
+    }
+  }
+  paypalInit() {
+    setTimeout(() => {
+      paypal.Buttons({
+        createOrder: (data, actions) => {
+          // This function sets up the details of the transaction, including the amount and line item details.
+          console.log('createOrder', this.totalPrice())
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: this.totalPrice()
+              }
+            }]
+          });
+        },
+        onApprove: (data, actions) => {
+          // This function captures the funds from the transaction.
+          return actions.order.capture().then((details) => {
+            // This function shows a transaction success message to your buyer.
+            this.paymentTransactionPayPal(details)//.bind(this);
+            //console.log(details)
+            alert('Transaction completed by ' + details.payer.name.given_name);
+
+          })//;
+        }
+      }).render('#paypal-button-container')
+    }, 500)
+
   }
 
   placeOrder() {

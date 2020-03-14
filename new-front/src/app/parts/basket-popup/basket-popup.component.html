@@ -75,7 +75,7 @@
           </div>
           <h3>Ship my order to&hellip;</h3>
           <div class="list-group">
-            <div class="list-group-item">
+            <!-- <div class="list-group-item">
               <div class="list-group-item-heading">
                 <div class="row radio">
                   <div class="col-xs-3 col-md-3 col-lg-3">
@@ -94,15 +94,15 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="list-group-item">
               <div class="list-group-item-heading">
                 <div class="row">
                   <div class="col-xs-3 col-md-3 clo-lg-3">
                     <div class="radio">
                       <label>
-                        <input type="radio" name="optionShipp" id="optionShipp2" value="option2" checked>
-                        A new address
+                        <input [(ngModel)]="paymentType" type="radio" name="optionShipp" id="optionShipp2" value="stripe" checked>
+                        A new address {{paymentType}}
                       </label>
                     </div>
                   </div>
@@ -110,7 +110,7 @@
                   <div class="col-xs-9">
 
                     <!-- FORM Payment-->
-                    <form role="form" class="" [formGroup]="paymentForm">
+                    <form *ngIf="paymentType == 'stripe' " role="form" class="" [formGroup]="paymentForm">
                       <!-- form-group name -->
                       <div class="row">
                         <div class="col-md-6">
@@ -118,7 +118,7 @@
                             <label for="inputname">First Name</label>
                             <input formControlName="firstName" type="text" class="form-control form-control-large"
                               id="inputname" placeholder="Enter name">
-                              <!-- <div *ngIf="!paymentForm.controls.firstName.valid && !paymentForm.controls.firstName.pristine" class="alert alert-danger">
+                            <!-- <div *ngIf="!paymentForm.controls.firstName.valid && !paymentForm.controls.firstName.pristine" class="alert alert-danger">
                                   Please write more then 3 symbols
                               </div> -->
 
@@ -131,7 +131,7 @@
                             <label for="inputname">Last Name</label>
                             <input formControlName="lastName" type="text" class="form-control form-control-large"
                               id="inputname" placeholder="Enter name">
-                              <!-- <div *ngIf="!paymentForm.controls.lastName.valid && !paymentForm.controls.lastName.pristine" class="alert alert-danger">
+                            <!-- <div *ngIf="!paymentForm.controls.lastName.valid && !paymentForm.controls.lastName.pristine" class="alert alert-danger">
                                   Please write more then 3 symbols
                               </div> -->
                             <app-form-validator [it]="lastName"></app-form-validator>
@@ -181,8 +181,12 @@
                           <option *ngFor="let state of state.defaultData.states">{{ state[1] }}</option>
                         </select>
                       </div>
+                      <div class="well">
+                          <button type="button" class="btn btn-success btn-lg btn-block" (click)="placeOrder()"> Place Order</button>
+                        </div>
                     </form>
-                    <button (click)="saveAdress()" class="btn btn-sm btn-success">Save Address</button>
+
+                    <!-- <button (click)="saveAdress()" class="btn btn-sm btn-success">Save Address</button> -->
                   </div>
                 </div>
               </div>
@@ -208,7 +212,7 @@
 
 
 
-          <form role="form">
+          <!-- <form role="form">
             <div class="checkbox">
               <label data-toggle="collapse" data-target="#gift">
                 <input type="checkbox"> I'd like to include a gift message
@@ -219,10 +223,10 @@
               <textarea class="form-control form-control-large" rows="3"></textarea>
               <p class="help-block">256 characters left</p>
             </div>
-          </form>
-          <h3>I'll pay with&hellip;</h3>
+          </form> -->
+          <!-- <h3>I'll pay with&hellip;</h3> -->
           <div class="list-group">
-            <div class="list-group-item">
+            <!-- <div class="list-group-item">
               <div class="list-group-item-heading">
                 <div class="row radio">
                   <div class="col-xs-3 col-md-3 clo-lg-3">
@@ -281,37 +285,37 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="list-group-item">
               <div class="list-group-item-heading">
                 <div class="row radio">
-                    <div id="paypal-button-container"></div>
-                  
+
                   <div class="col-xs-3 col-md-3 clo-lg-3">
                     <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                      PayPal
+                      <input [(ngModel)]="paymentType" (click)="paypalInit()" type="radio" name="optionsRadios" id="optionsRadios2" value="paypal">
+                      PayPal {{ paymentType }}
                     </label>
                   </div>
+
                   <div class="col-xs-9">
-                    <div class="media">
-                      <a class="media-left" href="#">
+                    <div *ngIf="paymentType == 'paypal' " class="media">
+                    <div id="paypal-button-container"></div>
+
+                      <!-- <a class="media-left" href="#">
                         <img
                           src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png"
                           height="25" alt="" />
                       </a>
                       <div class="media-body">
                         When you click "Place Order", you will be taken to the PayPal website.
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="well">
-            <button type="button" class="btn btn-success btn-lg btn-block" (click)="placeOrder()"> Place Order</button>
-          </div>
+
           <!-- message succsess when payment submited -->
           <div id="endstate" class="demo endstate">
             <div class="success-message">
