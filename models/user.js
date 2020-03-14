@@ -2,7 +2,7 @@ let mongoose = require('mongoose')
 
 // create a user model
 let User = mongoose.model('User', {
-    isLogged: true, // life-hack 
+    isLogged: { type: Boolean, default: true }, // life-hack 
 
     //oauthID: Number,
     created: Date,
