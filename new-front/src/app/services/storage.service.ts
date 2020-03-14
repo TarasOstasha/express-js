@@ -27,7 +27,6 @@ export class StorageService {
 
   clearItem(key) {
     localStorage.removeItem(key);
-
   }
   //const setItem2 = (key, value) => Promise.resolve().then( () =>  localStorage.setItem(key, value) );
   //const getItem2 = (key) => Promise.resolve().then( () => localStorage.getItem(key));

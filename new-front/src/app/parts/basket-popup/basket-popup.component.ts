@@ -264,7 +264,9 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     })
     console.log(fromServer)
     if (fromServer.ok) {
-      this.state.products = []
+      this.state.products = [];
+      this.onClose();
+      this.storage.clearItem('basket');
     }
   }
   paypalInit() {
