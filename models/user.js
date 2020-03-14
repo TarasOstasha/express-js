@@ -2,6 +2,8 @@ let mongoose = require('mongoose')
 
 // create a user model
 let User = mongoose.model('User', {
+    isLogged: true, // life-hack 
+
     //oauthID: Number,
     created: Date,
     //   name: String,
