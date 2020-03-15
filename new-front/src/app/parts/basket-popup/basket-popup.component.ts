@@ -57,9 +57,10 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   @Input() it: any;
   card: any;
   cardHandler = this.onChange.bind(this);
-  error: string;
+  error: String;
   paymentType: String;
-
+  promoCode: String;
+  discount: any = 0;
 
   constructor(
     private storage: StorageService,
@@ -225,6 +226,9 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   subTotalPrice(uProduct) {
     return uProduct.amount * uProduct.product.price;
   }
+  totalPriceDiscount() {
+    return this.totalPrice() - (this.totalPrice()/100 * this.discount);
+  }
 
 
   saveAdress() {
@@ -269,7 +273,8 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
       this.storage.clearItem('basket');
     }
   }
-  paypalInit() {
+  paypalInit() {paypal
+    if(this.paymentType == 'paypal') return
     setTimeout(() => {
       paypal.Buttons({
         createOrder: (data, actions) => {
@@ -326,6 +331,27 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     })
     return boughtProducts;
   }
+  // promo code
+  async promoChanged() {
+    const promo: any = await this.api.getPromoCode(this.promoCode);
+    if(promo) {
+      const curentDate = new Date().getSeconds();
+      const expiredDate = new Date(promo.expired).getSeconds();
+      if( curentDate > expiredDate ) {
+        alert('promo code expired');
+      }else {
+        console.log('done, need to show on page by style')
+        this.discount = promo.discount;
+      }
+      this.discount = promo.discount;
+
+    }else {
+      console.log('not exist promo, need to show on page by style')
+    }
+    console.log(promo)
+  }
+
+
   //QUESTION REF=GARDING VALIDATION. I'V GOT SOME ERORROR
 
   // testProduct() {
@@ -338,12 +364,8 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   get lastName() { return this.paymentForm.get('lastName') } // getter to first name
   get email() { return this.paymentForm.get('email') } //getter to email
 
-
-  //create method send message after purchase !!!
-  //validation shows css error but don't work correctly
-  //counter + - doesn't work good
-  // initial count of product in basket on main page
-  //clear all input fields after place order
+ //// promo code
+  
 }
 
 

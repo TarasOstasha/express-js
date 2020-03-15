@@ -179,6 +179,12 @@
             </div>
           </div>
         </div>
+        <!-- Promo Code -->
+        <input [(ngModel)]="newPromoCode.code" type="text">
+        <input [(ngModel)]="newPromoCode.discount" type="number" min="0" max="100">
+        <input [(ngModel)]="newPromoCode.expired" type="date">
+        <textarea [(ngModel)]="newPromoCode.description" name="promo" id="" cols="30" rows="10"></textarea>
+        <button (click)="createPromo()">ok</button>
         <app-new-products [categories]="appState.productCategories" [breadCrumbs]="appState.breadCrumbs" [state]="state.newProduct"></app-new-products>
         <!-- DataTables Products -->
         <div class="row" name="awesomePart" id="awesomePart">

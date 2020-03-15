@@ -138,6 +138,14 @@ export class ApiService {
     return this.http.get(url + 'get-user-info-if-logged', httpOptions).toPromise();
   }
 
+  createPromo(newPromoCode) {
+    return this.http.post(url + 'create-promo-code', newPromoCode, httpOptions).toPromise();
+  }
+
+  getPromoCode(promoCode) {
+    return this.http.get(url + `promo-code/${promoCode}`, httpOptions).toPromise();
+  }
+
   // getAll(model, currentPage, sizePage) {
   //   return this.http.get(`http://localhost:3000/all/${model}/${currentPage}?size=${sizePage}` , httpOptions).toPromise();
   // }

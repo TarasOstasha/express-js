@@ -55,7 +55,7 @@
         <h1>Checkout <small>Step 2 of 3</small></h1>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-md-12 col-lg-12 checkout-block">
           <div class="well">
             &hellip;
           </div>
@@ -66,10 +66,12 @@
           </div>
           <div class="collapse" id="promo">
             <div class="form-group">
-              <label for="inputpromo" class="control-label">Promo Code</label>
+              <label for="inputpromo" class="control-label promo-code">Promo Code</label>
               <div class="form-inline">
-                <input type="text" class="form-control" id="inputpromo" placeholder="Enter promo code">
-                <button class="btn btn-sm">Apply</button>
+                <input [(ngModel)]="promoCode" (ngModelChange)="promoChanged()" type="text" class="form-control" id="inputpromo" placeholder="Enter promo code">
+                <button type="button" class="btn btn-dark">Apply</button>
+                {{ totalPriceDiscount() }}
+                <!-- <button class="btn btn-sm">Apply</button> -->
               </div>
             </div>
           </div>
@@ -98,16 +100,17 @@
             <div class="list-group-item">
               <div class="list-group-item-heading">
                 <div class="row">
-                  <div class="col-xs-3 col-md-3 clo-lg-3">
+                  <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="radio">
-                      <label>
+                      <label class="payment-label">
                         <input [(ngModel)]="paymentType" type="radio" name="optionShipp" id="optionShipp2" value="stripe" checked>
-                        A new address {{paymentType}}
+                        <i class="fa fa-credit-card payment-icon"></i>
+                        Pay By Credit/Debit Card {{paymentType}}
                       </label>
                     </div>
                   </div>
 
-                  <div class="col-xs-9">
+                  <div class="col-xs-12 col-md-12 col-lg-12">
 
                     <!-- FORM Payment-->
                     <form *ngIf="paymentType == 'stripe' " role="form" class="" [formGroup]="paymentForm">
@@ -160,14 +163,14 @@
                           placeholder="Enter address">
                       </div>
                       <div class="row">
-                        <div class="col-xs-3 col-md-3 clo-lg-3">
+                        <div class="col-xs-6 col-md-6 clo-lg-6">
                           <div class="form-group">
                             <label for="inputZip">ZIP Code</label>
                             <input type="text" class="form-control form-control-small" id="inputZip"
                               placeholder="Enter zip">
                           </div>
                         </div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-6 col-md-6 clo-lg-6">
                           <div class="form-group">
                             <label for="inputCity">City</label>
                             <input type="text" class="form-control" id="inputCity" placeholder="Enter city">
@@ -289,15 +292,16 @@
             <div class="list-group-item">
               <div class="list-group-item-heading">
                 <div class="row radio">
-
-                  <div class="col-xs-3 col-md-3 clo-lg-3">
-                    <label>
-                      <input [(ngModel)]="paymentType" (click)="paypalInit()" type="radio" name="optionsRadios" id="optionsRadios2" value="paypal">
-                      PayPal {{ paymentType }}
+                  <div class="col-xs-12 col-md-12 clo-lg-12">
+                    <label class="payment-label">
+                      <input [(ngModel)]="paymentType" 
+                              (click)="paypalInit()" type="radio" name="optionsRadios" id="optionsRadios2" value="paypal">
+                              <i class="fa fa-cc-paypal payment-icon"></i>
+                              PayPal {{ paymentType }}
                     </label>
                   </div>
 
-                  <div class="col-xs-9">
+                  <div class="col-xs-12 col-md-12 col-lg-12">
                     <div *ngIf="paymentType == 'paypal' " class="media">
                     <div id="paypal-button-container"></div>
 

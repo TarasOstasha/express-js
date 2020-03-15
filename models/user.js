@@ -1,8 +1,9 @@
 let mongoose = require('mongoose')
 
+
 // create a user model
 let User = mongoose.model('User', {
-    isLogged: { type: Boolean, default: true }, // life-hack 
+    isLogged: { type: Boolean, default: true }, // when you get user, its mean that you are logged
 
     //oauthID: Number,
     created: Date,

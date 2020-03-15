@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit {
   allNotifications:any = {}
   transactionAmount: number = 0; 
   unreadMsgAmount: number; // all messages from customer
+  newPromoCode:any = {};
 
   constructor(
     private api: ApiService,
@@ -207,6 +208,17 @@ export class AdminComponent implements OnInit {
       this.viewportScroller.scrollToAnchor(elementId);
     },1000)
     
+  }
+  //promocode
+  async createPromo() {
+    const fromServer: any = await this.api.createPromo(this.newPromoCode);
+    if(fromServer.ok) {
+      alert('promo code has been created') 
+      this.newPromoCode  = {}
+    }
+    else {
+      alert('something wrong...')
+    }
   }
   
 }

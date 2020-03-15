@@ -19,6 +19,7 @@ const mailer = require('../controllers/mail/mailer');
 const bcrypt = require('bcrypt');
 const Session = require('../models/session');
 var path = require("path");
+const PromoCode = require('../models/promo-code');
 
 
 router.get('/all-users', (req, res, next) => {
@@ -777,9 +778,6 @@ router.get('/session-info', cors(), (req, res) => {
 router.get('/get-user-info-if-logged', async (req, res) => {
   try {
     console.log(req.user)
-    // const user = {
-    //   firstName: (req.user) ? req.user.firstName : null
-    // }
     if(req.user) {
       var user = {
         firstName: req.user.firstName,
@@ -809,6 +807,29 @@ router.get('/img-urls-slider', async (req, res) => {
       dataImg.push(currentImg)
     })
     res.json(dataImg)
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+})
+//promo code
+router.post('/create-promo-code', async(req, res)=>{
+  try {
+    const promo = new PromoCode(req.body).save();
+    res.json({ ok : true, promo });
+    console.log('promo code')
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+})
+// promo code params
+router.get('/promo-code/:code', async(req,res)=>{
+  try {
+    const promo = await PromoCode.findOne({
+      code: req.params.code
+    })
+    res.json(  promo )
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
