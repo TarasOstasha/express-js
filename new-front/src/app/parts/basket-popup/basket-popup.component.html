@@ -1,7 +1,10 @@
 <div class="basket-popup">
   <!-- <button (click)="testProduct()" style="background-color:black">test product</button> -->
-  <span class="close" (click)="onClose()"><i class="fa fa-times" aria-hidden="true"></i></span>
-  <table class="table">
+  <span class="close" (click)="onClose()">
+    <!-- <i class="fa fa-times" aria-hidden="true"></i> -->
+    <i class="fa fa-times-circle"></i>
+  </span>
+  <table class="table table-dark table-checkout table-hover">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -33,7 +36,7 @@
       </tr>
     </tbody>
   </table>
-  <table class="table-striped pull-right checkout-table">
+  <table class="pull-right checkout-table table-dark table-checkout">
     <thead>
       <tr>
         <th scope="col">Total</th>
@@ -66,11 +69,14 @@
           </div>
           <div class="collapse" id="promo">
             <div class="form-group">
-              <label for="inputpromo" class="control-label promo-code">Promo Code</label>
+              <!-- <label for="inputpromo" class="control-label promo-code">Promo Code</label> -->
+              <label for="inputpromo" [class]="(!promo) ? 'control-label promo-code' : 'control-label promo-code promo-code-line' ">Price - {{ totalPrice() }}</label><br>
+              <label *ngIf="promo" for="inputpromo" class="control-label promo-code">Price with discount - {{ totalPriceDiscount() }}</label>
+
               <div class="form-inline">
-                <input [(ngModel)]="promoCode" (ngModelChange)="promoChanged()" type="text" class="form-control" id="inputpromo" placeholder="Enter promo code">
+                <input [(ngModel)]="promoCode" (ngModelChange)="promoChanged()" type="text" [class]="(promoCodeStatus) ? 'form-control promoCodeStatusTrue': 'form-control promoCodeStatusFalse' " id="inputpromo" placeholder="Enter promo code">
                 <button type="button" class="btn btn-dark">Apply</button>
-                {{ totalPriceDiscount() }}
+                <!-- {{ totalPriceDiscount() }} -->
                 <!-- <button class="btn btn-sm">Apply</button> -->
               </div>
             </div>

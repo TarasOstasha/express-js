@@ -61,6 +61,8 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   paymentType: String;
   promoCode: String;
   discount: any = 0;
+  promo: any;
+  promoCodeStatus: boolean = false;
 
   constructor(
     private storage: StorageService,
@@ -227,7 +229,7 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     return uProduct.amount * uProduct.product.price;
   }
   totalPriceDiscount() {
-    return this.totalPrice() - (this.totalPrice()/100 * this.discount);
+    return this.totalPrice() - (this.totalPrice() / 100 * this.discount);
   }
 
 
@@ -273,8 +275,9 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
       this.storage.clearItem('basket');
     }
   }
-  paypalInit() {paypal
-    if(this.paymentType == 'paypal') return
+  paypalInit() {
+    paypal
+    if (this.paymentType == 'paypal') return
     setTimeout(() => {
       paypal.Buttons({
         createOrder: (data, actions) => {
@@ -333,22 +336,32 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   }
   // promo code
   async promoChanged() {
-    const promo: any = await this.api.getPromoCode(this.promoCode);
-    if(promo) {
-      const curentDate = new Date().getSeconds();
-      const expiredDate = new Date(promo.expired).getSeconds();
-      if( curentDate > expiredDate ) {
-        alert('promo code expired');
-      }else {
-        console.log('done, need to show on page by style')
-        this.discount = promo.discount;
-      }
-      this.discount = promo.discount;
+    try {
+      //const promo: any = await this.api.getPromoCode(this.promoCode);
+      this.promo = await this.api.getPromoCode(this.promoCode);
+      if (this.promo) {
+        const curentDate = new Date()//.getSeconds();
+        const expiredDate = new Date(this.promo.expired)//.getSeconds();
+        if (curentDate > expiredDate) {
+          alert('promo code expired');
+          console.log('*IF* curentDate-', curentDate, 'expiredDate-', expiredDate)
+        } else {
+          console.log('*ELSE* curentDate-', curentDate, 'expiredDate-', expiredDate)
+          this.promoCodeStatus = true;
+          console.log('done, need to show on page by style')
+          //this.discount = this.promo.discount;
+        }
+        this.discount = this.promo.discount;
 
-    }else {
-      console.log('not exist promo, need to show on page by style')
+      } else {
+        this.promoCodeStatus = false;
+        console.log('not exist promo, need to show on page by style')
+      }
+      console.log(this.promo)
+    } catch (error) {
+      console.log('some error on the front end') 
     }
-    console.log(promo)
+
   }
 
 
@@ -364,8 +377,8 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   get lastName() { return this.paymentForm.get('lastName') } // getter to first name
   get email() { return this.paymentForm.get('email') } //getter to email
 
- //// promo code
-  
+  //// promo code
+
 }
 
 
