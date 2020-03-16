@@ -21,14 +21,14 @@
         <td>{{ uProduct.product.title }}</td>
         <td>{{ subTotalPrice(uProduct) }}</td>
         <td>
-          <button class="btn btn-info" (click)="minus(uProduct.product)">-</button>
+          <button class="btn btn-info basket-btn" (click)="minus(uProduct.product)">-</button>
           {{ uProduct.amount }}
-          <button class="btn btn-info" (click)="plus(uProduct.product)">+</button>
+          <button class="btn btn-info basket-btn" (click)="plus(uProduct.product)">+</button>
           <!-- <input type="text" [(ngModel)]="uProduct.amount"> set edit value -->
         </td>
         <td>
           <!-- <button class="btn btn-success">Add</button> -->
-          <button type="button" class="btn btn-danger" (click)="deleteProduct(uProduct.product._id)">remove</button>
+          <button type="button" class="btn btn-danger basket-btn" (click)="deleteProduct(uProduct.product._id)">remove</button>
           <!-- <button class="btn btn-warning" (click)="editAmount()">edit</button> -->
         </td>
 
@@ -71,7 +71,7 @@
             <div class="form-group">
               <!-- <label for="inputpromo" class="control-label promo-code">Promo Code</label> -->
               <label for="inputpromo" [class]="(!promo) ? 'control-label promo-code' : 'control-label promo-code promo-code-line' ">Price - {{ totalPrice() }}</label><br>
-              <label *ngIf="promo" for="inputpromo" class="control-label promo-code">Price with discount - {{ totalPriceDiscount() }}</label>
+              <label *ngIf="promo" for="inputpromo" class="control-label promo-code">Price with discount - {{ totalPriceDiscount() }} , Your Discount is - {{ promo.discount }}%</label>
 
               <div class="form-inline">
                 <input [(ngModel)]="promoCode" (ngModelChange)="promoChanged()" type="text" [class]="(promoCodeStatus) ? 'form-control promoCodeStatusTrue': 'form-control promoCodeStatusFalse' " id="inputpromo" placeholder="Enter promo code">

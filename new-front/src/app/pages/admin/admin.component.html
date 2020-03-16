@@ -92,7 +92,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#awesomePart" >
+        <a class="nav-link" href="#awesomePart">
           <i class="fa fa-fw fa-table"></i>
           <span>Tables</span></a>
       </li>
@@ -113,14 +113,15 @@
         <!-- Icon Cards-->
         <div class="row">
           <div class="col-xl-3 col-sm-6 mb-3">
-            <div [class]="(notificationAmount > 0) ? 'active-notification card text-white bg-primary o-hidden h-100' : 'card text-white bg-primary o-hidden h-100' ">
+            <div
+              [class]="(notificationAmount > 0) ? 'active-notification card text-white bg-primary o-hidden h-100' : 'card text-white bg-primary o-hidden h-100' ">
               <div class="card-body">
                 <div class="card-body-icon">
                   <i class="fa fa-fw fa-comments"></i>
                 </div>
                 <div class="mr-5">{{ notificationAmount }} New Messages!</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" routerLink = "/admin-messages">
+              <a class="card-footer text-white clearfix small z-1" routerLink="/admin-messages">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fa fa-angle-right"></i>
@@ -131,14 +132,15 @@
           <!-- ORDERS -->
           <div class="col-xl-3 col-sm-6 mb-3">
             <!-- <div class="card text-white bg-warning o-hidden h-100"> -->
-            <div [class]="(transactionAmount > 0) ? 'active-notification-yellow card text-white bg-warning o-hidden h-100' : 'card text-white bg-warning o-hidden h-100' ">
+            <div
+              [class]="(transactionAmount > 0) ? 'active-notification-yellow card text-white bg-warning o-hidden h-100' : 'card text-white bg-warning o-hidden h-100' ">
               <div class="card-body">
                 <div class="card-body-icon">
                   <i class="fa fa-fw fa-shopping-cart"></i>
                 </div>
                 <div class="mr-5">{{ transactionAmount }} New Orders!</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" routerLink = "/orders">
+              <a class="card-footer text-white clearfix small z-1" routerLink="/orders">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fa fa-angle-right"></i>
@@ -147,14 +149,15 @@
             </div>
           </div>
           <div class="col-xl-3 col-sm-6 mb-3">
-            <div [class]="(unreadMsgAmount > 0) ? 'active-notification-green card text-white bg-success o-hidden h-100' : 'card text-white bg-success o-hidden h-100' ">
+            <div
+              [class]="(unreadMsgAmount > 0) ? 'active-notification-green card text-white bg-success o-hidden h-100' : 'card text-white bg-success o-hidden h-100' ">
               <div class="card-body">
                 <div class="card-body-icon">
                   <i class="fa fa-fw fa-list"></i>
                 </div>
                 <div class="mr-5">{{ unreadMsgAmount }} Chat Messages</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" routerLink = "/manager">
+              <a class="card-footer text-white clearfix small z-1" routerLink="/manager">
                 <span class="float-left">View Chat MSG</span>
                 <span class="float-right">
                   <i class="fa fa-angle-right"></i>
@@ -180,12 +183,28 @@
           </div>
         </div>
         <!-- Promo Code -->
-        <input [(ngModel)]="newPromoCode.code" type="text" placeholder="enter code discount">
-        <input [(ngModel)]="newPromoCode.discount" type="number" min="0" max="100" placeholder="how many % discount">
-        <input [(ngModel)]="newPromoCode.expired" type="date" placeholder="expired date">
-        <textarea [(ngModel)]="newPromoCode.description" name="promo" id="" cols="30" rows="10"></textarea>
-        <button (click)="createPromo()">ok</button>
-        <app-new-products [categories]="appState.productCategories" [breadCrumbs]="appState.breadCrumbs" [state]="state.newProduct"></app-new-products>
+        <div class="promo-code">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="formGroupExampleInput">Create Discount Code</label>
+              <input [(ngModel)]="newPromoCode.code" type="text" placeholder="enter code discount" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="formGroupExampleInput">Create Percent of Discount</label>
+              <input [(ngModel)]="newPromoCode.discount" type="number" min="0" max="100"
+                placeholder="how many % discount" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="formGroupExampleInput">Create Expired Code</label>
+              <input [(ngModel)]="newPromoCode.expired" type="date" placeholder="expired date" class="form-control">
+            </div>
+          </div>
+          <textarea [(ngModel)]="newPromoCode.description" name="promo" id="" cols="30" rows="10"
+            class="form-control"></textarea>
+          <button class="btn btn-success" (click)="createPromo()">ok</button>
+        </div>
+        <app-new-products [categories]="appState.productCategories" [breadCrumbs]="appState.breadCrumbs"
+          [state]="state.newProduct"></app-new-products>
         <!-- DataTables Products -->
         <div class="row" name="awesomePart" id="awesomePart">
           <div class="col-sm-12 col-md-6">
@@ -226,7 +245,7 @@
           <tbody>
             <tr *ngFor="let product of clipped_products | userFilter: state.table.product.search; let i = index"
               [attr.data-index]="i">
-            <!-- <tr *ngFor="let product of state.products; let i = index" [attr.data-index]="i"> -->
+              <!-- <tr *ngFor="let product of state.products; let i = index" [attr.data-index]="i"> -->
               <th scope="row">{{ i }}</th>
               <td>{{ product._id }}</td>
               <!-- <td>{{ product.id }}</td> -->
@@ -241,15 +260,17 @@
         <div class="row">
           <div class="col-sm-12 col-md-5">
             <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-              Showing {{ tableStart(state.table.product) }} to {{ tableActuallyEnd(state.table.product, state.products) }} of
-            {{ state.products.length }}  
+              Showing {{ tableStart(state.table.product) }} to
+              {{ tableActuallyEnd(state.table.product, state.products) }} of
+              {{ state.products.length }}
             </div>
-            {{state.table.product.range}} and 
+            {{state.table.product.range}} and
           </div>
           <div class="col-sm-12 col-md-7">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li *ngFor="let page of numToArray(amountOfPage(state.table.product, state.products))" class="page-item">
+                <li *ngFor="let page of numToArray(amountOfPage(state.table.product, state.products))"
+                  class="page-item">
                   <a (click)="clickPagination1(page)" class="page-link" href="javascript:void(0)">{{ page }}</a>
                 </li>
                 <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li>
