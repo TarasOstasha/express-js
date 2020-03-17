@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Pipe, PipeTransform } from '@angular/core';
 import appState from '../../app-state';
 import { ViewportScroller } from '@angular/common';
+declare var swal: any;
 
 //import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
@@ -213,11 +214,21 @@ export class AdminComponent implements OnInit {
   async createPromo() {
     const fromServer: any = await this.api.createPromo(this.newPromoCode);
     if(fromServer.ok) {
-      alert('promo code has been created') 
+      swal.fire({
+        icon: "success",
+        title: "success",
+        text: "Promo code has been created!",
+        type: "success"
+      })
       this.newPromoCode  = {}
     }
     else {
-      alert('something wrong...')
+      swal.fire({
+        icon: "warning",
+        title: "warning",
+        text: "Something went wrong...",
+        type: "warning"
+      })
     }
   }
   
