@@ -824,7 +824,7 @@ router.post('/create-promo-code', async(req, res)=>{
   }
 })
 // promo code params
-router.get('/promo-code/:code', async(req,res)=>{
+router.get(['/promo-code/:code', '/promo-code'], async(req,res)=>{
   try {
     const promo = await PromoCode.findOne({
       code: req.params.code
