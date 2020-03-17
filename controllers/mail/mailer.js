@@ -11,7 +11,18 @@ let transporter = nodemailer.createTransport({
     },
     connectionTimeout: 1 * 60 * 1000
 })
-
+// version 2
+// let transporter = nodemailer.createTransport({
+//     service: 'Gmail',
+//     auth: {
+//         user: 'tdeveloper241@gmail.com',
+//         pass: 'december22@'
+//     },
+//     tls: {
+//         rejectUnauthorized: false
+//     },
+//     connectionTimeout: 1 * 60 * 1000
+// })
 module.exports = {
 
 send: (from, to, subject, html)=>{

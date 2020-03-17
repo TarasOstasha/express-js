@@ -731,16 +731,29 @@ router.post('/payment-intense-approve', async (req, res) => {
     console.log(error)
   }
 })
+// mail route develop
+router.get('/mail', async(req, res)=>{
+  mailer.send('tdeveloper241@gmail.com', 'tonyjoss1990@gmail.com', 'MEGASHOP: Your order has been submitted',
+      `
+      <p>Your Price is 1000</p>
+      <p>Product name is ex</p>
+    `)
+    res.json('ok');
+})
+
 // PAYPAL Approve
 router.post('/paypal-approve', async(req, res)=>{
   try {
     const transaction = new Transaction(req.body);
     await transaction.save();
+    //transaction.customerEmail = 'tonyjoss1990@gmail.com' // testing
     mailer.send('garbiche.bucket@gmail.com', transaction.customerEmail, 'ExampleShop: Your order has been submitted',
     `
     <p>Your Price is ${transaction.totalPrice}</p>
     <p>Product name is ${transaction.productName}</p>
-  `)
+  `,
+  console.log(transaction.customerEmail, transaction.totalPrice, transaction.productName)
+  )
   res.json({
     ok: true,
     message: 'Transaction Success'
