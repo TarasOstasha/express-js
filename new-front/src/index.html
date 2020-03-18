@@ -28,7 +28,7 @@
 <body>
 <script>
   if(location.hostname == 'localhost') var url = 'http://localhost'; //dev
-  else var url = 'http://tonyjoss.com'; //production
+  else var url = 'https://tonyjoss.com'; //production
   const socket = io.connect(url);
   socket.on('news', (data)=>{
     console.log(data);
