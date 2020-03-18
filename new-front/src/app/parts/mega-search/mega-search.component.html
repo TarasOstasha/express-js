@@ -16,7 +16,7 @@
                     <div class="form">
                         <div class="panel panel-mobile">
                             <div class="panel-heading" role="tab" id="headingFiltersMobile">
-                                <input (ngModelChange)="changed($event)" [(ngModel)]="queries.keywords" type="text"
+                                <input (ngModelChange)="changed()" [(ngModel)]="queries.keywords" type="text"
                                     class="form-control" aria-label="Default"
                                     aria-describedby="inputGroup-sizing-default" placeholder="Search">
 
@@ -114,7 +114,7 @@
                                                             data-slider-max="1000" data-slider-step="1"
                                                             data-slider-value="[0, 1000]">
                                                     </div>
-                                                    {{defaultMinRange}},{{defaultMaxRange}},{{defaultMinMaxRange}}
+                                                    <!-- {{defaultMinRange}},{{defaultMaxRange}},{{defaultMinMaxRange}} -->
                                                 </div>
                                             </div>
                                         </div>

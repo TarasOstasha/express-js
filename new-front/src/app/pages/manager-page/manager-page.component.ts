@@ -45,7 +45,7 @@ export class ManagerPageComponent implements OnInit {
   state:any;
   allNotifications: any = {}; // all type of notifications in admin panel on the top level
   chatMsqAmount: number; // all messages from customer
-  
+  collapsed: boolean;
 
 
   constructor(

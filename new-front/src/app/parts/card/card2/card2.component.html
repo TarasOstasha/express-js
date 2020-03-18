@@ -159,11 +159,11 @@
             </li>
           </ul>
           <div class="arrows-perspective">
-            <div (click)="arrPrev(index)" [class]="(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' ">
+            <div (click)="arrPrev()" [class]="(slidePointer > 0) ? 'carouselPrev ' + moveArrow : 'hideArrow' ">
               <div class="y"></div>
               <div class="x"></div>
             </div>
-            <div (click)="arrNext(index)"
+            <div (click)="arrNext()"
               [class]="(slidePointer < imgSlides.length-1) ? 'carouselNext ' + moveArrow : 'hideArrow' ">
               <div class="y"></div>
               <div class="x"></div>

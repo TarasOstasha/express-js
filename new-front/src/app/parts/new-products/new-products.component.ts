@@ -26,6 +26,8 @@ export class NewProductsComponent implements OnInit {
   // }
   quill: any;
   url =  appState.hostName;
+  openCategory: boolean;
+
   constructor(
     private api: ApiService,
   ) { }

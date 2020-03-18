@@ -1,4 +1,4 @@
-<app-header [state]="appState.header" (onChanged)="headerHandler($event)"></app-header>
+<app-header [state]="appState.header"></app-header>
 <div class="container">
   <div class="row" style="margin-top:20px">
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 auth-block" [ngSwitch]="appState.checked_form">
@@ -105,12 +105,16 @@
               <a class="btn btn-lg btn-primary btn-block" (click)="register()">Register</a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <a class="btn btn-lg btn-success btn-block loginBtn loginBtn--facebook" [href]=" url + 'api/auth/facebook' ">Log with
-                Facebook</a>
+              <a class="btn btn-lg btn-block loginBtn loginBtn--facebook" [href]=" url + 'api/auth/facebook' ">
+                <i class="fab fa-facebook-f"></i>
+                Facebook
+              </a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <a class="btn btn-lg btn-success btn-block loginBtn loginBtn--google" [href]=" url + 'api/auth/google' ">Log with
-                Google</a>
+              <a class="btn btn-lg btn-block loginBtn loginBtn--google" [href]=" url + 'api/auth/google' ">
+                <i class="fab fa-google"></i>
+                Google
+              </a>
             </div>
           </div>
         </fieldset>

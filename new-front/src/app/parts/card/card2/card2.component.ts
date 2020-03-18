@@ -98,7 +98,7 @@ export class Card2Component implements OnInit {
     this.moveArrow = '';
   }
 
-  flip(index) {
+  flip() {
     this.hoverFlip = true;
     setTimeout(()=>{
       this.hideFront = true;
