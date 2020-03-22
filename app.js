@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 
 // connect to the database
@@ -64,6 +65,8 @@ app.use(bodyParser({ limit: '11111111mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'new-front/dist/new-front')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
+app.use(express.static(path.join(__dirname, 'portfolio')));
+
 
 
 // Initialize Passport and restore authentication state, if any, from the
@@ -84,7 +87,16 @@ app.use(passport.session());
 //   limits: { fileSize: 50 * 1024 * 1024 },
 // }));
 
-
+// SUB DOMAIN
+let portfolioHtml = '';
+fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
+  portfolioHtml = data;
+  if(err) portfolioHtml = 'error';
+})
+app.use((req, res, done )=>{
+  if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com') res.send(portfolioHtml)
+  else done()
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
