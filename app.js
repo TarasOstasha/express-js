@@ -90,10 +90,10 @@ app.use(passport.session());
 // SUB DOMAIN //
 app.use((req, res, done )=>{
   if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com' || req.headers.host == 'tonyjoss.com/main') {
-    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
     fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
       if(err) res.send(err);
       res.send(data) 
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
     })
   }
   
