@@ -88,13 +88,14 @@ app.use(passport.session());
 // }));
 
 // SUB DOMAIN
-let portfolioHtml = '';
-fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
-  portfolioHtml = data;
-  if(err) portfolioHtml = 'error';
-})
 app.use((req, res, done )=>{
-  if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com') res.send(portfolioHtml)
+  if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com') {
+    fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
+      if(err) res.send(err);
+      res.send(data)
+    })
+  }
+  // else if another subdomain
   else done()
 })
 
