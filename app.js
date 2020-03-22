@@ -90,19 +90,14 @@ app.use(passport.session());
 // SUB DOMAIN //
 app.use((req, res, done )=>{
   if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com' || req.headers.host == 'tonyjoss.com/main') {
-    const nocache = require('nocache');
-    app.use(nocache());
     fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
       if(err) res.send(err);
       res.send(data) 
-      //res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
     })
   }
-  
   // else if another subdomain
   else done()
 })
-
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
