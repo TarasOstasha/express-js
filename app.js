@@ -93,13 +93,15 @@ app.use((req, res, done )=>{
     fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
       if(err) res.send(err);
       res.send(data) 
-      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
+      //res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
     })
   }
   
   // else if another subdomain
   else done()
 })
+const nocache = require('nocache');
+app.use(nocache());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
