@@ -97,7 +97,7 @@ app.use((req, res, done )=>{
     })
   }
   // else if another subdomain
-  else done()
+  else setTimeout(next, 1000);
 })
 
 app.use('/', indexRouter);
