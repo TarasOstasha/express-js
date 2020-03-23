@@ -89,10 +89,10 @@ app.use(passport.session());
 
 // SUB DOMAIN //
 app.use((req, res, done )=>{
+  res.setHeader("Content-Type", "text/html");
   if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com' || req.headers.host == 'tonyjoss.com/main') {
     fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
       if(err) res.send(err);
-      res.setHeader("Content-Type", "application/json");
       res.send(data) 
     })
   }
