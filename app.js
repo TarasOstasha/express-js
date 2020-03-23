@@ -43,7 +43,7 @@ require('./_app/passport.js'); //... passport
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use((req, res, next) => {
+app.use((req, res, next)=> {
   req.a = 'Hello';
   next();
 });
@@ -71,7 +71,7 @@ app.use(express.static(path.join(__dirname, 'portfolio')));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
-app.use(session({
+app.use(session({ 
   secret: 'my_precious',
   name: 'cookie_name',
   //store: sessionStore, // connect-mongo session store
@@ -87,16 +87,15 @@ app.use(passport.session());
 //   limits: { fileSize: 50 * 1024 * 1024 },
 // }));
 
-// SUB DOMAIN //
-app.use((req, res, done) => {
-  if (req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com' || req.headers.host == 'tonyjoss.com/main') {
-    fs.readFile('portfolio/index.html', 'UTF-8', (err, data) => {
-      if (err) res.send(err);
-      res.setHeader("Content-Type", "text/html");
+// SUB DOMAIN
+app.use((req, res, done )=>{
+  if(req.headers.host == 'localhost' || req.headers.host == 'tonyjoss.com') {
+    fs.readFile('portfolio/index.html', 'UTF-8', (err, data)=>{
+      if(err) res.send(err);
       res.send(data)
     })
   }
-  // else if another subdomain
+  // else if another
   else done()
 })
 
@@ -104,12 +103,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
