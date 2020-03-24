@@ -27,7 +27,8 @@ const appState = {
       },
       paymentData: {}
     },
-    searchResult: []
+    searchResult: [],
+    favoriteProducts: []
   },
   //pages
   pages: {

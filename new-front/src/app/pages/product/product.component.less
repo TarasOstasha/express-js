@@ -75,12 +75,26 @@ body {
         -ms-flex-direction: column;
             flex-direction: column; }
   
-  .colors {
+  // .colors {
+  //   -webkit-box-flex: 1;
+  //   -webkit-flex-grow: 1;
+  //       -ms-flex-positive: 1;
+  //           flex-grow: 1; }
+  
+  .product-colors {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1; }
-  
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .colors {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
   .product-title, .price, .sizes, .colors {
     text-transform: UPPERCASE;
     font-weight: bold; }
@@ -90,6 +104,12 @@ body {
   
   .product-title, .rating, .product-description, .price, .vote, .sizes {
     margin-bottom: 15px; }
+
+  .sizes {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
   
   .product-title {
     margin-top: 0; }
@@ -107,7 +127,8 @@ body {
     width: 2em;
     border-radius: 2px; }
     .color:first-of-type {
-      margin-left: 20px; }
+      margin-left: 20px; 
+    }
   
   .add-to-cart, .like {
     background: #ff9f1a;
@@ -171,6 +192,8 @@ body {
     width: 2em;
     height: 2em;
     display: inline-block;
+    border-radius: 15px;
+    margin-right: 5px;
   }
 
   .breadCrumb-list {

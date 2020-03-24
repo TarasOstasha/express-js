@@ -28,7 +28,8 @@ let Product = mongoose.model('Product', {
       private: Number,
       voutes: []
     },
-    breadCrumbs: []
+    breadCrumbs: [], 
+    favoriteProducts: []
 });
 
 

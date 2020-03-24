@@ -39,6 +39,10 @@ export class ApiService {
     return this.http.get(url + 'product/' + id).toPromise(); //productID
   }
 
+  addFavoriteProducts(product) {
+    return this.http.post( url + 'favorite-products', product ,httpOptions ).toPromise();
+  }
+
   getTodos() {
     return this.http.get<Todo[]>(url + 'todos') //leave becouse we don't use it
   }

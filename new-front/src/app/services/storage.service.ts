@@ -12,9 +12,21 @@ export class StorageService {
     if (json == null) return []
     else return JSON.parse(json);
   }
+  getFavoriteFromStorage() {
+    const json = localStorage.getItem('favorite');
+    if (json == null) return []
+    else return JSON.parse(json);
+  }
+  async addFavoriteToStorage(product) {
+    const allProductsJson = await this.getItem('favorite');
+    console.log(allProductsJson)
+    const allProducts = JSON.parse(allProductsJson);
+    allProducts.push(product);
+    this.setItem('favorite', allProducts);
+  }
 
-
-  setItem(key, value) {
+  setItem(key, value) { 
+    if(typeof(value != 'string') ) value = JSON.stringify(value);
     //return Promise.resolve().then(function () {
       localStorage.setItem(key, value);
     //});

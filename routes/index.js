@@ -20,6 +20,7 @@ const bcrypt = require('bcrypt');
 const Session = require('../models/session');
 var path = require("path");
 const PromoCode = require('../models/promo-code');
+const Favorite = require('../models/favorite-products');
 
 
 router.get('/all-users', (req, res, next) => {
@@ -174,6 +175,45 @@ router.get('/products', cors(), function (req, res, next) {
     console.log(err);
   });
 });
+
+
+
+// try {
+//   const username = req.body.email;
+//   const user = await User.findOne({ username: username }); // request to data base
+//   if (user) return res.json({ ok: false, message: 'this user already exist' });
+
+//   const new_user = new User({
+//     role: 'user',
+//     userName: req.body.email,
+//     firstName: req.body.firstName,
+//     lastName: req.body.lastName,
+//     email: req.body.email,
+//     password: req.body.password
+//   });
+//   new_user.save()
+//   res.json({ ok: true })
+router.post('/favorite-products', cors(), async (req, res)=>{
+  try {
+    console.log(req.user, req.body, 'req user');
+    if(!req.user) return res.json({ ok: false, msg: 'Please log in' });
+    const productId = req.body._id;
+    const userId = req.user._id;
+    if(await Favorite.findOne({
+      productId,
+      userId
+    })) return res.json({ ok: false, mag: 'This item already exist in your list' });
+
+    const favoriteProducts = await Favorite.create({
+      productId,
+      userId
+    })
+    favoriteProducts.save();
+  } catch (error) {
+    console.log(error);
+  }
+
+})
 
 router.get('/product/:id', cors(), function (req, res, next) {
   //console.log(req.params.id);

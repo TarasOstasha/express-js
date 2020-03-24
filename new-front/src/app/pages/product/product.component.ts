@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import state from '../../app-state';
 import { ApiService } from '../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-product',
@@ -14,11 +15,13 @@ export class ProductComponent implements OnInit {
   newSize;
   newColor;
   url =  state.hostName;
+  favoriteProductsLength: any;
   //private api: ApiService
 
   constructor(
     private api: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: StorageService
   ) {
 
     this.state = state;
@@ -36,7 +39,7 @@ export class ProductComponent implements OnInit {
         console.log(id)
         const fromServer: any = await this.api.getProduct(id);
         this.state.product = fromServer.product;
-        console.log(fromServer);
+     
       // }, err => {
       //   console.log(err);
       // })
@@ -48,6 +51,7 @@ export class ProductComponent implements OnInit {
 
   }
   ngOnInit() {
+    console.log(state.header.favoriteProducts, '- favoriteProducts ngOnInit')
     let id = this.route.snapshot.paramMap.get('productId');
     let statistic: any = {
       user: this.state.header.user.name,
@@ -92,8 +96,22 @@ export class ProductComponent implements OnInit {
   buyProduct(event) {
     event.stopPropagation();
     state.header.basket.products.push(this.state.product); //додати продукт в корзину
+    console.log(state.header.basket.products, 'basket.products')
     this.refreshBasketStorage()
   }
+  // add favorite products
+  async toFavorite(event) {
+    //console.log(event, 'event')
+    event.stopPropagation();
+    state.header.favoriteProducts.push(this.state.product);
+    console.log(state.header.favoriteProducts, '- favoriteProducts')
+    const fromServer = await this.api.addFavoriteProducts(this.state.product);
+    this.storage.addFavoriteToStorage(this.state.product);
+    console.log(fromServer, 'this is products from server');
+    //console.log(fromServer)
+    //console.log(this.state.product, '- state product')
+  }
+
   //duplicate code !!!!
   refreshBasketStorage() {
     const json = JSON.stringify(state.header.basket.products);

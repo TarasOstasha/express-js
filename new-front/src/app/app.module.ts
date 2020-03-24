@@ -52,6 +52,7 @@ import { CategoryBlockComponent } from './parts/category-block/category-block.co
 import { SubcategoryAccordionComponent } from './parts/subcategory-accordion/subcategory-accordion.component';
 import { CategoriesComponent } from './parts/categories/categories.component';
 import { IsAdminGuard } from './guard/is-admin.guard';
+import { FavoriteComponent } from './parts/favorite/favorite.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { IsAdminGuard } from './guard/is-admin.guard';
     CategoryBlockComponent,
     SubcategoryAccordionComponent,
     CategoriesComponent,
+    FavoriteComponent,
     
     
   ],
