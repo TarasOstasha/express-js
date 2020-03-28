@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import state from '../../app-state';
 import { ApiService } from '../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +16,10 @@ export class ProductComponent implements OnInit {
   newColor;
   url =  state.hostName;
   favoriteProductsLength: any;
+  public position: string = '-30em';
+
+  favoriteProductBtn: boolean;
+    
   //private api: ApiService
 
   constructor(
@@ -50,8 +54,14 @@ export class ProductComponent implements OnInit {
 
 
   }
-  ngOnInit() {
-    console.log(state.header.favoriteProducts, '- favoriteProducts ngOnInit')
+  async ngOnInit() {
+    // setTimeout(()=>{
+    //   this.position = '1em';
+    // }, 500)
+
+    //state.header.favoriteBlock // set hidden favorite icon
+    this.state.header.favoriteProducts = await this.storage.getFavoriteFromStorage(); 
+    console.log(state)
     let id = this.route.snapshot.paramMap.get('productId');
     let statistic: any = {
       user: this.state.header.user.name,
@@ -101,15 +111,15 @@ export class ProductComponent implements OnInit {
   }
   // add favorite products
   async toFavorite(event) {
-    //console.log(event, 'event')
+    this.favoriteProductBtn = true;
+    console.log(this.favoriteProductBtn, 'event')
     event.stopPropagation();
     state.header.favoriteProducts.push(this.state.product);
     console.log(state.header.favoriteProducts, '- favoriteProducts')
     const fromServer = await this.api.addFavoriteProducts(this.state.product);
     this.storage.addFavoriteToStorage(this.state.product);
     console.log(fromServer, 'this is products from server');
-    //console.log(fromServer)
-    //console.log(this.state.product, '- state product')
+    this.position = '0'
   }
 
   //duplicate code !!!!

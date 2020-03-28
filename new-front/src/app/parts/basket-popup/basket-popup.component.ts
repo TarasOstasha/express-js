@@ -18,6 +18,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
 import { ApiService } from '../../services/api.service';
+import { debug } from 'util';
 
 
 declare var stripe: any;
@@ -105,11 +106,12 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
   @Output() onChanged = new EventEmitter<any>(); //генератор подій
   @Input() state: any;
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.state.showPaymant = 'myClose';
     //quantity of products
-    this.state.products = this.storage.getBasketFromStorage();
+    this.state.products = await this.storage.getBasketFromStorage();
+    console.log(this.storage.getBasketFromStorage())
   }
   //check email repeating from auth components!!!!! need to fix it   !!!!!!!
   private mailValidator(): ValidatorFn {

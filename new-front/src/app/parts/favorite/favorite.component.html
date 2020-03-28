@@ -1,11 +1,48 @@
-<div class="favorite-wrapper">
-  <div class="favorite-box">
-    
-  </div>
-  <!-- <div class="card-trigger"> -->
-      <ul class="cd-cart__count">
-          <li>{{ appState.header.favoriteProducts.length }}</li>
-        </ul>
-  <!-- </div> -->
+<!-- <div class="favorite-wrapper" [style.left]="position">
+  <div class="favorite-box" (click)="openFavorite()" *ngIf="!exampleFlag">
+    <ul class="cd-cart__count">
+      <li>{{ appState.header.favoriteProducts.length }}</li>
+    </ul>
+  </div> -->
 
+  <!-- <div [class]="(!exampleFlag) ? 'favorite-block-wrapper transform': 'favorite-block-wrapper transform transform-active' " >
+    <ul class="favorite-list">
+      <li *ngFor="let product of appState.header.favoriteProducts;let i = index;">
+        <img class="pictogram" [src]="url + product.imgs[0]" alt="img">
+        <div>{{ product.productName }}</div>
+        <span class="fa fa-times" (click)="remove(i)"></span>
+      </li>
+    </ul>
+    <div class="close-favorite" [style.display]="style">
+      <button type="button" class="btn btn-success btn-favorite btn-favorite-basket"><span><i
+            class="fa fa-shopping-basket"></i></span></button>
+      <button (click)="closeFavorite()" type="button" class="btn btn-danger btn-favorite"><span class="fa fa-times"></span></button>
+    </div>
+  </div>
+</div> -->
+
+
+ <!-- next -->
+<!-- <div [class]="(!exampleFlag) ? 'box transform' : 'box transform transform-active'  ">
+  
 </div>
+
+<button (click)="openBlock()">click</button> -->
+<app-header [state]="appState.header"></app-header>
+
+<div class="favorite-wrapper">
+  <div class="container content">
+      <ul class="favorite-list">
+          <li *ngFor="let product of appState.header.favoriteProducts;let i = index;" >
+            <img class="pictogram" [src]="url + product.imgs[0]" alt="img" routerLink="/product/{{ product._id }}">
+            <div>{{ product.productName }}</div>
+            <div>{{ product.price }}</div>
+            <span class="fa fa-shopping-basket" (click)="addFavoriteProductToBasket(i)"></span>
+            <span class="fa fa-times" (click)="remove(i)"></span>
+          </li>
+        </ul>
+  </div>
+
+  <app-footer></app-footer>
+</div>
+

@@ -27,7 +27,7 @@ export class AppComponent {
     try {
       this.fingerPrint.checkIfItExist();
       this.setUserInfo();
-      this.appState.header.basket.products = this.storage.getBasketFromStorage();
+      this.appState.header.basket.products = await this.storage.getBasketFromStorage();
       const fromServer: any = await this.api.getProducts()
       appState.products = fromServer.products;
     } catch (error) {

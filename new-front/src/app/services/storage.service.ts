@@ -7,22 +7,26 @@ export class StorageService {
 
   constructor() { }
 
-  getBasketFromStorage() {
-    const json = localStorage.getItem('basket');
-    if (json == null) return []
-    else return JSON.parse(json);
+  async getBasketFromStorage() {
+    const basket = await this.getItem('basket');
+    return (Array.isArray(basket)) ? basket : [];
   }
-  getFavoriteFromStorage() {
-    const json = localStorage.getItem('favorite');
-    if (json == null) return []
-    else return JSON.parse(json);
+  async getFavoriteFromStorage() {
+    const favorite = await this.getItem('favorite');
+    return (Array.isArray(favorite)) ?  favorite : [];
   }
   async addFavoriteToStorage(product) {
-    const allProductsJson = await this.getItem('favorite');
-    console.log(allProductsJson)
-    const allProducts = JSON.parse(allProductsJson);
-    allProducts.push(product);
-    this.setItem('favorite', allProducts);
+    const favorite = await this.getFavoriteFromStorage()
+    console.log(favorite)
+    favorite.push(product);
+    this.setItem('favorite', favorite);
+  }
+  // remove from localstorage
+  async removeFavoriteFromStorage(index) {
+    const favorite = await this.getFavoriteFromStorage()
+    console.log(favorite)
+    favorite.splice(index, 1);
+    this.setItem('favorite', favorite);
   }
 
   setItem(key, value) { 
@@ -33,7 +37,11 @@ export class StorageService {
   }
   getItem(key) {
     return Promise.resolve().then(function () {
-      return localStorage.getItem(key);
+      try {
+        return JSON.parse(localStorage.getItem(key));
+      } catch (error) {
+        return null
+      }
     });
   }
 

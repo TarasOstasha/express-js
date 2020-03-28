@@ -29,6 +29,7 @@ const appState = {
     },
     searchResult: [],
     favoriteProducts: []
+    //favoriteBlock: false
   },
   //pages
   pages: {
@@ -106,7 +107,10 @@ const appState = {
   checked_form: 'login',
   error: {
     dublicate_user: false
-  }
+  },
+  // favorite block
+  showFavoriteBlock: false
+
 
 }
 

@@ -16,6 +16,7 @@ import { ManagerPageComponent } from './pages/manager-page/manager-page.componen
 import { Card2Component } from './parts/card/card2/card2.component';
 import { CategoriesComponent } from './parts/categories/categories.component';
 import { IsAdminGuard } from './guard/is-admin.guard';
+import { FavoriteComponent } from './parts/favorite/favorite.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -35,7 +36,9 @@ const routes: Routes = [
   { path: 'manager', component: ManagerPageComponent },
   { path: 'card2', component: Card2Component },  // just for develop, after must removed
   { path: 'categories/:category', component: CategoriesComponent },
+  { path: 'favorite', component: FavoriteComponent },
   { path: '**', redirectTo: '/p404' } //should be last one
+
 ];
 
 @NgModule({
