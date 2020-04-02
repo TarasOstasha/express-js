@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import state from '../app-state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
+  state = state;
 
   constructor() { }
 
@@ -48,6 +50,12 @@ export class StorageService {
   clearItem(key) {
     localStorage.removeItem(key);
   }
+
+  refreshBasketStorage() {
+    const json = JSON.stringify(state.header.basket.products);
+    localStorage.setItem('basket', json);
+  }
+
   //const setItem2 = (key, value) => Promise.resolve().then( () =>  localStorage.setItem(key, value) );
   //const getItem2 = (key) => Promise.resolve().then( () => localStorage.getItem(key));
 }

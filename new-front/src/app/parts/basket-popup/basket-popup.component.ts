@@ -204,20 +204,24 @@ export class BasketPopupComponent implements OnInit { //AfterViewInit, also add
     })
     this.state.open = true;
     this.stateBack()
+    this.storage.refreshBasketStorage();
   }
   deleteProduct(id) {
     console.log(id)
     console.log(this.state.products.filter(product => product._id != id))
     //видалити всі продукти по id
     this.state.products = this.state.products.filter(product => product._id != id);
+    this.storage.refreshBasketStorage();
   }
 
   minus(product) {
     console.log(product, 'product-minus')
-    this.removeOne(product._id)
+    this.removeOne(product._id);
+    this.storage.refreshBasketStorage();
   }
   plus(product) {
     this.state.products.push(product);
+    this.storage.refreshBasketStorage();
   }
 
   totalPrice() {

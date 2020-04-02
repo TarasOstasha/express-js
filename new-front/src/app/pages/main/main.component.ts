@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //import { state } from '@angular/animations';
 import { ApiService } from '../../services/api.service';
 import state from '../../app-state';
-
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-main',
@@ -12,10 +12,10 @@ import state from '../../app-state';
 export class MainComponent implements OnInit {
   state: any; //remove
   appState: any;
+
   constructor(
-
     private api: ApiService,
-
+    private storage: StorageService
   ) {
     this.state = state;
     this.appState = state;
@@ -29,14 +29,14 @@ export class MainComponent implements OnInit {
   cardHandler(product) {
     console.log('return data', product);
     state.header.basket.products.push(product); //додати продукт в корзину
-    this.refreshBasketStorage()
+    this.storage.refreshBasketStorage();
     //  this.header_state.basket = this.state.basket; // передати 
   }
 
-  refreshBasketStorage() {
-    const json = JSON.stringify(state.header.basket.products);
-    localStorage.setItem('basket', json);
-  }
+  // refreshBasketStorage() {
+  //   const json = JSON.stringify(state.header.basket.products);
+  //   localStorage.setItem('basket', json);
+  // }
 
 
 
