@@ -1,5 +1,5 @@
 import { OnInit, Component, EventEmitter, Input, Output } from '@angular/core';
-import  appState  from '../../../app-state';
+import appState from '../../../app-state';
 import * as $ from 'jquery';
 
 @Component({
@@ -14,7 +14,7 @@ export class Card2Component implements OnInit {
   @Input() state: any
   @Input() userId: string;
   @Input() index: number;
-  
+
   productCardClass: string = '';
   productBackClass: string = 'flip90';
   moveArrow: string = '';
@@ -23,17 +23,28 @@ export class Card2Component implements OnInit {
   carouselSlideWidth = 335;
   carouselWidth = 0;
   isAnimating = false;
-  carousel:any;
+  carousel: any;
   //t = [0,1,2,3,4] // use imgSlides !!!
-  
+
   unhoverCardPoint: boolean = true;
   hoverFlip: boolean = false;
   hideFront: boolean = false;
-  url =  appState.hostName;
+  url = appState.hostName;
   constructor() {
   }
 
   ngOnInit() {
+    // lazy img loading
+    const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+      entries.forEach((entry: any) => {
+        const lazyImage = entry.target;
+        if (entry.isIntersecting) lazyImage.src = lazyImage.dataset.image;
+      })
+    });
+    document.querySelectorAll('.product-img').forEach((v) => {
+      imageObserver.observe(v);
+    })
+
     this.carousel = `#carousel-${this.index} ul`;
     this.carouselInit(this.index);
     //console.log(this.state.imgs, '-this.state.imgs')
@@ -81,11 +92,11 @@ export class Card2Component implements OnInit {
     //alert('try hover')
     //this.hoverBlocked = true;
     //if(!this.hoverBlocked) {
-      console.log('hover')
-      this.productCardClass = 'animate';
-      this.moveArrow = 'visible';
+    console.log('hover')
+    this.productCardClass = 'animate';
+    this.moveArrow = 'visible';
 
-   // }
+    // }
     //$('#product-card').addClass('animate');
     //$('div.carouselNext, div.carouselPrev').addClass('visible');
     //$('#product-card').removeClass('animate');			
@@ -100,14 +111,14 @@ export class Card2Component implements OnInit {
 
   flip() {
     this.hoverFlip = true;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.hideFront = true;
     }, 150)
   }
 
   close() {
     this.hoverFlip = false;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.hideFront = false;
     }, 150)
   }
@@ -120,7 +131,7 @@ export class Card2Component implements OnInit {
     const cx = '#cx-' + index;
     const cy = '#cy-' + index;
     this.moveArrow = '';
-   this.productCardClass = 'flip-10';
+    this.productCardClass = 'flip-10';
 
     setTimeout(function () {
       this.productCardClass = 'flip90';
@@ -129,10 +140,10 @@ export class Card2Component implements OnInit {
       });
     }, 50);
 
-    setTimeout( ()=> {
+    setTimeout(() => {
       //this.productCardClass = 'flip190';
       $(productBack).show().find('div.shadow').show().fadeTo(90, 0);  // hide shadow
-      setTimeout( ()=> {
+      setTimeout(() => {
         this.productBackClass = 'flip0'
         setTimeout(function () {
           $(`${cx}, ${cy}`).addClass('s1');
@@ -178,17 +189,17 @@ export class Card2Component implements OnInit {
   newLeftSlide(direction) {
     var currentLeft = Math.abs(parseInt($(this.carousel).css("left")));
     var newLeft = (direction == 'left') ? currentLeft - this.carouselSlideWidth : currentLeft + this.carouselSlideWidth
-    console.log(newLeft, currentLeft,this.carouselSlideWidth)
+    console.log(newLeft, currentLeft, this.carouselSlideWidth)
     return newLeft;
   }
 
   //
-  
+
   slidePointer = 0;
   endSlider = this.imgSlides.length - 1; // останній елемент в масиві
   startSlider = this.imgSlides[0]; // 1 елемент в масиві
   //
-  
+
 
   // Load Previous Image
   arrPrev() {
@@ -200,7 +211,7 @@ export class Card2Component implements OnInit {
     setTimeout(function () { this.isAnimating = false; }, 300);
   }
 
-     
+
   // Load Next Image
   arrNext() {
     this.slidePointer++;
@@ -211,7 +222,7 @@ export class Card2Component implements OnInit {
     setTimeout(function () { this.isAnimating = false; }, 300);
   }
 
-   // building the width of the carousel
+  // building the width of the carousel
   carouselInit(index) {
     const carousel = `#carousel-${index} ul`;
 
@@ -223,7 +234,7 @@ export class Card2Component implements OnInit {
 
 
   //2  edition
-  
+
 
 }
 
