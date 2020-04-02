@@ -155,7 +155,7 @@
         <div [id]=" 'carousel-' + index">
           <ul style="transition: .3s;display:flex">
             <li *ngFor="let slide of state.imgs; let cardSliderIndex = index">
-              <img style="width:100%" [src]="url + slide" alt="">
+              <img style="width:100%" [attr.data-image]="url + slide" alt="">
             </li>
           </ul>
           <div class="arrows-perspective">

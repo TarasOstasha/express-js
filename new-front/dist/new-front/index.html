@@ -28,7 +28,7 @@
 <body>
 <script>
   if(location.hostname == 'localhost') var url = 'http://localhost'; //dev
-  else var url = 'http://tonyjoss.com'; //production
+  else var url = 'https://tonyjoss.com'; //production
   const socket = io.connect(url);
   socket.on('news', (data)=>{
     console.log(data);
@@ -57,6 +57,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.js"></script>
   <!-- bootstrap-slider - https://cdnjs.com/libraries/bootstrap-slider -->
 
-<script type="text/javascript" src="runtime.26209474bfa8dc87a77c.js"></script><script type="text/javascript" src="polyfills.4ea41d8426ec45a3408e.js"></script><script type="text/javascript" src="main.4f226e498ee670b45507.js"></script></body>
+<script type="text/javascript" src="runtime.26209474bfa8dc87a77c.js"></script><script type="text/javascript" src="polyfills.4ea41d8426ec45a3408e.js"></script><script type="text/javascript" src="main.c9414b82b0ee3122651d.js"></script></body>
 
 </html>
