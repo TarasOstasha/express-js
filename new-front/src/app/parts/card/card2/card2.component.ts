@@ -41,7 +41,7 @@ export class Card2Component implements OnInit {
         if (entry.isIntersecting) lazyImage.src = lazyImage.dataset.image;
       })
     });
-    document.querySelectorAll('.product-img').forEach((v) => {
+    document.querySelectorAll('img').forEach((v) => {
       imageObserver.observe(v);
     })
 

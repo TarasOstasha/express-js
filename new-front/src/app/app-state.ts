@@ -2,7 +2,7 @@ const appState = {
   hostName: (location.hostname == 'localhost') ? 'http://localhost/' : '/',
   //general
   products: [],
-  showedProducts: [],
+  showedProducts: [], //filtered products
   breadCrumbs: [],
   productCategories: { name: 'hight-level', subCategories: [] },
   subcategoryAccordion: {
